@@ -363,7 +363,7 @@
                 <div class="space-y-2">
                   <span class="font-bold text-slate-600 dark:text-slate-300 block">Earnings</span>
                   <div class="flex justify-between"><span>Basic Pay:</span> <span class="font-mono font-semibold" id="res-sal-basic">₹0</span></div>
-                  <div class="flex justify-between"><span>Dearness Allowance (DA):</span> <span class="font-mono font-semibold" id="res-sal-da">₹0</span></div>
+                  <div class="flex justify-between"><span id="lbl-sal-da">Dearness Allowance (DA):</span> <span class="font-mono font-semibold" id="res-sal-da">₹0</span></div>
                   <div class="flex justify-between"><span>House Rent Allowance (HRA):</span> <span class="font-mono font-semibold" id="res-sal-hra">₹0</span></div>
                   <div class="flex justify-between"><span>Transport Allowance (TA + DA on TA):</span> <span class="font-mono font-semibold" id="res-sal-ta">₹0</span></div>
                   <div class="flex justify-between pt-2 border-t font-bold text-emerald-600 text-sm"><span>Gross Salary:</span> <span class="font-mono" id="res-sal-gross">₹0</span></div>
@@ -392,66 +392,130 @@
         </div>
       </div>
 
-      <!-- MODULE 2: DA ARREARS -->
+      <!-- MODULE 2: DA ARREARS (INDEPENDENT WITH TA ARREARS) -->
       <div id="module-da-arrears" class="calc-module hidden space-y-4">
         <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
-          <h3 class="font-bold text-slate-900 dark:text-white">DA Revision Back-Pay / Arrears Estimator</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <div>
+            <h3 class="font-bold text-slate-900 dark:text-white">DA Revision Back-Pay / Arrears Estimator</h3>
+            <p class="text-slate-500 text-[11px]">Computes retroactively owed difference on Basic Pay and Transport Allowance (TPTA).</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
             <div>
-              <label class="block mb-1">Monthly Basic Pay (₹)</label>
-              <input type="number" id="arr-basic" value="35400" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              <label class="block mb-1 font-medium">Monthly Basic Pay (₹)</label>
+              <input type="number" id="arr-basic" value="35400" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
             </div>
             <div>
-              <label class="block mb-1">Old DA Rate (%)</label>
-              <input type="number" id="arr-old-da" value="58" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              <label class="block mb-1 font-medium">Pay Level</label>
+              <select id="arr-level" onchange="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded">
+                <option value="1">Level 1 - 2</option>
+                <option value="6" selected>Level 3 - 8</option>
+                <option value="9">Level 9 & above</option>
+              </select>
             </div>
             <div>
-              <label class="block mb-1">New DA Rate (%)</label>
-              <input type="number" id="arr-new-da" value="60" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              <label class="block mb-1 font-medium">City TPTA Class</label>
+              <select id="arr-city" onchange="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded">
+                <option value="X">Higher TPTA (Class X)</option>
+                <option value="Y" selected>Other Cities (Class Y/Z)</option>
+              </select>
             </div>
             <div>
-              <label class="block mb-1">Arrears Period (Months Gap)</label>
+              <label class="block mb-1 font-medium">Old & New DA %</label>
+              <div class="flex items-center space-x-1">
+                <input type="number" id="arr-old-da" value="58" oninput="runArrearsEngine()" class="w-1/2 px-2 py-1.5 border rounded font-mono" placeholder="Old">
+                <span>→</span>
+                <input type="number" id="arr-new-da" value="60" oninput="runArrearsEngine()" class="w-1/2 px-2 py-1.5 border rounded font-mono font-bold" placeholder="New">
+              </div>
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Months Gap</label>
               <input type="number" id="arr-months" value="3" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
             </div>
           </div>
-          <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl flex justify-between items-center">
+          <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl flex flex-col sm:flex-row justify-between sm:items-center gap-3">
             <div>
-              <span class="text-slate-500 block">Monthly Differential Due:</span>
-              <span class="font-mono text-base font-bold text-emerald-600" id="res-arr-monthly">₹0</span>
+              <span class="text-slate-500 block">Monthly Differential (Basic + TA):</span>
+              <span class="font-mono text-sm font-bold text-emerald-600" id="res-arr-monthly">₹0</span>
             </div>
-            <div class="text-right">
-              <span class="text-slate-500 block">Total Net DA Arrears Due:</span>
+            <div class="sm:text-right">
+              <span class="text-slate-500 block">Total Gross DA Arrears Payable:</span>
               <span class="font-mono text-xl font-black text-brand-red dark:text-red-400" id="res-arr-total">₹0</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- MODULE 3: INCREMENT & MACP FIXATION -->
+      <!-- MODULE 3: INCREMENT & MACP FIXATION (7th CPC MATRIX COMPLIANT) -->
       <div id="module-fixation" class="calc-module hidden space-y-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- MACP & Promotion -->
+          
+          <!-- MACP & Promotion Fixation -->
           <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
-            <h3 class="font-bold text-slate-900 dark:text-white">MACP / Promotion Pay Fixation</h3>
             <div>
-              <label class="block mb-1">Current Basic Pay (₹)</label>
-              <input type="number" id="fix-basic" value="35400" oninput="runFixationEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+              <h3 class="font-bold text-slate-900 dark:text-white">MACP / Promotion Pay Fixation (FR 22(I)(a)(1))</h3>
+              <p class="text-slate-500 text-[11px]">Grants 1 notional increment in old level, then snaps to next higher cell in target level.</p>
             </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div>
+                <label class="block mb-1 font-medium">Current Level</label>
+                <select id="fix-curr-level" onchange="runFixationEngine()" class="w-full px-2 py-1.5 border rounded">
+                  <option value="1">Level 1</option>
+                  <option value="2">Level 2</option>
+                  <option value="3">Level 3</option>
+                  <option value="4">Level 4</option>
+                  <option value="5">Level 5</option>
+                  <option value="6" selected>Level 6</option>
+                  <option value="7">Level 7</option>
+                  <option value="8">Level 8</option>
+                  <option value="9">Level 9</option>
+                  <option value="10">Level 10</option>
+                  <option value="11">Level 11</option>
+                  <option value="12">Level 12</option>
+                </select>
+              </div>
+              <div>
+                <label class="block mb-1 font-medium">Target Level</label>
+                <select id="fix-target-level" onchange="runFixationEngine()" class="w-full px-2 py-1.5 border rounded font-semibold text-brand-red dark:text-red-400">
+                  <option value="2">Level 2</option>
+                  <option value="3">Level 3</option>
+                  <option value="4">Level 4</option>
+                  <option value="5">Level 5</option>
+                  <option value="6">Level 6</option>
+                  <option value="7" selected>Level 7</option>
+                  <option value="8">Level 8</option>
+                  <option value="9">Level 9</option>
+                  <option value="10">Level 10</option>
+                  <option value="11">Level 11</option>
+                  <option value="12">Level 12</option>
+                </select>
+              </div>
+              <div>
+                <label class="block mb-1 font-medium">Current Basic (₹)</label>
+                <input type="number" id="fix-basic" value="35400" oninput="runFixationEngine()" class="w-full px-2 py-1.5 border rounded font-mono font-bold">
+              </div>
+            </div>
+
             <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
-              <div class="flex justify-between"><span>Notional 3% Increment:</span> <span class="font-mono font-semibold" id="res-fix-notional">₹0</span></div>
-              <div class="flex justify-between font-bold text-slate-900 dark:text-white"><span>Fixation Floor:</span> <span class="font-mono" id="res-fix-floor">₹0</span></div>
+              <div class="flex justify-between"><span>Notional Cell in Current Level:</span> <span class="font-mono font-semibold" id="res-fix-notional">₹0</span></div>
+              <div class="flex justify-between text-slate-500"><span>Fixation Floor:</span> <span class="font-mono" id="res-fix-floor">₹0</span></div>
             </div>
+            
             <div class="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 rounded-lg">
-              <span class="text-slate-500 text-[11px] block">Fixed Basic in Upgraded Level:</span>
+              <span class="text-slate-500 text-[11px] block">Pay Fixed in Upgraded Matrix Level:</span>
               <span class="font-mono text-lg font-black text-emerald-700 dark:text-emerald-300" id="res-fix-final">₹0</span>
+              <span class="text-[10px] text-emerald-800 dark:text-emerald-400 block mt-0.5" id="res-fix-matrix-cell">Matching Pay Matrix Cell</span>
             </div>
           </div>
 
-          <!-- Annual Increment Date -->
+          <!-- Annual Increment Date (Independent Input) -->
           <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
             <h3 class="font-bold text-slate-900 dark:text-white">Annual Increment & Cycle Engine</h3>
             <div>
-              <label class="block mb-1">Date of Joining / Promotion / MACP</label>
+              <label class="block mb-1 font-medium">Current Basic Pay (₹)</label>
+              <input type="number" id="inc-basic" value="35400" oninput="runIncrementEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Date of Appointment / Promotion / MACP</label>
               <input type="date" id="inc-date" value="2026-02-15" onchange="runIncrementEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
             </div>
             <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
@@ -459,16 +523,18 @@
               <div class="flex justify-between"><span>Next Scheduled Increment Date:</span> <span class="font-mono font-bold" id="res-inc-next-date">01-01-2027</span></div>
             </div>
             <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg flex justify-between items-center">
-              <span>Basic after 3% Increment:</span>
+              <span>Basic after 3% Annual Increment:</span>
               <span class="font-mono text-base font-bold text-emerald-600" id="res-inc-new-basic">₹0</span>
             </div>
           </div>
+
         </div>
       </div>
 
-      <!-- MODULE 4: PENSION & GRATUITY -->
+      <!-- MODULE 4: PENSION & GRATUITY (INDEPENDENT INPUTS & STATUTORY FLOORS) -->
       <div id="module-pension" class="calc-module hidden space-y-4">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          
           <!-- Pension (OPS / UPS) -->
           <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
             <div class="flex justify-between items-center border-b pb-2">
@@ -480,26 +546,35 @@
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block mb-1">Last Basic / 12-Mo Avg (₹)</label>
+                <label class="block mb-1 font-medium">Last Basic / 12-Mo Avg (₹)</label>
                 <input type="number" id="pen-emoluments" value="65000" oninput="runPensionEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
               </div>
               <div>
-                <label class="block mb-1">Completed Years of Service</label>
-                <input type="number" id="pen-years" value="28" oninput="runPensionEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+                <label class="block mb-1 font-medium">Completed Years of Service</label>
+                <input type="number" id="pen-years" value="28" min="0" oninput="runPensionEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
               </div>
             </div>
-            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
+
+            <div id="pen-eligibility-warning" class="p-2.5 bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900 text-rose-800 dark:text-rose-300 rounded-lg text-[11px] font-semibold hidden">
+              Not eligible for pension: Minimum 10 years qualifying service required under statutory pension rules.
+            </div>
+
+            <div id="pen-output-block" class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
               <div class="flex justify-between"><span>Basic Assured Pension:</span> <span class="font-mono font-bold" id="res-pen-basic">₹0</span></div>
-              <div class="flex justify-between"><span>Dearness Relief (DR @ 60%):</span> <span class="font-mono font-bold" id="res-pen-dr">₹0</span></div>
+              <div class="flex justify-between"><span id="lbl-pen-dr">Dearness Relief (DR):</span> <span class="font-mono font-bold" id="res-pen-dr">₹0</span></div>
               <div class="flex justify-between pt-1 border-t font-bold text-emerald-600 text-sm"><span>Total Monthly Pension:</span> <span class="font-mono" id="res-pen-total">₹0</span></div>
             </div>
-            <div id="pen-ups-lump-box" class="p-2.5 bg-brand-gold/10 border border-brand-gold/30 rounded-lg flex justify-between items-center">
-              <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">UPS Retirement Lump-Sum Payout:</span>
-              <span class="font-mono font-bold text-slate-900 dark:text-white" id="res-pen-ups-lump">₹0</span>
+
+            <div id="pen-ups-lump-box" class="p-2.5 bg-brand-gold/10 border border-brand-gold/30 rounded-lg space-y-1">
+              <div class="flex justify-between items-center">
+                <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">UPS Retirement Lump-Sum Payout:</span>
+                <span class="font-mono font-bold text-slate-900 dark:text-white" id="res-pen-ups-lump">₹0</span>
+              </div>
+              <p class="text-[10px] text-slate-500 italic leading-tight">Upper-bound estimate (assumes final basic+DA across career; actual rules sum 1/10th of historical emoluments per semester).</p>
             </div>
           </div>
 
-          <!-- DCRG Gratuity & Leave Encashment -->
+          <!-- DCRG Gratuity & Leave Encashment (Self-Contained) -->
           <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
             <div class="flex justify-between items-center border-b pb-2">
               <h3 class="font-bold text-slate-900 dark:text-white">Gratuity (DCRG) & Leave Encashment</h3>
@@ -508,13 +583,17 @@
                 <option value="DEATH">Death Gratuity</option>
               </select>
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block mb-1">Qualifying Service (Years)</label>
+                <label class="block mb-1 font-medium">Last Basic Pay (₹)</label>
+                <input type="number" id="grat-basic" value="65000" oninput="runGratuityEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+              </div>
+              <div>
+                <label class="block mb-1 font-medium">Qualifying Service (Yrs)</label>
                 <input type="number" id="grat-years" value="30" oninput="runGratuityEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
               </div>
               <div>
-                <label class="block mb-1">Earned Leave Balance (Days)</label>
+                <label class="block mb-1 font-medium">Earned Leave (Days)</label>
                 <input type="number" id="grat-el-days" value="300" max="300" oninput="runGratuityEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
               </div>
             </div>
@@ -528,38 +607,54 @@
               <span class="font-mono font-bold text-emerald-600 text-sm" id="res-el-total">₹0</span>
             </div>
           </div>
+
         </div>
       </div>
 
-      <!-- MODULE 5: NPS / UPS & HBA -->
+      <!-- MODULE 5: NPS / UPS & HBA (WITH ANNUAL INCREMENT COMPOUNDING) -->
       <div id="module-nps-hba" class="calc-module hidden space-y-4">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          
           <!-- NPS Accumulator -->
           <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
-            <h3 class="font-bold text-slate-900 dark:text-white border-b pb-2">NPS Corpus & Annuity Projector</h3>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="flex justify-between items-center border-b pb-2">
+              <h3 class="font-bold text-slate-900 dark:text-white">NPS Corpus & Annuity Projector</h3>
+              <select id="nps-type" onchange="runNpsEngine()" class="px-2 py-0.5 border rounded text-[11px]">
+                <option value="plain" selected>Plain NPS (14% Govt)</option>
+                <option value="ups">UPS Option (18.5% Govt)</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <div>
-                <label class="block mb-1">Current Corpus (₹)</label>
+                <label class="block mb-1 font-medium">Monthly Basic (₹)</label>
+                <input type="number" id="nps-basic" value="35400" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+              </div>
+              <div>
+                <label class="block mb-1 font-medium">Current Corpus (₹)</label>
                 <input type="number" id="nps-curr" value="500000" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
               </div>
               <div>
-                <label class="block mb-1">Remaining Years</label>
+                <label class="block mb-1 font-medium">Years to Retirement</label>
                 <input type="number" id="nps-years" value="20" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
               </div>
               <div>
-                <label class="block mb-1">Expected Return (% p.a.)</label>
-                <input type="number" id="nps-roi" value="9.5" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+                <label class="block mb-1 font-medium">Expected Return (%)</label>
+                <input type="number" id="nps-roi" value="9.5" step="0.1" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
               </div>
               <div>
-                <label class="block mb-1">Annuity Rate (% p.a.)</label>
-                <input type="number" id="nps-annuity-rate" value="6.5" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+                <label class="block mb-1 font-medium">Annual Pay Growth (%)</label>
+                <input type="number" id="nps-growth" value="3.0" step="0.1" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+              <div>
+                <label class="block mb-1 font-medium">Annuity Yield (%)</label>
+                <input type="number" id="nps-annuity-rate" value="6.5" step="0.1" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
               </div>
             </div>
             <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
               <div class="flex justify-between"><span>Projected Total Corpus:</span> <span class="font-mono font-bold text-sm text-slate-900 dark:text-white" id="res-nps-corpus">₹0</span></div>
               <div class="flex justify-between text-emerald-600"><span>Tax-Free Lump Sum (60%):</span> <span class="font-mono font-semibold" id="res-nps-lump">₹0</span></div>
-              <div class="flex justify-between"><span>Mandatory Annuity (40%):</span> <span class="font-mono font-semibold" id="res-nps-annuity-fund">₹0</span></div>
-              <div class="flex justify-between pt-1 border-t font-bold text-brand-red dark:text-red-400"><span>Estimated Monthly Annuity:</span> <span class="font-mono" id="res-nps-monthly">₹0</span></div>
+              <div class="flex justify-between"><span>Mandatory Annuity Fund (40%):</span> <span class="font-mono font-semibold" id="res-nps-annuity-fund">₹0</span></div>
+              <div class="flex justify-between pt-1 border-t font-bold text-brand-red dark:text-red-400"><span>Estimated Monthly Pension:</span> <span class="font-mono" id="res-nps-monthly">₹0</span></div>
             </div>
           </div>
 
@@ -568,11 +663,11 @@
             <h3 class="font-bold text-slate-900 dark:text-white border-b pb-2">House Building Advance (HBA) Schedule</h3>
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block mb-1">Desired Advance (₹)</label>
+                <label class="block mb-1 font-medium">Desired Advance (₹)</label>
                 <input type="number" id="hba-req" value="2500000" oninput="runHbaEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
               </div>
               <div>
-                <label class="block mb-1">Monthly Basic Pay (₹)</label>
+                <label class="block mb-1 font-medium">Monthly Basic Pay (₹)</label>
                 <input type="number" id="hba-basic" value="65000" oninput="runHbaEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
               </div>
             </div>
@@ -580,51 +675,60 @@
               <div class="flex justify-between"><span>Sanctioned (Cap ₹25L / 34 Mo):</span> <span class="font-mono font-bold" id="res-hba-sanctioned">₹0</span></div>
               <div class="flex justify-between"><span>Phase 1 Principal EMI (180 Mos):</span> <span class="font-mono font-bold text-emerald-600" id="res-hba-p-emi">₹0</span></div>
               <div class="flex justify-between"><span>Phase 2 Interest EMI (60 Mos):</span> <span class="font-mono font-bold text-rose-600" id="res-hba-i-emi">₹0</span></div>
-              <div class="flex justify-between pt-1 border-t"><span>Simple Interest Rate (Diminishing):</span> <span class="font-mono" id="res-hba-rate">7.44% p.a.</span></div>
+              <div class="flex justify-between pt-1 border-t"><span>Simple Interest Rate (Diminishing):</span> <span class="font-mono font-semibold" id="res-hba-rate">7.44% p.a.</span></div>
             </div>
           </div>
+
         </div>
       </div>
 
-      <!-- MODULE 6: INCOME TAX COMPARISON -->
+      <!-- MODULE 6: INCOME TAX COMPARISON (AGE-SLAB & MARGINAL RELIEF COMPLIANT) -->
       <div id="module-tax" class="calc-module hidden space-y-4">
         <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
           <div class="flex justify-between items-center border-b pb-2">
             <h3 class="font-bold text-slate-900 dark:text-white">FY 2026–27 (AY 2027–28) Tax Comparison Engine</h3>
             <span class="font-mono text-[11px] text-slate-500">Budget 2026 Compliant</span>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
             <div>
-              <label class="block mb-1">Gross Annual Salary (₹)</label>
+              <label class="block mb-1 font-medium">Gross Annual Salary (₹)</label>
               <input type="number" id="tax-gross" value="1250000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
             </div>
             <div>
-              <label class="block mb-1">80C Investments (₹)</label>
+              <label class="block mb-1 font-medium">Age Category</label>
+              <select id="tax-age" onchange="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded">
+                <option value="general" selected>&lt; 60 Yrs (General)</option>
+                <option value="senior">60–79 Yrs (Senior Citizen)</option>
+                <option value="super_senior">80+ Yrs (Super Senior)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">80C Investments (₹)</label>
               <input type="number" id="tax-80c" value="150000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
             </div>
             <div>
-              <label class="block mb-1">80D Mediclaim (₹)</label>
+              <label class="block mb-1 font-medium">80D Mediclaim (₹)</label>
               <input type="number" id="tax-80d" value="25000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
             </div>
             <div>
-              <label class="block mb-1">HRA / Home Loan Exemption (₹)</label>
+              <label class="block mb-1 font-medium">HRA / Home Loan Sec 24 (₹)</label>
               <input type="number" id="tax-other" value="60000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-            <!-- New Regime -->
             <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
               <div class="flex justify-between items-center"><span class="font-bold text-slate-900 dark:text-white">New Regime (Default)</span> <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">Std Ded: ₹75,000</span></div>
               <div class="flex justify-between"><span>Taxable Income:</span> <span class="font-mono font-bold" id="res-tax-new-taxable">₹0</span></div>
-              <div class="flex justify-between"><span>Sec 87A Rebate:</span> <span class="font-mono font-bold text-emerald-600" id="res-tax-new-rebate">₹0</span></div>
+              <div class="flex justify-between"><span>Sec 87A Rebate / Relief:</span> <span class="font-mono font-bold text-emerald-600" id="res-tax-new-rebate">₹0</span></div>
+              <div class="flex justify-between"><span>Surcharge:</span> <span class="font-mono font-semibold" id="res-tax-new-surcharge">₹0</span></div>
               <div class="flex justify-between pt-2 border-t font-bold text-base text-slate-900 dark:text-white"><span>Total Tax + Cess (4%):</span> <span class="font-mono" id="res-tax-new-total">₹0</span></div>
             </div>
-            <!-- Old Regime -->
             <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
               <div class="flex justify-between items-center"><span class="font-bold text-slate-900 dark:text-white">Old Regime</span> <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded">Std Ded: ₹50,000</span></div>
               <div class="flex justify-between"><span>Taxable Income:</span> <span class="font-mono font-bold" id="res-tax-old-taxable">₹0</span></div>
               <div class="flex justify-between"><span>Sec 87A Rebate:</span> <span class="font-mono font-bold text-emerald-600" id="res-tax-old-rebate">₹0</span></div>
+              <div class="flex justify-between"><span>Surcharge:</span> <span class="font-mono font-semibold" id="res-tax-old-surcharge">₹0</span></div>
               <div class="flex justify-between pt-2 border-t font-bold text-base text-slate-900 dark:text-white"><span>Total Tax + Cess (4%):</span> <span class="font-mono" id="res-tax-old-total">₹0</span></div>
             </div>
           </div>
@@ -641,14 +745,14 @@
           <div class="flex justify-between items-center border-b pb-2">
             <div>
               <h3 class="font-bold text-slate-900 dark:text-white">Gramin Dak Sevak (GDS) TRCA Emoluments Desk</h3>
-              <p class="text-[11px] text-slate-500">Kamlesh Chandra Committee dispensation (7th CPC does not apply to GDS cadre).</p>
+              <p class="text-[11px] text-slate-500">Kamlesh Chandra Committee framework (7th CPC does not apply to GDS cadre).</p>
             </div>
             <span class="px-2 py-0.5 rounded bg-brand-red text-white font-mono text-[10px] font-bold">Dept. of Posts GDS Rules</span>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label class="block mb-1">Cadre & Engagement Category</label>
+              <label class="block mb-1 font-medium">Cadre & Scale Category</label>
               <select id="gds-cadre" onchange="runGdsEngine()" class="w-full px-2.5 py-1.5 border rounded bg-slate-50 dark:bg-slate-900">
                 <option value="level1_abpm">ABPM / Dak Sevak (Level 1, 4 Hours - ₹10,000 Base)</option>
                 <option value="level2_abpm">BPM Level 1 / ABPM Level 2 (5 Hours - ₹12,000 Base)</option>
@@ -656,15 +760,19 @@
               </select>
             </div>
             <div>
-              <label class="block mb-1">Current TRCA Stage (₹)</label>
+              <label class="block mb-1 font-medium">Current TRCA Stage (₹)</label>
               <input type="number" id="gds-trca-stage" value="14500" oninput="runGdsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Combined Duty / Office Allowance (₹) <span class="text-[10px] text-slate-400 font-normal">(Per OM)</span></label>
+              <input type="number" id="gds-cda" value="500" oninput="runGdsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
             </div>
           </div>
 
           <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-2">
             <div class="flex justify-between"><span>Basic TRCA:</span> <span class="font-mono font-bold" id="res-gds-base">₹0</span></div>
-            <div class="flex justify-between"><span>DA on TRCA (@ 60%):</span> <span class="font-mono font-bold" id="res-gds-da">₹0</span></div>
-            <div class="flex justify-between"><span>Combined Duty Allowance (CDA / Office Maint):</span> <span class="font-mono font-bold">₹500</span></div>
+            <div class="flex justify-between"><span id="lbl-gds-da">Dearness Allowance on TRCA:</span> <span class="font-mono font-bold" id="res-gds-da">₹0</span></div>
+            <div class="flex justify-between"><span>Monthly Allowances (CDA / Office Maint):</span> <span class="font-mono font-bold" id="res-gds-cda">₹0</span></div>
             <div class="flex justify-between pt-2 border-t font-bold text-base text-brand-red dark:text-red-400"><span>Gross Monthly Emoluments:</span> <span class="font-mono" id="res-gds-gross">₹0</span></div>
           </div>
         </div>
@@ -680,15 +788,15 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label class="block mb-1">Current 7th CPC Basic Pay (₹)</label>
+              <label class="block mb-1 font-medium">Current 7th CPC Basic Pay (₹)</label>
               <input type="number" id="cpc8-basic" value="35400" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
             </div>
             <div>
-              <label class="block mb-1">Hypothetical Fitment Factor</label>
+              <label class="block mb-1 font-medium">Hypothetical Fitment Factor</label>
               <input type="number" id="cpc8-factor" value="2.15" step="0.05" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
             </div>
             <div>
-              <label class="block mb-1">Illustrative Arrears Months</label>
+              <label class="block mb-1 font-medium">Illustrative Arrears Months</label>
               <input type="number" id="cpc8-months" value="12" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
             </div>
           </div>
@@ -768,7 +876,7 @@
 
   <!-- SCRIPT ENGINE -->
   <script>
-    /* 0. CENTRAL CONFIG FALLBACK (UPDATED DYNAMICALLY VIA data/rates-config.json) */
+    /* 0. CENTRAL CONFIG (FALLBACK FOR data/rates-config.json) */
     let RATES_CONFIG = {
       version: "2026.2",
       as_of: "September 2026",
@@ -778,6 +886,7 @@
         gpf_interest_rate: 7.1,
         hba_interest_rate: 7.44,
         gratuity: { ceiling: 2500000, max_half_years: 66, da_trigger_pct: 50 },
+        pension: { ops_min_pension: 9000, ops_max_pension: 125000 },
         nps_ups: { employee_nps_pct: 10.0, govt_plain_nps_pct: 14.0, govt_ups_pct: 18.5, ups_min_pension: 10000 },
         hra_slabs: { X: 0.30, Y: 0.20, Z: 0.10 },
         transport_allowance: {
@@ -797,14 +906,37 @@
           standard_deduction: 50000, sec_80c_cap: 150000, sec_87a_rebate_limit: 12500, sec_87a_threshold: 500000, cess: 0.04,
           slabs_general: [
             { up_to: 250000, rate: 0.00 }, { up_to: 500000, rate: 0.05 }, { up_to: 1000000, rate: 0.20 }, { up_to: 999999999, rate: 0.30 }
+          ],
+          slabs_senior: [
+            { up_to: 300000, rate: 0.00 }, { up_to: 500000, rate: 0.05 }, { up_to: 1000000, rate: 0.20 }, { up_to: 999999999, rate: 0.30 }
+          ],
+          slabs_super_senior: [
+            { up_to: 500000, rate: 0.00 }, { up_to: 1000000, rate: 0.20 }, { up_to: 999999999, rate: 0.30 }
           ]
         },
         gds_trca: {
+          default_cda: 500,
           level1_abpm: { min: 10000, max: 24470 },
           level2_abpm: { min: 12000, max: 29380 },
           level2_bpm: { min: 14500, max: 35480 }
         }
       }
+    };
+
+    /* 7th CPC PAY MATRIX DATA CELL LOOKUPS (LEVELS 1 - 12) */
+    const PAY_MATRIX_7CPC = {
+      1: [18000, 18500, 19100, 19700, 20300, 20900, 21500, 22100, 22800, 23500, 24200, 24900, 25600, 26400, 27200, 28000, 28800, 29700, 30600, 31500, 32400, 33400, 34400, 35400, 36500, 37600, 38700, 39900, 41100, 42300, 43600, 44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900],
+      2: [19900, 20500, 21100, 21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100, 48500, 50000, 51500, 53000, 54600, 56200, 57900, 59600, 61400, 63200],
+      3: [21700, 22400, 23100, 23800, 24500, 25200, 26000, 26800, 27600, 28400, 29300, 30200, 31100, 32000, 33000, 34000, 35000, 36100, 37200, 38300, 39400, 40600, 41800, 43100, 44400, 45700, 47100, 48500, 50000, 51500, 53000, 54600, 56200, 57900, 59600, 61400, 63200, 65100, 67100, 69100],
+      4: [25500, 26300, 27100, 27900, 28700, 29600, 30500, 31400, 32300, 33300, 34300, 35300, 36400, 37500, 38600, 39800, 41000, 42200, 43500, 44800, 46100, 47500, 48900, 50400, 51900, 53500, 55100, 56800, 58500, 60300, 62100, 64000, 65900, 67900, 69900, 72000, 74200, 76400, 78700, 81100],
+      5: [29200, 30100, 31000, 31900, 32900, 33900, 34900, 35900, 37000, 38100, 39200, 40400, 41600, 42800, 44100, 45400, 46800, 48200, 49600, 51100, 52600, 54200, 55800, 57500, 59200, 61000, 62800, 64700, 66600, 68600, 70700, 72800, 75000, 77300, 79600, 82000, 84500, 87000, 89600, 92300],
+      6: [35400, 36500, 37600, 38700, 39900, 41100, 42300, 43600, 44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400],
+      7: [44900, 46200, 47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600, 130400, 134300, 138300, 142400],
+      8: [47600, 49000, 50500, 52000, 53600, 55200, 56900, 58600, 60400, 62200, 64100, 66000, 68000, 70000, 72100, 74300, 76500, 78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600, 130400, 134300, 138300, 142400, 146700, 151100],
+      9: [53100, 54700, 56300, 58000, 59700, 61500, 63300, 65200, 67200, 69200, 71300, 73400, 75600, 77900, 80200, 82600, 85100, 87700, 90300, 93000, 95800, 98700, 101700, 104800, 107900, 111100, 114400, 117800, 121300, 124900, 128600, 132500, 136500, 140600, 144800, 149100, 153600, 158200, 162900, 167800],
+      10: [56100, 57800, 59500, 61300, 63100, 65000, 67000, 69000, 71100, 73200, 75400, 77700, 80000, 82400, 84900, 87400, 90000, 92700, 95500, 98400, 101400, 104400, 107500, 110700, 114000, 117400, 120900, 124500, 128200, 132000, 136000, 140100, 144300, 148600, 153100, 157700, 162400, 167300, 172300, 177500],
+      11: [67700, 69700, 71800, 74000, 76200, 78500, 80900, 83300, 85800, 88400, 91100, 93800, 96600, 99500, 102500, 105600, 108800, 112100, 115500, 119000, 122600, 126300, 130100, 134000, 138000, 142100, 146400, 150800, 155300, 160000, 164800, 169700, 174800, 180000, 185400, 191000, 196700, 202600, 208700],
+      12: [78800, 81200, 83600, 86100, 88700, 91400, 94100, 96900, 99800, 102800, 105900, 109100, 112400, 115800, 119300, 122900, 126600, 130400, 134300, 138300, 142400, 146700, 151100, 155600, 160300, 165100, 170100, 175200, 180500, 185900, 191500, 197200, 203100, 209200]
     };
 
     const VERIFIED_FORMS_FALLBACK = [
@@ -907,13 +1039,18 @@
     }
 
     /* ========================================================================= */
-    /* CALCULATOR ENGINES (CONFIG DRIVEN & COMPLIANT WITH STATUTORY RULES)       */
+    /* CALCULATOR ENGINES (STATUTORY RULES & AUDITED CALCULATIONS)                */
     /* ========================================================================= */
     function initCalculatorSuite() {
       const p = RATES_CONFIG.current_parameters;
       document.getElementById('calc-disclaimer-text').innerText = RATES_CONFIG.disclaimer;
       document.getElementById('calc-as-of-badge').innerText = `Audited as of: ${RATES_CONFIG.as_of} | Config v${RATES_CONFIG.version} (DA: ${p.da_percentage}%, GPF: ${p.gpf_interest_rate}%, HBA: ${p.hba_interest_rate}%)`;
       document.getElementById('sal-da-badge').innerText = `DA: ${p.da_percentage}%`;
+
+      // Update dynamic DA / DR label headers
+      document.getElementById('lbl-sal-da').innerText = `Dearness Allowance (DA @ ${p.da_percentage}%):`;
+      document.getElementById('lbl-pen-dr').innerText = `Dearness Relief (DR @ ${p.da_percentage}%):`;
+      document.getElementById('lbl-gds-da').innerText = `Dearness Allowance on TRCA (@ ${p.da_percentage}%):`;
 
       runSalaryEngine();
       runArrearsEngine();
@@ -973,16 +1110,17 @@
       if (scheme === 'NPS') {
         retDed = Math.round((basic + da) * (p.nps_ups.employee_nps_pct / 100));
         govContrib = Math.round((basic + da) * (p.nps_ups.govt_plain_nps_pct / 100));
-        document.getElementById('lbl-sal-ret').innerText = "NPS Employee (10%):";
+        document.getElementById('lbl-sal-ret').innerText = `NPS Employee (${p.nps_ups.employee_nps_pct}%):`;
       } else if (scheme === 'UPS') {
         retDed = Math.round((basic + da) * (p.nps_ups.employee_nps_pct / 100));
         govContrib = Math.round((basic + da) * (p.nps_ups.govt_ups_pct / 100));
-        document.getElementById('lbl-sal-ret').innerText = "UPS Employee (10%):";
+        document.getElementById('lbl-sal-ret').innerText = `UPS Employee (${p.nps_ups.employee_nps_pct}%):`;
       } else {
-        retDed = Math.round(basic * 0.06); // Minimum 6% GPF
+        retDed = Math.round(basic * 0.06); // Statutory min 6% GPF
         document.getElementById('lbl-sal-ret').innerText = "GPF Subscription (6%):";
       }
 
+      // 7th CPC approved CGEGIS rates (kept at ₹30/60/120 by Cabinet decision)
       const cgegis = level >= 10 ? 120 : (level >= 6 ? 60 : 30);
       document.getElementById('res-sal-cgegis').innerText = '₹' + cgegis;
 
@@ -1000,45 +1138,92 @@
       document.getElementById('res-sal-gov-contrib').innerText = '₹' + govContrib.toLocaleString('en-IN');
     }
 
-    // 2. DA Arrears Engine
+    // 2. DA Arrears Engine (Self-Contained with Basic & Transport Allowance Arrears)
     function runArrearsEngine() {
       const basic = parseFloat(document.getElementById('arr-basic').value) || 0;
+      const level = parseInt(document.getElementById('arr-level').value) || 6;
+      const city = document.getElementById('arr-city').value || 'Y';
       const oldDa = parseFloat(document.getElementById('arr-old-da').value) || 0;
       const newDa = parseFloat(document.getElementById('arr-new-da').value) || 0;
       const months = parseFloat(document.getElementById('arr-months').value) || 0;
+      const p = RATES_CONFIG.current_parameters;
 
-      const diffPct = Math.max(0, newDa - oldDa);
-      const monthly = Math.round(basic * (diffPct / 100));
-      const total = monthly * months;
+      let taBase = p.transport_allowance[city].L3_to_L8;
+      if (level >= 9) taBase = p.transport_allowance[city].L9_above;
+      else if (level <= 2) taBase = p.transport_allowance[city].L1_to_L2;
 
-      document.getElementById('res-arr-monthly').innerText = '₹' + monthly.toLocaleString('en-IN');
+      const diffPct = Math.max(0, newDa - oldDa) / 100;
+      const mBasic = Math.round(basic * diffPct);
+      const mTa = Math.round(taBase * diffPct);
+      const mTotal = mBasic + mTa;
+      const total = mTotal * months;
+
+      document.getElementById('res-arr-monthly').innerText = `₹${mTotal.toLocaleString('en-IN')} (Basic: ₹${mBasic} + TA: ₹${mTa})`;
       document.getElementById('res-arr-total').innerText = '₹' + total.toLocaleString('en-IN');
     }
 
-    // 3. Fixation Engine
+    // 3. True 7th CPC MACP / Promotion Pay Fixation Engine
     function runFixationEngine() {
       const basic = parseFloat(document.getElementById('fix-basic').value) || 0;
-      const inc = Math.round(basic * 0.03);
-      const floor = basic + inc;
-      document.getElementById('res-fix-notional').innerText = '₹' + inc.toLocaleString('en-IN');
-      document.getElementById('res-fix-floor').innerText = '₹' + floor.toLocaleString('en-IN');
-      document.getElementById('res-fix-final').innerText = '₹' + floor.toLocaleString('en-IN');
+      const currLevel = parseInt(document.getElementById('fix-curr-level').value) || 6;
+      const targetLevel = parseInt(document.getElementById('fix-target-level').value) || 7;
+
+      const currCells = PAY_MATRIX_7CPC[currLevel] || [];
+      const targetCells = PAY_MATRIX_7CPC[targetLevel] || [];
+
+      // Step 1: Notional increment in existing level
+      let notionalInc = Math.round(basic * 0.03);
+      let notionalBasic = basic + notionalInc;
+
+      const currIndex = currCells.indexOf(basic);
+      if (currIndex !== -1 && currIndex + 1 < currCells.length) {
+        notionalBasic = currCells[currIndex + 1];
+        notionalInc = notionalBasic - basic;
+      }
+
+      // Step 2: Snap to cell equal to or next higher in target level (FR 22(I)(a)(1))
+      let fixedBasic = targetCells[0] || notionalBasic;
+      let cellFound = false;
+      for (let i = 0; i < targetCells.length; i++) {
+        if (targetCells[i] >= notionalBasic) {
+          fixedBasic = targetCells[i];
+          cellFound = true;
+          break;
+        }
+      }
+
+      if (!cellFound && targetCells.length > 0) {
+        fixedBasic = targetCells[targetCells.length - 1];
+      }
+
+      document.getElementById('res-fix-notional').innerText = `₹${notionalInc.toLocaleString('en-IN')} (Notional Pay: ₹${notionalBasic.toLocaleString('en-IN')})`;
+      document.getElementById('res-fix-floor').innerText = '₹' + notionalBasic.toLocaleString('en-IN');
+      document.getElementById('res-fix-final').innerText = '₹' + fixedBasic.toLocaleString('en-IN');
+      document.getElementById('res-fix-matrix-cell').innerText = `Fixed at Cell in Level ${targetLevel} (₹${fixedBasic.toLocaleString('en-IN')})`;
     }
 
-    // 4. Increment Cycle Engine
+    // 4. Annual Increment Date Engine (Handles 1 Jan joining edge case correctly)
     function runIncrementEngine() {
+      const basic = parseFloat(document.getElementById('inc-basic').value) || 35400;
       const dStr = document.getElementById('inc-date').value;
-      const basic = parseFloat(document.getElementById('sal-basic').value) || 35400;
       if (!dStr) return;
       const d = new Date(dStr);
       const m = d.getMonth() + 1;
       const day = d.getDate();
 
-      // Rule: Joining between 2 Jan and 1 July -> 1 Jan increment. Otherwise 1 July.
       let cycle = "1 July";
       let nextYear = d.getFullYear() + 1;
-      if ((m === 1 && day >= 2) || (m > 1 && m < 7) || (m === 7 && day === 1)) {
+
+      // 7th CPC Rule 10: Appointed on 1 Jan -> increment on 1 July of SAME year
+      if (m === 1 && day === 1) {
+        cycle = "1 July";
+        nextYear = d.getFullYear();
+      } else if ((m === 1 && day >= 2) || (m > 1 && m < 7) || (m === 7 && day === 1)) {
         cycle = "1 January";
+        nextYear = d.getFullYear() + 1;
+      } else {
+        cycle = "1 July";
+        nextYear = d.getFullYear() + 1;
       }
 
       const newBasic = Math.round(basic * 1.03);
@@ -1047,7 +1232,7 @@
       document.getElementById('res-inc-new-basic').innerText = '₹' + newBasic.toLocaleString('en-IN');
     }
 
-    // 5. Pension Engine
+    // 5. Pension Engine (With 10-Year Floor Check & Statutory OPS Floor)
     function runPensionEngine() {
       const p = RATES_CONFIG.current_parameters;
       const type = document.getElementById('pen-type').value;
@@ -1055,12 +1240,30 @@
       const years = parseFloat(document.getElementById('pen-years').value) || 0;
       const daPct = p.da_percentage;
 
+      const warnBox = document.getElementById('pen-eligibility-warning');
+      const outBlock = document.getElementById('pen-output-block');
+
+      // Check 10-year qualifying service floor
+      if (years < 10) {
+        warnBox.classList.remove('hidden');
+        outBlock.classList.add('opacity-40');
+        document.getElementById('res-pen-basic').innerText = '₹0';
+        document.getElementById('res-pen-dr').innerText = '₹0';
+        document.getElementById('res-pen-total').innerText = '₹0';
+        document.getElementById('pen-ups-lump-box').classList.add('hidden');
+        return;
+      }
+
+      warnBox.classList.add('hidden');
+      outBlock.classList.remove('opacity-40');
+
       let basePen = 0;
       let upsLump = 0;
 
       if (type === 'OPS') {
         const fullYears = Math.min(years, 20);
         basePen = (emoluments * 0.5) * (fullYears / 20);
+        if (basePen < (p.pension?.ops_min_pension || 9000)) basePen = (p.pension?.ops_min_pension || 9000);
         document.getElementById('pen-ups-lump-box').classList.add('hidden');
       } else {
         const fullYears = Math.min(years, 25);
@@ -1082,11 +1285,11 @@
       document.getElementById('res-pen-total').innerText = '₹' + total.toLocaleString('en-IN');
     }
 
-    // 6. Gratuity & Leave Encashment Engine
+    // 6. Gratuity & Leave Encashment Engine (Independent Basic Pay Input)
     function runGratuityEngine() {
       const p = RATES_CONFIG.current_parameters;
       const mode = document.getElementById('grat-mode').value;
-      const basic = parseFloat(document.getElementById('pen-emoluments').value) || 65000;
+      const basic = parseFloat(document.getElementById('grat-basic').value) || 0;
       const years = parseFloat(document.getElementById('grat-years').value) || 0;
       const elDays = Math.min(parseFloat(document.getElementById('grat-el-days').value) || 0, 300);
 
@@ -1115,20 +1318,32 @@
       document.getElementById('res-el-total').innerText = '₹' + elAmt.toLocaleString('en-IN');
     }
 
-    // 7. NPS Engine
+    // 7. NPS / UPS Engine (Fully Config-Driven with 3% Compounding)
     function runNpsEngine() {
+      const p = RATES_CONFIG.current_parameters;
+      const basic = parseFloat(document.getElementById('nps-basic').value) || 0;
       const curr = parseFloat(document.getElementById('nps-curr').value) || 0;
       const years = parseFloat(document.getElementById('nps-years').value) || 0;
       const roi = (parseFloat(document.getElementById('nps-roi').value) || 0) / 100;
-      const annRate = (parseFloat(document.getElementById('nps-annuity-rate').value) || 0) / 100;
-      const basic = parseFloat(document.getElementById('sal-basic').value) || 35400;
-      const da = Math.round(basic * (RATES_CONFIG.current_parameters.da_percentage / 100));
+      const growth = (parseFloat(document.getElementById('nps-growth').value) || 3.0) / 100;
+      const annRate = (parseFloat(document.getElementById('nps-annuity-rate').value) || 6.5) / 100;
+      const scheme = document.getElementById('nps-type').value;
 
-      const monthlyContrib = (basic + da) * 0.24; // 10% Emp + 14% Gov
+      const daPct = p.da_percentage / 100;
+      const govPct = scheme === 'ups' ? (p.nps_ups.govt_ups_pct / 100) : (p.nps_ups.govt_plain_nps_pct / 100);
+      const empPct = p.nps_ups.employee_nps_pct / 100;
+      const totalContribRate = empPct + govPct;
+
       let corpus = curr;
+      let currentYearBasic = basic;
+
       for (let y = 0; y < years; y++) {
-        corpus = (corpus + monthlyContrib * 12) * (1 + roi);
+        const da = currentYearBasic * daPct;
+        const annualContrib = (currentYearBasic + da) * totalContribRate * 12;
+        corpus = (corpus + annualContrib) * (1 + roi);
+        currentYearBasic = currentYearBasic * (1 + growth); // 3% annual increment compounding
       }
+
       corpus = Math.round(corpus);
       const lump = Math.round(corpus * 0.60);
       const annFund = Math.round(corpus * 0.40);
@@ -1151,7 +1366,6 @@
       const iMonths = 60;
       const pEmi = Math.round(maxSanction / pMonths);
 
-      // Simple interest diminishing balance: total interest = P * r * (N + 1) / (2 * 12)
       const totalInterest = Math.round((maxSanction * rate * (pMonths + 1)) / (2 * 12));
       const iEmi = Math.round(totalInterest / iMonths);
 
@@ -1161,79 +1375,108 @@
       document.getElementById('res-hba-rate').innerText = (rate * 100).toFixed(2) + '% p.a.';
     }
 
-    // 9. Income Tax Engine (FY 2026-27 / AY 2027-28)
+    // 9. Income Tax Engine (With Age Slabs, Surcharge, & Sec 87A Marginal Relief)
     function runTaxEngine() {
       const p = RATES_CONFIG.current_parameters;
       const gross = parseFloat(document.getElementById('tax-gross').value) || 0;
+      const age = document.getElementById('tax-age').value;
       const c80 = Math.min(parseFloat(document.getElementById('tax-80c').value) || 0, p.income_tax_old_2026.sec_80c_cap);
       const d80 = parseFloat(document.getElementById('tax-80d').value) || 0;
       const other = parseFloat(document.getElementById('tax-other').value) || 0;
 
-      // NEW REGIME
+      // Surcharge helper function
+      function computeSurcharge(taxableInc, taxAmt) {
+        if (taxableInc > 20000000) return Math.round(taxAmt * 0.25);
+        if (taxableInc > 10000000) return Math.round(taxAmt * 0.15);
+        if (taxableInc > 5000000) return Math.round(taxAmt * 0.10);
+        return 0;
+      }
+
+      // --- NEW REGIME (Age independent under statutory budget rules) ---
       const newTaxable = Math.max(0, gross - p.income_tax_new_2026.standard_deduction);
       let newTax = 0;
       let prevLim = 0;
       for (const s of p.income_tax_new_2026.slabs) {
         if (newTaxable > prevLim) {
-          const taxableChunk = Math.min(newTaxable, s.up_to) - prevLim;
-          newTax += taxableChunk * s.rate;
+          const chunk = Math.min(newTaxable, s.up_to) - prevLim;
+          newTax += chunk * s.rate;
           prevLim = s.up_to;
         }
       }
+
+      // Sec 87A Rebate + Marginal Relief in New Regime
       let newRebate = 0;
       if (newTaxable <= p.income_tax_new_2026.sec_87a_threshold) {
         newRebate = Math.min(newTax, p.income_tax_new_2026.sec_87a_rebate_limit);
         newTax -= newRebate;
+      } else {
+        // Marginal Relief: tax cannot exceed (taxable income - threshold)
+        const excessIncome = newTaxable - p.income_tax_new_2026.sec_87a_threshold;
+        if (newTax > excessIncome) {
+          newRebate = newTax - excessIncome;
+          newTax = excessIncome;
+        }
       }
-      const newFinal = Math.round(newTax * (1 + p.income_tax_new_2026.cess));
 
-      // OLD REGIME
+      const newSurcharge = computeSurcharge(newTaxable, newTax);
+      const newFinal = Math.round((newTax + newSurcharge) * (1 + p.income_tax_new_2026.cess));
+
+      // --- OLD REGIME (Age Slabs Applied) ---
       const oldTaxable = Math.max(0, gross - p.income_tax_old_2026.standard_deduction - c80 - d80 - other);
+      let oldSlabs = p.income_tax_old_2026.slabs_general;
+      if (age === 'senior') oldSlabs = p.income_tax_old_2026.slabs_senior;
+      else if (age === 'super_senior') oldSlabs = p.income_tax_old_2026.slabs_super_senior;
+
       let oldTax = 0;
       let prevOldLim = 0;
-      for (const s of p.income_tax_old_2026.slabs_general) {
+      for (const s of oldSlabs) {
         if (oldTaxable > prevOldLim) {
-          const taxableChunk = Math.min(oldTaxable, s.up_to) - prevOldLim;
-          oldTax += taxableChunk * s.rate;
+          const chunk = Math.min(oldTaxable, s.up_to) - prevOldLim;
+          oldTax += chunk * s.rate;
           prevOldLim = s.up_to;
         }
       }
+
       let oldRebate = 0;
       if (oldTaxable <= p.income_tax_old_2026.sec_87a_threshold) {
         oldRebate = Math.min(oldTax, p.income_tax_old_2026.sec_87a_rebate_limit);
         oldTax -= oldRebate;
       }
-      const oldFinal = Math.round(oldTax * (1 + p.income_tax_old_2026.cess));
+
+      const oldSurcharge = computeSurcharge(oldTaxable, oldTax);
+      const oldFinal = Math.round((oldTax + oldSurcharge) * (1 + p.income_tax_old_2026.cess));
 
       document.getElementById('res-tax-new-taxable').innerText = '₹' + newTaxable.toLocaleString('en-IN');
-      document.getElementById('res-tax-new-rebate').innerText = '₹' + newRebate.toLocaleString('en-IN');
+      document.getElementById('res-tax-new-rebate').innerText = '₹' + Math.round(newRebate).toLocaleString('en-IN');
+      document.getElementById('res-tax-new-surcharge').innerText = '₹' + newSurcharge.toLocaleString('en-IN');
       document.getElementById('res-tax-new-total').innerText = '₹' + newFinal.toLocaleString('en-IN');
 
       document.getElementById('res-tax-old-taxable').innerText = '₹' + oldTaxable.toLocaleString('en-IN');
-      document.getElementById('res-tax-old-rebate').innerText = '₹' + oldRebate.toLocaleString('en-IN');
+      document.getElementById('res-tax-old-rebate').innerText = '₹' + Math.round(oldRebate).toLocaleString('en-IN');
+      document.getElementById('res-tax-old-surcharge').innerText = '₹' + oldSurcharge.toLocaleString('en-IN');
       document.getElementById('res-tax-old-total').innerText = '₹' + oldFinal.toLocaleString('en-IN');
 
       const rec = document.getElementById('res-tax-recommendation');
       if (newFinal < oldFinal) {
         rec.innerHTML = `<span class="text-emerald-700 dark:text-emerald-400">Recommendation: New Tax Regime saves you ₹${(oldFinal - newFinal).toLocaleString('en-IN')} annually.</span>`;
       } else if (oldFinal < newFinal) {
-        rec.innerHTML = `<span class="text-emerald-700 dark:text-emerald-400">Recommendation: Old Tax Regime saves you ₹${(newFinal - oldFinal).toLocaleString('en-IN')} with current deductions.</span>`;
+        rec.innerHTML = `<span class="text-emerald-700 dark:text-emerald-400">Recommendation: Old Tax Regime saves you ₹${(newFinal - oldFinal).toLocaleString('en-IN')} with your claimed deductions.</span>`;
       } else {
-        rec.innerHTML = `<span class="text-slate-600 dark:text-slate-300">Both regimes yield identical tax liability (₹0 or equal).</span>`;
+        rec.innerHTML = `<span class="text-slate-600 dark:text-slate-300">Both regimes yield equal tax liability (₹0 or equal).</span>`;
       }
     }
 
-    // 10. GDS TRCA Engine
+    // 10. GDS TRCA Engine (Configurable CDA)
     function runGdsEngine() {
-      const c = document.getElementById('gds-cadre').value;
       const stage = parseFloat(document.getElementById('gds-trca-stage').value) || 14500;
+      const cda = parseFloat(document.getElementById('gds-cda').value) || 0;
       const daPct = RATES_CONFIG.current_parameters.da_percentage;
       const da = Math.round(stage * (daPct / 100));
-      const cda = 500;
       const gross = stage + da + cda;
 
       document.getElementById('res-gds-base').innerText = '₹' + stage.toLocaleString('en-IN');
       document.getElementById('res-gds-da').innerText = '₹' + da.toLocaleString('en-IN');
+      document.getElementById('res-gds-cda').innerText = '₹' + cda.toLocaleString('en-IN');
       document.getElementById('res-gds-gross').innerText = '₹' + gross.toLocaleString('en-IN');
     }
 
