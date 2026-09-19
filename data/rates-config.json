@@ -1,0 +1,79 @@
+{
+  "version": "2026.2",
+  "as_of": "September 2026",
+  "disclaimer": "Estimate only — for official figures, refer to your DDO/PAO or the relevant Department of Expenditure / DoPPW / PFRDA notification.",
+  "rates_history": {
+    "da_rates": [
+      { "rate": 60, "effective_from": "2026-01-01", "order_ref": "MoF/DoE OM dated 18-04-2026" },
+      { "rate": 58, "effective_from": "2025-07-01", "order_ref": "MoF/DoE OM dated Oct 2025" },
+      { "rate": 53, "effective_from": "2024-07-01", "order_ref": "MoF/DoE OM dated Oct 2024" },
+      { "rate": 50, "effective_from": "2024-01-01", "order_ref": "MoF/DoE OM dated Mar 2024" }
+    ],
+    "gpf_interest": [
+      { "rate": 7.1, "effective_from": "2026-04-01", "order_ref": "DEA Resolution Q1 FY2026-27" }
+    ],
+    "hba_interest": [
+      { "rate": 7.44, "effective_from": "2025-04-01", "order_ref": "MoHUA / Railway Board OM" }
+    ]
+  },
+  "current_parameters": {
+    "da_percentage": 60,
+    "gpf_interest_rate": 7.1,
+    "hba_interest_rate": 7.44,
+    "gratuity": {
+      "ceiling": 2500000,
+      "max_half_years": 66,
+      "da_trigger_pct": 50,
+      "order_ref": "DoPPW OM No. 28/03/2024-P&PW(B)/Gratuity/9559"
+    },
+    "nps_ups": {
+      "employee_nps_pct": 10.0,
+      "govt_plain_nps_pct": 14.0,
+      "govt_ups_pct": 18.5,
+      "ups_min_pension": 10000
+    },
+    "hra_slabs": {
+      "X": 0.30,
+      "Y": 0.20,
+      "Z": 0.10
+    },
+    "transport_allowance": {
+      "X": { "L9_above": 7200, "L3_to_L8": 3600, "L1_to_L2": 1350 },
+      "Y": { "L9_above": 3600, "L3_to_L8": 1800, "L1_to_L2": 900 },
+      "Z": { "L9_above": 3600, "L3_to_L8": 1800, "L1_to_L2": 900 }
+    },
+    "income_tax_new_2026": {
+      "standard_deduction": 75000,
+      "sec_87a_rebate_limit": 60000,
+      "sec_87a_threshold": 1200000,
+      "cess": 0.04,
+      "slabs": [
+        { "up_to": 400000, "rate": 0.00 },
+        { "up_to": 800000, "rate": 0.05 },
+        { "up_to": 1200000, "rate": 0.10 },
+        { "up_to": 1600000, "rate": 0.15 },
+        { "up_to": 2000000, "rate": 0.20 },
+        { "up_to": 2400000, "rate": 0.25 },
+        { "up_to": 999999999, "rate": 0.30 }
+      ]
+    },
+    "income_tax_old_2026": {
+      "standard_deduction": 50000,
+      "sec_80c_cap": 150000,
+      "sec_87a_rebate_limit": 12500,
+      "sec_87a_threshold": 500000,
+      "cess": 0.04,
+      "slabs_general": [
+        { "up_to": 250000, "rate": 0.00 },
+        { "up_to": 500000, "rate": 0.05 },
+        { "up_to": 1000000, "rate": 0.20 },
+        { "up_to": 999999999, "rate": 0.30 }
+      ]
+    },
+    "gds_trca": {
+      "level1_abpm": { "title": "ABPM / Dak Sevak (Level 1, 4 hrs)", "min": 10000, "max": 24470 },
+      "level2_abpm": { "title": "BPM Level 1 / ABPM Level 2 (5 hrs)", "min": 12000, "max": 29380 },
+      "level2_bpm": { "title": "BPM (Level 2, 5 hrs)", "min": 14500, "max": 35480 }
+    }
+  }
+}

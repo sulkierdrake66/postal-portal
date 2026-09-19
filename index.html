@@ -43,17 +43,6 @@
       body { background: #ffffff !important; color: #000000 !important; font-size: 10pt !important; }
       .no-print { display: none !important; }
       .print-only { display: block !important; }
-      .form-print-sheet {
-        box-shadow: none !important; border: none !important; padding: 0 !important;
-        margin: 0 !important; width: 100% !important; max-width: 100% !important;
-        background: transparent !important; color: #000000 !important;
-      }
-      .govt-ruled-table { border-collapse: collapse !important; width: 100% !important; }
-      .govt-ruled-table th, .govt-ruled-table td { border: 1px solid #000000 !important; padding: 4px 6px !important; }
-      input, textarea, select {
-        border: none !important; border-bottom: 1px dotted #333 !important; border-radius: 0 !important;
-        background: transparent !important; color: #000000 !important; padding: 1px 2px !important;
-      }
     }
   </style>
 </head>
@@ -62,8 +51,6 @@
   <!-- TOP APP BAR -->
   <header class="no-print bg-brand-card dark:bg-brand-darkCard border-b border-brand-border dark:border-brand-darkBorder sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-      
-      <!-- Brand & Vector Logo -->
       <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTab('dashboard')">
         <div class="w-10 h-10 rounded-xl bg-brand-red flex items-center justify-center shadow-md relative overflow-hidden flex-shrink-0">
           <svg class="w-6 h-6" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,7 +100,6 @@
         </button>
       </nav>
 
-      <!-- Utility Actions -->
       <div class="flex items-center space-x-2">
         <button onclick="toggleTheme()" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Toggle Theme">
           <i data-lucide="sun" id="theme-icon-sun" class="w-5 h-5 hidden text-amber-400"></i>
@@ -141,7 +127,7 @@
   <!-- MAIN CONTAINER -->
   <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
-    <!-- TAB 1: DASHBOARD -->
+    <!-- VIEW 1: DASHBOARD -->
     <div id="view-dashboard" class="tab-view space-y-6">
       <div class="bg-gradient-to-r from-red-950 via-slate-900 to-amber-950 text-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-800">
         <div class="max-w-3xl space-y-3">
@@ -154,9 +140,9 @@
             Centralized reference repository for civil service personnel and postal operators. Verify active rulings, compute salary and retirement schedules, audit statutory forms, and trace supersession chains.
           </p>
           <div class="flex flex-wrap gap-3 pt-2">
-            <button onclick="navigateTab('ask')" class="bg-brand-gold hover:bg-brand-darkGold text-slate-950 font-bold px-4 py-2 rounded-lg text-xs flex items-center space-x-1.5 shadow">
-              <i data-lucide="sparkles" class="w-4 h-4"></i>
-              <span>Launch Rule Assistant</span>
+            <button onclick="navigateTab('calculators')" class="bg-brand-gold hover:bg-brand-darkGold text-slate-950 font-bold px-4 py-2 rounded-lg text-xs flex items-center space-x-1.5 shadow">
+              <i data-lucide="calculator" class="w-4 h-4"></i>
+              <span>Open Payment Calculators</span>
             </button>
             <button onclick="navigateTab('orders')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-4 py-2 rounded-lg text-xs border border-white/20 flex items-center space-x-1.5">
               <i data-lucide="file-text" class="w-4 h-4"></i>
@@ -166,7 +152,6 @@
         </div>
       </div>
 
-      <!-- Live Counters -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder">
           <span class="text-xs text-slate-500 font-medium">Orders Loaded</span>
@@ -191,7 +176,7 @@
       </div>
     </div>
 
-    <!-- TAB 2: ASK -->
+    <!-- VIEW 2: ASK -->
     <div id="view-ask" class="tab-view hidden space-y-6">
       <div class="bg-brand-card dark:bg-brand-darkCard p-6 rounded-2xl border border-brand-border dark:border-brand-darkBorder space-y-4">
         <div>
@@ -201,20 +186,18 @@
           </h2>
           <p class="text-xs text-slate-500 mt-1">Queries run directly against verified dataset entries without external APIs.</p>
         </div>
-
         <div class="flex gap-2">
-          <input type="text" id="ask-input" onkeydown="if(event.key==='Enter') executeRuleQuery()" placeholder="Ask a rule question (e.g., 'deceased claim limit', 'TA submission deadline', 'LTC bills')..." class="flex-grow px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-brand-red focus:outline-none">
+          <input type="text" id="ask-input" onkeydown="if(event.key==='Enter') executeRuleQuery()" placeholder="Ask a rule question (e.g., 'deceased claim limit', 'TA submission deadline')..." class="flex-grow px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-brand-red focus:outline-none">
           <button onclick="executeRuleQuery()" class="bg-brand-red hover:bg-brand-darkRed text-white px-4 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5">
             <i data-lucide="search" class="w-4 h-4"></i>
             <span>Consult</span>
           </button>
         </div>
-
         <div id="ask-results" class="pt-4 space-y-4 hidden"></div>
       </div>
     </div>
 
-    <!-- TAB 3: ORDERS REGISTER -->
+    <!-- VIEW 3: ORDERS REGISTER -->
     <div id="view-orders" class="tab-view hidden space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3">
         <div>
@@ -231,7 +214,6 @@
           </select>
         </div>
       </div>
-
       <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder overflow-x-auto shadow-sm">
         <table class="w-full text-left text-xs">
           <thead class="bg-slate-50 dark:bg-slate-800 text-slate-500 font-mono border-b border-brand-border dark:border-brand-darkBorder">
@@ -249,13 +231,12 @@
       </div>
     </div>
 
-    <!-- TAB 4: POSB RATES HUB -->
+    <!-- VIEW 4: POSB RATES HUB -->
     <div id="view-posb" class="tab-view hidden space-y-4">
       <div class="pb-3 border-b border-brand-border dark:border-brand-darkBorder">
         <h2 class="text-xl font-bold text-slate-900 dark:text-white">POSB & Small Savings Schemes Master Register</h2>
         <p class="text-xs text-slate-500">Rates populated directly from /data/posb-rates.json.</p>
       </div>
-
       <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder overflow-x-auto shadow-sm">
         <table class="w-full text-left text-xs">
           <thead class="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono border-b border-brand-border dark:border-brand-darkBorder">
@@ -272,17 +253,16 @@
       </div>
     </div>
 
-    <!-- TAB 5: FORMS CATALOG & REPOSITORY -->
+    <!-- VIEW 5: FORMS CATALOG -->
     <div id="view-forms" class="tab-view hidden space-y-4">
       <div class="pb-3 border-b border-brand-border dark:border-brand-darkBorder">
         <h2 class="text-xl font-bold text-slate-900 dark:text-white">Official Forms Catalog</h2>
         <p class="text-xs text-slate-500">Statutory departmental and civil service forms indexed from /data/forms.json.</p>
       </div>
-
       <div id="forms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
-    <!-- TAB 6: PINCODE & POST OFFICE DIRECTORY (HIERARCHICAL GROUPED VIEW) -->
+    <!-- VIEW 6: PINCODE & POST OFFICES -->
     <div id="view-offices" class="tab-view hidden space-y-4">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3">
         <div>
@@ -293,16 +273,9 @@
           <p class="text-xs text-slate-500">Complete administrative hierarchy: Sub Offices, Head Offices, Division, Region, and Circle.</p>
         </div>
         <div class="w-full sm:w-80">
-          <input 
-            type="text" 
-            id="office-search-input" 
-            oninput="debounceOfficeSearch()" 
-            placeholder="Search 6-digit PIN, Office (e.g. Asifabad), or District..." 
-            class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-brand-red focus:outline-none"
-          >
+          <input type="text" id="office-search-input" oninput="debounceOfficeSearch()" placeholder="Search 6-digit PIN, Office, or District..." class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-brand-red focus:outline-none">
         </div>
       </div>
-
       <div id="pincode-results-container" class="space-y-4">
         <div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">
           <i data-lucide="search" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
@@ -312,106 +285,438 @@
       </div>
     </div>
 
-    <!-- TAB 7: CALCULATORS -->
-    <div id="view-calculators" class="tab-view hidden space-y-4">
-      <div class="flex gap-2 border-b border-brand-border dark:border-brand-darkBorder pb-3 text-xs">
-        <button onclick="switchCalcSub('salary')" id="subbtn-salary" class="px-3 py-1.5 font-bold rounded-lg bg-brand-red text-white">7th CPC Salary</button>
-        <button onclick="switchCalcSub('gpf')" id="subbtn-gpf" class="px-3 py-1.5 font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">GPF Ledger</button>
+    <!-- ============================================================= -->
+    <!-- VIEW 7: COMPLETE PAYMENT CALCULATOR SUITE                     -->
+    <!-- ============================================================= -->
+    <div id="view-calculators" class="tab-view hidden space-y-5">
+      
+      <!-- Statutory Disclaimer Banner -->
+      <div class="p-3 bg-amber-50 dark:bg-amber-950/40 border-l-4 border-brand-gold rounded-r-xl text-amber-900 dark:text-amber-200 text-xs flex items-start gap-2.5">
+        <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0 text-brand-gold mt-0.5"></i>
+        <div>
+          <span class="font-bold block">Statutory Notice & Audit Trail:</span>
+          <span id="calc-disclaimer-text">Estimate only — for official figures, refer to your DDO/PAO or the relevant Department of Expenditure / DoPPW / PFRDA notification.</span>
+          <span class="block mt-0.5 text-[11px] text-amber-700 dark:text-amber-300 font-mono" id="calc-as-of-badge">Audited as of: September 2026 | Config v2026.2</span>
+        </div>
       </div>
 
-      <!-- Salary Calculator -->
-      <div id="calc-pane-salary" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
-            <h3 class="font-bold text-slate-900 dark:text-white">Emolument Inputs</h3>
+      <!-- Category Tabs Selector -->
+      <div class="flex overflow-x-auto gap-2 border-b border-brand-border dark:border-brand-darkBorder pb-2 text-xs font-semibold">
+        <button onclick="switchCalcModule('salary')" id="modbtn-salary" class="px-3 py-1.5 rounded-lg bg-brand-red text-white whitespace-nowrap">7th CPC Pay Slip</button>
+        <button onclick="switchCalcModule('da-arrears')" id="modbtn-da-arrears" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">DA Arrears</button>
+        <button onclick="switchCalcModule('fixation')" id="modbtn-fixation" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">Increment & MACP</button>
+        <button onclick="switchCalcModule('pension')" id="modbtn-pension" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">Pension & Gratuity</button>
+        <button onclick="switchCalcModule('nps-hba')" id="modbtn-nps-hba" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">NPS / UPS & HBA</button>
+        <button onclick="switchCalcModule('tax')" id="modbtn-tax" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">Income Tax Comparison</button>
+        <button onclick="switchCalcModule('gds')" id="modbtn-gds" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">GDS TRCA Desk</button>
+        <button onclick="switchCalcModule('cpc8')" id="modbtn-cpc8" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 whitespace-nowrap">8th CPC Estimator</button>
+      </div>
+
+      <!-- MODULE 1: 7th CPC SALARY & PAY SLIP -->
+      <div id="module-salary" class="calc-module space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
+            <h3 class="font-bold text-slate-900 dark:text-white border-b pb-2">Pay & City Parameters</h3>
             <div>
               <label class="block mb-1 font-medium">Basic Pay (₹)</label>
-              <input type="number" id="calc-basic" value="25500" oninput="runSalaryCalc()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+              <input type="number" id="sal-basic" value="35400" oninput="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold bg-slate-50 dark:bg-slate-900">
             </div>
             <div>
-              <label class="block mb-1 font-medium">City HRA Category</label>
-              <select id="calc-city-class" onchange="runSalaryCalc()" class="w-full px-2.5 py-1.5 border rounded">
-                <option value="X">Class X (30%)</option>
-                <option value="Y" selected>Class Y (20%)</option>
-                <option value="Z">Class Z (10%)</option>
+              <label class="block mb-1 font-medium">Pay Level</label>
+              <select id="sal-level" onchange="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded bg-slate-50 dark:bg-slate-900">
+                <option value="1">Level 1 (₹18,000 - ₹56,900)</option>
+                <option value="2">Level 2 (₹19,900 - ₹63,200)</option>
+                <option value="3">Level 3 (₹21,700 - ₹69,100)</option>
+                <option value="4">Level 4 (₹25,500 - ₹81,100)</option>
+                <option value="5">Level 5 (₹29,200 - ₹92,300)</option>
+                <option value="6" selected>Level 6 (₹35,400 - ₹1,12,400)</option>
+                <option value="7">Level 7 (₹44,900 - ₹1,42,400)</option>
+                <option value="8">Level 8 (₹47,600 - ₹1,51,100)</option>
+                <option value="9">Level 9 & above (₹53,100+)</option>
               </select>
             </div>
             <div>
-              <label class="block mb-1 font-medium">DA (%)</label>
-              <input type="number" id="calc-da-pct" value="50" oninput="runSalaryCalc()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              <label class="block mb-1 font-medium">City HRA Classification</label>
+              <select id="sal-city" onchange="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded bg-slate-50 dark:bg-slate-900">
+                <option value="X">Class X (30% HRA - e.g. Delhi, Mumbai, Kolkata)</option>
+                <option value="Y" selected>Class Y (20% HRA - e.g. Tier-II Cities)</option>
+                <option value="Z">Class Z (10% HRA - Other Rural/Sub-Offices)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Pension / Retirement Scheme</label>
+              <select id="sal-scheme" onchange="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded bg-slate-50 dark:bg-slate-900">
+                <option value="NPS" selected>NPS (10% Employee Contribution)</option>
+                <option value="UPS">UPS (10% Employee, 18.5% Govt Pooled)</option>
+                <option value="OPS">OPS / GPF (Pre-2004 Recruit)</option>
+              </select>
             </div>
           </div>
 
-          <div class="md:col-span-2 bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder flex flex-col justify-between text-xs">
-            <div class="space-y-3">
-              <h3 class="font-bold text-slate-900 dark:text-white border-b pb-2">Emoluments Statement</h3>
-              <div class="grid grid-cols-2 gap-4">
-                <div class="space-y-1.5">
-                  <div class="flex justify-between"><span>Basic Pay:</span> <span class="font-mono font-bold" id="res-basic">₹25,500</span></div>
-                  <div class="flex justify-between"><span>DA:</span> <span class="font-mono font-bold" id="res-da">₹12,750</span></div>
-                  <div class="flex justify-between"><span>HRA:</span> <span class="font-mono font-bold" id="res-hra">₹5,100</span></div>
-                  <div class="flex justify-between"><span>TPTA:</span> <span class="font-mono font-bold" id="res-tpta">₹2,700</span></div>
-                  <div class="flex justify-between pt-1 border-t font-bold text-emerald-600"><span>Gross:</span> <span class="font-mono" id="res-gross">₹46,050</span></div>
+          <div class="lg:col-span-2 bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder flex flex-col justify-between text-xs space-y-4">
+            <div>
+              <div class="flex justify-between items-center border-b pb-2">
+                <h3 class="font-bold text-slate-900 dark:text-white">Monthly Statement of Emoluments</h3>
+                <span class="font-mono text-[11px] text-slate-500" id="sal-da-badge">DA: 60%</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-3">
+                <div class="space-y-2">
+                  <span class="font-bold text-slate-600 dark:text-slate-300 block">Earnings</span>
+                  <div class="flex justify-between"><span>Basic Pay:</span> <span class="font-mono font-semibold" id="res-sal-basic">₹0</span></div>
+                  <div class="flex justify-between"><span>Dearness Allowance (DA):</span> <span class="font-mono font-semibold" id="res-sal-da">₹0</span></div>
+                  <div class="flex justify-between"><span>House Rent Allowance (HRA):</span> <span class="font-mono font-semibold" id="res-sal-hra">₹0</span></div>
+                  <div class="flex justify-between"><span>Transport Allowance (TA + DA on TA):</span> <span class="font-mono font-semibold" id="res-sal-ta">₹0</span></div>
+                  <div class="flex justify-between pt-2 border-t font-bold text-emerald-600 text-sm"><span>Gross Salary:</span> <span class="font-mono" id="res-sal-gross">₹0</span></div>
                 </div>
-                <div class="space-y-1.5">
-                  <div class="flex justify-between"><span>NPS Employee (10%):</span> <span class="font-mono font-bold" id="res-nps">₹3,825</span></div>
-                  <div class="flex justify-between"><span>CGEGIS:</span> <span class="font-mono font-bold">₹30</span></div>
-                  <div class="flex justify-between"><span>CGHS / Medical:</span> <span class="font-mono font-bold">₹250</span></div>
-                  <div class="flex justify-between"><span>Prof. Tax:</span> <span class="font-mono font-bold">₹200</span></div>
-                  <div class="flex justify-between pt-1 border-t font-bold text-rose-600"><span>Deductions:</span> <span class="font-mono" id="res-ded">₹4,305</span></div>
+                <div class="space-y-2">
+                  <span class="font-bold text-slate-600 dark:text-slate-300 block">Deductions</span>
+                  <div class="flex justify-between"><span id="lbl-sal-ret">NPS (10%):</span> <span class="font-mono font-semibold" id="res-sal-pension">₹0</span></div>
+                  <div class="flex justify-between"><span>CGEGIS:</span> <span class="font-mono font-semibold" id="res-sal-cgegis">₹30</span></div>
+                  <div class="flex justify-between"><span>CGHS / Medical:</span> <span class="font-mono font-semibold">₹450</span></div>
+                  <div class="flex justify-between"><span>Professional Tax:</span> <span class="font-mono font-semibold">₹200</span></div>
+                  <div class="flex justify-between pt-2 border-t font-bold text-rose-600 text-sm"><span>Total Deductions:</span> <span class="font-mono" id="res-sal-ded">₹0</span></div>
                 </div>
               </div>
             </div>
-            <div class="p-3 bg-slate-900 text-white rounded-lg flex justify-between items-center mt-4">
-              <span class="font-medium">Net Take-Home Pay:</span>
-              <span class="font-mono text-lg font-black text-brand-gold" id="res-net">₹41,745</span>
+            <div class="p-4 bg-slate-900 text-white rounded-xl flex justify-between items-center">
+              <div>
+                <span class="text-xs text-slate-400 block">Net Take-Home Pay (Disbursed to Bank):</span>
+                <span class="font-mono text-xl font-black text-brand-gold" id="res-sal-net">₹0</span>
+              </div>
+              <div class="text-right text-[11px] text-slate-400">
+                <span>Government Contribution: </span>
+                <span class="font-mono font-bold text-emerald-400" id="res-sal-gov-contrib">₹0</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- GPF Calculator -->
-      <div id="calc-pane-gpf" class="hidden bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
-        <h3 class="font-bold text-slate-900 dark:text-white">GPF Annual Interest Ledger (7.1% p.a.)</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block mb-1">Opening Balance on 1 April (₹)</label>
-            <input type="number" id="gpf-op-bal" value="400000" oninput="runGpfCalc()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+      <!-- MODULE 2: DA ARREARS -->
+      <div id="module-da-arrears" class="calc-module hidden space-y-4">
+        <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
+          <h3 class="font-bold text-slate-900 dark:text-white">DA Revision Back-Pay / Arrears Estimator</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <div>
+              <label class="block mb-1">Monthly Basic Pay (₹)</label>
+              <input type="number" id="arr-basic" value="35400" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+            <div>
+              <label class="block mb-1">Old DA Rate (%)</label>
+              <input type="number" id="arr-old-da" value="58" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+            <div>
+              <label class="block mb-1">New DA Rate (%)</label>
+              <input type="number" id="arr-new-da" value="60" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+            <div>
+              <label class="block mb-1">Arrears Period (Months Gap)</label>
+              <input type="number" id="arr-months" value="3" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
           </div>
-          <div>
-            <label class="block mb-1">Monthly Subscription (₹)</label>
-            <input type="number" id="gpf-month-sub" value="10000" oninput="runGpfCalc()" class="w-full px-2.5 py-1.5 border rounded font-mono">
-          </div>
-        </div>
-        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg flex justify-between items-center">
-          <div>
-            <span class="text-slate-500 block">Total Interest Credited (31 March):</span>
-            <span class="font-mono text-base font-bold text-emerald-600" id="gpf-res-int">₹33,015</span>
-          </div>
-          <div class="text-right">
-            <span class="text-slate-500 block">Closing Balance:</span>
-            <span class="font-mono text-lg font-black text-brand-red dark:text-red-400" id="gpf-res-close">₹5,53,015</span>
+          <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl flex justify-between items-center">
+            <div>
+              <span class="text-slate-500 block">Monthly Differential Due:</span>
+              <span class="font-mono text-base font-bold text-emerald-600" id="res-arr-monthly">₹0</span>
+            </div>
+            <div class="text-right">
+              <span class="text-slate-500 block">Total Net DA Arrears Due:</span>
+              <span class="font-mono text-xl font-black text-brand-red dark:text-red-400" id="res-arr-total">₹0</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
+      <!-- MODULE 3: INCREMENT & MACP FIXATION -->
+      <div id="module-fixation" class="calc-module hidden space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- MACP & Promotion -->
+          <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
+            <h3 class="font-bold text-slate-900 dark:text-white">MACP / Promotion Pay Fixation</h3>
+            <div>
+              <label class="block mb-1">Current Basic Pay (₹)</label>
+              <input type="number" id="fix-basic" value="35400" oninput="runFixationEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
+              <div class="flex justify-between"><span>Notional 3% Increment:</span> <span class="font-mono font-semibold" id="res-fix-notional">₹0</span></div>
+              <div class="flex justify-between font-bold text-slate-900 dark:text-white"><span>Fixation Floor:</span> <span class="font-mono" id="res-fix-floor">₹0</span></div>
+            </div>
+            <div class="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 rounded-lg">
+              <span class="text-slate-500 text-[11px] block">Fixed Basic in Upgraded Level:</span>
+              <span class="font-mono text-lg font-black text-emerald-700 dark:text-emerald-300" id="res-fix-final">₹0</span>
+            </div>
+          </div>
+
+          <!-- Annual Increment Date -->
+          <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
+            <h3 class="font-bold text-slate-900 dark:text-white">Annual Increment & Cycle Engine</h3>
+            <div>
+              <label class="block mb-1">Date of Joining / Promotion / MACP</label>
+              <input type="date" id="inc-date" value="2026-02-15" onchange="runIncrementEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
+              <div class="flex justify-between"><span>Determined Increment Cycle:</span> <span class="font-semibold text-brand-red dark:text-red-400" id="res-inc-cycle">1 January</span></div>
+              <div class="flex justify-between"><span>Next Scheduled Increment Date:</span> <span class="font-mono font-bold" id="res-inc-next-date">01-01-2027</span></div>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg flex justify-between items-center">
+              <span>Basic after 3% Increment:</span>
+              <span class="font-mono text-base font-bold text-emerald-600" id="res-inc-new-basic">₹0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 4: PENSION & GRATUITY -->
+      <div id="module-pension" class="calc-module hidden space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Pension (OPS / UPS) -->
+          <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
+            <div class="flex justify-between items-center border-b pb-2">
+              <h3 class="font-bold text-slate-900 dark:text-white">Pension Engine (OPS / UPS)</h3>
+              <select id="pen-type" onchange="runPensionEngine()" class="px-2 py-1 border rounded text-[11px] font-semibold">
+                <option value="OPS">Old Pension Scheme (OPS)</option>
+                <option value="UPS" selected>Unified Pension Scheme (UPS)</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block mb-1">Last Basic / 12-Mo Avg (₹)</label>
+                <input type="number" id="pen-emoluments" value="65000" oninput="runPensionEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+              </div>
+              <div>
+                <label class="block mb-1">Completed Years of Service</label>
+                <input type="number" id="pen-years" value="28" oninput="runPensionEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
+              <div class="flex justify-between"><span>Basic Assured Pension:</span> <span class="font-mono font-bold" id="res-pen-basic">₹0</span></div>
+              <div class="flex justify-between"><span>Dearness Relief (DR @ 60%):</span> <span class="font-mono font-bold" id="res-pen-dr">₹0</span></div>
+              <div class="flex justify-between pt-1 border-t font-bold text-emerald-600 text-sm"><span>Total Monthly Pension:</span> <span class="font-mono" id="res-pen-total">₹0</span></div>
+            </div>
+            <div id="pen-ups-lump-box" class="p-2.5 bg-brand-gold/10 border border-brand-gold/30 rounded-lg flex justify-between items-center">
+              <span class="text-[11px] font-semibold text-slate-700 dark:text-slate-300">UPS Retirement Lump-Sum Payout:</span>
+              <span class="font-mono font-bold text-slate-900 dark:text-white" id="res-pen-ups-lump">₹0</span>
+            </div>
+          </div>
+
+          <!-- DCRG Gratuity & Leave Encashment -->
+          <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
+            <div class="flex justify-between items-center border-b pb-2">
+              <h3 class="font-bold text-slate-900 dark:text-white">Gratuity (DCRG) & Leave Encashment</h3>
+              <select id="grat-mode" onchange="runGratuityEngine()" class="px-2 py-1 border rounded text-[11px]">
+                <option value="RET">Retirement Gratuity</option>
+                <option value="DEATH">Death Gratuity</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block mb-1">Qualifying Service (Years)</label>
+                <input type="number" id="grat-years" value="30" oninput="runGratuityEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+              <div>
+                <label class="block mb-1">Earned Leave Balance (Days)</label>
+                <input type="number" id="grat-el-days" value="300" max="300" oninput="runGratuityEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
+              <div class="flex justify-between"><span>Gratuity Calculated:</span> <span class="font-mono font-bold" id="res-grat-calc">₹0</span></div>
+              <div class="flex justify-between text-rose-600"><span>Applicable Statutory Ceiling:</span> <span class="font-mono font-bold" id="res-grat-ceil">₹25,00,000</span></div>
+              <div class="flex justify-between pt-1 border-t font-bold text-brand-red dark:text-red-400 text-sm"><span>Payable DCRG:</span> <span class="font-mono" id="res-grat-final">₹0</span></div>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg flex justify-between items-center">
+              <span>EL Encashment (Max 300 days):</span>
+              <span class="font-mono font-bold text-emerald-600 text-sm" id="res-el-total">₹0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 5: NPS / UPS & HBA -->
+      <div id="module-nps-hba" class="calc-module hidden space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- NPS Accumulator -->
+          <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
+            <h3 class="font-bold text-slate-900 dark:text-white border-b pb-2">NPS Corpus & Annuity Projector</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block mb-1">Current Corpus (₹)</label>
+                <input type="number" id="nps-curr" value="500000" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+              <div>
+                <label class="block mb-1">Remaining Years</label>
+                <input type="number" id="nps-years" value="20" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+              <div>
+                <label class="block mb-1">Expected Return (% p.a.)</label>
+                <input type="number" id="nps-roi" value="9.5" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+              <div>
+                <label class="block mb-1">Annuity Rate (% p.a.)</label>
+                <input type="number" id="nps-annuity-rate" value="6.5" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
+              <div class="flex justify-between"><span>Projected Total Corpus:</span> <span class="font-mono font-bold text-sm text-slate-900 dark:text-white" id="res-nps-corpus">₹0</span></div>
+              <div class="flex justify-between text-emerald-600"><span>Tax-Free Lump Sum (60%):</span> <span class="font-mono font-semibold" id="res-nps-lump">₹0</span></div>
+              <div class="flex justify-between"><span>Mandatory Annuity (40%):</span> <span class="font-mono font-semibold" id="res-nps-annuity-fund">₹0</span></div>
+              <div class="flex justify-between pt-1 border-t font-bold text-brand-red dark:text-red-400"><span>Estimated Monthly Annuity:</span> <span class="font-mono" id="res-nps-monthly">₹0</span></div>
+            </div>
+          </div>
+
+          <!-- House Building Advance (HBA) -->
+          <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
+            <h3 class="font-bold text-slate-900 dark:text-white border-b pb-2">House Building Advance (HBA) Schedule</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block mb-1">Desired Advance (₹)</label>
+                <input type="number" id="hba-req" value="2500000" oninput="runHbaEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+              </div>
+              <div>
+                <label class="block mb-1">Monthly Basic Pay (₹)</label>
+                <input type="number" id="hba-basic" value="65000" oninput="runHbaEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+              </div>
+            </div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-lg space-y-1.5">
+              <div class="flex justify-between"><span>Sanctioned (Cap ₹25L / 34 Mo):</span> <span class="font-mono font-bold" id="res-hba-sanctioned">₹0</span></div>
+              <div class="flex justify-between"><span>Phase 1 Principal EMI (180 Mos):</span> <span class="font-mono font-bold text-emerald-600" id="res-hba-p-emi">₹0</span></div>
+              <div class="flex justify-between"><span>Phase 2 Interest EMI (60 Mos):</span> <span class="font-mono font-bold text-rose-600" id="res-hba-i-emi">₹0</span></div>
+              <div class="flex justify-between pt-1 border-t"><span>Simple Interest Rate (Diminishing):</span> <span class="font-mono" id="res-hba-rate">7.44% p.a.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 6: INCOME TAX COMPARISON -->
+      <div id="module-tax" class="calc-module hidden space-y-4">
+        <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b pb-2">
+            <h3 class="font-bold text-slate-900 dark:text-white">FY 2026–27 (AY 2027–28) Tax Comparison Engine</h3>
+            <span class="font-mono text-[11px] text-slate-500">Budget 2026 Compliant</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <div>
+              <label class="block mb-1">Gross Annual Salary (₹)</label>
+              <input type="number" id="tax-gross" value="1250000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+            </div>
+            <div>
+              <label class="block mb-1">80C Investments (₹)</label>
+              <input type="number" id="tax-80c" value="150000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+            <div>
+              <label class="block mb-1">80D Mediclaim (₹)</label>
+              <input type="number" id="tax-80d" value="25000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+            <div>
+              <label class="block mb-1">HRA / Home Loan Exemption (₹)</label>
+              <input type="number" id="tax-other" value="60000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <!-- New Regime -->
+            <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="flex justify-between items-center"><span class="font-bold text-slate-900 dark:text-white">New Regime (Default)</span> <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded">Std Ded: ₹75,000</span></div>
+              <div class="flex justify-between"><span>Taxable Income:</span> <span class="font-mono font-bold" id="res-tax-new-taxable">₹0</span></div>
+              <div class="flex justify-between"><span>Sec 87A Rebate:</span> <span class="font-mono font-bold text-emerald-600" id="res-tax-new-rebate">₹0</span></div>
+              <div class="flex justify-between pt-2 border-t font-bold text-base text-slate-900 dark:text-white"><span>Total Tax + Cess (4%):</span> <span class="font-mono" id="res-tax-new-total">₹0</span></div>
+            </div>
+            <!-- Old Regime -->
+            <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <div class="flex justify-between items-center"><span class="font-bold text-slate-900 dark:text-white">Old Regime</span> <span class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded">Std Ded: ₹50,000</span></div>
+              <div class="flex justify-between"><span>Taxable Income:</span> <span class="font-mono font-bold" id="res-tax-old-taxable">₹0</span></div>
+              <div class="flex justify-between"><span>Sec 87A Rebate:</span> <span class="font-mono font-bold text-emerald-600" id="res-tax-old-rebate">₹0</span></div>
+              <div class="flex justify-between pt-2 border-t font-bold text-base text-slate-900 dark:text-white"><span>Total Tax + Cess (4%):</span> <span class="font-mono" id="res-tax-old-total">₹0</span></div>
+            </div>
+          </div>
+
+          <div class="p-3 bg-brand-gold/10 border border-brand-gold/30 rounded-lg text-center font-bold text-xs" id="res-tax-recommendation">
+            Analyzing optimal regime...
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 7: GDS TRCA DESK -->
+      <div id="module-gds" class="calc-module hidden space-y-4">
+        <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b pb-2">
+            <div>
+              <h3 class="font-bold text-slate-900 dark:text-white">Gramin Dak Sevak (GDS) TRCA Emoluments Desk</h3>
+              <p class="text-[11px] text-slate-500">Kamlesh Chandra Committee dispensation (7th CPC does not apply to GDS cadre).</p>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-brand-red text-white font-mono text-[10px] font-bold">Dept. of Posts GDS Rules</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block mb-1">Cadre & Engagement Category</label>
+              <select id="gds-cadre" onchange="runGdsEngine()" class="w-full px-2.5 py-1.5 border rounded bg-slate-50 dark:bg-slate-900">
+                <option value="level1_abpm">ABPM / Dak Sevak (Level 1, 4 Hours - ₹10,000 Base)</option>
+                <option value="level2_abpm">BPM Level 1 / ABPM Level 2 (5 Hours - ₹12,000 Base)</option>
+                <option value="level2_bpm" selected>Branch Postmaster (BPM Level 2, 5 Hours - ₹14,500 Base)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1">Current TRCA Stage (₹)</label>
+              <input type="number" id="gds-trca-stage" value="14500" oninput="runGdsEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+            </div>
+          </div>
+
+          <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-2">
+            <div class="flex justify-between"><span>Basic TRCA:</span> <span class="font-mono font-bold" id="res-gds-base">₹0</span></div>
+            <div class="flex justify-between"><span>DA on TRCA (@ 60%):</span> <span class="font-mono font-bold" id="res-gds-da">₹0</span></div>
+            <div class="flex justify-between"><span>Combined Duty Allowance (CDA / Office Maint):</span> <span class="font-mono font-bold">₹500</span></div>
+            <div class="flex justify-between pt-2 border-t font-bold text-base text-brand-red dark:text-red-400"><span>Gross Monthly Emoluments:</span> <span class="font-mono" id="res-gds-gross">₹0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 8: 8th CPC ARREARS ESTIMATOR -->
+      <div id="module-cpc8" class="calc-module hidden space-y-4">
+        <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
+          <div class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900 rounded-lg text-rose-800 dark:text-rose-300">
+            <span class="font-bold block flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Speculative & Illustrative What-If Tool</span>
+            <p class="text-[11px] mt-0.5">8th CPC constituted 3 Nov 2025 (Chairperson: Justice Ranjana Prakash Desai); report expected ~mid-2027. No official fitment factor or pay matrix exists yet.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block mb-1">Current 7th CPC Basic Pay (₹)</label>
+              <input type="number" id="cpc8-basic" value="35400" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+            </div>
+            <div>
+              <label class="block mb-1">Hypothetical Fitment Factor</label>
+              <input type="number" id="cpc8-factor" value="2.15" step="0.05" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+            <div>
+              <label class="block mb-1">Illustrative Arrears Months</label>
+              <input type="number" id="cpc8-months" value="12" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+          </div>
+
+          <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-2">
+            <div class="flex justify-between"><span>Estimated Indicative Revised Basic:</span> <span class="font-mono font-bold text-base text-slate-900 dark:text-white" id="res-cpc8-new-basic">₹0</span></div>
+            <div class="flex justify-between"><span>Indicative Gross Back-Pay (Illustrative):</span> <span class="font-mono font-black text-lg text-brand-gold" id="res-cpc8-arrears">₹0</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </main>
 
   <!-- IN-PAGE PDF VIEWER LIGHTBOX -->
   <div id="pdf-viewer-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 hidden">
-    <div class="bg-brand-card dark:bg-brand-darkCard rounded-2xl w-full max-w-5xl h-[90vh] flex flex-col border border-brand-border dark:border-brand-darkBorder shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+    <div class="bg-brand-card dark:bg-brand-darkCard rounded-2xl w-full max-w-5xl h-[90vh] flex flex-col border border-brand-border dark:border-brand-darkBorder shadow-2xl overflow-hidden">
       <div class="px-4 py-3 bg-slate-100 dark:bg-slate-800 border-b border-brand-border dark:border-brand-darkBorder flex items-center justify-between">
         <div class="flex items-center space-x-2 truncate">
           <span class="w-2.5 h-2.5 rounded-full bg-brand-gold"></span>
           <span id="pdf-modal-title" class="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-100 truncate">Form Preview</span>
         </div>
         <div class="flex items-center space-x-2">
-          <button onclick="printModalPdf()" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 text-xs font-semibold flex items-center space-x-1.5 transition">
+          <button onclick="printModalPdf()" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 text-slate-800 dark:text-slate-100 text-xs font-semibold flex items-center space-x-1.5">
             <i data-lucide="printer" class="w-4 h-4"></i>
-            <span class="hidden sm:inline">Print</span>
+            <span>Print</span>
           </button>
-          <button onclick="closePdfViewerModal()" class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition" title="Close Preview (Esc)">
+          <button onclick="closePdfViewerModal()" class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
@@ -432,30 +737,18 @@
         </div>
         <button onclick="closeOrderDetailModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
-
       <div class="space-y-3">
-        <div>
-          <span class="font-semibold block text-slate-500">Subject:</span>
-          <p class="font-bold text-slate-900 dark:text-white" id="modal-order-subj">—</p>
-        </div>
-        <div>
-          <span class="font-semibold block text-slate-500">Substance & Ruling:</span>
-          <p class="text-slate-700 dark:text-slate-300 leading-relaxed" id="modal-order-substance">—</p>
-        </div>
-
+        <div><span class="font-semibold block text-slate-500">Subject:</span><p class="font-bold text-slate-900 dark:text-white" id="modal-order-subj">—</p></div>
+        <div><span class="font-semibold block text-slate-500">Substance & Ruling:</span><p class="text-slate-700 dark:text-slate-300 leading-relaxed" id="modal-order-substance">—</p></div>
         <div id="modal-superseded-box" class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900 rounded-lg text-rose-800 dark:text-rose-300 space-y-1 hidden">
           <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Caution: Superseded Order</div>
-          <p class="text-[11px]">This order has been superseded and is not in force. Replaced by: <strong id="modal-superseded-by-ref">—</strong></p>
+          <p class="text-[11px]">This order has been superseded. Replaced by: <strong id="modal-superseded-by-ref">—</strong></p>
         </div>
-
         <div id="modal-replaces-box" class="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900 rounded-lg text-amber-800 dark:text-amber-300 space-y-1 hidden">
           <div class="font-bold flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4"></i> Supersedes Predecessor</div>
-          <p class="text-[11px]">This order formally modifies or replaces earlier order: <strong id="modal-replaces-ref">—</strong></p>
+          <p class="text-[11px]">This order replaces: <strong id="modal-replaces-ref">—</strong></p>
         </div>
-
-        <div class="text-[11px] text-slate-400 pt-2 border-t">
-          <span>Source Document: <strong id="modal-source-doc" class="font-mono text-slate-600 dark:text-slate-300">—</strong></span>
-        </div>
+        <div class="text-[11px] text-slate-400 pt-2 border-t">Source Document: <strong id="modal-source-doc" class="font-mono text-slate-600 dark:text-slate-300">—</strong></div>
       </div>
     </div>
   </div>
@@ -469,78 +762,85 @@
         <span>·</span>
         <span>Independent Civil Service Reference & Rules Desk</span>
       </div>
-      <div class="text-[11px] text-center sm:text-right">
-        Static decoupled architecture · Verifiable against official source circulars.
-      </div>
+      <div class="text-[11px] text-center sm:text-right">Static decoupled architecture · Verifiable against official source circulars.</div>
     </div>
   </footer>
 
   <!-- SCRIPT ENGINE -->
   <script>
-    const VERIFIED_FORMS_FALLBACK = [
-      {
-        "id": "form-pdf-1",
-        "code": "FORM-CODE-1",
-        "title": "Charge Report Fillable",
-        "ruleRef": "ACG 61",
-        "category": "Establishment / Accounts",
-        "pdfPath": "forms/form_1.pdf"
-      },
-      {
-        "id": "form-pdf-2",
-        "code": "FORM-CODE-2",
-        "title": "Leave Application Form Fillable",
-        "ruleRef": "SR1",
-        "category": "Leave / Staff",
-        "pdfPath": "forms/form_2.pdf"
+    /* 0. CENTRAL CONFIG FALLBACK (UPDATED DYNAMICALLY VIA data/rates-config.json) */
+    let RATES_CONFIG = {
+      version: "2026.2",
+      as_of: "September 2026",
+      disclaimer: "Estimate only — for official figures, refer to your DDO/PAO or the relevant Department of Expenditure / DoPPW / PFRDA notification.",
+      current_parameters: {
+        da_percentage: 60,
+        gpf_interest_rate: 7.1,
+        hba_interest_rate: 7.44,
+        gratuity: { ceiling: 2500000, max_half_years: 66, da_trigger_pct: 50 },
+        nps_ups: { employee_nps_pct: 10.0, govt_plain_nps_pct: 14.0, govt_ups_pct: 18.5, ups_min_pension: 10000 },
+        hra_slabs: { X: 0.30, Y: 0.20, Z: 0.10 },
+        transport_allowance: {
+          X: { L9_above: 7200, L3_to_L8: 3600, L1_to_L2: 1350 },
+          Y: { L9_above: 3600, L3_to_L8: 1800, L1_to_L2: 900 },
+          Z: { L9_above: 3600, L3_to_L8: 1800, L1_to_L2: 900 }
+        },
+        income_tax_new_2026: {
+          standard_deduction: 75000, sec_87a_rebate_limit: 60000, sec_87a_threshold: 1200000, cess: 0.04,
+          slabs: [
+            { up_to: 400000, rate: 0.00 }, { up_to: 800000, rate: 0.05 }, { up_to: 1200000, rate: 0.10 },
+            { up_to: 1600000, rate: 0.15 }, { up_to: 2000000, rate: 0.20 }, { up_to: 2400000, rate: 0.25 },
+            { up_to: 999999999, rate: 0.30 }
+          ]
+        },
+        income_tax_old_2026: {
+          standard_deduction: 50000, sec_80c_cap: 150000, sec_87a_rebate_limit: 12500, sec_87a_threshold: 500000, cess: 0.04,
+          slabs_general: [
+            { up_to: 250000, rate: 0.00 }, { up_to: 500000, rate: 0.05 }, { up_to: 1000000, rate: 0.20 }, { up_to: 999999999, rate: 0.30 }
+          ]
+        },
+        gds_trca: {
+          level1_abpm: { min: 10000, max: 24470 },
+          level2_abpm: { min: 12000, max: 29380 },
+          level2_bpm: { min: 14500, max: 35480 }
+        }
       }
+    };
+
+    const VERIFIED_FORMS_FALLBACK = [
+      { id: "form-pdf-1", code: "FORM-CODE-1", title: "Charge Report Fillable", ruleRef: "ACG 61", category: "Establishment / Accounts", pdfPath: "forms/form_1.pdf" },
+      { id: "form-pdf-2", code: "FORM-CODE-2", title: "Leave Application Form Fillable", ruleRef: "SR1", category: "Leave / Staff", pdfPath: "forms/form_2.pdf" }
     ];
 
     let DATA_ORDERS = [];
     let DATA_POSB = [];
     let DATA_FORMS = [...VERIFIED_FORMS_FALLBACK];
-    let DATA_PINCODES_GROUPED = []; // Grouped memory map
+    let DATA_PINCODES_GROUPED = [];
     let officeSearchTimeout = null;
-    const MAX_PIN_RESULTS = 25;
 
     async function fetchDataset(filename, fallbackData = []) {
-      const candidatePaths = [
-        `data/${filename}`,
-        `/data/${filename}`,
-        `./data/${filename}`,
-        filename,
-        `./${filename}`
-      ];
-
+      const candidatePaths = [`data/${filename}`, `/data/${filename}`, `./data/${filename}`, filename, `./${filename}`];
       for (const p of candidatePaths) {
         try {
           const res = await fetch(p);
           if (res.ok) {
             const json = await res.json();
-            if (Array.isArray(json) && json.length > 0) {
-              return json;
-            }
+            if (json) return json;
           }
         } catch (err) {}
       }
       return fallbackData;
     }
 
-    /* IN-MEMORY GROUPING CONVERTER: CONVERTS FULL FLAT LIST INTO RICH GROUPED PINCODE CARDS */
     function buildGroupedPincodeData(rawList) {
       if (!Array.isArray(rawList) || rawList.length === 0) return [];
-
-      // If already grouped structure
-      if (rawList[0].postOffices || rawList[0].offices) {
-        return rawList;
-      }
+      if (rawList[0].postOffices || rawList[0].offices) return rawList;
 
       const map = new Map();
       for (let i = 0; i < rawList.length; i++) {
         const item = rawList[i];
         const pin = String(item.pincode || item.Pincode || '').trim();
         if (!pin) continue;
-
         if (!map.has(pin)) {
           map.set(pin, {
             pincode: pin,
@@ -553,9 +853,7 @@
             postOffices: []
           });
         }
-
         const group = map.get(pin);
-        // Pull forward administrative details if missing at root
         if (!group.division && item.division) group.division = item.division;
         if (!group.region && item.region) group.region = item.region;
         if (!group.circle && item.circle) group.circle = item.circle;
@@ -569,31 +867,33 @@
           relatedHeadOffice: item.relatedHeadOffice || item.relatedheadoffice || 'NA'
         });
       }
-
       return Array.from(map.values());
     }
 
-    /* 1. FETCH CONTROLLER */
+    /* 1. CENTRAL CONTROLLER INITIALIZATION */
     async function loadCentralData() {
       try {
-        const [orders, posb, forms, rawPins] = await Promise.all([
+        const [orders, posb, forms, rawPins, cfg] = await Promise.all([
           fetchDataset('orders.json', []),
           fetchDataset('posb-rates.json', []),
           fetchDataset('forms.json', VERIFIED_FORMS_FALLBACK),
-          fetchDataset('pincodes.json', []).then(res => res.length ? res : fetchDataset('india_pincodes_flat.json', []))
+          fetchDataset('pincodes.json', []).then(res => res.length ? res : fetchDataset('india_pincodes_flat.json', [])),
+          fetchDataset('rates-config.json', RATES_CONFIG)
         ]);
 
         DATA_ORDERS = orders;
         DATA_POSB = posb;
         DATA_FORMS = forms && forms.length > 0 ? forms : VERIFIED_FORMS_FALLBACK;
         DATA_PINCODES_GROUPED = buildGroupedPincodeData(rawPins);
+        if (cfg && cfg.current_parameters) RATES_CONFIG = cfg;
       } catch (e) {
-        console.warn('Dataset sync warning:', e);
+        console.warn('Dataset sync fallback active:', e);
       } finally {
         updateDashboardCounters();
         renderOrdersTable();
         renderPosbTable();
         renderFormsCatalog();
+        initCalculatorSuite();
       }
     }
 
@@ -606,6 +906,351 @@
       }
     }
 
+    /* ========================================================================= */
+    /* CALCULATOR ENGINES (CONFIG DRIVEN & COMPLIANT WITH STATUTORY RULES)       */
+    /* ========================================================================= */
+    function initCalculatorSuite() {
+      const p = RATES_CONFIG.current_parameters;
+      document.getElementById('calc-disclaimer-text').innerText = RATES_CONFIG.disclaimer;
+      document.getElementById('calc-as-of-badge').innerText = `Audited as of: ${RATES_CONFIG.as_of} | Config v${RATES_CONFIG.version} (DA: ${p.da_percentage}%, GPF: ${p.gpf_interest_rate}%, HBA: ${p.hba_interest_rate}%)`;
+      document.getElementById('sal-da-badge').innerText = `DA: ${p.da_percentage}%`;
+
+      runSalaryEngine();
+      runArrearsEngine();
+      runFixationEngine();
+      runIncrementEngine();
+      runPensionEngine();
+      runGratuityEngine();
+      runNpsEngine();
+      runHbaEngine();
+      runTaxEngine();
+      runGdsEngine();
+      runCpc8Engine();
+    }
+
+    function switchCalcModule(modId) {
+      document.querySelectorAll('.calc-module').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('module-' + modId);
+      if (target) target.classList.remove('hidden');
+
+      ['salary', 'da-arrears', 'fixation', 'pension', 'nps-hba', 'tax', 'gds', 'cpc8'].forEach(m => {
+        const btn = document.getElementById('modbtn-' + m);
+        if (btn) {
+          if (m === modId) {
+            btn.className = "px-3 py-1.5 rounded-lg bg-brand-red text-white whitespace-nowrap font-bold";
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 whitespace-nowrap font-medium";
+          }
+        }
+      });
+    }
+
+    // 1. Salary / Pay Slip Engine
+    function runSalaryEngine() {
+      const p = RATES_CONFIG.current_parameters;
+      const basic = parseFloat(document.getElementById('sal-basic').value) || 0;
+      const level = parseInt(document.getElementById('sal-level').value) || 6;
+      const city = document.getElementById('sal-city').value;
+      const scheme = document.getElementById('sal-scheme').value;
+
+      const daPct = p.da_percentage;
+      const da = Math.round(basic * (daPct / 100));
+
+      const hraRate = p.hra_slabs[city] || 0.20;
+      const hra = Math.round(basic * hraRate);
+
+      let taBase = p.transport_allowance[city].L3_to_L8;
+      if (level >= 9) taBase = p.transport_allowance[city].L9_above;
+      else if (level <= 2) taBase = p.transport_allowance[city].L1_to_L2;
+
+      const taDa = Math.round(taBase * (daPct / 100));
+      const totalTa = taBase + taDa;
+
+      const gross = basic + da + hra + totalTa;
+
+      let retDed = 0;
+      let govContrib = 0;
+      if (scheme === 'NPS') {
+        retDed = Math.round((basic + da) * (p.nps_ups.employee_nps_pct / 100));
+        govContrib = Math.round((basic + da) * (p.nps_ups.govt_plain_nps_pct / 100));
+        document.getElementById('lbl-sal-ret').innerText = "NPS Employee (10%):";
+      } else if (scheme === 'UPS') {
+        retDed = Math.round((basic + da) * (p.nps_ups.employee_nps_pct / 100));
+        govContrib = Math.round((basic + da) * (p.nps_ups.govt_ups_pct / 100));
+        document.getElementById('lbl-sal-ret').innerText = "UPS Employee (10%):";
+      } else {
+        retDed = Math.round(basic * 0.06); // Minimum 6% GPF
+        document.getElementById('lbl-sal-ret').innerText = "GPF Subscription (6%):";
+      }
+
+      const cgegis = level >= 10 ? 120 : (level >= 6 ? 60 : 30);
+      document.getElementById('res-sal-cgegis').innerText = '₹' + cgegis;
+
+      const totalDed = retDed + cgegis + 450 + 200;
+      const net = gross - totalDed;
+
+      document.getElementById('res-sal-basic').innerText = '₹' + basic.toLocaleString('en-IN');
+      document.getElementById('res-sal-da').innerText = '₹' + da.toLocaleString('en-IN');
+      document.getElementById('res-sal-hra').innerText = '₹' + hra.toLocaleString('en-IN');
+      document.getElementById('res-sal-ta').innerText = `₹${totalTa.toLocaleString('en-IN')} (₹${taBase}+₹${taDa})`;
+      document.getElementById('res-sal-gross').innerText = '₹' + gross.toLocaleString('en-IN');
+      document.getElementById('res-sal-pension').innerText = '₹' + retDed.toLocaleString('en-IN');
+      document.getElementById('res-sal-ded').innerText = '₹' + totalDed.toLocaleString('en-IN');
+      document.getElementById('res-sal-net').innerText = '₹' + net.toLocaleString('en-IN');
+      document.getElementById('res-sal-gov-contrib').innerText = '₹' + govContrib.toLocaleString('en-IN');
+    }
+
+    // 2. DA Arrears Engine
+    function runArrearsEngine() {
+      const basic = parseFloat(document.getElementById('arr-basic').value) || 0;
+      const oldDa = parseFloat(document.getElementById('arr-old-da').value) || 0;
+      const newDa = parseFloat(document.getElementById('arr-new-da').value) || 0;
+      const months = parseFloat(document.getElementById('arr-months').value) || 0;
+
+      const diffPct = Math.max(0, newDa - oldDa);
+      const monthly = Math.round(basic * (diffPct / 100));
+      const total = monthly * months;
+
+      document.getElementById('res-arr-monthly').innerText = '₹' + monthly.toLocaleString('en-IN');
+      document.getElementById('res-arr-total').innerText = '₹' + total.toLocaleString('en-IN');
+    }
+
+    // 3. Fixation Engine
+    function runFixationEngine() {
+      const basic = parseFloat(document.getElementById('fix-basic').value) || 0;
+      const inc = Math.round(basic * 0.03);
+      const floor = basic + inc;
+      document.getElementById('res-fix-notional').innerText = '₹' + inc.toLocaleString('en-IN');
+      document.getElementById('res-fix-floor').innerText = '₹' + floor.toLocaleString('en-IN');
+      document.getElementById('res-fix-final').innerText = '₹' + floor.toLocaleString('en-IN');
+    }
+
+    // 4. Increment Cycle Engine
+    function runIncrementEngine() {
+      const dStr = document.getElementById('inc-date').value;
+      const basic = parseFloat(document.getElementById('sal-basic').value) || 35400;
+      if (!dStr) return;
+      const d = new Date(dStr);
+      const m = d.getMonth() + 1;
+      const day = d.getDate();
+
+      // Rule: Joining between 2 Jan and 1 July -> 1 Jan increment. Otherwise 1 July.
+      let cycle = "1 July";
+      let nextYear = d.getFullYear() + 1;
+      if ((m === 1 && day >= 2) || (m > 1 && m < 7) || (m === 7 && day === 1)) {
+        cycle = "1 January";
+      }
+
+      const newBasic = Math.round(basic * 1.03);
+      document.getElementById('res-inc-cycle').innerText = cycle;
+      document.getElementById('res-inc-next-date').innerText = (cycle === "1 January" ? "01-01-" : "01-07-") + nextYear;
+      document.getElementById('res-inc-new-basic').innerText = '₹' + newBasic.toLocaleString('en-IN');
+    }
+
+    // 5. Pension Engine
+    function runPensionEngine() {
+      const p = RATES_CONFIG.current_parameters;
+      const type = document.getElementById('pen-type').value;
+      const emoluments = parseFloat(document.getElementById('pen-emoluments').value) || 0;
+      const years = parseFloat(document.getElementById('pen-years').value) || 0;
+      const daPct = p.da_percentage;
+
+      let basePen = 0;
+      let upsLump = 0;
+
+      if (type === 'OPS') {
+        const fullYears = Math.min(years, 20);
+        basePen = (emoluments * 0.5) * (fullYears / 20);
+        document.getElementById('pen-ups-lump-box').classList.add('hidden');
+      } else {
+        const fullYears = Math.min(years, 25);
+        basePen = (emoluments * 0.5) * (fullYears / 25);
+        if (years >= 10 && basePen < p.nps_ups.ups_min_pension) basePen = p.nps_ups.ups_min_pension;
+        const halfYears = Math.min(years * 2, 66);
+        const da = Math.round(emoluments * (daPct / 100));
+        upsLump = Math.round((1/10) * (emoluments + da) * halfYears);
+        document.getElementById('pen-ups-lump-box').classList.remove('hidden');
+        document.getElementById('res-pen-ups-lump').innerText = '₹' + upsLump.toLocaleString('en-IN');
+      }
+
+      basePen = Math.round(basePen);
+      const dr = Math.round(basePen * (daPct / 100));
+      const total = basePen + dr;
+
+      document.getElementById('res-pen-basic').innerText = '₹' + basePen.toLocaleString('en-IN');
+      document.getElementById('res-pen-dr').innerText = '₹' + dr.toLocaleString('en-IN');
+      document.getElementById('res-pen-total').innerText = '₹' + total.toLocaleString('en-IN');
+    }
+
+    // 6. Gratuity & Leave Encashment Engine
+    function runGratuityEngine() {
+      const p = RATES_CONFIG.current_parameters;
+      const mode = document.getElementById('grat-mode').value;
+      const basic = parseFloat(document.getElementById('pen-emoluments').value) || 65000;
+      const years = parseFloat(document.getElementById('grat-years').value) || 0;
+      const elDays = Math.min(parseFloat(document.getElementById('grat-el-days').value) || 0, 300);
+
+      const da = Math.round(basic * (p.da_percentage / 100));
+      const emoluments = basic + da;
+      const halfYears = Math.min(Math.floor(years * 2), p.gratuity.max_half_years);
+
+      let calcGrat = 0;
+      if (mode === 'RET') {
+        calcGrat = Math.round((emoluments / 4) * halfYears);
+      } else {
+        if (years < 1) calcGrat = emoluments * 2;
+        else if (years < 5) calcGrat = emoluments * 6;
+        else if (years < 11) calcGrat = emoluments * 12;
+        else if (years < 20) calcGrat = emoluments * 20;
+        else calcGrat = Math.round((emoluments / 2) * halfYears);
+      }
+
+      const ceil = p.gratuity.ceiling;
+      const finalGrat = Math.min(calcGrat, ceil);
+      const elAmt = Math.round((emoluments / 30) * elDays);
+
+      document.getElementById('res-grat-calc').innerText = '₹' + calcGrat.toLocaleString('en-IN');
+      document.getElementById('res-grat-ceil').innerText = '₹' + ceil.toLocaleString('en-IN');
+      document.getElementById('res-grat-final').innerText = '₹' + finalGrat.toLocaleString('en-IN');
+      document.getElementById('res-el-total').innerText = '₹' + elAmt.toLocaleString('en-IN');
+    }
+
+    // 7. NPS Engine
+    function runNpsEngine() {
+      const curr = parseFloat(document.getElementById('nps-curr').value) || 0;
+      const years = parseFloat(document.getElementById('nps-years').value) || 0;
+      const roi = (parseFloat(document.getElementById('nps-roi').value) || 0) / 100;
+      const annRate = (parseFloat(document.getElementById('nps-annuity-rate').value) || 0) / 100;
+      const basic = parseFloat(document.getElementById('sal-basic').value) || 35400;
+      const da = Math.round(basic * (RATES_CONFIG.current_parameters.da_percentage / 100));
+
+      const monthlyContrib = (basic + da) * 0.24; // 10% Emp + 14% Gov
+      let corpus = curr;
+      for (let y = 0; y < years; y++) {
+        corpus = (corpus + monthlyContrib * 12) * (1 + roi);
+      }
+      corpus = Math.round(corpus);
+      const lump = Math.round(corpus * 0.60);
+      const annFund = Math.round(corpus * 0.40);
+      const monthlyAnnuity = Math.round((annFund * annRate) / 12);
+
+      document.getElementById('res-nps-corpus').innerText = '₹' + corpus.toLocaleString('en-IN');
+      document.getElementById('res-nps-lump').innerText = '₹' + lump.toLocaleString('en-IN');
+      document.getElementById('res-nps-annuity-fund').innerText = '₹' + annFund.toLocaleString('en-IN');
+      document.getElementById('res-nps-monthly').innerText = '₹' + monthlyAnnuity.toLocaleString('en-IN');
+    }
+
+    // 8. HBA Engine (Diminishing Balance Simple Interest)
+    function runHbaEngine() {
+      const req = parseFloat(document.getElementById('hba-req').value) || 0;
+      const basic = parseFloat(document.getElementById('hba-basic').value) || 0;
+      const rate = (RATES_CONFIG.current_parameters.hba_interest_rate || 7.44) / 100;
+
+      const maxSanction = Math.min(req, 2500000, basic * 34);
+      const pMonths = 180;
+      const iMonths = 60;
+      const pEmi = Math.round(maxSanction / pMonths);
+
+      // Simple interest diminishing balance: total interest = P * r * (N + 1) / (2 * 12)
+      const totalInterest = Math.round((maxSanction * rate * (pMonths + 1)) / (2 * 12));
+      const iEmi = Math.round(totalInterest / iMonths);
+
+      document.getElementById('res-hba-sanctioned').innerText = '₹' + maxSanction.toLocaleString('en-IN');
+      document.getElementById('res-hba-p-emi').innerText = '₹' + pEmi.toLocaleString('en-IN');
+      document.getElementById('res-hba-i-emi').innerText = '₹' + iEmi.toLocaleString('en-IN');
+      document.getElementById('res-hba-rate').innerText = (rate * 100).toFixed(2) + '% p.a.';
+    }
+
+    // 9. Income Tax Engine (FY 2026-27 / AY 2027-28)
+    function runTaxEngine() {
+      const p = RATES_CONFIG.current_parameters;
+      const gross = parseFloat(document.getElementById('tax-gross').value) || 0;
+      const c80 = Math.min(parseFloat(document.getElementById('tax-80c').value) || 0, p.income_tax_old_2026.sec_80c_cap);
+      const d80 = parseFloat(document.getElementById('tax-80d').value) || 0;
+      const other = parseFloat(document.getElementById('tax-other').value) || 0;
+
+      // NEW REGIME
+      const newTaxable = Math.max(0, gross - p.income_tax_new_2026.standard_deduction);
+      let newTax = 0;
+      let prevLim = 0;
+      for (const s of p.income_tax_new_2026.slabs) {
+        if (newTaxable > prevLim) {
+          const taxableChunk = Math.min(newTaxable, s.up_to) - prevLim;
+          newTax += taxableChunk * s.rate;
+          prevLim = s.up_to;
+        }
+      }
+      let newRebate = 0;
+      if (newTaxable <= p.income_tax_new_2026.sec_87a_threshold) {
+        newRebate = Math.min(newTax, p.income_tax_new_2026.sec_87a_rebate_limit);
+        newTax -= newRebate;
+      }
+      const newFinal = Math.round(newTax * (1 + p.income_tax_new_2026.cess));
+
+      // OLD REGIME
+      const oldTaxable = Math.max(0, gross - p.income_tax_old_2026.standard_deduction - c80 - d80 - other);
+      let oldTax = 0;
+      let prevOldLim = 0;
+      for (const s of p.income_tax_old_2026.slabs_general) {
+        if (oldTaxable > prevOldLim) {
+          const taxableChunk = Math.min(oldTaxable, s.up_to) - prevOldLim;
+          oldTax += taxableChunk * s.rate;
+          prevOldLim = s.up_to;
+        }
+      }
+      let oldRebate = 0;
+      if (oldTaxable <= p.income_tax_old_2026.sec_87a_threshold) {
+        oldRebate = Math.min(oldTax, p.income_tax_old_2026.sec_87a_rebate_limit);
+        oldTax -= oldRebate;
+      }
+      const oldFinal = Math.round(oldTax * (1 + p.income_tax_old_2026.cess));
+
+      document.getElementById('res-tax-new-taxable').innerText = '₹' + newTaxable.toLocaleString('en-IN');
+      document.getElementById('res-tax-new-rebate').innerText = '₹' + newRebate.toLocaleString('en-IN');
+      document.getElementById('res-tax-new-total').innerText = '₹' + newFinal.toLocaleString('en-IN');
+
+      document.getElementById('res-tax-old-taxable').innerText = '₹' + oldTaxable.toLocaleString('en-IN');
+      document.getElementById('res-tax-old-rebate').innerText = '₹' + oldRebate.toLocaleString('en-IN');
+      document.getElementById('res-tax-old-total').innerText = '₹' + oldFinal.toLocaleString('en-IN');
+
+      const rec = document.getElementById('res-tax-recommendation');
+      if (newFinal < oldFinal) {
+        rec.innerHTML = `<span class="text-emerald-700 dark:text-emerald-400">Recommendation: New Tax Regime saves you ₹${(oldFinal - newFinal).toLocaleString('en-IN')} annually.</span>`;
+      } else if (oldFinal < newFinal) {
+        rec.innerHTML = `<span class="text-emerald-700 dark:text-emerald-400">Recommendation: Old Tax Regime saves you ₹${(newFinal - oldFinal).toLocaleString('en-IN')} with current deductions.</span>`;
+      } else {
+        rec.innerHTML = `<span class="text-slate-600 dark:text-slate-300">Both regimes yield identical tax liability (₹0 or equal).</span>`;
+      }
+    }
+
+    // 10. GDS TRCA Engine
+    function runGdsEngine() {
+      const c = document.getElementById('gds-cadre').value;
+      const stage = parseFloat(document.getElementById('gds-trca-stage').value) || 14500;
+      const daPct = RATES_CONFIG.current_parameters.da_percentage;
+      const da = Math.round(stage * (daPct / 100));
+      const cda = 500;
+      const gross = stage + da + cda;
+
+      document.getElementById('res-gds-base').innerText = '₹' + stage.toLocaleString('en-IN');
+      document.getElementById('res-gds-da').innerText = '₹' + da.toLocaleString('en-IN');
+      document.getElementById('res-gds-gross').innerText = '₹' + gross.toLocaleString('en-IN');
+    }
+
+    // 11. 8th CPC Estimator
+    function runCpc8Engine() {
+      const basic = parseFloat(document.getElementById('cpc8-basic').value) || 0;
+      const factor = parseFloat(document.getElementById('cpc8-factor').value) || 2.15;
+      const months = parseFloat(document.getElementById('cpc8-months').value) || 0;
+
+      const newBasic = Math.round(basic * factor);
+      const diff = Math.max(0, newBasic - basic);
+      const arrears = diff * months;
+
+      document.getElementById('res-cpc8-new-basic').innerText = '₹' + newBasic.toLocaleString('en-IN');
+      document.getElementById('res-cpc8-arrears').innerText = '₹' + arrears.toLocaleString('en-IN');
+    }
+
     /* 2. RENDER ORDERS TABLE */
     function renderOrdersTable() {
       const tbody = document.getElementById('orders-tbody');
@@ -616,38 +1261,24 @@
       const statusFilter = document.getElementById('filter-order-status')?.value || 'ALL';
 
       const filtered = DATA_ORDERS.filter(o => {
-        const matchesQ = (o.orderNo || '').toLowerCase().includes(query) || (o.subject || '').toLowerCase().includes(query) || (o.keywords && o.keywords.toLowerCase().includes(query));
+        const matchesQ = (o.orderNo || '').toLowerCase().includes(query) || (o.subject || '').toLowerCase().includes(query);
         const matchesStatus = (statusFilter === 'ALL') || (o.status === statusFilter);
         return matchesQ && matchesStatus;
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="6" class="p-8 text-center text-slate-400">
-              <i data-lucide="file-question" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
-              <div class="font-bold text-sm">No verified data loaded yet</div>
-              <p class="text-[11px] text-slate-500 mt-1">Upload verified circulars into data/orders.json</p>
-            </td>
-          </tr>
-        `;
-        lucide.createIcons();
+        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400">No verified orders loaded.</td></tr>`;
         return;
       }
 
       filtered.forEach(o => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800 transition";
-
-        let statusBadge = "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300";
-        if (o.status === "Superseded") statusBadge = "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
-        if (o.status === "Partially Modified") statusBadge = "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300";
-
         tr.innerHTML = `
           <td class="p-3 font-mono font-bold">${o.orderNo} <div class="text-[10px] text-slate-400">${o.date || 'Undated'}</div></td>
           <td class="p-3 text-slate-500">${o.category}</td>
           <td class="p-3 font-medium">${o.subject}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${statusBadge}">${o.status}</span></td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${o.status === 'In Force' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${o.status}</span></td>
           <td class="p-3 font-mono text-[11px] text-slate-500">${o.supersedes || o.supersededBy || '—'}</td>
           <td class="p-3 text-right"><button onclick="viewOrderDetail('${o.id}')" class="text-brand-red dark:text-red-400 font-bold hover:underline">View</button></td>
         `;
@@ -656,53 +1287,30 @@
       lucide.createIcons();
     }
 
-    /* 3. ORDER DETAIL MODAL */
     function viewOrderDetail(orderId) {
       const order = DATA_ORDERS.find(o => o.id === orderId);
       if (!order) return;
-
       document.getElementById('modal-order-ref').innerText = order.orderNo;
-      document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated Record';
+      document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated';
       document.getElementById('modal-order-subj').innerText = order.subject;
       document.getElementById('modal-order-substance').innerText = order.substance;
-      document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source File';
-
-      const supBox = document.getElementById('modal-superseded-box');
-      const repBox = document.getElementById('modal-replaces-box');
-
-      if (order.status === 'Superseded' && order.supersededBy) {
-        document.getElementById('modal-superseded-by-ref').innerText = order.supersededBy;
-        supBox.classList.remove('hidden');
-      } else {
-        supBox.classList.add('hidden');
-      }
-
-      if (order.supersedes) {
-        document.getElementById('modal-replaces-ref').innerText = order.supersedes;
-        repBox.classList.remove('hidden');
-      } else {
-        repBox.classList.add('hidden');
-      }
-
+      document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source';
       document.getElementById('order-detail-modal').classList.remove('hidden');
-      lucide.createIcons();
     }
 
     function closeOrderDetailModal() {
       document.getElementById('order-detail-modal').classList.add('hidden');
     }
 
-    /* 4. RENDER POSB TABLE */
+    /* 3. RENDER POSB TABLE */
     function renderPosbTable() {
       const tbody = document.getElementById('posb-tbody');
       if (!tbody) return;
       tbody.innerHTML = '';
-
       if (DATA_POSB.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400 font-bold">No verified data loaded yet (Check data/posb-rates.json)</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400 font-bold">No POSB data loaded.</td></tr>`;
         return;
       }
-
       DATA_POSB.forEach(s => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800";
@@ -717,34 +1325,26 @@
       });
     }
 
-    /* 5. RENDER FORMS CATALOG: GMAIL-STYLE IN-PAGE POPUP */
+    /* 4. RENDER FORMS CATALOG */
     function renderFormsCatalog() {
       const grid = document.getElementById('forms-grid');
       if (!grid) return;
       grid.innerHTML = '';
-
-      if (DATA_FORMS.length === 0) {
-        grid.innerHTML = `<div class="col-span-3 p-8 text-center text-slate-400 font-bold bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">No verified forms loaded yet (Check data/forms.json)</div>`;
-        return;
-      }
-
       DATA_FORMS.forEach(f => {
         const card = document.createElement('div');
-        card.className = "p-5 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 flex flex-col justify-between shadow-sm hover:shadow-md transition";
+        card.className = "p-5 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 flex flex-col justify-between shadow-sm";
         card.innerHTML = `
           <div class="space-y-2">
             <div class="flex justify-between items-start">
               <span class="font-mono text-xs font-bold text-brand-red dark:text-red-400">${f.code}</span>
-              <span class="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-500 font-medium">${f.category}</span>
+              <span class="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-500">${f.category}</span>
             </div>
-            <h4 class="font-bold text-sm text-slate-900 dark:text-white leading-snug">${f.title}</h4>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white">${f.title}</h4>
             <p class="text-[11px] text-slate-500">${f.ruleRef || ''}</p>
           </div>
-
-          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
-            <button onclick="openPdfModal('${f.pdfPath}', '${f.title.replace(/'/g, "\\'")}')" class="w-full sm:w-auto inline-flex items-center justify-center space-x-1.5 text-xs font-bold text-white bg-brand-red hover:bg-brand-darkRed px-4 py-2 rounded-lg shadow-sm transition">
-              <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
-              <span>Open & Fill</span>
+          <div class="pt-3 border-t flex justify-end">
+            <button onclick="openPdfModal('${f.pdfPath}', '${f.title.replace(/'/g, "\\'")}')" class="w-full sm:w-auto text-xs font-bold text-white bg-brand-red hover:bg-brand-darkRed px-4 py-2 rounded-lg shadow-sm transition">
+              Open & Fill
             </button>
           </div>
         `;
@@ -756,11 +1356,8 @@
     function openPdfModal(pdfPath, title) {
       const modal = document.getElementById('pdf-viewer-modal');
       const iframe = document.getElementById('pdf-modal-iframe');
-      const modalTitle = document.getElementById('pdf-modal-title');
-      
       if (!modal || !iframe) return;
-
-      modalTitle.innerText = title || 'Document Preview';
+      document.getElementById('pdf-modal-title').innerText = title;
       iframe.src = pdfPath;
       modal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
@@ -769,61 +1366,36 @@
 
     function closePdfViewerModal() {
       const modal = document.getElementById('pdf-viewer-modal');
-      const iframe = document.getElementById('pdf-modal-iframe');
-      
       if (!modal) return;
       modal.classList.add('hidden');
-      if (iframe) iframe.src = '';
+      document.getElementById('pdf-modal-iframe').src = '';
       document.body.style.overflow = '';
     }
 
     function printModalPdf() {
       const iframe = document.getElementById('pdf-modal-iframe');
       if (iframe && iframe.contentWindow) {
-        try {
-          iframe.contentWindow.focus();
-          iframe.contentWindow.print();
-        } catch (e) {
-          window.print();
-        }
+        try { iframe.contentWindow.focus(); iframe.contentWindow.print(); } catch (e) { window.print(); }
       }
     }
 
-    /* 6. GROUPED PINCODE SEARCH ENGINE */
+    /* 5. GROUPED PINCODE SEARCH ENGINE */
     function debounceOfficeSearch() {
       clearTimeout(officeSearchTimeout);
-      officeSearchTimeout = setTimeout(() => {
-        renderGroupedPincodeResults();
-      }, 180);
+      officeSearchTimeout = setTimeout(renderGroupedPincodeResults, 180);
     }
 
     function renderGroupedPincodeResults() {
       const container = document.getElementById('pincode-results-container');
       if (!container) return;
-
       const rawQuery = (document.getElementById('office-search-input')?.value || '').trim().toLowerCase();
 
       if (!DATA_PINCODES_GROUPED || DATA_PINCODES_GROUPED.length === 0) {
-        container.innerHTML = `
-          <div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">
-            <i data-lucide="database" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
-            <div class="font-bold text-sm">Pincode database not yet loaded</div>
-            <p class="text-[11px] text-slate-500 mt-1">Ensure data/pincodes.json exists in your repository.</p>
-          </div>
-        `;
-        lucide.createIcons();
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl">Pincode database loading...</div>`;
         return;
       }
-
       if (rawQuery.length < 3) {
-        container.innerHTML = `
-          <div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">
-            <i data-lucide="search" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
-            <div class="font-semibold text-xs">Type at least 3 digits or characters to scan...</div>
-            <p class="text-[10px] text-slate-500 mt-1">${DATA_PINCODES_GROUPED.length.toLocaleString('en-IN')} pincodes indexed.</p>
-          </div>
-        `;
-        lucide.createIcons();
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl">Type at least 3 digits or letters to search ${DATA_PINCODES_GROUPED.length.toLocaleString('en-IN')} pincodes...</div>`;
         return;
       }
 
@@ -831,194 +1403,81 @@
       for (let i = 0; i < DATA_PINCODES_GROUPED.length; i++) {
         const item = DATA_PINCODES_GROUPED[i];
         const pin = String(item.pincode || '');
-        const district = String(item.district || '').toLowerCase();
+        const dist = String(item.district || '').toLowerCase();
         const state = String(item.state || '').toLowerCase();
         const offices = item.postOffices || [];
 
-        const pinMatch = pin.startsWith(rawQuery);
-        const distMatch = district.includes(rawQuery);
-        const stateMatch = state.includes(rawQuery);
-        const officeMatch = offices.some(o => {
-          return (o.officeName || '').toLowerCase().includes(rawQuery) ||
-                 (o.relatedSubOffice || '').toLowerCase().includes(rawQuery) ||
-                 (o.relatedHeadOffice || '').toLowerCase().includes(rawQuery);
-        });
-
-        if (pinMatch || distMatch || stateMatch || officeMatch) {
+        if (pin.startsWith(rawQuery) || dist.includes(rawQuery) || state.includes(rawQuery) || offices.some(o => (o.officeName || '').toLowerCase().includes(rawQuery))) {
           matches.push(item);
-          if (matches.length >= MAX_PIN_RESULTS) break;
+          if (matches.length >= 25) break;
         }
       }
 
       if (matches.length === 0) {
-        container.innerHTML = `
-          <div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">
-            <div class="font-bold text-xs">No matching pincodes or offices found for "${rawQuery}"</div>
-          </div>
-        `;
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl">No matching post offices found for "${rawQuery}"</div>`;
         return;
       }
 
-      container.innerHTML = matches.map(group => {
-        const pin = group.pincode;
-        const district = group.district || '—';
-        const state = group.state || '—';
-        const division = group.division || '';
-        const region = group.region || '';
-        const circle = group.circle || '';
-        const offices = group.postOffices || [];
-
-        // Build administrative metadata line
-        const adminParts = [];
-        if (division) adminParts.push(`Division: ${division}`);
-        if (region) adminParts.push(`Region: ${region}`);
-        if (circle) adminParts.push(`Circle: ${circle}`);
-        const adminDetails = adminParts.join(' · ');
-
-        return `
-          <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder p-5 shadow-sm space-y-3">
-            <div class="flex flex-col sm:flex-row justify-between sm:items-center pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-2">
-              <div class="flex items-center space-x-3">
-                <span class="font-mono text-xl font-black text-brand-red dark:text-red-400 tracking-wider">${pin}</span>
-                <div>
-                  <span class="font-bold text-sm text-slate-900 dark:text-white">${district}, ${state}</span>
-                  ${adminDetails ? `<div class="text-[11px] text-slate-500 font-medium">${adminDetails}</div>` : ''}
-                </div>
+      container.innerHTML = matches.map(group => `
+        <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder p-5 shadow-sm space-y-3">
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center pb-3 border-b gap-2">
+            <div class="flex items-center space-x-3">
+              <span class="font-mono text-xl font-black text-brand-red dark:text-red-400 tracking-wider">${group.pincode}</span>
+              <div>
+                <span class="font-bold text-sm text-slate-900 dark:text-white">${group.district}, ${group.state}</span>
+                <div class="text-[11px] text-slate-500">Division: ${group.division || '—'} · Region: ${group.region || '—'} · Circle: ${group.circle || '—'}</div>
               </div>
-              <span class="text-[11px] font-mono font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-700 self-start sm:self-auto">
-                ${offices.length} ${offices.length === 1 ? 'Office' : 'Offices'} Attached
-              </span>
             </div>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-xs">
-                <thead class="bg-slate-50 dark:bg-slate-800/60 font-mono text-[11px] text-slate-500 border-b border-brand-border dark:border-brand-darkBorder">
-                  <tr>
-                    <th class="py-2 px-3">Office Name</th>
-                    <th class="py-2 px-3">Type</th>
-                    <th class="py-2 px-3">Delivery Status</th>
-                    <th class="py-2 px-3">Taluk / Tehsil</th>
-                    <th class="py-2 px-3">Sub Office (SO)</th>
-                    <th class="py-2 px-3">Head Office (HO) Linkage</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-                  ${offices.map(o => {
-                    const oName = o.officeName || '—';
-                    const oType = o.officeType || '—';
-                    const oDelivery = o.deliveryStatus || 'Delivery';
-                    const oTaluk = o.taluk || '—';
-                    const oSo = o.relatedSubOffice || 'NA';
-                    const oHo = o.relatedHeadOffice || 'NA';
-                    const isNonDel = String(oDelivery).toLowerCase().includes('non');
-
-                    return `
-                      <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
-                        <td class="py-2 px-3 font-semibold text-slate-800 dark:text-slate-200">${oName}</td>
-                        <td class="py-2 px-3">
-                          <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-bold text-slate-600 dark:text-slate-300">${oType}</span>
-                        </td>
-                        <td class="py-2 px-3">
-                          <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${isNonDel ? 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'}">
-                            ${oDelivery}
-                          </span>
-                        </td>
-                        <td class="py-2 px-3 text-slate-500">${oTaluk}</td>
-                        <td class="py-2 px-3 text-slate-600 dark:text-slate-400 font-mono text-[11px]">${oSo}</td>
-                        <td class="py-2 px-3 font-mono font-bold text-[11px] text-brand-red dark:text-red-400">${oHo}</td>
-                      </tr>
-                    `;
-                  }).join('')}
-                </tbody>
-              </table>
-            </div>
-
+            <span class="text-[11px] font-mono font-semibold bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-full">${group.postOffices.length} Offices Attached</span>
           </div>
-        `;
-      }).join('');
-
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 dark:bg-slate-800/60 font-mono text-[11px] text-slate-500 border-b">
+                <tr>
+                  <th class="py-2 px-3">Office Name</th><th class="py-2 px-3">Type</th><th class="py-2 px-3">Delivery</th><th class="py-2 px-3">Taluk</th><th class="py-2 px-3">Sub Office</th><th class="py-2 px-3">Head Office</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                ${group.postOffices.map(o => `
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                    <td class="py-2 px-3 font-semibold">${o.officeName}</td>
+                    <td class="py-2 px-3 font-mono">${o.officeType}</td>
+                    <td class="py-2 px-3">${o.deliveryStatus}</td>
+                    <td class="py-2 px-3 text-slate-500">${o.taluk}</td>
+                    <td class="py-2 px-3 font-mono text-slate-500">${o.relatedSubOffice}</td>
+                    <td class="py-2 px-3 font-mono font-bold text-brand-red dark:text-red-400">${o.relatedHeadOffice}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `).join('');
       lucide.createIcons();
     }
 
-    /* 7. LOCAL QUERY ENGINE (ASK FEATURE) */
+    /* 6. ASK LOCAL ENGINE */
     function executeRuleQuery() {
       const rawQ = document.getElementById('ask-input').value.trim().toLowerCase();
       const resContainer = document.getElementById('ask-results');
       resContainer.classList.remove('hidden');
+      if (!rawQ) { resContainer.innerHTML = `<div class="p-4 text-xs text-slate-500">Please enter a rule keyword.</div>`; return; }
 
-      if (!rawQ) {
-        resContainer.innerHTML = `<div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-xs text-slate-500">Please enter a rule or subject keyword.</div>`;
-        return;
-      }
-
-      const matches = DATA_ORDERS.filter(o => {
-        const text = (o.orderNo + ' ' + o.subject + ' ' + o.substance + ' ' + (o.keywords || '')).toLowerCase();
-        return rawQ.split(' ').some(word => word.length > 2 && text.includes(word));
-      });
-
+      const matches = DATA_ORDERS.filter(o => (o.orderNo + ' ' + o.subject + ' ' + o.substance + ' ' + (o.keywords || '')).toLowerCase().includes(rawQ));
       if (matches.length === 0) {
-        resContainer.innerHTML = `
-          <div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center space-y-2 border border-slate-200 dark:border-slate-700">
-            <div class="font-bold text-sm text-slate-800 dark:text-slate-200">No verified ruling found for "${rawQ}"</div>
-            <p class="text-xs text-slate-500">Try keywords like 'deceased claim', 'TA bill', 'leave', or verify if the source order exists in data/orders.json.</p>
-          </div>
-        `;
+        resContainer.innerHTML = `<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-xs text-slate-500">No verified ruling found for "${rawQ}".</div>`;
         return;
       }
-
-      matches.sort((a, b) => (a.status === 'In Force' ? -1 : 1));
-
       resContainer.innerHTML = matches.map(m => `
         <div class="p-4 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-2">
-          <div class="flex justify-between items-center">
-            <span class="font-mono font-bold text-brand-red dark:text-red-400 text-xs">${m.orderNo}</span>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.status === 'In Force' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'}">${m.status}</span>
-          </div>
+          <div class="flex justify-between"><span class="font-mono font-bold text-brand-red text-xs">${m.orderNo}</span><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">${m.status}</span></div>
           <h4 class="font-bold text-sm text-slate-900 dark:text-white">${m.subject}</h4>
-          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${m.substance}</p>
-          ${m.supersededBy ? `<div class="text-[11px] text-rose-600 font-medium">Superseded by: ${m.supersededBy}</div>` : ''}
-          ${m.supersedes ? `<div class="text-[11px] text-amber-600 font-medium">Replaces earlier order: ${m.supersedes}</div>` : ''}
+          <p class="text-xs text-slate-600 dark:text-slate-300">${m.substance}</p>
         </div>
       `).join('');
     }
 
-    /* 8. CALCULATORS */
-    function runSalaryCalc() {
-      const basic = parseFloat(document.getElementById('calc-basic').value) || 0;
-      const daPct = parseFloat(document.getElementById('calc-da-pct').value) || 50;
-      const city = document.getElementById('calc-city-class').value;
-
-      const da = Math.round(basic * (daPct / 100));
-      const hraPct = city === 'X' ? 0.30 : (city === 'Y' ? 0.20 : 0.10);
-      const hra = Math.round(basic * hraPct);
-      const tpta = 2700;
-
-      const gross = basic + da + hra + tpta;
-      const nps = Math.round((basic + da) * 0.10);
-      const ded = nps + 30 + 250 + 200;
-      const net = gross - ded;
-
-      document.getElementById('res-basic').innerText = '₹' + basic.toLocaleString('en-IN');
-      document.getElementById('res-da').innerText = '₹' + da.toLocaleString('en-IN');
-      document.getElementById('res-hra').innerText = '₹' + hra.toLocaleString('en-IN');
-      document.getElementById('res-tpta').innerText = '₹' + tpta.toLocaleString('en-IN');
-      document.getElementById('res-gross').innerText = '₹' + gross.toLocaleString('en-IN');
-      document.getElementById('res-nps').innerText = '₹' + nps.toLocaleString('en-IN');
-      document.getElementById('res-ded').innerText = '₹' + ded.toLocaleString('en-IN');
-      document.getElementById('res-net').innerText = '₹' + net.toLocaleString('en-IN');
-    }
-
-    function runGpfCalc() {
-      const op = parseFloat(document.getElementById('gpf-op-bal').value) || 0;
-      const sub = parseFloat(document.getElementById('gpf-month-sub').value) || 0;
-      let cum = 0, bal = op;
-      for (let m = 0; m < 12; m++) { bal += sub; cum += bal; }
-      const intCred = Math.round((cum * 0.071) / 12);
-      document.getElementById('gpf-res-int').innerText = '₹' + intCred.toLocaleString('en-IN');
-      document.getElementById('gpf-res-close').innerText = '₹' + (bal + intCred).toLocaleString('en-IN');
-    }
-
-    /* 9. NAVIGATION & THEMES */
+    /* 7. NAVIGATION & APP LIFECYCLE */
     function navigateTab(tabId) {
       document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById('view-' + tabId);
@@ -1027,21 +1486,12 @@
       ['dashboard', 'ask', 'orders', 'posb', 'forms', 'offices', 'calculators'].forEach(t => {
         const btn = document.getElementById('btn-tab-' + t);
         if (btn) {
-          if (t === tabId) {
-            btn.className = "px-3 py-2 rounded-lg text-brand-red dark:text-red-400 font-bold flex items-center space-x-1.5";
-          } else {
-            btn.className = "px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5";
-          }
+          btn.className = (t === tabId)
+            ? "px-3 py-2 rounded-lg text-brand-red dark:text-red-400 font-bold flex items-center space-x-1.5"
+            : "px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5";
         }
       });
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function switchCalcSub(sub) {
-      document.getElementById('calc-pane-salary').classList.toggle('hidden', sub !== 'salary');
-      document.getElementById('calc-pane-gpf').classList.toggle('hidden', sub !== 'gpf');
-      document.getElementById('subbtn-salary').className = sub === 'salary' ? "px-3 py-1.5 font-bold rounded-lg bg-brand-red text-white" : "px-3 py-1.5 font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300";
-      document.getElementById('subbtn-gpf').className = sub === 'gpf' ? "px-3 py-1.5 font-bold rounded-lg bg-brand-red text-white" : "px-3 py-1.5 font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300";
     }
 
     function toggleTheme() {
@@ -1062,15 +1512,12 @@
       }
     });
 
-    /* BOOTSTRAP */
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('postaliq_theme') || 'light';
       if (savedTheme === 'dark') {
         document.documentElement.classList.add('dark');
         updateThemeIcons(true);
       }
-      runSalaryCalc();
-      runGpfCalc();
       loadCentralData();
       lucide.createIcons();
     });
