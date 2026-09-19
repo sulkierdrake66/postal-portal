@@ -289,9 +289,7 @@
         <p class="text-xs text-slate-500">Statutory departmental and civil service forms indexed from /data/forms.json.</p>
       </div>
 
-      <div id="forms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Dynamic Cards -->
-      </div>
+      <div id="forms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
     <!-- ============================================================= -->
@@ -411,6 +409,38 @@
 
   </main>
 
+  <!-- IN-PAGE PDF VIEWER LIGHTBOX (GMAIL-STYLE PREVIEW DIALOG) -->
+  <div id="pdf-viewer-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 hidden">
+    <div class="bg-brand-card dark:bg-brand-darkCard rounded-2xl w-full max-w-5xl h-[90vh] flex flex-col border border-brand-border dark:border-brand-darkBorder shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Top Modal Bar -->
+      <div class="px-4 py-3 bg-slate-100 dark:bg-slate-800 border-b border-brand-border dark:border-brand-darkBorder flex items-center justify-between">
+        <div class="flex items-center space-x-2 truncate">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-gold"></span>
+          <span id="pdf-modal-title" class="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-100 truncate">Form Preview</span>
+        </div>
+        
+        <div class="flex items-center space-x-2">
+          <!-- In-Modal Print Trigger -->
+          <button onclick="printModalPdf()" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 text-xs font-semibold flex items-center space-x-1.5 transition">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Print</span>
+          </button>
+          
+          <!-- Close Trigger -->
+          <button onclick="closePdfViewerModal()" class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition" title="Close Preview (Esc)">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Embedded Fillable PDF Frame -->
+      <div class="flex-grow w-full h-full bg-slate-900 relative">
+        <iframe id="pdf-modal-iframe" src="" class="w-full h-full border-0"></iframe>
+      </div>
+    </div>
+  </div>
+
   <!-- DETAIL MODAL FOR ORDERS -->
   <div id="order-detail-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-brand-card dark:bg-brand-darkCard rounded-2xl max-w-xl w-full p-6 border border-brand-border dark:border-brand-darkBorder shadow-2xl space-y-4 text-xs">
@@ -466,7 +496,7 @@
 
   <!-- SCRIPT ENGINE -->
   <script>
-    /* FALLBACK DATASET: ENSURES FORMS ALWAYS RENDER EVEN OFFLINE OR IF FETCH IS DELAYED */
+    /* VERIFIED FORMS DATASET FALLBACK (LOADED DIRECTLY IF FETCH IS BLOCKED OR SLOW) */
     const VERIFIED_FORMS_FALLBACK = [
       {
         "id": "form-pdf-1",
@@ -489,7 +519,7 @@
     /* APPLICATION STATE REPOSITORIES */
     let DATA_ORDERS = [];
     let DATA_POSB = [];
-    let DATA_FORMS = [...VERIFIED_FORMS_FALLBACK]; // Pre-seeded with verified forms
+    let DATA_FORMS = [...VERIFIED_FORMS_FALLBACK];
     let DATA_OFFICES = [];
 
     /* RESILIENT MULTI-PATH FETCHER */
@@ -661,7 +691,7 @@
       });
     }
 
-    /* 5. RENDER FORMS CATALOG */
+    /* 5. RENDER FORMS CATALOG: GMAIL-STYLE IN-PAGE POPUP */
     function renderFormsCatalog() {
       const grid = document.getElementById('forms-grid');
       if (!grid) return;
@@ -674,7 +704,7 @@
 
       DATA_FORMS.forEach(f => {
         const card = document.createElement('div');
-        card.className = "p-5 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 flex flex-col justify-between shadow-sm";
+        card.className = "p-5 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 flex flex-col justify-between shadow-sm hover:shadow-md transition";
         card.innerHTML = `
           <div class="space-y-2">
             <div class="flex justify-between items-start">
@@ -685,14 +715,10 @@
             <p class="text-[11px] text-slate-500">${f.ruleRef || ''}</p>
           </div>
 
-          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-            <a href="${f.pdfPath}" target="_blank" class="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-red dark:text-red-400 hover:underline">
-              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-end">
+            <button onclick="openPdfModal('${f.pdfPath}', '${f.title.replace(/'/g, "\\'")}')" class="w-full sm:w-auto inline-flex items-center justify-center space-x-1.5 text-xs font-bold text-white bg-brand-red hover:bg-brand-darkRed px-4 py-2 rounded-lg shadow-sm transition">
+              <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
               <span>Open & Fill</span>
-            </a>
-            <button onclick="printExternalPdf('${f.pdfPath}')" class="inline-flex items-center space-x-1 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
-              <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-              <span>Print</span>
             </button>
           </div>
         `;
@@ -701,35 +727,50 @@
       lucide.createIcons();
     }
 
-    function printExternalPdf(pdfUrl) {
-      const existingFrame = document.getElementById('pdf-print-iframe');
-      if (existingFrame) existingFrame.remove();
+    /* IN-PAGE PDF VIEWER CONTROLLERS */
+    function openPdfModal(pdfPath, title) {
+      const modal = document.getElementById('pdf-viewer-modal');
+      const iframe = document.getElementById('pdf-modal-iframe');
+      const modalTitle = document.getElementById('pdf-modal-title');
+      
+      if (!modal || !iframe) return;
 
-      const iframe = document.createElement('iframe');
-      iframe.id = 'pdf-print-iframe';
-      iframe.style.position = 'fixed';
-      iframe.style.right = '0';
-      iframe.style.bottom = '0';
-      iframe.style.width = '0';
-      iframe.style.height = '0';
-      iframe.style.border = '0';
-      iframe.src = pdfUrl;
+      modalTitle.innerText = title || 'Document Preview';
+      iframe.src = pdfPath;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden'; // Lock background scrolling
+      lucide.createIcons();
+    }
 
-      iframe.onload = function() {
+    function closePdfViewerModal() {
+      const modal = document.getElementById('pdf-viewer-modal');
+      const iframe = document.getElementById('pdf-modal-iframe');
+      
+      if (!modal) return;
+      modal.classList.add('hidden');
+      if (iframe) iframe.src = ''; // Unload PDF from memory
+      document.body.style.overflow = '';
+    }
+
+    function printModalPdf() {
+      const iframe = document.getElementById('pdf-modal-iframe');
+      if (iframe && iframe.contentWindow) {
         try {
           iframe.contentWindow.focus();
           iframe.contentWindow.print();
         } catch (e) {
-          const win = window.open(pdfUrl, '_blank');
-          if (win) {
-            win.focus();
-            win.print();
-          }
+          window.print();
         }
-      };
-
-      document.body.appendChild(iframe);
+      }
     }
+
+    // Dismiss lightboxes with Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePdfViewerModal();
+        closeOrderDetailModal();
+      }
+    });
 
     /* 6. RENDER OFFICES TABLE */
     function renderOfficesTable() {
