@@ -141,9 +141,7 @@
   <!-- MAIN CONTAINER -->
   <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
-    <!-- ============================================================= -->
-    <!-- TAB 1: DASHBOARD                                              -->
-    <!-- ============================================================= -->
+    <!-- TAB 1: DASHBOARD -->
     <div id="view-dashboard" class="tab-view space-y-6">
       <div class="bg-gradient-to-r from-red-950 via-slate-900 to-amber-950 text-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-800">
         <div class="max-w-3xl space-y-3">
@@ -193,9 +191,7 @@
       </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- TAB 2: ASK                                                    -->
-    <!-- ============================================================= -->
+    <!-- TAB 2: ASK -->
     <div id="view-ask" class="tab-view hidden space-y-6">
       <div class="bg-brand-card dark:bg-brand-darkCard p-6 rounded-2xl border border-brand-border dark:border-brand-darkBorder space-y-4">
         <div>
@@ -218,9 +214,7 @@
       </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- TAB 3: ORDERS REGISTER                                        -->
-    <!-- ============================================================= -->
+    <!-- TAB 3: ORDERS REGISTER -->
     <div id="view-orders" class="tab-view hidden space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3">
         <div>
@@ -255,9 +249,7 @@
       </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- TAB 4: POSB RATES HUB                                        -->
-    <!-- ============================================================= -->
+    <!-- TAB 4: POSB RATES HUB -->
     <div id="view-posb" class="tab-view hidden space-y-4">
       <div class="pb-3 border-b border-brand-border dark:border-brand-darkBorder">
         <h2 class="text-xl font-bold text-slate-900 dark:text-white">POSB & Small Savings Schemes Master Register</h2>
@@ -280,9 +272,7 @@
       </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- TAB 5: FORMS CATALOG & REPOSITORY                             -->
-    <!-- ============================================================= -->
+    <!-- TAB 5: FORMS CATALOG & REPOSITORY -->
     <div id="view-forms" class="tab-view hidden space-y-4">
       <div class="pb-3 border-b border-brand-border dark:border-brand-darkBorder">
         <h2 class="text-xl font-bold text-slate-900 dark:text-white">Official Forms Catalog</h2>
@@ -292,9 +282,7 @@
       <div id="forms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- TAB 6: PINCODE & POST OFFICE DIRECTORY (GROUPED VIEW)         -->
-    <!-- ============================================================= -->
+    <!-- TAB 6: PINCODE & POST OFFICE DIRECTORY (HIERARCHICAL GROUPED VIEW) -->
     <div id="view-offices" class="tab-view hidden space-y-4">
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3">
         <div>
@@ -302,20 +290,19 @@
             <i data-lucide="map-pin" class="w-5 h-5 text-brand-red dark:text-red-400"></i>
             <span>All-India Pincode & Post Office Directory</span>
           </h2>
-          <p class="text-xs text-slate-500">Instant offline search across grouped delivery zones, sub-offices, and branch offices.</p>
+          <p class="text-xs text-slate-500">Complete administrative hierarchy: Sub Offices, Head Offices, Division, Region, and Circle.</p>
         </div>
         <div class="w-full sm:w-80">
           <input 
             type="text" 
             id="office-search-input" 
             oninput="debounceOfficeSearch()" 
-            placeholder="Search 6-digit PIN, Office (e.g. Ushagram), or District..." 
+            placeholder="Search 6-digit PIN, Office (e.g. Asifabad), or District..." 
             class="w-full px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-brand-red focus:outline-none"
           >
         </div>
       </div>
 
-      <!-- Search Results Container -->
       <div id="pincode-results-container" class="space-y-4">
         <div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">
           <i data-lucide="search" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
@@ -325,9 +312,7 @@
       </div>
     </div>
 
-    <!-- ============================================================= -->
-    <!-- TAB 7: CALCULATORS                                            -->
-    <!-- ============================================================= -->
+    <!-- TAB 7: CALCULATORS -->
     <div id="view-calculators" class="tab-view hidden space-y-4">
       <div class="flex gap-2 border-b border-brand-border dark:border-brand-darkBorder pb-3 text-xs">
         <button onclick="switchCalcSub('salary')" id="subbtn-salary" class="px-3 py-1.5 font-bold rounded-lg bg-brand-red text-white">7th CPC Salary</button>
@@ -413,32 +398,24 @@
 
   </main>
 
-  <!-- IN-PAGE PDF VIEWER LIGHTBOX (GMAIL-STYLE PREVIEW DIALOG) -->
+  <!-- IN-PAGE PDF VIEWER LIGHTBOX -->
   <div id="pdf-viewer-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-2 sm:p-4 hidden">
     <div class="bg-brand-card dark:bg-brand-darkCard rounded-2xl w-full max-w-5xl h-[90vh] flex flex-col border border-brand-border dark:border-brand-darkBorder shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-      
-      <!-- Top Modal Bar -->
       <div class="px-4 py-3 bg-slate-100 dark:bg-slate-800 border-b border-brand-border dark:border-brand-darkBorder flex items-center justify-between">
         <div class="flex items-center space-x-2 truncate">
           <span class="w-2.5 h-2.5 rounded-full bg-brand-gold"></span>
           <span id="pdf-modal-title" class="font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-100 truncate">Form Preview</span>
         </div>
-        
         <div class="flex items-center space-x-2">
-          <!-- In-Modal Print Trigger -->
           <button onclick="printModalPdf()" class="px-3 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 text-xs font-semibold flex items-center space-x-1.5 transition">
             <i data-lucide="printer" class="w-4 h-4"></i>
             <span class="hidden sm:inline">Print</span>
           </button>
-          
-          <!-- Close Trigger -->
           <button onclick="closePdfViewerModal()" class="p-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition" title="Close Preview (Esc)">
             <i data-lucide="x" class="w-5 h-5"></i>
           </button>
         </div>
       </div>
-
-      <!-- Embedded Fillable PDF Frame -->
       <div class="flex-grow w-full h-full bg-slate-900 relative">
         <iframe id="pdf-modal-iframe" src="" class="w-full h-full border-0"></iframe>
       </div>
@@ -500,7 +477,6 @@
 
   <!-- SCRIPT ENGINE -->
   <script>
-    /* VERIFIED FORMS DATASET FALLBACK */
     const VERIFIED_FORMS_FALLBACK = [
       {
         "id": "form-pdf-1",
@@ -520,15 +496,13 @@
       }
     ];
 
-    /* APPLICATION STATE REPOSITORIES */
     let DATA_ORDERS = [];
     let DATA_POSB = [];
     let DATA_FORMS = [...VERIFIED_FORMS_FALLBACK];
-    let DATA_PINCODES = [];
+    let DATA_PINCODES_GROUPED = []; // Grouped memory map
     let officeSearchTimeout = null;
     const MAX_PIN_RESULTS = 25;
 
-    /* RESILIENT MULTI-PATH FETCHER */
     async function fetchDataset(filename, fallbackData = []) {
       const candidatePaths = [
         `data/${filename}`,
@@ -547,27 +521,72 @@
               return json;
             }
           }
-        } catch (err) {
-          // Continue to next path
-        }
+        } catch (err) {}
       }
       return fallbackData;
+    }
+
+    /* IN-MEMORY GROUPING CONVERTER: CONVERTS FULL FLAT LIST INTO RICH GROUPED PINCODE CARDS */
+    function buildGroupedPincodeData(rawList) {
+      if (!Array.isArray(rawList) || rawList.length === 0) return [];
+
+      // If already grouped structure
+      if (rawList[0].postOffices || rawList[0].offices) {
+        return rawList;
+      }
+
+      const map = new Map();
+      for (let i = 0; i < rawList.length; i++) {
+        const item = rawList[i];
+        const pin = String(item.pincode || item.Pincode || '').trim();
+        if (!pin) continue;
+
+        if (!map.has(pin)) {
+          map.set(pin, {
+            pincode: pin,
+            district: item.district || item.District || '',
+            state: item.state || item.State || item.StateName || '',
+            division: item.division || item.Division || '',
+            region: item.region || item.Region || '',
+            circle: item.circle || item.Circle || '',
+            taluk: item.taluk || item.Taluk || '',
+            postOffices: []
+          });
+        }
+
+        const group = map.get(pin);
+        // Pull forward administrative details if missing at root
+        if (!group.division && item.division) group.division = item.division;
+        if (!group.region && item.region) group.region = item.region;
+        if (!group.circle && item.circle) group.circle = item.circle;
+
+        group.postOffices.push({
+          officeName: item.officeName || item.officename || '',
+          officeType: item.officeType || item.officetype || '',
+          deliveryStatus: item.deliveryStatus || item.deliverystatus || 'Delivery',
+          taluk: item.taluk || item.Taluk || '',
+          relatedSubOffice: item.relatedSubOffice || item.relatedsuboffice || 'NA',
+          relatedHeadOffice: item.relatedHeadOffice || item.relatedheadoffice || 'NA'
+        });
+      }
+
+      return Array.from(map.values());
     }
 
     /* 1. FETCH CONTROLLER */
     async function loadCentralData() {
       try {
-        const [orders, posb, forms, pincodes] = await Promise.all([
+        const [orders, posb, forms, rawPins] = await Promise.all([
           fetchDataset('orders.json', []),
           fetchDataset('posb-rates.json', []),
           fetchDataset('forms.json', VERIFIED_FORMS_FALLBACK),
-          fetchDataset('pincodes.json', []).then(res => res.length ? res : fetchDataset('india_pincodes_grouped.json', []))
+          fetchDataset('pincodes.json', []).then(res => res.length ? res : fetchDataset('india_pincodes_flat.json', []))
         ]);
 
         DATA_ORDERS = orders;
         DATA_POSB = posb;
         DATA_FORMS = forms && forms.length > 0 ? forms : VERIFIED_FORMS_FALLBACK;
-        DATA_PINCODES = pincodes;
+        DATA_PINCODES_GROUPED = buildGroupedPincodeData(rawPins);
       } catch (e) {
         console.warn('Dataset sync warning:', e);
       } finally {
@@ -583,7 +602,7 @@
       if (document.getElementById('dash-count-posb')) document.getElementById('dash-count-posb').innerText = DATA_POSB.length;
       if (document.getElementById('dash-count-forms')) document.getElementById('dash-count-forms').innerText = DATA_FORMS.length;
       if (document.getElementById('dash-count-offices')) {
-        document.getElementById('dash-count-offices').innerText = DATA_PINCODES.length ? DATA_PINCODES.length.toLocaleString('en-IN') : '0';
+        document.getElementById('dash-count-offices').innerText = DATA_PINCODES_GROUPED.length ? DATA_PINCODES_GROUPED.length.toLocaleString('en-IN') : '0';
       }
     }
 
@@ -734,7 +753,6 @@
       lucide.createIcons();
     }
 
-    /* IN-PAGE PDF VIEWER CONTROLLERS */
     function openPdfModal(pdfPath, title) {
       const modal = document.getElementById('pdf-viewer-modal');
       const iframe = document.getElementById('pdf-modal-iframe');
@@ -771,7 +789,7 @@
       }
     }
 
- /* 6. GROUPED PINCODE SEARCH ENGINE (WITH COMPREHENSIVE LINKAGE FALLBACKS) */
+    /* 6. GROUPED PINCODE SEARCH ENGINE */
     function debounceOfficeSearch() {
       clearTimeout(officeSearchTimeout);
       officeSearchTimeout = setTimeout(() => {
@@ -785,12 +803,12 @@
 
       const rawQuery = (document.getElementById('office-search-input')?.value || '').trim().toLowerCase();
 
-      if (!DATA_PINCODES || DATA_PINCODES.length === 0) {
+      if (!DATA_PINCODES_GROUPED || DATA_PINCODES_GROUPED.length === 0) {
         container.innerHTML = `
           <div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">
             <i data-lucide="database" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
             <div class="font-bold text-sm">Pincode database not yet loaded</div>
-            <p class="text-[11px] text-slate-500 mt-1">Ensure data/pincodes.json or data/india_pincodes_grouped.json exists in your repository.</p>
+            <p class="text-[11px] text-slate-500 mt-1">Ensure data/pincodes.json exists in your repository.</p>
           </div>
         `;
         lucide.createIcons();
@@ -802,7 +820,7 @@
           <div class="p-8 text-center text-slate-400 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">
             <i data-lucide="search" class="w-8 h-8 mx-auto mb-2 opacity-40"></i>
             <div class="font-semibold text-xs">Type at least 3 digits or characters to scan...</div>
-            <p class="text-[10px] text-slate-500 mt-1">${DATA_PINCODES.length.toLocaleString('en-IN')} pincodes indexed.</p>
+            <p class="text-[10px] text-slate-500 mt-1">${DATA_PINCODES_GROUPED.length.toLocaleString('en-IN')} pincodes indexed.</p>
           </div>
         `;
         lucide.createIcons();
@@ -810,20 +828,20 @@
       }
 
       const matches = [];
-      for (let i = 0; i < DATA_PINCODES.length; i++) {
-        const item = DATA_PINCODES[i];
-        const pin = String(item.pincode || item.Pincode || item.pin || item.PIN || '');
-        const district = String(item.district || item.District || item.districtname || '').toLowerCase();
-        const state = String(item.state || item.State || item.StateName || item.statename || '').toLowerCase();
-        const offices = item.postOffices || item.offices || item.PostOffices || item.officesList || [];
+      for (let i = 0; i < DATA_PINCODES_GROUPED.length; i++) {
+        const item = DATA_PINCODES_GROUPED[i];
+        const pin = String(item.pincode || '');
+        const district = String(item.district || '').toLowerCase();
+        const state = String(item.state || '').toLowerCase();
+        const offices = item.postOffices || [];
 
         const pinMatch = pin.startsWith(rawQuery);
         const distMatch = district.includes(rawQuery);
         const stateMatch = state.includes(rawQuery);
         const officeMatch = offices.some(o => {
-          const oName = (o.name || o.officeName || o.OfficeName || o.officename || '').toLowerCase();
-          const hoName = (o.relatedHeadoffice || o.relatedHeadOffice || o.headOffice || o.HeadOffice || o.HO || '').toLowerCase();
-          return oName.includes(rawQuery) || hoName.includes(rawQuery);
+          return (o.officeName || '').toLowerCase().includes(rawQuery) ||
+                 (o.relatedSubOffice || '').toLowerCase().includes(rawQuery) ||
+                 (o.relatedHeadOffice || '').toLowerCase().includes(rawQuery);
         });
 
         if (pinMatch || distMatch || stateMatch || officeMatch) {
@@ -842,17 +860,15 @@
       }
 
       container.innerHTML = matches.map(group => {
-        const pin = group.pincode || group.Pincode || group.pin || group.PIN || '—';
-        const district = group.district || group.District || group.districtname || '—';
-        const state = group.state || group.State || group.StateName || group.statename || '—';
-        
-        // Comprehensive circle & region fallbacks
-        const circle = group.circle || group.Circle || group.circleName || group.circlename || '';
-        const region = group.region || group.Region || group.regionName || group.regionname || '';
-        const division = group.division || group.Division || group.divisionName || group.divisionname || '';
-        const offices = group.postOffices || group.offices || group.PostOffices || group.officesList || [];
+        const pin = group.pincode;
+        const district = group.district || '—';
+        const state = group.state || '—';
+        const division = group.division || '';
+        const region = group.region || '';
+        const circle = group.circle || '';
+        const offices = group.postOffices || [];
 
-        // Build administrative metadata badge
+        // Build administrative metadata line
         const adminParts = [];
         if (division) adminParts.push(`Division: ${division}`);
         if (region) adminParts.push(`Region: ${region}`);
@@ -888,15 +904,12 @@
                 </thead>
                 <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                   ${offices.map(o => {
-                    const oName = o.name || o.officeName || o.OfficeName || o.officename || '—';
-                    const oType = o.type || o.officeType || o.OfficeType || o.officetype || '—';
-                    const oDelivery = o.deliveryStatus || o.DeliveryStatus || o.delivery || o.deliverystatus || 'Delivery';
-                    const oTaluk = o.taluk || o.Taluk || o.subDistrict || o.subdistrict || '—';
-                    
-                    // Comprehensive SO & HO key linkages
-                    const oSo = o.relatedSubOffice || o.relatedSuboffice || o.subOffice || o.SubOffice || o.SO || '—';
-                    const oHo = o.relatedHeadoffice || o.relatedHeadOffice || o.headOffice || o.HeadOffice || o.HO || o.head_office || '—';
-                    
+                    const oName = o.officeName || '—';
+                    const oType = o.officeType || '—';
+                    const oDelivery = o.deliveryStatus || 'Delivery';
+                    const oTaluk = o.taluk || '—';
+                    const oSo = o.relatedSubOffice || 'NA';
+                    const oHo = o.relatedHeadOffice || 'NA';
                     const isNonDel = String(oDelivery).toLowerCase().includes('non');
 
                     return `
@@ -1042,7 +1055,6 @@
       document.getElementById('theme-icon-moon')?.classList.toggle('hidden', isDark);
     }
 
-    // Dismiss lightboxes with Escape key
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closePdfViewerModal();
