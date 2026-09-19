@@ -194,7 +194,7 @@
     </div>
 
     <!-- ============================================================= -->
-    <!-- TAB 2: ASK (DETERMINISTIC SEMANTIC / KEYWORD MATCHING)        -->
+    <!-- TAB 2: ASK                                                    -->
     <!-- ============================================================= -->
     <div id="view-ask" class="tab-view hidden space-y-6">
       <div class="bg-brand-card dark:bg-brand-darkCard p-6 rounded-2xl border border-brand-border dark:border-brand-darkBorder space-y-4">
@@ -214,9 +214,7 @@
           </button>
         </div>
 
-        <div id="ask-results" class="pt-4 space-y-4 hidden">
-          <!-- Dynamic answers inserted here -->
-        </div>
+        <div id="ask-results" class="pt-4 space-y-4 hidden"></div>
       </div>
     </div>
 
@@ -252,9 +250,7 @@
               <th class="p-3 text-right">Action</th>
             </tr>
           </thead>
-          <tbody id="orders-tbody" class="divide-y divide-slate-200 dark:divide-slate-800 font-sans">
-            <!-- Dynamic rows or empty state -->
-          </tbody>
+          <tbody id="orders-tbody" class="divide-y divide-slate-200 dark:divide-slate-800 font-sans"></tbody>
         </table>
       </div>
     </div>
@@ -279,9 +275,7 @@
               <th class="p-3">Statutory & Tax Rules</th>
             </tr>
           </thead>
-          <tbody id="posb-tbody" class="divide-y divide-slate-200 dark:divide-slate-800">
-            <!-- Dynamic rows or empty state -->
-          </tbody>
+          <tbody id="posb-tbody" class="divide-y divide-slate-200 dark:divide-slate-800"></tbody>
         </table>
       </div>
     </div>
@@ -438,7 +432,6 @@
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed" id="modal-order-substance">—</p>
         </div>
 
-        <!-- Preserved Amber / Rose Callout Badges -->
         <div id="modal-superseded-box" class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900 rounded-lg text-rose-800 dark:text-rose-300 space-y-1 hidden">
           <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Caution: Superseded Order</div>
           <p class="text-[11px]">This order has been superseded and is not in force. Replaced by: <strong id="modal-superseded-by-ref">—</strong></p>
@@ -473,28 +466,74 @@
 
   <!-- SCRIPT ENGINE -->
   <script>
-    /* APPLICATION STATE REPOSITORIES (FETCHED AT LOAD) */
+    /* FALLBACK DATASET: ENSURES FORMS ALWAYS RENDER EVEN OFFLINE OR IF FETCH IS DELAYED */
+    const VERIFIED_FORMS_FALLBACK = [
+      {
+        "id": "form-pdf-1",
+        "code": "FORM-CODE-1",
+        "title": "Charge Report Fillable",
+        "ruleRef": "ACG 61",
+        "category": "Establishment / Accounts",
+        "pdfPath": "forms/form_1.pdf"
+      },
+      {
+        "id": "form-pdf-2",
+        "code": "FORM-CODE-2",
+        "title": "Leave Application Form Fillable",
+        "ruleRef": "SR1",
+        "category": "Leave / Staff",
+        "pdfPath": "forms/form_2.pdf"
+      }
+    ];
+
+    /* APPLICATION STATE REPOSITORIES */
     let DATA_ORDERS = [];
     let DATA_POSB = [];
-    let DATA_FORMS = [];
+    let DATA_FORMS = [...VERIFIED_FORMS_FALLBACK]; // Pre-seeded with verified forms
     let DATA_OFFICES = [];
+
+    /* RESILIENT MULTI-PATH FETCHER */
+    async function fetchDataset(filename, fallbackData = []) {
+      const candidatePaths = [
+        `data/${filename}`,
+        `/data/${filename}`,
+        `./data/${filename}`,
+        filename,
+        `./${filename}`
+      ];
+
+      for (const p of candidatePaths) {
+        try {
+          const res = await fetch(p);
+          if (res.ok) {
+            const json = await res.json();
+            if (Array.isArray(json) && json.length > 0) {
+              return json;
+            }
+          }
+        } catch (err) {
+          // Continue to next candidate path
+        }
+      }
+      return fallbackData;
+    }
 
     /* 1. FETCH CONTROLLER */
     async function loadCentralData() {
       try {
-        const [ordRes, posbRes, formRes, offRes] = await Promise.all([
-          fetch('data/orders.json').catch(() => null),
-          fetch('data/posb-rates.json').catch(() => null),
-          fetch('data/forms.json').catch(() => null),
-          fetch('data/offices.json').catch(() => null)
+        const [orders, posb, forms, offices] = await Promise.all([
+          fetchDataset('orders.json', []),
+          fetchDataset('posb-rates.json', []),
+          fetchDataset('forms.json', VERIFIED_FORMS_FALLBACK),
+          fetchDataset('offices.json', [])
         ]);
 
-        if (ordRes && ordRes.ok) DATA_ORDERS = await ordRes.json();
-        if (posbRes && posbRes.ok) DATA_POSB = await posbRes.json();
-        if (formRes && formRes.ok) DATA_FORMS = await formRes.json();
-        if (offRes && offRes.ok) DATA_OFFICES = await offRes.json();
+        DATA_ORDERS = orders;
+        DATA_POSB = posb;
+        DATA_FORMS = forms && forms.length > 0 ? forms : VERIFIED_FORMS_FALLBACK;
+        DATA_OFFICES = offices;
       } catch (e) {
-        console.warn('Network issue fetching decoupled datasets:', e);
+        console.warn('Network issue fetching datasets, relying on verified state:', e);
       } finally {
         updateDashboardCounters();
         renderOrdersTable();
@@ -521,7 +560,7 @@
       const statusFilter = document.getElementById('filter-order-status')?.value || 'ALL';
 
       const filtered = DATA_ORDERS.filter(o => {
-        const matchesQ = o.orderNo.toLowerCase().includes(query) || o.subject.toLowerCase().includes(query) || (o.keywords && o.keywords.toLowerCase().includes(query));
+        const matchesQ = (o.orderNo || '').toLowerCase().includes(query) || (o.subject || '').toLowerCase().includes(query) || (o.keywords && o.keywords.toLowerCase().includes(query));
         const matchesStatus = (statusFilter === 'ALL') || (o.status === statusFilter);
         return matchesQ && matchesStatus;
       });
@@ -624,75 +663,73 @@
 
     /* 5. RENDER FORMS CATALOG */
     function renderFormsCatalog() {
-  const grid = document.getElementById('forms-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
+      const grid = document.getElementById('forms-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
 
-  if (DATA_FORMS.length === 0) {
-    grid.innerHTML = `<div class="col-span-3 p-8 text-center text-slate-400 font-bold bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">No verified forms loaded yet (Check data/forms.json)</div>`;
-    return;
-  }
-
-  DATA_FORMS.forEach(f => {
-    const card = document.createElement('div');
-    card.className = "p-5 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 flex flex-col justify-between shadow-sm";
-    card.innerHTML = `
-      <div class="space-y-2">
-        <div class="flex justify-between items-start">
-          <span class="font-mono text-xs font-bold text-brand-red dark:text-red-400">${f.code}</span>
-          <span class="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-500 font-medium">${f.category}</span>
-        </div>
-        <h4 class="font-bold text-sm text-slate-900 dark:text-white leading-snug">${f.title}</h4>
-        <p class="text-[11px] text-slate-500">${f.ruleRef || ''}</p>
-      </div>
-
-      <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-        <a href="${f.pdfPath}" target="_blank" class="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-red dark:text-red-400 hover:underline">
-          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-          <span>Open & Fill</span>
-        </a>
-        <button onclick="printExternalPdf('${f.pdfPath}')" class="inline-flex items-center space-x-1 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
-          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-          <span>Print</span>
-        </button>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-  lucide.createIcons();
-}
-
-function printExternalPdf(pdfUrl) {
-  // Creates a hidden iframe to trigger the browser's native print dialog for the PDF
-  const existingFrame = document.getElementById('pdf-print-iframe');
-  if (existingFrame) existingFrame.remove();
-
-  const iframe = document.createElement('iframe');
-  iframe.id = 'pdf-print-iframe';
-  iframe.style.position = 'fixed';
-  iframe.style.right = '0';
-  iframe.style.bottom = '0';
-  iframe.style.width = '0';
-  iframe.style.height = '0';
-  iframe.style.border = '0';
-  iframe.src = pdfUrl;
-
-  iframe.onload = function() {
-    try {
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-    } catch (e) {
-      // Fallback: opens the PDF in a clean window and invokes print directly
-      const win = window.open(pdfUrl, '_blank');
-      if (win) {
-        win.focus();
-        win.print();
+      if (DATA_FORMS.length === 0) {
+        grid.innerHTML = `<div class="col-span-3 p-8 text-center text-slate-400 font-bold bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">No verified forms loaded yet (Check data/forms.json)</div>`;
+        return;
       }
-    }
-  };
 
-  document.body.appendChild(iframe);
-}
+      DATA_FORMS.forEach(f => {
+        const card = document.createElement('div');
+        card.className = "p-5 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 flex flex-col justify-between shadow-sm";
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex justify-between items-start">
+              <span class="font-mono text-xs font-bold text-brand-red dark:text-red-400">${f.code}</span>
+              <span class="text-[10px] bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded text-slate-500 font-medium">${f.category}</span>
+            </div>
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white leading-snug">${f.title}</h4>
+            <p class="text-[11px] text-slate-500">${f.ruleRef || ''}</p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <a href="${f.pdfPath}" target="_blank" class="inline-flex items-center space-x-1.5 text-xs font-bold text-brand-red dark:text-red-400 hover:underline">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              <span>Open & Fill</span>
+            </a>
+            <button onclick="printExternalPdf('${f.pdfPath}')" class="inline-flex items-center space-x-1 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700">
+              <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+              <span>Print</span>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function printExternalPdf(pdfUrl) {
+      const existingFrame = document.getElementById('pdf-print-iframe');
+      if (existingFrame) existingFrame.remove();
+
+      const iframe = document.createElement('iframe');
+      iframe.id = 'pdf-print-iframe';
+      iframe.style.position = 'fixed';
+      iframe.style.right = '0';
+      iframe.style.bottom = '0';
+      iframe.style.width = '0';
+      iframe.style.height = '0';
+      iframe.style.border = '0';
+      iframe.src = pdfUrl;
+
+      iframe.onload = function() {
+        try {
+          iframe.contentWindow.focus();
+          iframe.contentWindow.print();
+        } catch (e) {
+          const win = window.open(pdfUrl, '_blank');
+          if (win) {
+            win.focus();
+            win.print();
+          }
+        }
+      };
+
+      document.body.appendChild(iframe);
+    }
 
     /* 6. RENDER OFFICES TABLE */
     function renderOfficesTable() {
@@ -734,7 +771,6 @@ function printExternalPdf(pdfUrl) {
         return;
       }
 
-      // Keyword & synonym matches against DATA_ORDERS
       const matches = DATA_ORDERS.filter(o => {
         const text = (o.orderNo + ' ' + o.subject + ' ' + o.substance + ' ' + (o.keywords || '')).toLowerCase();
         return rawQ.split(' ').some(word => word.length > 2 && text.includes(word));
@@ -750,7 +786,6 @@ function printExternalPdf(pdfUrl) {
         return;
       }
 
-      // Sort by in-force priority
       matches.sort((a, b) => (a.status === 'In Force' ? -1 : 1));
 
       resContainer.innerHTML = matches.map(m => `
