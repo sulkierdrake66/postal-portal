@@ -1,0 +1,26 @@
+[
+  {
+    "id": "form-acg61",
+    "code": "A.C.G. 61",
+    "title": "Charge Report and Receipt for Cash and Stamps, on Transfer of Charge",
+    "ruleRef": "Rule 267, P&T Financial Hand Book Vol. I",
+    "category": "Establishment & Accounts",
+    "interactive": true
+  },
+  {
+    "id": "form-ta-tour",
+    "code": "Form No. 02",
+    "title": "Travelling Allowance Bill for Tour (Part A & B)",
+    "ruleRef": "Supplementary Rules / TA Regulations",
+    "category": "Travelling Allowance",
+    "interactive": true
+  },
+  {
+    "id": "form-sr1",
+    "code": "S.R. 1",
+    "title": "Application for Leave",
+    "ruleRef": "Central Civil Services (Leave) Rules, 1972",
+    "category": "Establishment & Staff",
+    "interactive": true
+  }
+]

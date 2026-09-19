@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostalIQ — Postal Orders, Operational Calculators & Reference Hub</title>
+  
+  <!-- PostalIQ Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23B71C1C%22/><path d=%22M24 28h24c8.8 0 16 7.2 16 16s-7.2 16-16 16H36v16H24V28zm12 22h12c3.3 0 6-2.7 6-6s-2.7-6-6-6H36v12z%22 fill=%22%23F59E0B%22/><circle cx=%2274%22 cy=%2272%22 r=%228%22 fill=%22%23F59E0B%22/></svg>">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#B71C1C',
+              darkRed: '#7F1D1D',
+              gold: '#F59E0B',
+              darkGold: '#D97706',
+              surface: '#F8FAFC',
+              darkSurface: '#0B1120',
+              card: '#FFFFFF',
+              darkCard: '#1E293B',
+              border: '#E2E8F0',
+              darkBorder: '#334155'
+            }
+          },
+          fontFamily: {
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+            serif: ['Cambria', 'Georgia', 'Times New Roman', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @media print {
+      body { background: #ffffff !important; color: #000000 !important; font-size: 10pt !important; }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      .form-print-sheet {
+        box-shadow: none !important; border: none !important; padding: 0 !important;
+        margin: 0 !important; width: 100% !important; max-width: 100% !important;
+        background: transparent !important; color: #000000 !important;
+      }
+      .govt-ruled-table { border-collapse: collapse !important; width: 100% !important; }
+      .govt-ruled-table th, .govt-ruled-table td { border: 1px solid #000000 !important; padding: 4px 6px !important; }
+      input, textarea, select {
+        border: none !important; border-bottom: 1px dotted #333 !important; border-radius: 0 !important;
+        background: transparent !important; color: #000000 !important; padding: 1px 2px !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-brand-surface dark:bg-brand-darkSurface text-slate-800 dark:text-slate-100 flex flex-col min-h-full font-sans antialiased transition-colors duration-200">
+
+  <!-- TOP APP BAR -->
+  <header class="no-print bg-brand-card dark:bg-brand-darkCard border-b border-brand-border dark:border-brand-darkBorder sticky top-0 z-50 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      
+      <!-- Brand & Vector Logo -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTab('dashboard')">
+        <div class="w-10 h-10 rounded-xl bg-brand-red flex items-center justify-center shadow-md relative overflow-hidden flex-shrink-0">
+          <svg class="w-6 h-6" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 24h26c11 0 20 9 20 20s-9 20-20 20H36v18H22V24zm14 26h12c3.3 0 6-2.7 6-6s-2.7-6-6-6H36v12z" fill="#F59E0B"/>
+            <circle cx="76" cy="74" r="9" fill="#F59E0B"/>
+          </svg>
+          <div class="absolute bottom-0 inset-x-0 h-1 bg-brand-gold"></div>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-bold text-xl tracking-tight text-brand-red dark:text-red-400">PostalIQ</span>
+            <span class="text-[10px] font-mono font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700">postaliq.store</span>
+          </div>
+          <p class="text-[10px] text-slate-500 dark:text-slate-400 hidden sm:block">Civil Service Rules, Circulars Lineage & Operational Desk</p>
+        </div>
+      </div>
+
+      <!-- Main Navigation -->
+      <nav class="hidden lg:flex items-center space-x-1 text-sm font-medium">
+        <button onclick="navigateTab('dashboard')" id="btn-tab-dashboard" class="px-3 py-2 rounded-lg text-brand-red dark:text-red-400 font-bold flex items-center space-x-1.5">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>Dashboard</span>
+        </button>
+        <button onclick="navigateTab('ask')" id="btn-tab-ask" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5">
+          <i data-lucide="sparkles" class="w-4 h-4 text-brand-gold"></i>
+          <span>Ask Rules</span>
+        </button>
+        <button onclick="navigateTab('orders')" id="btn-tab-orders" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5">
+          <i data-lucide="file-text" class="w-4 h-4"></i>
+          <span>Orders Register</span>
+        </button>
+        <button onclick="navigateTab('posb')" id="btn-tab-posb" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5">
+          <i data-lucide="percent" class="w-4 h-4"></i>
+          <span>POSB Rates</span>
+        </button>
+        <button onclick="navigateTab('forms')" id="btn-tab-forms" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5">
+          <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+          <span>Forms</span>
+        </button>
+        <button onclick="navigateTab('offices')" id="btn-tab-offices" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5">
+          <i data-lucide="map-pin" class="w-4 h-4"></i>
+          <span>PIN / Offices</span>
+        </button>
+        <button onclick="navigateTab('calculators')" id="btn-tab-calculators" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5">
+          <i data-lucide="calculator" class="w-4 h-4"></i>
+          <span>Calculators</span>
+        </button>
+      </nav>
+
+      <!-- Utility Actions -->
+      <div class="flex items-center space-x-2">
+        <button onclick="toggleTheme()" class="p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Toggle Theme">
+          <i data-lucide="sun" id="theme-icon-sun" class="w-5 h-5 hidden text-amber-400"></i>
+          <i data-lucide="moon" id="theme-icon-moon" class="w-5 h-5"></i>
+        </button>
+        <button onclick="window.print()" class="hidden sm:inline-flex items-center space-x-1 text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Print</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE TABS -->
+  <div class="no-print lg:hidden bg-brand-card dark:bg-brand-darkCard border-b border-brand-border dark:border-brand-darkBorder px-3 py-2 flex space-x-2 overflow-x-auto text-xs">
+    <button onclick="navigateTab('dashboard')" class="whitespace-nowrap px-2.5 py-1.5 rounded bg-slate-100 dark:bg-slate-800 font-bold text-brand-red dark:text-red-400">Dashboard</button>
+    <button onclick="navigateTab('ask')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Ask</button>
+    <button onclick="navigateTab('orders')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Orders</button>
+    <button onclick="navigateTab('posb')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Rates</button>
+    <button onclick="navigateTab('forms')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Forms</button>
+    <button onclick="navigateTab('offices')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">PINs</button>
+    <button onclick="navigateTab('calculators')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Calculators</button>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+
+    <!-- ============================================================= -->
+    <!-- TAB 1: DASHBOARD                                              -->
+    <!-- ============================================================= -->
+    <div id="view-dashboard" class="tab-view space-y-6">
+      <div class="bg-gradient-to-r from-red-950 via-slate-900 to-amber-950 text-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-800">
+        <div class="max-w-3xl space-y-3">
+          <div class="inline-flex items-center space-x-2 bg-black/40 px-3 py-1 rounded-full text-xs font-mono text-amber-300 border border-amber-500/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>PostalIQ Central Data Architecture</span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-black tracking-tight">Independent Postal Knowledge & Operations Base</h1>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Centralized reference repository for civil service personnel and postal operators. Verify active rulings, compute salary and retirement schedules, audit statutory forms, and trace supersession chains.
+          </p>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <button onclick="navigateTab('ask')" class="bg-brand-gold hover:bg-brand-darkGold text-slate-950 font-bold px-4 py-2 rounded-lg text-xs flex items-center space-x-1.5 shadow">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+              <span>Launch Rule Assistant</span>
+            </button>
+            <button onclick="navigateTab('orders')" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-4 py-2 rounded-lg text-xs border border-white/20 flex items-center space-x-1.5">
+              <i data-lucide="file-text" class="w-4 h-4"></i>
+              <span>Explore Orders Register</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Counters -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder">
+          <span class="text-xs text-slate-500 font-medium">Orders Loaded</span>
+          <div class="text-xl font-mono font-black text-slate-900 dark:text-white mt-1" id="dash-count-orders">0</div>
+          <span class="text-[11px] text-slate-400">From /data/orders.json</span>
+        </div>
+        <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder">
+          <span class="text-xs text-slate-500 font-medium">POSB Schemes</span>
+          <div class="text-xl font-mono font-black text-slate-900 dark:text-white mt-1" id="dash-count-posb">0</div>
+          <span class="text-[11px] text-slate-400">From /data/posb-rates.json</span>
+        </div>
+        <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder">
+          <span class="text-xs text-slate-500 font-medium">Forms Cataloged</span>
+          <div class="text-xl font-mono font-black text-slate-900 dark:text-white mt-1" id="dash-count-forms">0</div>
+          <span class="text-[11px] text-slate-400">From /data/forms.json</span>
+        </div>
+        <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder">
+          <span class="text-xs text-slate-500 font-medium">Offices Indexed</span>
+          <div class="text-xl font-mono font-black text-slate-900 dark:text-white mt-1" id="dash-count-offices">0</div>
+          <span class="text-[11px] text-slate-400">From /data/offices.json</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TAB 2: ASK (DETERMINISTIC SEMANTIC / KEYWORD MATCHING)        -->
+    <!-- ============================================================= -->
+    <div id="view-ask" class="tab-view hidden space-y-6">
+      <div class="bg-brand-card dark:bg-brand-darkCard p-6 rounded-2xl border border-brand-border dark:border-brand-darkBorder space-y-4">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="sparkles" class="w-5 h-5 text-brand-gold"></i>
+            <span>Rule & Order Consultation Engine</span>
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">Queries run directly against verified dataset entries without external APIs.</p>
+        </div>
+
+        <div class="flex gap-2">
+          <input type="text" id="ask-input" onkeydown="if(event.key==='Enter') executeRuleQuery()" placeholder="Ask a rule question (e.g., 'deceased claim limit', 'TA submission deadline', 'LTC bills')..." class="flex-grow px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-brand-red focus:outline-none">
+          <button onclick="executeRuleQuery()" class="bg-brand-red hover:bg-brand-darkRed text-white px-4 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5">
+            <i data-lucide="search" class="w-4 h-4"></i>
+            <span>Consult</span>
+          </button>
+        </div>
+
+        <div id="ask-results" class="pt-4 space-y-4 hidden">
+          <!-- Dynamic answers inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TAB 3: ORDERS REGISTER                                        -->
+    <!-- ============================================================= -->
+    <div id="view-orders" class="tab-view hidden space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white">Orders & Circulars Directory</h2>
+          <p class="text-xs text-slate-500">Trace active vs superseded orders based on centralized repository data.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <input type="text" id="filter-order-text" oninput="renderOrdersTable()" placeholder="Search subject or order ref..." class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 w-48 sm:w-64">
+          <select id="filter-order-status" onchange="renderOrdersTable()" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
+            <option value="ALL">All Statuses</option>
+            <option value="In Force">In Force</option>
+            <option value="Superseded">Superseded</option>
+            <option value="Partially Modified">Partially Modified</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder overflow-x-auto shadow-sm">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-50 dark:bg-slate-800 text-slate-500 font-mono border-b border-brand-border dark:border-brand-darkBorder">
+            <tr>
+              <th class="p-3">Order Ref & Date</th>
+              <th class="p-3">Category</th>
+              <th class="p-3">Subject</th>
+              <th class="p-3">Status</th>
+              <th class="p-3">Supersedes / Replaced By</th>
+              <th class="p-3 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody" class="divide-y divide-slate-200 dark:divide-slate-800 font-sans">
+            <!-- Dynamic rows or empty state -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TAB 4: POSB RATES HUB                                        -->
+    <!-- ============================================================= -->
+    <div id="view-posb" class="tab-view hidden space-y-4">
+      <div class="pb-3 border-b border-brand-border dark:border-brand-darkBorder">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">POSB & Small Savings Schemes Master Register</h2>
+        <p class="text-xs text-slate-500">Rates populated directly from /data/posb-rates.json.</p>
+      </div>
+
+      <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder overflow-x-auto shadow-sm">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono border-b border-brand-border dark:border-brand-darkBorder">
+            <tr>
+              <th class="p-3">Scheme</th>
+              <th class="p-3">Rate</th>
+              <th class="p-3">Compounding</th>
+              <th class="p-3">Tenure</th>
+              <th class="p-3">Statutory & Tax Rules</th>
+            </tr>
+          </thead>
+          <tbody id="posb-tbody" class="divide-y divide-slate-200 dark:divide-slate-800">
+            <!-- Dynamic rows or empty state -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TAB 5: FORMS CATALOG & REPOSITORY                             -->
+    <!-- ============================================================= -->
+    <div id="view-forms" class="tab-view hidden space-y-4">
+      <div class="pb-3 border-b border-brand-border dark:border-brand-darkBorder">
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Official Forms Catalog</h2>
+        <p class="text-xs text-slate-500">Statutory departmental and civil service forms indexed from /data/forms.json.</p>
+      </div>
+
+      <div id="forms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Dynamic Cards -->
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TAB 6: PINCODE & OFFICE FINDER                                -->
+    <!-- ============================================================= -->
+    <div id="view-offices" class="tab-view hidden space-y-4">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white">Postal Office & PIN Directory</h2>
+          <p class="text-xs text-slate-500">Search directory loaded from /data/offices.json.</p>
+        </div>
+        <input type="text" id="office-search-input" oninput="renderOfficesTable()" placeholder="Search PIN, office name, or district..." class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 w-full sm:w-64">
+      </div>
+
+      <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder overflow-x-auto shadow-sm">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono border-b border-brand-border dark:border-brand-darkBorder">
+            <tr>
+              <th class="p-3">PIN Code</th>
+              <th class="p-3">Office Name</th>
+              <th class="p-3">Type</th>
+              <th class="p-3">District</th>
+              <th class="p-3">State</th>
+              <th class="p-3">Delivery</th>
+            </tr>
+          </thead>
+          <tbody id="offices-tbody" class="divide-y divide-slate-200 dark:divide-slate-800 font-sans"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- TAB 7: CALCULATORS                                            -->
+    <!-- ============================================================= -->
+    <div id="view-calculators" class="tab-view hidden space-y-4">
+      <div class="flex gap-2 border-b border-brand-border dark:border-brand-darkBorder pb-3 text-xs">
+        <button onclick="switchCalcSub('salary')" id="subbtn-salary" class="px-3 py-1.5 font-bold rounded-lg bg-brand-red text-white">7th CPC Salary</button>
+        <button onclick="switchCalcSub('gpf')" id="subbtn-gpf" class="px-3 py-1.5 font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">GPF Ledger</button>
+      </div>
+
+      <!-- Salary Calculator -->
+      <div id="calc-pane-salary" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-3 text-xs">
+            <h3 class="font-bold text-slate-900 dark:text-white">Emolument Inputs</h3>
+            <div>
+              <label class="block mb-1 font-medium">Basic Pay (₹)</label>
+              <input type="number" id="calc-basic" value="25500" oninput="runSalaryCalc()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold">
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">City HRA Category</label>
+              <select id="calc-city-class" onchange="runSalaryCalc()" class="w-full px-2.5 py-1.5 border rounded">
+                <option value="X">Class X (30%)</option>
+                <option value="Y" selected>Class Y (20%)</option>
+                <option value="Z">Class Z (10%)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">DA (%)</label>
+              <input type="number" id="calc-da-pct" value="50" oninput="runSalaryCalc()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+            </div>
+          </div>
+
+          <div class="md:col-span-2 bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder flex flex-col justify-between text-xs">
+            <div class="space-y-3">
+              <h3 class="font-bold text-slate-900 dark:text-white border-b pb-2">Emoluments Statement</h3>
+              <div class="grid grid-cols-2 gap-4">
+                <div class="space-y-1.5">
+                  <div class="flex justify-between"><span>Basic Pay:</span> <span class="font-mono font-bold" id="res-basic">₹25,500</span></div>
+                  <div class="flex justify-between"><span>DA:</span> <span class="font-mono font-bold" id="res-da">₹12,750</span></div>
+                  <div class="flex justify-between"><span>HRA:</span> <span class="font-mono font-bold" id="res-hra">₹5,100</span></div>
+                  <div class="flex justify-between"><span>TPTA:</span> <span class="font-mono font-bold" id="res-tpta">₹2,700</span></div>
+                  <div class="flex justify-between pt-1 border-t font-bold text-emerald-600"><span>Gross:</span> <span class="font-mono" id="res-gross">₹46,050</span></div>
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex justify-between"><span>NPS Employee (10%):</span> <span class="font-mono font-bold" id="res-nps">₹3,825</span></div>
+                  <div class="flex justify-between"><span>CGEGIS:</span> <span class="font-mono font-bold">₹30</span></div>
+                  <div class="flex justify-between"><span>CGHS / Medical:</span> <span class="font-mono font-bold">₹250</span></div>
+                  <div class="flex justify-between"><span>Prof. Tax:</span> <span class="font-mono font-bold">₹200</span></div>
+                  <div class="flex justify-between pt-1 border-t font-bold text-rose-600"><span>Deductions:</span> <span class="font-mono" id="res-ded">₹4,305</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="p-3 bg-slate-900 text-white rounded-lg flex justify-between items-center mt-4">
+              <span class="font-medium">Net Take-Home Pay:</span>
+              <span class="font-mono text-lg font-black text-brand-gold" id="res-net">₹41,745</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GPF Calculator -->
+      <div id="calc-pane-gpf" class="hidden bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
+        <h3 class="font-bold text-slate-900 dark:text-white">GPF Annual Interest Ledger (7.1% p.a.)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block mb-1">Opening Balance on 1 April (₹)</label>
+            <input type="number" id="gpf-op-bal" value="400000" oninput="runGpfCalc()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+          </div>
+          <div>
+            <label class="block mb-1">Monthly Subscription (₹)</label>
+            <input type="number" id="gpf-month-sub" value="10000" oninput="runGpfCalc()" class="w-full px-2.5 py-1.5 border rounded font-mono">
+          </div>
+        </div>
+        <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg flex justify-between items-center">
+          <div>
+            <span class="text-slate-500 block">Total Interest Credited (31 March):</span>
+            <span class="font-mono text-base font-bold text-emerald-600" id="gpf-res-int">₹33,015</span>
+          </div>
+          <div class="text-right">
+            <span class="text-slate-500 block">Closing Balance:</span>
+            <span class="font-mono text-lg font-black text-brand-red dark:text-red-400" id="gpf-res-close">₹5,53,015</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- DETAIL MODAL FOR ORDERS -->
+  <div id="order-detail-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-brand-card dark:bg-brand-darkCard rounded-2xl max-w-xl w-full p-6 border border-brand-border dark:border-brand-darkBorder shadow-2xl space-y-4 text-xs">
+      <div class="flex justify-between items-start pb-2 border-b">
+        <div>
+          <span class="font-mono font-bold text-brand-red dark:text-red-400 text-sm" id="modal-order-ref">—</span>
+          <div class="text-[10px] text-slate-400" id="modal-order-date">—</div>
+        </div>
+        <button onclick="closeOrderDetailModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <span class="font-semibold block text-slate-500">Subject:</span>
+          <p class="font-bold text-slate-900 dark:text-white" id="modal-order-subj">—</p>
+        </div>
+        <div>
+          <span class="font-semibold block text-slate-500">Substance & Ruling:</span>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed" id="modal-order-substance">—</p>
+        </div>
+
+        <!-- Preserved Amber / Rose Callout Badges -->
+        <div id="modal-superseded-box" class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900 rounded-lg text-rose-800 dark:text-rose-300 space-y-1 hidden">
+          <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Caution: Superseded Order</div>
+          <p class="text-[11px]">This order has been superseded and is not in force. Replaced by: <strong id="modal-superseded-by-ref">—</strong></p>
+        </div>
+
+        <div id="modal-replaces-box" class="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900 rounded-lg text-amber-800 dark:text-amber-300 space-y-1 hidden">
+          <div class="font-bold flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4"></i> Supersedes Predecessor</div>
+          <p class="text-[11px]">This order formally modifies or replaces earlier order: <strong id="modal-replaces-ref">—</strong></p>
+        </div>
+
+        <div class="text-[11px] text-slate-400 pt-2 border-t">
+          <span>Source Document: <strong id="modal-source-doc" class="font-mono text-slate-600 dark:text-slate-300">—</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="no-print bg-brand-card dark:bg-brand-darkCard border-t border-brand-border dark:border-brand-darkBorder py-5 mt-10 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center space-x-2">
+        <div class="w-5 h-5 rounded bg-brand-red flex items-center justify-center font-black text-brand-gold text-[10px]">PQ</div>
+        <span class="font-bold text-slate-700 dark:text-slate-300">PostalIQ</span>
+        <span>·</span>
+        <span>Independent Civil Service Reference & Rules Desk</span>
+      </div>
+      <div class="text-[11px] text-center sm:text-right">
+        Static decoupled architecture · Verifiable against official source circulars.
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT ENGINE -->
+  <script>
+    /* APPLICATION STATE REPOSITORIES (FETCHED AT LOAD) */
+    let DATA_ORDERS = [];
+    let DATA_POSB = [];
+    let DATA_FORMS = [];
+    let DATA_OFFICES = [];
+
+    /* 1. FETCH CONTROLLER */
+    async function loadCentralData() {
+      try {
+        const [ordRes, posbRes, formRes, offRes] = await Promise.all([
+          fetch('data/orders.json').catch(() => null),
+          fetch('data/posb-rates.json').catch(() => null),
+          fetch('data/forms.json').catch(() => null),
+          fetch('data/offices.json').catch(() => null)
+        ]);
+
+        if (ordRes && ordRes.ok) DATA_ORDERS = await ordRes.json();
+        if (posbRes && posbRes.ok) DATA_POSB = await posbRes.json();
+        if (formRes && formRes.ok) DATA_FORMS = await formRes.json();
+        if (offRes && offRes.ok) DATA_OFFICES = await offRes.json();
+      } catch (e) {
+        console.warn('Network issue fetching decoupled datasets:', e);
+      } finally {
+        updateDashboardCounters();
+        renderOrdersTable();
+        renderPosbTable();
+        renderFormsCatalog();
+        renderOfficesTable();
+      }
+    }
+
+    function updateDashboardCounters() {
+      document.getElementById('dash-count-orders').innerText = DATA_ORDERS.length;
+      document.getElementById('dash-count-posb').innerText = DATA_POSB.length;
+      document.getElementById('dash-count-forms').innerText = DATA_FORMS.length;
+      document.getElementById('dash-count-offices').innerText = DATA_OFFICES.length;
+    }
+
+    /* 2. RENDER ORDERS TABLE */
+    function renderOrdersTable() {
+      const tbody = document.getElementById('orders-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const query = (document.getElementById('filter-order-text')?.value || '').toLowerCase();
+      const statusFilter = document.getElementById('filter-order-status')?.value || 'ALL';
+
+      const filtered = DATA_ORDERS.filter(o => {
+        const matchesQ = o.orderNo.toLowerCase().includes(query) || o.subject.toLowerCase().includes(query) || (o.keywords && o.keywords.toLowerCase().includes(query));
+        const matchesStatus = (statusFilter === 'ALL') || (o.status === statusFilter);
+        return matchesQ && matchesStatus;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="p-8 text-center text-slate-400">
+              <i data-lucide="file-question" class="w-8 h-8 mx-auto mb-2 opacity-50"></i>
+              <div class="font-bold text-sm">No verified data loaded yet</div>
+              <p class="text-[11px] text-slate-500 mt-1">Upload verified circulars into data/orders.json</p>
+            </td>
+          </tr>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      filtered.forEach(o => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800 transition";
+
+        let statusBadge = "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300";
+        if (o.status === "Superseded") statusBadge = "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300";
+        if (o.status === "Partially Modified") statusBadge = "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300";
+
+        tr.innerHTML = `
+          <td class="p-3 font-mono font-bold">${o.orderNo} <div class="text-[10px] text-slate-400">${o.date || 'Undated'}</div></td>
+          <td class="p-3 text-slate-500">${o.category}</td>
+          <td class="p-3 font-medium">${o.subject}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${statusBadge}">${o.status}</span></td>
+          <td class="p-3 font-mono text-[11px] text-slate-500">${o.supersedes || o.supersededBy || '—'}</td>
+          <td class="p-3 text-right"><button onclick="viewOrderDetail('${o.id}')" class="text-brand-red dark:text-red-400 font-bold hover:underline">View</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    /* 3. ORDER DETAIL MODAL */
+    function viewOrderDetail(orderId) {
+      const order = DATA_ORDERS.find(o => o.id === orderId);
+      if (!order) return;
+
+      document.getElementById('modal-order-ref').innerText = order.orderNo;
+      document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated Record';
+      document.getElementById('modal-order-subj').innerText = order.subject;
+      document.getElementById('modal-order-substance').innerText = order.substance;
+      document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source File';
+
+      const supBox = document.getElementById('modal-superseded-box');
+      const repBox = document.getElementById('modal-replaces-box');
+
+      if (order.status === 'Superseded' && order.supersededBy) {
+        document.getElementById('modal-superseded-by-ref').innerText = order.supersededBy;
+        supBox.classList.remove('hidden');
+      } else {
+        supBox.classList.add('hidden');
+      }
+
+      if (order.supersedes) {
+        document.getElementById('modal-replaces-ref').innerText = order.supersedes;
+        repBox.classList.remove('hidden');
+      } else {
+        repBox.classList.add('hidden');
+      }
+
+      document.getElementById('order-detail-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeOrderDetailModal() {
+      document.getElementById('order-detail-modal').classList.add('hidden');
+    }
+
+    /* 4. RENDER POSB TABLE */
+    function renderPosbTable() {
+      const tbody = document.getElementById('posb-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (DATA_POSB.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400 font-bold">No verified data loaded yet (Check data/posb-rates.json)</td></tr>`;
+        return;
+      }
+
+      DATA_POSB.forEach(s => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800";
+        tr.innerHTML = `
+          <td class="p-3 font-bold">${s.scheme}</td>
+          <td class="p-3 font-mono font-black text-brand-red dark:text-red-400">${s.rate}</td>
+          <td class="p-3 text-slate-500">${s.compounding}</td>
+          <td class="p-3 font-mono">${s.tenure}</td>
+          <td class="p-3 text-[11px] text-slate-500">${s.taxNotes}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* 5. RENDER FORMS CATALOG */
+    function renderFormsCatalog() {
+      const grid = document.getElementById('forms-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      if (DATA_FORMS.length === 0) {
+        grid.innerHTML = `<div class="col-span-3 p-8 text-center text-slate-400 font-bold bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">No verified forms loaded yet (Check data/forms.json)</div>`;
+        return;
+      }
+
+      DATA_FORMS.forEach(f => {
+        const card = document.createElement('div');
+        card.className = "p-4 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-2";
+        card.innerHTML = `
+          <div class="flex justify-between items-start">
+            <span class="font-mono text-xs font-bold text-brand-red dark:text-red-400">${f.code}</span>
+            <span class="text-[10px] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-500">${f.category}</span>
+          </div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white">${f.title}</h4>
+          <p class="text-[11px] text-slate-500">${f.ruleRef}</p>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    /* 6. RENDER OFFICES TABLE */
+    function renderOfficesTable() {
+      const tbody = document.getElementById('offices-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const query = (document.getElementById('office-search-input')?.value || '').toLowerCase();
+      const filtered = DATA_OFFICES.filter(o => o.pincode.includes(query) || o.officeName.toLowerCase().includes(query) || o.district.toLowerCase().includes(query));
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-bold">No verified offices loaded yet (Check data/offices.json)</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(o => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800";
+        tr.innerHTML = `
+          <td class="p-3 font-mono font-bold">${o.pincode}</td>
+          <td class="p-3 font-semibold">${o.officeName}</td>
+          <td class="p-3 text-slate-500">${o.officeType}</td>
+          <td class="p-3">${o.district}</td>
+          <td class="p-3">${o.state}</td>
+          <td class="p-3">${o.deliveryStatus}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* 7. LOCAL QUERY ENGINE (ASK FEATURE) */
+    function executeRuleQuery() {
+      const rawQ = document.getElementById('ask-input').value.trim().toLowerCase();
+      const resContainer = document.getElementById('ask-results');
+      resContainer.classList.remove('hidden');
+
+      if (!rawQ) {
+        resContainer.innerHTML = `<div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg text-xs text-slate-500">Please enter a rule or subject keyword.</div>`;
+        return;
+      }
+
+      // Keyword & synonym matches against DATA_ORDERS
+      const matches = DATA_ORDERS.filter(o => {
+        const text = (o.orderNo + ' ' + o.subject + ' ' + o.substance + ' ' + (o.keywords || '')).toLowerCase();
+        return rawQ.split(' ').some(word => word.length > 2 && text.includes(word));
+      });
+
+      if (matches.length === 0) {
+        resContainer.innerHTML = `
+          <div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center space-y-2 border border-slate-200 dark:border-slate-700">
+            <div class="font-bold text-sm text-slate-800 dark:text-slate-200">No verified ruling found for "${rawQ}"</div>
+            <p class="text-xs text-slate-500">Try keywords like 'deceased claim', 'TA bill', 'leave', or verify if the source order exists in data/orders.json.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Sort by in-force priority
+      matches.sort((a, b) => (a.status === 'In Force' ? -1 : 1));
+
+      resContainer.innerHTML = matches.map(m => `
+        <div class="p-4 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="font-mono font-bold text-brand-red dark:text-red-400 text-xs">${m.orderNo}</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${m.status === 'In Force' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'}">${m.status}</span>
+          </div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white">${m.subject}</h4>
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">${m.substance}</p>
+          ${m.supersededBy ? `<div class="text-[11px] text-rose-600 font-medium">Superseded by: ${m.supersededBy}</div>` : ''}
+          ${m.supersedes ? `<div class="text-[11px] text-amber-600 font-medium">Replaces earlier order: ${m.supersedes}</div>` : ''}
+        </div>
+      `).join('');
+    }
+
+    /* 8. CALCULATORS */
+    function runSalaryCalc() {
+      const basic = parseFloat(document.getElementById('calc-basic').value) || 0;
+      const daPct = parseFloat(document.getElementById('calc-da-pct').value) || 50;
+      const city = document.getElementById('calc-city-class').value;
+
+      const da = Math.round(basic * (daPct / 100));
+      const hraPct = city === 'X' ? 0.30 : (city === 'Y' ? 0.20 : 0.10);
+      const hra = Math.round(basic * hraPct);
+      const tpta = 2700;
+
+      const gross = basic + da + hra + tpta;
+      const nps = Math.round((basic + da) * 0.10);
+      const ded = nps + 30 + 250 + 200;
+      const net = gross - ded;
+
+      document.getElementById('res-basic').innerText = '₹' + basic.toLocaleString('en-IN');
+      document.getElementById('res-da').innerText = '₹' + da.toLocaleString('en-IN');
+      document.getElementById('res-hra').innerText = '₹' + hra.toLocaleString('en-IN');
+      document.getElementById('res-tpta').innerText = '₹' + tpta.toLocaleString('en-IN');
+      document.getElementById('res-gross').innerText = '₹' + gross.toLocaleString('en-IN');
+      document.getElementById('res-nps').innerText = '₹' + nps.toLocaleString('en-IN');
+      document.getElementById('res-ded').innerText = '₹' + ded.toLocaleString('en-IN');
+      document.getElementById('res-net').innerText = '₹' + net.toLocaleString('en-IN');
+    }
+
+    function runGpfCalc() {
+      const op = parseFloat(document.getElementById('gpf-op-bal').value) || 0;
+      const sub = parseFloat(document.getElementById('gpf-month-sub').value) || 0;
+      let cum = 0, bal = op;
+      for (let m = 0; m < 12; m++) { bal += sub; cum += bal; }
+      const intCred = Math.round((cum * 0.071) / 12);
+      document.getElementById('gpf-res-int').innerText = '₹' + intCred.toLocaleString('en-IN');
+      document.getElementById('gpf-res-close').innerText = '₹' + (bal + intCred).toLocaleString('en-IN');
+    }
+
+    /* 9. NAVIGATION & THEMES */
+    function navigateTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById('view-' + tabId);
+      if (target) target.classList.remove('hidden');
+
+      ['dashboard', 'ask', 'orders', 'posb', 'forms', 'offices', 'calculators'].forEach(t => {
+        const btn = document.getElementById('btn-tab-' + t);
+        if (btn) {
+          if (t === tabId) {
+            btn.className = "px-3 py-2 rounded-lg text-brand-red dark:text-red-400 font-bold flex items-center space-x-1.5";
+          } else {
+            btn.className = "px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5";
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function switchCalcSub(sub) {
+      document.getElementById('calc-pane-salary').classList.toggle('hidden', sub !== 'salary');
+      document.getElementById('calc-pane-gpf').classList.toggle('hidden', sub !== 'gpf');
+      document.getElementById('subbtn-salary').className = sub === 'salary' ? "px-3 py-1.5 font-bold rounded-lg bg-brand-red text-white" : "px-3 py-1.5 font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300";
+      document.getElementById('subbtn-gpf').className = sub === 'gpf' ? "px-3 py-1.5 font-bold rounded-lg bg-brand-red text-white" : "px-3 py-1.5 font-semibold rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300";
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('postaliq_theme', isDark ? 'dark' : 'light');
+      updateThemeIcons(isDark);
+    }
+
+    function updateThemeIcons(isDark) {
+      document.getElementById('theme-icon-sun')?.classList.toggle('hidden', !isDark);
+      document.getElementById('theme-icon-moon')?.classList.toggle('hidden', isDark);
+    }
+
+    /* BOOTSTRAP */
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('postaliq_theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark');
+        updateThemeIcons(true);
+      }
+      runSalaryCalc();
+      runGpfCalc();
+      loadCentralData();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

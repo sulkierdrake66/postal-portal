@@ -1,0 +1,16 @@
+[
+  {
+    "scheme": "Post Office Savings Account (SB)",
+    "rate": "4.0%",
+    "compounding": "Annually",
+    "tenure": "Demand",
+    "taxNotes": "Tax exemption under Sec 80TTA up to statutory limit"
+  },
+  {
+    "scheme": "Public Provident Fund (PPF)",
+    "rate": "7.1%",
+    "compounding": "Annually",
+    "tenure": "15 Years",
+    "taxNotes": "Exempt-Exempt-Exempt (EEE) status"
+  }
+]

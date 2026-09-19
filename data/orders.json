@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ORD-VERIFY-001",
+    "orderNo": "[PENDING-VERIFICATION-REF]",
+    "date": null,
+    "category": "Savings Bank",
+    "subject": "[PENDING VERIFICATION] Awaiting user upload of verified circular",
+    "substance": "This entry serves as a schema template. Real orders will be loaded once verified documents are supplied.",
+    "status": "In Force",
+    "supersedes": null,
+    "supersededBy": null,
+    "sourceOffice": "Postal Operations Directorate",
+    "sourceDocument": "Official Gazette / Circular Repository",
+    "keywords": "sample placeholder verification template"
+  }
+]
