@@ -771,7 +771,7 @@
       }
     }
 
-    /* 6. GROUPED PINCODE SEARCH ENGINE */
+ /* 6. GROUPED PINCODE SEARCH ENGINE (WITH COMPREHENSIVE LINKAGE FALLBACKS) */
     function debounceOfficeSearch() {
       clearTimeout(officeSearchTimeout);
       officeSearchTimeout = setTimeout(() => {
@@ -812,15 +812,19 @@
       const matches = [];
       for (let i = 0; i < DATA_PINCODES.length; i++) {
         const item = DATA_PINCODES[i];
-        const pin = String(item.pincode || item.Pincode || item.pin || '');
-        const district = String(item.district || item.District || '').toLowerCase();
-        const state = String(item.state || item.State || item.StateName || '').toLowerCase();
-        const offices = item.postOffices || item.offices || item.PostOffices || [];
+        const pin = String(item.pincode || item.Pincode || item.pin || item.PIN || '');
+        const district = String(item.district || item.District || item.districtname || '').toLowerCase();
+        const state = String(item.state || item.State || item.StateName || item.statename || '').toLowerCase();
+        const offices = item.postOffices || item.offices || item.PostOffices || item.officesList || [];
 
         const pinMatch = pin.startsWith(rawQuery);
         const distMatch = district.includes(rawQuery);
         const stateMatch = state.includes(rawQuery);
-        const officeMatch = offices.some(o => (o.name || o.officeName || o.OfficeName || '').toLowerCase().includes(rawQuery));
+        const officeMatch = offices.some(o => {
+          const oName = (o.name || o.officeName || o.OfficeName || o.officename || '').toLowerCase();
+          const hoName = (o.relatedHeadoffice || o.relatedHeadOffice || o.headOffice || o.HeadOffice || o.HO || '').toLowerCase();
+          return oName.includes(rawQuery) || hoName.includes(rawQuery);
+        });
 
         if (pinMatch || distMatch || stateMatch || officeMatch) {
           matches.push(item);
@@ -838,12 +842,22 @@
       }
 
       container.innerHTML = matches.map(group => {
-        const pin = group.pincode || group.Pincode || group.pin;
-        const district = group.district || group.District || '—';
-        const state = group.state || group.State || group.StateName || '—';
-        const circle = group.circle || group.Circle || '';
-        const division = group.division || group.Division || '';
-        const offices = group.postOffices || group.offices || group.PostOffices || [];
+        const pin = group.pincode || group.Pincode || group.pin || group.PIN || '—';
+        const district = group.district || group.District || group.districtname || '—';
+        const state = group.state || group.State || group.StateName || group.statename || '—';
+        
+        // Comprehensive circle & region fallbacks
+        const circle = group.circle || group.Circle || group.circleName || group.circlename || '';
+        const region = group.region || group.Region || group.regionName || group.regionname || '';
+        const division = group.division || group.Division || group.divisionName || group.divisionname || '';
+        const offices = group.postOffices || group.offices || group.PostOffices || group.officesList || [];
+
+        // Build administrative metadata badge
+        const adminParts = [];
+        if (division) adminParts.push(`Division: ${division}`);
+        if (region) adminParts.push(`Region: ${region}`);
+        if (circle) adminParts.push(`Circle: ${circle}`);
+        const adminDetails = adminParts.join(' · ');
 
         return `
           <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder p-5 shadow-sm space-y-3">
@@ -852,7 +866,7 @@
                 <span class="font-mono text-xl font-black text-brand-red dark:text-red-400 tracking-wider">${pin}</span>
                 <div>
                   <span class="font-bold text-sm text-slate-900 dark:text-white">${district}, ${state}</span>
-                  ${division ? `<div class="text-[10px] text-slate-500">Division: ${division}${circle ? '· ' + circle : ''}</div>` : ''}
+                  ${adminDetails ? `<div class="text-[11px] text-slate-500 font-medium">${adminDetails}</div>` : ''}
                 </div>
               </div>
               <span class="text-[11px] font-mono font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-1 rounded-full border border-slate-200 dark:border-slate-700 self-start sm:self-auto">
@@ -865,19 +879,24 @@
                 <thead class="bg-slate-50 dark:bg-slate-800/60 font-mono text-[11px] text-slate-500 border-b border-brand-border dark:border-brand-darkBorder">
                   <tr>
                     <th class="py-2 px-3">Office Name</th>
-                    <th class="py-2 px-3">Designation / Type</th>
+                    <th class="py-2 px-3">Type</th>
                     <th class="py-2 px-3">Delivery Status</th>
-                    <th class="py-2 px-3">Taluk / Sub-District</th>
-                    <th class="py-2 px-3">Head Office Linkage</th>
+                    <th class="py-2 px-3">Taluk / Tehsil</th>
+                    <th class="py-2 px-3">Sub Office (SO)</th>
+                    <th class="py-2 px-3">Head Office (HO) Linkage</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                   ${offices.map(o => {
-                    const oName = o.name || o.officeName || o.OfficeName || '—';
-                    const oType = o.type || o.officeType || o.OfficeType || '—';
-                    const oDelivery = o.deliveryStatus || o.DeliveryStatus || o.delivery || 'Delivery';
-                    const oTaluk = o.taluk || o.Taluk || '—';
-                    const oHo = o.relatedHeadoffice || o.headOffice || o.HO || '—';
+                    const oName = o.name || o.officeName || o.OfficeName || o.officename || '—';
+                    const oType = o.type || o.officeType || o.OfficeType || o.officetype || '—';
+                    const oDelivery = o.deliveryStatus || o.DeliveryStatus || o.delivery || o.deliverystatus || 'Delivery';
+                    const oTaluk = o.taluk || o.Taluk || o.subDistrict || o.subdistrict || '—';
+                    
+                    // Comprehensive SO & HO key linkages
+                    const oSo = o.relatedSubOffice || o.relatedSuboffice || o.subOffice || o.SubOffice || o.SO || '—';
+                    const oHo = o.relatedHeadoffice || o.relatedHeadOffice || o.headOffice || o.HeadOffice || o.HO || o.head_office || '—';
+                    
                     const isNonDel = String(oDelivery).toLowerCase().includes('non');
 
                     return `
@@ -892,7 +911,8 @@
                           </span>
                         </td>
                         <td class="py-2 px-3 text-slate-500">${oTaluk}</td>
-                        <td class="py-2 px-3 text-slate-500 font-mono text-[11px]">${oHo}</td>
+                        <td class="py-2 px-3 text-slate-600 dark:text-slate-400 font-mono text-[11px]">${oSo}</td>
+                        <td class="py-2 px-3 font-mono font-bold text-[11px] text-brand-red dark:text-red-400">${oHo}</td>
                       </tr>
                     `;
                   }).join('')}
