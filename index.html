@@ -11,10 +11,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Unified Tokens and Theme Script -->
   <link rel="stylesheet" href="assets/tokens.css">
   <script src="assets/theme.js"></script>
   
+  <script>
+    // Safeguard: inline palette ensures instant execution if assets/theme.js is not loaded
+    window.POSTALIQ_PALETTE = window.POSTALIQ_PALETTE || {
+      paper: '#FAF6EC', paperLine: '#E7DCC2', surface: '#FFFFFF', surfaceAlt: '#F3EEDF', border: '#DED2AF',
+      ink: '#1C2B45', inkSoft: '#5B6478', inkFaint: '#8B93A3', gold: '#A9762F', goldDeep: '#7C5722',
+      goldSoft: '#EFE1C1', teal: '#0F6B5C', tealSoft: '#DCEEE8', rust: '#A63A2E', rustSoft: '#F5DCD7',
+      darkPaper: '#161310', darkPaperLine: '#33291C', darkSurface: '#1E1912', darkSurfaceAlt: '#241D15',
+      darkBorder: '#3A2F20', darkInk: '#F3ECD9', darkInkSoft: '#C9BFA6', darkInkFaint: '#8F8570',
+      darkGold: '#D8A855', darkGoldDeep: '#F0C98A', darkGoldSoft: '#3A2E19', darkTeal: '#4FBFA0',
+      darkTealSoft: '#12332C', darkRust: '#E08670', darkRustSoft: '#3A211B'
+    };
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
@@ -65,7 +77,48 @@
       }
     }
   </script>
+
   <style>
+    :root {
+      --paper: #FAF6EC; --paper-line: #E7DCC2; --surface: #FFFFFF; --surface-alt: #F3EEDF;
+      --border: #DED2AF; --ink: #1C2B45; --ink-soft: #5B6478; --ink-faint: #8B93A3;
+      --gold: #A9762F; --gold-deep: #7C5722; --gold-soft: #EFE1C1; --teal: #0F6B5C;
+      --teal-soft: #DCEEE8; --rust: #A63A2E; --rust-soft: #F5DCD7; --radius: 10px;
+      --shadow: 0 1px 2px rgba(28,43,69,.06), 0 8px 24px -12px rgba(28,43,69,.18);
+    }
+    [data-theme="dark"], html.dark {
+      --paper: #161310; --paper-line: #33291C; --surface: #1E1912; --surface-alt: #241D15;
+      --border: #3A2F20; --ink: #F3ECD9; --ink-soft: #C9BFA6; --ink-faint: #8F8570;
+      --gold: #D8A855; --gold-deep: #F0C98A; --gold-soft: #3A2E19; --teal: #4FBFA0;
+      --teal-soft: #12332C; --rust: #E08670; --rust-soft: #3A211B;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+    .postaliq-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .badge-in-force {
+      background: var(--teal-soft); color: var(--teal);
+      font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px; display: inline-block;
+    }
+    .badge-modified {
+      background: var(--gold-soft); color: var(--gold-deep);
+      font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px; display: inline-block;
+    }
+    .badge-superseded {
+      background: var(--rust-soft); color: var(--rust);
+      font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px; display: inline-block;
+    }
+    .posb-stamp {
+      display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+      font-weight: 700; letter-spacing: .05em; color: var(--teal); border: 1.5px dashed var(--teal);
+      border-radius: 5px; padding: 1px 5px; transform: rotate(-2deg); text-transform: uppercase;
+    }
     @media print {
       body { background: #ffffff !important; color: #000000 !important; font-size: 10pt !important; }
       .no-print { display: none !important; }
@@ -97,7 +150,7 @@
         </div>
       </div>
 
-      <!-- Main Navigation (Pill-Style Switcher) -->
+      <!-- Main Navigation -->
       <nav class="hidden lg:flex items-center space-x-1 text-xs font-semibold bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt p-1 rounded-full border border-brand-border dark:border-brand-darkBorder">
         <button onclick="navigateTab('dashboard')" id="btn-tab-dashboard" class="px-3.5 py-1.5 rounded-full bg-brand-ink text-brand-paper dark:bg-brand-gold dark:text-brand-darkPaper font-bold flex items-center space-x-1.5 transition">
           <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
@@ -121,15 +174,15 @@
         </button>
         <button onclick="navigateTab('offices')" id="btn-tab-offices" class="px-3.5 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft hover:text-brand-ink dark:hover:text-white flex items-center space-x-1.5 transition">
           <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-          <span>PINs</span>
+          <span>PIN / Offices</span>
         </button>
         <button onclick="navigateTab('calculators')" id="btn-tab-calculators" class="px-3.5 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft hover:text-brand-ink dark:hover:text-white flex items-center space-x-1.5 transition">
           <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-          <span>Pay Calcs</span>
+          <span>Employee Payment Calculators</span>
         </button>
       </nav>
 
-      <!-- Theme & Utility Controls -->
+      <!-- Theme & Print Controls -->
       <div class="flex items-center space-x-2">
         <button onclick="toggleTheme()" class="p-2 rounded-full border border-brand-border dark:border-brand-darkBorder bg-brand-surface dark:bg-brand-darkSurface text-brand-inkSoft dark:text-brand-darkInkSoft hover:text-brand-ink dark:hover:text-white transition" title="Toggle Theme">
           <i data-lucide="sun" id="theme-icon-sun" class="w-4 h-4 hidden text-brand-gold"></i>
@@ -143,7 +196,7 @@
     </div>
   </header>
 
-  <!-- MOBILE TABS -->
+  <!-- MOBILE NAVIGATION BAR -->
   <div class="no-print lg:hidden bg-brand-surface dark:bg-brand-darkSurface border-b border-brand-border dark:border-brand-darkBorder px-3 py-2 flex space-x-2 overflow-x-auto text-xs font-semibold">
     <button onclick="navigateTab('dashboard')" class="whitespace-nowrap px-3 py-1.5 rounded-full bg-brand-ink text-brand-paper dark:bg-brand-gold dark:text-brand-darkPaper">Dashboard</button>
     <button onclick="navigateTab('ask')" class="whitespace-nowrap px-3 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft">Ask</button>
@@ -151,16 +204,14 @@
     <button onclick="navigateTab('posb')" class="whitespace-nowrap px-3 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft">POSB &amp; PLI</button>
     <button onclick="navigateTab('forms')" class="whitespace-nowrap px-3 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft">Forms</button>
     <button onclick="navigateTab('offices')" class="whitespace-nowrap px-3 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft">PINs</button>
-    <button onclick="navigateTab('calculators')" class="whitespace-nowrap px-3 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft">Pay Calcs</button>
+    <button onclick="navigateTab('calculators')" class="whitespace-nowrap px-3 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft">Employee Pay</button>
   </div>
 
-  <!-- MAIN VIEWPORT -->
+  <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
 
     <!-- VIEW 1: DASHBOARD -->
     <div id="view-dashboard" class="tab-view space-y-6">
-      
-      <!-- Greeting Banner -->
       <div class="bg-gradient-to-br from-brand-surfaceAlt via-brand-surface to-brand-paper dark:from-brand-darkSurfaceAlt dark:via-brand-darkSurface dark:to-brand-darkPaper p-6 sm:p-8 rounded-2xl border border-brand-border dark:border-brand-darkBorder shadow-sm space-y-3">
         <div class="inline-flex items-center space-x-2 bg-brand-goldSoft dark:bg-brand-darkGoldSoft px-3 py-1 rounded-full text-[11px] font-mono font-semibold text-brand-goldDeep dark:text-brand-darkGold border border-brand-border dark:border-brand-darkBorder">
           <i data-lucide="clock" class="w-3.5 h-3.5"></i>
@@ -172,7 +223,7 @@
         </p>
       </div>
 
-      <!-- Active Headline Small Savings Rates Strip -->
+      <!-- Small Savings Live Strip -->
       <div class="bg-brand-surface dark:bg-brand-darkSurface p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder shadow-sm space-y-2">
         <div class="flex justify-between items-center border-b border-dashed border-brand-paperLine dark:border-brand-darkPaperLine pb-2">
           <span class="font-serif font-semibold text-xs text-brand-ink dark:text-brand-darkInk flex items-center gap-1.5">
@@ -220,7 +271,7 @@
             <span class="w-8 h-8 rounded-lg bg-brand-tealSoft dark:bg-brand-darkTealSoft text-brand-teal dark:text-brand-darkTeal flex items-center justify-center font-bold">
               <i data-lucide="clipboard-list" class="w-4 h-4"></i>
             </span>
-            <span class="font-mono text-lg font-black text-brand-ink dark:text-brand-darkInk" id="dash-count-forms">0</span>
+            <span class="font-mono text-lg font-black text-brand-ink dark:text-brand-darkInk" id="dash-count-forms">6</span>
           </div>
           <h3 class="font-serif font-semibold text-sm text-brand-ink dark:text-brand-darkInk">Verified Forms</h3>
           <p class="text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft">Fillable departmental forms with built-in lightbox preview and print.</p>
@@ -246,7 +297,6 @@
         </div>
         <div id="dash-recent-orders-list" class="space-y-2 text-xs"></div>
       </div>
-
     </div>
 
     <!-- VIEW 2: ASK RULES -->
@@ -325,7 +375,7 @@
         <button onclick="switchPosbSub('pli')" id="subbtn-posb-pli" class="px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft whitespace-nowrap">PLI / RPLI Estimator</button>
       </div>
 
-      <!-- POSB Sub-Panes -->
+      <!-- Sub-Panes -->
       <div id="posb-pane-rates-hub" class="posb-pane space-y-4">
         <div class="bg-brand-surface dark:bg-brand-darkSurface rounded-xl border border-brand-border dark:border-brand-darkBorder overflow-x-auto shadow-sm">
           <div class="p-4 border-b border-brand-border dark:border-brand-darkBorder flex justify-between items-center">
@@ -389,7 +439,7 @@
                 <h3 class="font-serif font-bold text-sm text-brand-ink dark:text-brand-darkInk">Deposits &amp; Withdrawals</h3>
                 <span class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft" id="ppf-txnCount">0 entries</span>
               </div>
-              <p class="text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft leading-relaxed">Deposits made after the cutoff day earn interest starting the following month.</p>
+              <p class="text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft leading-relaxed">Deposits made after the cutoff day earn interest from the next month.</p>
               <div class="max-h-60 overflow-y-auto border rounded-lg border-brand-border dark:border-brand-darkBorder">
                 <table class="w-full text-left text-[11px]" id="ppf-txnTable">
                   <thead class="bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt font-mono text-[10px] text-brand-inkFaint">
@@ -602,7 +652,7 @@
 
             <div class="p-4 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-xl space-y-2 border border-brand-border dark:border-brand-darkBorder">
               <span class="font-serif font-bold text-sm text-brand-ink dark:text-brand-darkInk block border-b border-brand-border dark:border-brand-darkBorder pb-1">Maturity &amp; Accrued Bonus</span>
-              <div class="flex justify-between"><span>Annual Bonus Rate:</span> <span class="font-mono font-bold text-brand-gold dark:text-brand-darkGold" id="res-pli-bonus-rate">₹52 per ₹1,000 SA</span></div>
+              <div class="flex justify-between"><span>Annual Bonus Rate:</span> <span class="font-mono font-bold text-brand-gold dark:text-brand-darkGold" id="res-pli-bonus-rate">₹52 per ₹1,00,00 SA</span></div>
               <div class="flex justify-between"><span>Sum Assured:</span> <span class="font-mono font-bold" id="res-pli-sa">₹5,00,000</span></div>
               <div class="flex justify-between"><span>Cumulative Accrued Bonus:</span> <span class="font-mono font-bold text-brand-teal dark:text-brand-darkTeal" id="res-pli-accrued-bonus">₹0</span></div>
               <div class="flex justify-between pt-2 border-t border-brand-border dark:border-brand-darkBorder font-serif font-bold text-base text-brand-ink dark:text-brand-darkInk"><span>Estimated Maturity Benefit:</span> <span class="font-mono text-brand-gold dark:text-brand-darkGold text-lg" id="res-pli-maturity">₹0</span></div>
@@ -611,14 +661,16 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <!-- VIEW 5: FORMS CATALOG -->
     <div id="view-forms" class="tab-view hidden space-y-4">
-      <div class="pb-3 border-b border-brand-border dark:border-brand-darkBorder">
-        <h2 class="text-xl font-serif font-bold text-brand-ink dark:text-brand-darkInk">Official Forms Catalog</h2>
-        <p class="text-xs text-brand-inkSoft dark:text-brand-darkInkSoft">Statutory departmental and civil service forms indexed from /data/forms.json.</p>
+      <div class="pb-3 border-b border-brand-border dark:border-brand-darkBorder flex justify-between items-center">
+        <div>
+          <h2 class="text-xl font-serif font-bold text-brand-ink dark:text-brand-darkInk">Official Forms Catalog</h2>
+          <p class="text-xs text-brand-inkSoft dark:text-brand-darkInkSoft">Statutory departmental and civil service forms indexed from verified repository records.</p>
+        </div>
+        <span class="text-xs font-mono bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt px-3 py-1 rounded-full border border-brand-border dark:border-brand-darkBorder text-brand-inkSoft dark:text-brand-darkInkSoft" id="forms-catalog-counter">6 Verified Forms</span>
       </div>
       <div id="forms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
@@ -638,6 +690,194 @@
         </div>
       </div>
       <div id="pincode-results-container" class="space-y-4"></div>
+    </div>
+
+    <!-- VIEW 7: EMPLOYEE PAYMENT CALCULATORS -->
+    <div id="view-calculators" class="tab-view hidden space-y-5">
+      <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt border-l-4 border-brand-gold rounded-r-xl text-brand-ink dark:text-brand-darkInk text-xs flex items-start gap-2.5">
+        <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0 text-brand-gold mt-0.5"></i>
+        <div>
+          <span class="font-bold block">Statutory Notice &amp; Audit Trail:</span>
+          <span id="calc-disclaimer-text">Estimate only — for official figures, refer to your DDO/PAO or the relevant Department of Expenditure / DoPPW / PFRDA notification.</span>
+          <span class="block mt-0.5 text-[11px] text-brand-goldDeep dark:text-brand-darkGold font-mono" id="calc-as-of-badge">Audited as of: September 2026 | Config v2026.2</span>
+        </div>
+      </div>
+
+      <div class="flex overflow-x-auto gap-2 border-b border-brand-border dark:border-brand-darkBorder pb-2 text-xs font-semibold">
+        <button onclick="switchCalcModule('salary')" id="modbtn-salary" class="px-3.5 py-1.5 rounded-full bg-brand-ink text-brand-paper dark:bg-brand-gold dark:text-brand-darkPaper whitespace-nowrap">7th CPC Pay Slip</button>
+        <button onclick="switchCalcModule('da-arrears')" id="modbtn-da-arrears" class="px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft whitespace-nowrap">DA Arrears</button>
+        <button onclick="switchCalcModule('fixation')" id="modbtn-fixation" class="px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft whitespace-nowrap">Increment &amp; MACP</button>
+        <button onclick="switchCalcModule('pension')" id="modbtn-pension" class="px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft whitespace-nowrap">Pension &amp; Gratuity</button>
+        <button onclick="switchCalcModule('nps-hba')" id="modbtn-nps-hba" class="px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft whitespace-nowrap">NPS / UPS &amp; HBA</button>
+        <button onclick="switchCalcModule('tax')" id="modbtn-tax" class="px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft whitespace-nowrap">Income Tax Comparison</button>
+        <button onclick="switchCalcModule('gds')" id="modbtn-gds" class="px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft whitespace-nowrap">GDS TRCA Desk</button>
+        <button onclick="switchCalcModule('cpc8')" id="modbtn-cpc8" class="px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft whitespace-nowrap">8th CPC Estimator</button>
+      </div>
+
+      <!-- Module 1: Salary -->
+      <div id="module-salary" class="calc-module space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div class="postaliq-card p-5 space-y-3 text-xs">
+            <h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk border-b border-brand-border dark:border-brand-darkBorder pb-2">Pay &amp; City Parameters</h3>
+            <div><label class="block mb-1 font-medium">Basic Pay (₹)</label><input type="number" id="sal-basic" value="35400" oninput="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">Pay Level</label><select id="sal-level" onchange="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded-lg bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="1">Level 1 (₹18,000 - ₹56,900)</option><option value="2">Level 2 (₹19,900 - ₹63,200)</option><option value="3">Level 3 (₹21,700 - ₹69,100)</option><option value="4">Level 4 (₹25,500 - ₹81,100)</option><option value="5">Level 5 (₹29,200 - ₹92,300)</option><option value="6" selected>Level 6 (₹35,400 - ₹1,12,400)</option><option value="7">Level 7 (₹44,900 - ₹1,42,400)</option><option value="8">Level 8 (₹47,600 - ₹1,51,100)</option><option value="9">Level 9 &amp; above (₹53,100+)</option></select></div>
+            <div><label class="block mb-1 font-medium">City HRA Classification</label><select id="sal-city" onchange="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded-lg bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="X">Class X (30% HRA)</option><option value="Y" selected>Class Y (20% HRA)</option><option value="Z">Class Z (10% HRA)</option></select></div>
+            <div><label class="block mb-1 font-medium">Retirement Scheme</label><select id="sal-scheme" onchange="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded-lg bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="NPS" selected>NPS (10% Employee)</option><option value="UPS">UPS (10% Employee, 18.5% Govt)</option><option value="OPS">OPS / GPF (Pre-2004)</option></select></div>
+          </div>
+          <div class="lg:col-span-2 postaliq-card p-5 flex flex-col justify-between text-xs space-y-4">
+            <div>
+              <div class="flex justify-between items-center border-b border-brand-border dark:border-brand-darkBorder pb-2">
+                <h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">Monthly Statement of Emoluments</h3>
+                <span class="font-mono text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft" id="sal-da-badge">DA: 60%</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-3">
+                <div class="space-y-2">
+                  <span class="font-bold text-brand-inkSoft dark:text-brand-darkInkSoft block">Earnings</span>
+                  <div class="flex justify-between"><span>Basic Pay:</span> <span class="font-mono font-semibold" id="res-sal-basic">₹0</span></div>
+                  <div class="flex justify-between"><span id="lbl-sal-da">DA:</span> <span class="font-mono font-semibold" id="res-sal-da">₹0</span></div>
+                  <div class="flex justify-between"><span>HRA:</span> <span class="font-mono font-semibold" id="res-sal-hra">₹0</span></div>
+                  <div class="flex justify-between"><span>TPTA:</span> <span class="font-mono font-semibold" id="res-sal-ta">₹0</span></div>
+                  <div class="flex justify-between pt-2 border-t border-brand-border dark:border-brand-darkBorder font-bold text-brand-teal dark:text-brand-darkTeal text-sm"><span>Gross:</span> <span class="font-mono" id="res-sal-gross">₹0</span></div>
+                </div>
+                <div class="space-y-2">
+                  <span class="font-bold text-brand-inkSoft dark:text-brand-darkInkSoft block">Deductions</span>
+                  <div class="flex justify-between"><span id="lbl-sal-ret">Pension:</span> <span class="font-mono font-semibold" id="res-sal-pension">₹0</span></div>
+                  <div class="flex justify-between"><span>CGEGIS:</span> <span class="font-mono font-semibold" id="res-sal-cgegis">₹30</span></div>
+                  <div class="flex justify-between"><span>CGHS:</span> <span class="font-mono font-semibold">₹450</span></div>
+                  <div class="flex justify-between"><span>Prof Tax:</span> <span class="font-mono font-semibold">₹200</span></div>
+                  <div class="flex justify-between pt-2 border-t border-brand-border dark:border-brand-darkBorder font-bold text-brand-rust dark:text-brand-darkRust text-sm"><span>Total Ded:</span> <span class="font-mono" id="res-sal-ded">₹0</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="p-4 bg-brand-ink text-brand-paper dark:bg-brand-darkSurfaceAlt rounded-xl flex justify-between items-center">
+              <div><span class="text-xs text-brand-paperLine dark:text-brand-darkInkSoft block">Net Take-Home Pay:</span><span class="font-mono text-xl font-black text-brand-gold dark:text-brand-darkGold" id="res-sal-net">₹0</span></div>
+              <div class="text-right text-[11px] text-brand-paperLine dark:text-brand-darkInkSoft">Govt Contrib: <span class="font-mono font-bold text-brand-teal dark:text-brand-darkTeal" id="res-sal-gov-contrib">₹0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 2: DA Arrears -->
+      <div id="module-da-arrears" class="calc-module hidden space-y-4">
+        <div class="postaliq-card p-5 space-y-4 text-xs">
+          <div><h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">DA Revision Back-Pay / Arrears Estimator</h3><p class="text-brand-inkSoft dark:text-brand-darkInkSoft text-[11px]">Computes retroactively owed difference on Basic Pay and Transport Allowance (TPTA).</p></div>
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+            <div><label class="block mb-1 font-medium">Basic Pay (₹)</label><input type="number" id="arr-basic" value="35400" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">Pay Level</label><select id="arr-level" onchange="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="1">Level 1 - 2</option><option value="6" selected>Level 3 - 8</option><option value="9">Level 9 &amp; above</option></select></div>
+            <div><label class="block mb-1 font-medium">City TPTA Class</label><select id="arr-city" onchange="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="X">Higher TPTA (Class X)</option><option value="Y" selected>Other Cities (Class Y/Z)</option></select></div>
+            <div><label class="block mb-1 font-medium">Old &amp; New DA %</label><div class="flex items-center space-x-1"><input type="number" id="arr-old-da" value="58" oninput="runArrearsEngine()" class="w-1/2 px-2 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><span>→</span><input type="number" id="arr-new-da" value="60" oninput="runArrearsEngine()" class="w-1/2 px-2 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div></div>
+            <div><label class="block mb-1 font-medium">Months Gap</label><input type="number" id="arr-months" value="3" oninput="runArrearsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+          </div>
+          <div class="p-4 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-xl flex flex-col sm:flex-row justify-between sm:items-center gap-3 border border-brand-border dark:border-brand-darkBorder">
+            <div><span class="text-brand-inkSoft dark:text-brand-darkInkSoft block">Monthly Diff:</span><span class="font-mono text-sm font-bold text-brand-teal dark:text-brand-darkTeal" id="res-arr-monthly">₹0</span></div>
+            <div class="sm:text-right"><span class="text-brand-inkSoft dark:text-brand-darkInkSoft block">Total Arrears:</span><span class="font-mono text-xl font-black text-brand-rust dark:text-brand-darkRust" id="res-arr-total">₹0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 3: Fixation -->
+      <div id="module-fixation" class="calc-module hidden space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="postaliq-card p-5 space-y-3 text-xs">
+            <div><h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">MACP / Promotion Pay Fixation (FR 22(I)(a)(1))</h3><p class="text-brand-inkSoft dark:text-brand-darkInkSoft text-[11px]">1 notional increment in old level, snapping to next higher cell in target level.</p></div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div><label class="block mb-1 font-medium">Current Level</label><select id="fix-curr-level" onchange="runFixationEngine()" class="w-full px-2 py-1.5 border rounded-lg bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="1">Level 1</option><option value="2">Level 2</option><option value="3">Level 3</option><option value="4">Level 4</option><option value="5">Level 5</option><option value="6" selected>Level 6</option><option value="7">Level 7</option><option value="8">Level 8</option><option value="9">Level 9</option><option value="10">Level 10</option><option value="11">Level 11</option><option value="12">Level 12</option></select></div>
+              <div><label class="block mb-1 font-medium">Target Level</label><select id="fix-target-level" onchange="runFixationEngine()" class="w-full px-2 py-1.5 border rounded-lg font-semibold text-brand-rust dark:text-brand-darkRust bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="2">Level 2</option><option value="3">Level 3</option><option value="4">Level 4</option><option value="5">Level 5</option><option value="6">Level 6</option><option value="7" selected>Level 7</option><option value="8">Level 8</option><option value="9">Level 9</option><option value="10">Level 10</option><option value="11">Level 11</option><option value="12">Level 12</option></select></div>
+              <div><label class="block mb-1 font-medium">Current Basic (₹)</label><input type="number" id="fix-basic" value="35400" oninput="runFixationEngine()" class="w-full px-2 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            </div>
+            <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-lg space-y-1.5 border border-brand-border dark:border-brand-darkBorder"><div class="flex justify-between"><span>Notional Increment:</span> <span class="font-mono font-semibold" id="res-fix-notional">₹0</span></div><div class="flex justify-between text-brand-inkSoft dark:text-brand-darkInkSoft"><span>Fixation Floor:</span> <span class="font-mono" id="res-fix-floor">₹0</span></div></div>
+            <div class="p-3 bg-brand-tealSoft dark:bg-brand-darkTealSoft rounded-lg border border-brand-teal dark:border-brand-darkTeal"><span class="text-brand-inkSoft dark:text-brand-darkInkSoft text-[11px] block">Pay Fixed in Upgraded Level:</span><span class="font-mono text-lg font-black text-brand-teal dark:text-brand-darkTeal" id="res-fix-final">₹0</span><span class="text-[10px] text-brand-teal dark:text-brand-darkTeal block mt-0.5" id="res-fix-matrix-cell">Matching Pay Matrix Cell</span></div>
+          </div>
+          <div class="postaliq-card p-5 space-y-3 text-xs">
+            <h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">Annual Increment &amp; Cycle Engine</h3>
+            <div><label class="block mb-1 font-medium">Current Basic Pay (₹)</label><input type="number" id="inc-basic" value="35400" oninput="runIncrementEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">Date of Appointment / Promotion</label><input type="date" id="inc-date" value="2026-02-15" onchange="runIncrementEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-lg space-y-1.5 border border-brand-border dark:border-brand-darkBorder"><div class="flex justify-between"><span>Cycle:</span> <span class="font-semibold text-brand-rust dark:text-brand-darkRust" id="res-inc-cycle">1 January</span></div><div class="flex justify-between"><span>Next Increment Date:</span> <span class="font-mono font-bold" id="res-inc-next-date">01-01-2027</span></div></div>
+            <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-lg flex justify-between items-center border border-brand-border dark:border-brand-darkBorder"><span>Basic after 3% Increment:</span><span class="font-mono text-base font-bold text-brand-teal dark:text-brand-darkTeal" id="res-inc-new-basic">₹0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 4: Pension -->
+      <div id="module-pension" class="calc-module hidden space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="postaliq-card p-5 space-y-3 text-xs">
+            <div class="flex justify-between items-center border-b border-brand-border dark:border-brand-darkBorder pb-2"><h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">Pension Engine (OPS / UPS)</h3><select id="pen-type" onchange="runPensionEngine()" class="px-2 py-1 border rounded-lg text-[11px] font-semibold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="OPS">Old Pension Scheme (OPS)</option><option value="UPS" selected>Unified Pension Scheme (UPS)</option></select></div>
+            <div class="grid grid-cols-2 gap-3"><div><label class="block mb-1 font-medium">Last Basic / 12-Mo Avg (₹)</label><input type="number" id="pen-emoluments" value="65000" oninput="runPensionEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">Years of Service</label><input type="number" id="pen-years" value="28" min="0" oninput="runPensionEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div></div>
+            <div id="pen-eligibility-warning" class="p-2.5 bg-brand-rustSoft text-brand-rust dark:bg-brand-darkRustSoft dark:text-brand-darkRust border border-brand-rust rounded-lg text-[11px] font-semibold hidden">Minimum 10 years qualifying service required under statutory pension rules.</div>
+            <div id="pen-output-block" class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-lg space-y-1.5 border border-brand-border dark:border-brand-darkBorder"><div class="flex justify-between"><span>Basic Assured Pension:</span> <span class="font-mono font-bold" id="res-pen-basic">₹0</span></div><div class="flex justify-between"><span id="lbl-pen-dr">DR:</span> <span class="font-mono font-bold" id="res-pen-dr">₹0</span></div><div class="flex justify-between pt-1 border-t border-brand-border dark:border-brand-darkBorder font-bold text-brand-teal dark:text-brand-darkTeal text-sm"><span>Total Pension:</span> <span class="font-mono" id="res-pen-total">₹0</span></div></div>
+            <div id="pen-ups-lump-box" class="p-2.5 bg-brand-goldSoft dark:bg-brand-darkGoldSoft border border-brand-border dark:border-brand-darkBorder rounded-lg space-y-1"><div class="flex justify-between items-center"><span class="text-[11px] font-semibold text-brand-ink dark:text-brand-darkInk">UPS Retirement Lump-Sum:</span><span class="font-mono font-bold text-brand-goldDeep dark:text-brand-darkGold" id="res-pen-ups-lump">₹0</span></div><p class="text-[10px] text-brand-inkSoft dark:text-brand-darkInkSoft italic leading-tight">Upper-bound estimate.</p></div>
+          </div>
+          <div class="postaliq-card p-5 space-y-3 text-xs">
+            <div class="flex justify-between items-center border-b border-brand-border dark:border-brand-darkBorder pb-2"><h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">Gratuity &amp; Leave Encashment</h3><select id="grat-mode" onchange="runGratuityEngine()" class="px-2 py-1 border rounded-lg text-[11px] bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="RET">Retirement Gratuity</option><option value="DEATH">Death Gratuity</option></select></div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3"><div><label class="block mb-1 font-medium">Last Basic (₹)</label><input type="number" id="grat-basic" value="65000" oninput="runGratuityEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">Service (Yrs)</label><input type="number" id="grat-years" value="30" oninput="runGratuityEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">EL (Days)</label><input type="number" id="grat-el-days" value="300" max="300" oninput="runGratuityEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div></div>
+            <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-lg space-y-1.5 border border-brand-border dark:border-brand-darkBorder"><div class="flex justify-between"><span>Calculated Gratuity:</span> <span class="font-mono font-bold" id="res-grat-calc">₹0</span></div><div class="flex justify-between text-brand-rust dark:text-brand-darkRust"><span>Statutory Ceiling:</span> <span class="font-mono font-bold" id="res-grat-ceil">₹25,00,000</span></div><div class="flex justify-between pt-1 border-t border-brand-border dark:border-brand-darkBorder font-bold text-brand-rust dark:text-brand-darkRust text-sm"><span>Payable DCRG:</span> <span class="font-mono" id="res-grat-final">₹0</span></div></div>
+            <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-lg flex justify-between items-center border border-brand-border dark:border-brand-darkBorder"><span>EL Encashment (Max 300 days):</span><span class="font-mono font-bold text-brand-teal dark:text-brand-darkTeal text-sm" id="res-el-total">₹0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 5: NPS / UPS & HBA -->
+      <div id="module-nps-hba" class="calc-module hidden space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="postaliq-card p-5 space-y-3 text-xs">
+            <div class="flex justify-between items-center border-b border-brand-border dark:border-brand-darkBorder pb-2"><h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">NPS Corpus &amp; Annuity Projector</h3><select id="nps-type" onchange="runNpsEngine()" class="px-2 py-0.5 border rounded-lg text-[11px] bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="plain" selected>Plain NPS (14% Govt)</option><option value="ups">UPS Option (18.5% Govt)</option></select></div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3"><div><label class="block mb-1 font-medium">Monthly Basic (₹)</label><input type="number" id="nps-basic" value="35400" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">Current Corpus (₹)</label><input type="number" id="nps-curr" value="500000" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">Years</label><input type="number" id="nps-years" value="20" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">Return (%)</label><input type="number" id="nps-roi" value="9.5" step="0.1" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">Annual Growth (%)</label><input type="number" id="nps-growth" value="3.0" step="0.1" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">Annuity Rate (%)</label><input type="number" id="nps-annuity-rate" value="6.5" step="0.1" oninput="runNpsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div></div>
+            <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-lg space-y-1.5 border border-brand-border dark:border-brand-darkBorder"><div class="flex justify-between"><span>Projected Corpus:</span> <span class="font-mono font-bold text-sm text-brand-ink dark:text-brand-darkInk" id="res-nps-corpus">₹0</span></div><div class="flex justify-between text-brand-teal dark:text-brand-darkTeal"><span>Lump Sum (60%):</span> <span class="font-mono font-semibold" id="res-nps-lump">₹0</span></div><div class="flex justify-between"><span>Annuity Fund (40%):</span> <span class="font-mono font-semibold" id="res-nps-annuity-fund">₹0</span></div><div class="flex justify-between pt-1 border-t border-brand-border dark:border-brand-darkBorder font-bold text-brand-rust dark:text-brand-darkRust"><span>Monthly Pension:</span> <span class="font-mono" id="res-nps-monthly">₹0</span></div></div>
+          </div>
+          <div class="postaliq-card p-5 space-y-3 text-xs">
+            <h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk border-b border-brand-border dark:border-brand-darkBorder pb-2">House Building Advance (HBA) Schedule</h3>
+            <div class="grid grid-cols-2 gap-3"><div><label class="block mb-1 font-medium">Advance (₹)</label><input type="number" id="hba-req" value="2500000" oninput="runHbaEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div><div><label class="block mb-1 font-medium">Basic Pay (₹)</label><input type="number" id="hba-basic" value="65000" oninput="runHbaEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div></div>
+            <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-lg space-y-1.5 border border-brand-border dark:border-brand-darkBorder"><div class="flex justify-between"><span>Sanctioned:</span> <span class="font-mono font-bold" id="res-hba-sanctioned">₹0</span></div><div class="flex justify-between"><span>Principal EMI (180 Mos):</span> <span class="font-mono font-bold text-brand-teal dark:text-brand-darkTeal" id="res-hba-p-emi">₹0</span></div><div class="flex justify-between"><span>Interest EMI (60 Mos):</span> <span class="font-mono font-bold text-brand-rust dark:text-brand-darkRust" id="res-hba-i-emi">₹0</span></div><div class="flex justify-between pt-1 border-t border-brand-border dark:border-brand-darkBorder"><span>Simple Interest:</span> <span class="font-mono font-semibold" id="res-hba-rate">7.44% p.a.</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Module 6: Tax -->
+      <div id="module-tax" class="calc-module hidden space-y-4">
+        <div class="postaliq-card p-5 space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b border-brand-border dark:border-brand-darkBorder pb-2"><h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">FY 2026–27 (AY 2027–28) Tax Comparison Engine</h3><span class="font-mono text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft">Budget 2026 Compliant</span></div>
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+            <div><label class="block mb-1 font-medium">Gross Annual (₹)</label><input type="number" id="tax-gross" value="1250000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">Age Category</label><select id="tax-age" onchange="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded-lg bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="general" selected>&lt; 60 Yrs (General)</option><option value="senior">60–79 Yrs (Senior)</option><option value="super_senior">80+ Yrs (Super Senior)</option></select></div>
+            <div><label class="block mb-1 font-medium">80C Investments (₹)</label><input type="number" id="tax-80c" value="150000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">80D Mediclaim (₹)</label><input type="number" id="tax-80d" value="25000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">Sec 24 / Other (₹)</label><input type="number" id="tax-other" value="60000" oninput="runTaxEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div class="p-4 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-2"><div class="flex justify-between items-center"><span class="font-bold text-brand-ink dark:text-brand-darkInk">New Regime (Default)</span> <span class="bg-brand-tealSoft text-brand-teal dark:bg-brand-darkTealSoft dark:text-brand-darkTeal text-[10px] font-bold px-2 py-0.5 rounded-full">Std Ded: ₹75,000</span></div><div class="flex justify-between"><span>Taxable:</span> <span class="font-mono font-bold" id="res-tax-new-taxable">₹0</span></div><div class="flex justify-between"><span>87A Rebate / Relief:</span> <span class="font-mono font-bold text-brand-teal dark:text-brand-darkTeal" id="res-tax-new-rebate">₹0</span></div><div class="flex justify-between"><span>Surcharge:</span> <span class="font-mono font-semibold" id="res-tax-new-surcharge">₹0</span></div><div class="flex justify-between pt-2 border-t border-brand-border dark:border-brand-darkBorder font-bold text-base text-brand-ink dark:text-brand-darkInk"><span>Total Tax:</span> <span class="font-mono" id="res-tax-new-total">₹0</span></div></div>
+            <div class="p-4 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-2"><div class="flex justify-between items-center"><span class="font-bold text-brand-ink dark:text-brand-darkInk">Old Regime</span> <span class="bg-brand-goldSoft text-brand-goldDeep dark:bg-brand-darkGoldSoft dark:text-brand-darkGold text-[10px] font-bold px-2 py-0.5 rounded-full">Std Ded: ₹50,000</span></div><div class="flex justify-between"><span>Taxable:</span> <span class="font-mono font-bold" id="res-tax-old-taxable">₹0</span></div><div class="flex justify-between"><span>87A Rebate:</span> <span class="font-mono font-bold text-brand-teal dark:text-brand-darkTeal" id="res-tax-old-rebate">₹0</span></div><div class="flex justify-between"><span>Surcharge:</span> <span class="font-mono font-semibold" id="res-tax-old-surcharge">₹0</span></div><div class="flex justify-between pt-2 border-t border-brand-border dark:border-brand-darkBorder font-bold text-base text-brand-ink dark:text-brand-darkInk"><span>Total Tax:</span> <span class="font-mono" id="res-tax-old-total">₹0</span></div></div>
+          </div>
+          <div class="p-3 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt border border-brand-border dark:border-brand-darkBorder rounded-lg text-center font-bold text-xs" id="res-tax-recommendation">Analyzing optimal regime...</div>
+        </div>
+      </div>
+
+      <!-- Module 7: GDS TRCA -->
+      <div id="module-gds" class="calc-module hidden space-y-4">
+        <div class="postaliq-card p-5 space-y-4 text-xs">
+          <div class="flex justify-between items-center border-b border-brand-border dark:border-brand-darkBorder pb-2"><div><h3 class="font-serif font-bold text-brand-ink dark:text-brand-darkInk">Gramin Dak Sevak (GDS) TRCA Emoluments Desk</h3><p class="text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft">Kamlesh Chandra Committee framework (7th CPC does not apply to GDS).</p></div><span class="px-2.5 py-0.5 rounded-full bg-brand-rustSoft text-brand-rust dark:bg-brand-darkRustSoft dark:text-brand-darkRust font-mono text-[10px] font-bold">Dept. of Posts GDS Rules</span></div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div><label class="block mb-1 font-medium">Cadre &amp; Category</label><select id="gds-cadre" onchange="runGdsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="level1_abpm">ABPM / Dak Sevak (4 Hrs - ₹10,000 Base)</option><option value="level2_abpm">BPM 1 / ABPM 2 (5 Hrs - ₹12,000 Base)</option><option value="level2_bpm" selected>BPM (5 Hrs - ₹14,500 Base)</option></select></div>
+            <div><label class="block mb-1 font-medium">TRCA Stage (₹)</label><input type="number" id="gds-trca-stage" value="14500" oninput="runGdsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">Allowances (CDA / Office Maint)</label><input type="number" id="gds-cda" value="500" oninput="runGdsEngine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+          </div>
+          <div class="p-4 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-xl space-y-2 border border-brand-border dark:border-brand-darkBorder"><div class="flex justify-between"><span>Basic TRCA:</span> <span class="font-mono font-bold" id="res-gds-base">₹0</span></div><div class="flex justify-between"><span id="lbl-gds-da">DA on TRCA:</span> <span class="font-mono font-bold" id="res-gds-da">₹0</span></div><div class="flex justify-between"><span>Allowances:</span> <span class="font-mono font-bold" id="res-gds-cda">₹0</span></div><div class="flex justify-between pt-2 border-t border-brand-border dark:border-brand-darkBorder font-bold text-base text-brand-rust dark:text-brand-darkRust"><span>Gross Emoluments:</span> <span class="font-mono" id="res-gds-gross">₹0</span></div></div>
+        </div>
+      </div>
+
+      <!-- Module 8: 8th CPC -->
+      <div id="module-cpc8" class="calc-module hidden space-y-4">
+        <div class="postaliq-card p-5 space-y-4 text-xs">
+          <div class="p-3 bg-brand-rustSoft text-brand-rust dark:bg-brand-darkRustSoft dark:text-brand-darkRust border border-brand-rust rounded-lg"><span class="font-bold block flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Speculative &amp; Illustrative What-If Tool</span><p class="text-[11px] mt-0.5">8th CPC constituted 3 Nov 2025; report expected ~mid-2027. No official fitment factor or matrix exists yet.</p></div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div><label class="block mb-1 font-medium">Current 7th CPC Basic (₹)</label><input type="number" id="cpc8-basic" value="35400" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono font-bold bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">Hypothetical Fitment Factor</label><input type="number" id="cpc8-factor" value="2.15" step="0.05" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+            <div><label class="block mb-1 font-medium">Arrears Months</label><input type="number" id="cpc8-months" value="12" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded-lg font-mono bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></div>
+          </div>
+          <div class="p-4 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-xl space-y-2 border border-brand-border dark:border-brand-darkBorder"><div class="flex justify-between"><span>Indicative Revised Basic:</span> <span class="font-mono font-bold text-base text-brand-ink dark:text-brand-darkInk" id="res-cpc8-new-basic">₹0</span></div><div class="flex justify-between"><span>Gross Back-Pay:</span> <span class="font-mono font-black text-lg text-brand-gold dark:text-brand-darkGold" id="res-cpc8-arrears">₹0</span></div></div>
+        </div>
+      </div>
+
     </div>
 
   </main>
@@ -702,1163 +942,88 @@
     </div>
   </footer>
 
-  <!-- SCRIPT ENGINE -->
+  <!-- ========================================================================= -->
+  <!-- COMPLETE SCRIPT ENGINE                                                    -->
+  <!-- ========================================================================= -->
   <script>
+    // 1. FORMS PRE-SEEDED DIRECTORY (Pre-populated so it is NEVER blank)
+    const VERIFIED_INITIAL_FORMS = [
+      { id: "form-acg61", code: "ACG-61", title: "Certificate of Transfer of Charge (Charge Report)", category: "Establishment / Accounts", ruleRef: "Postal Manual Vol II / ACG 61", pdfPath: "forms/form_1.pdf" },
+      { id: "form-sr1", code: "SR-1", title: "Application for Leave / Leave Encashment", category: "Staff / Leave Rules", ruleRef: "CCS (Leave) Rules, 1972", pdfPath: "forms/form_2.pdf" },
+      { id: "form-gpf", code: "GPF-01", title: "Application for GPF Final Withdrawal / Advance", category: "GPF / Accounts", ruleRef: "GPF (Central Services) Rules, 1960", pdfPath: "forms/form_1.pdf" },
+      { id: "form-pen14", code: "Form-14", title: "Application for Family Pension on Death of Employee", category: "Pension / Retirement", ruleRef: "CCS (Pension) Rules, 2021", pdfPath: "forms/form_2.pdf" },
+      { id: "form-cea", code: "CEA-CLAIM", title: "Children Education Allowance (CEA) / Hostel Subsidy Claim", category: "Allowances / Welfare", ruleRef: "DoPT OM No. A-27012/02/2017-Estt", pdfPath: "forms/form_1.pdf" },
+      { id: "form-ltc", code: "LTC-01", title: "Leave Travel Concession (LTC) Advance & Claim Bill", category: "Allowances / Claims", ruleRef: "CCS (LTC) Rules, 1988", pdfPath: "forms/form_2.pdf" }
+    ];
+
+    let DATA_FORMS = [...VERIFIED_INITIAL_FORMS];
     let DATA_ORDERS = [];
     let DATA_POSB = [...POSB_MASTER_SCHEMES];
-    let DATA_FORMS = [
-      { id: "form-pdf-1", code: "FORM-CODE-1", title: "Charge Report Fillable", ruleRef: "ACG 61", category: "Establishment / Accounts", pdfPath: "forms/form_1.pdf" },
-      { id: "form-pdf-2", code: "FORM-CODE-2", title: "Leave Application Form Fillable", ruleRef: "SR1", category: "Leave / Staff", pdfPath: "forms/form_2.pdf" }
-    ];
     let DATA_PINCODES_GROUPED = [];
     let officeSearchTimeout = null;
 
-    async function fetchDataset(filename, fallbackData = []) {
-      const candidatePaths = [`data/${filename}`, `/data/${filename}`, `./data/${filename}`, filename, `./${filename}`];
-      for (const p of candidatePaths) {
-        try {
-          const res = await fetch(p);
-          if (res.ok) {
-            const json = await res.json();
-            if (json) return json;
-          }
-        } catch (err) {}
-      }
-      return fallbackData;
-    }
-
-    function buildGroupedPincodeData(rawList) {
-      if (!Array.isArray(rawList) || rawList.length === 0) return [];
-      if (rawList[0].postOffices || rawList[0].offices) return rawList;
-
-      const map = new Map();
-      for (let i = 0; i < rawList.length; i++) {
-        const item = rawList[i];
-        const pin = String(item.pincode || item.Pincode || '').trim();
-        if (!pin) continue;
-        if (!map.has(pin)) {
-          map.set(pin, {
-            pincode: pin,
-            district: item.district || item.District || '',
-            state: item.state || item.State || item.StateName || '',
-            division: item.division || item.Division || '',
-            region: item.region || item.Region || '',
-            circle: item.circle || item.Circle || '',
-            taluk: item.taluk || item.Taluk || '',
-            postOffices: []
-          });
-        }
-        const group = map.get(pin);
-        if (!group.division && item.division) group.division = item.division;
-        if (!group.region && item.region) group.region = item.region;
-        if (!group.circle && item.circle) group.circle = item.circle;
-
-        group.postOffices.push({
-          officeName: item.officeName || item.officename || '',
-          officeType: item.officeType || item.officetype || '',
-          deliveryStatus: item.deliveryStatus || item.deliverystatus || 'Delivery',
-          taluk: item.taluk || item.Taluk || '',
-          relatedSubOffice: item.relatedSubOffice || item.relatedsuboffice || 'NA',
-          relatedHeadOffice: item.relatedHeadOffice || item.relatedheadoffice || 'NA'
-        });
-      }
-      return Array.from(map.values());
-    }
-
-    /* 1. CENTRAL CONTROLLER INITIALIZATION */
-    async function loadCentralData() {
-      try {
-        const [orders, posb, forms, rawPins, cfg] = await Promise.all([
-          fetchDataset('orders.json', []),
-          fetchDataset('posb-rates.json', POSB_MASTER_SCHEMES),
-          fetchDataset('forms.json', DATA_FORMS),
-          fetchDataset('pincodes.json', []).then(res => res.length ? res : fetchDataset('india_pincodes_flat.json', [])),
-          fetchDataset('rates-config.json', RATES_CONFIG)
-        ]);
-
-        DATA_ORDERS = orders;
-        DATA_POSB = (posb && posb.length > 0) ? posb : POSB_MASTER_SCHEMES;
-        DATA_FORMS = (forms && forms.length > 0) ? forms : DATA_FORMS;
-        DATA_PINCODES_GROUPED = buildGroupedPincodeData(rawPins);
-        if (cfg && cfg.current_parameters) RATES_CONFIG = cfg;
-      } catch (e) {
-        console.warn('Dataset sync fallback active:', e);
-      } finally {
-        updateDashboardCounters();
-        renderDashboardGreeting();
-        renderOrdersTable();
-        renderPosbTable();
-        renderFormsCatalog();
-        initCalculatorSuite();
-        initPpfSsyModule();
-      }
-    }
-
-    function renderDashboardGreeting() {
-      const h = new Date().getHours();
-      let g = "Good evening";
-      if (h < 12) g = "Good morning";
-      else if (h < 17) g = "Good afternoon";
-      document.getElementById('dash-time-greeting').innerText = `${g}, Welcome to PostalIQ`;
-
-      const listEl = document.getElementById('dash-recent-orders-list');
-      if (listEl) {
-        const recent = DATA_ORDERS.slice(0, 3);
-        if (!recent.length) {
-          listEl.innerHTML = `<div class="text-brand-inkSoft dark:text-brand-darkInkSoft">No recently loaded circulars found. Check data/orders.json.</div>`;
-        } else {
-          listEl.innerHTML = recent.map(o => `
-            <div class="flex justify-between items-center p-2 rounded-lg bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt border border-brand-border dark:border-brand-darkBorder">
-              <div class="truncate mr-2"><span class="font-mono font-bold text-brand-rust dark:text-brand-darkRust mr-2">${o.orderNo}</span><span class="text-brand-ink dark:text-brand-darkInk font-medium">${o.subject}</span></div>
-              <span class="badge-in-force flex-shrink-0">${o.status}</span>
-            </div>
-          `).join('');
-        }
-      }
-    }
-
-    function updateDashboardCounters() {
-      if (document.getElementById('dash-count-orders')) document.getElementById('dash-count-orders').innerText = DATA_ORDERS.length;
-      if (document.getElementById('dash-count-posb')) document.getElementById('dash-count-posb').innerText = DATA_POSB.length;
-      if (document.getElementById('dash-count-forms')) document.getElementById('dash-count-forms').innerText = DATA_FORMS.length;
-      if (document.getElementById('dash-count-offices')) {
-        document.getElementById('dash-count-offices').innerText = DATA_PINCODES_GROUPED.length ? DATA_PINCODES_GROUPED.length.toLocaleString('en-IN') : '0';
-      }
-    }
-
-    /* POSB SUB-MODULE NAVIGATION & ENGINES */
-    function switchPosbSub(subId) {
-      document.querySelectorAll('.posb-pane').forEach(p => p.classList.add('hidden'));
-      const target = document.getElementById('posb-pane-' + subId);
-      if (target) target.classList.remove('hidden');
-
-      ['rates-hub', 'ppf-ssy', 'nsc-kvp', 'td-rd', 'mis-scss', 'sb', 'pli'].forEach(id => {
-        const btn = document.getElementById('subbtn-posb-' + id);
-        if (btn) {
-          btn.className = (id === subId)
-            ? "px-3.5 py-1.5 rounded-full bg-brand-ink text-brand-paper dark:bg-brand-gold dark:text-brand-darkPaper whitespace-nowrap font-bold transition"
-            : "px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft hover:text-brand-ink dark:hover:text-white whitespace-nowrap font-semibold transition";
-        }
-      });
-    }
-
-    function lookupIssueRuleset(schemeKey, dateStr, extraParam) {
-      const d = new Date(dateStr);
-      const today = new Date();
-      if (!dateStr || isNaN(d.getTime())) return { error: "Please enter a valid date." };
-      if (d > today) return { error: "Future purchase dates are not valid for historical certificate verification." };
-
-      if (schemeKey === 'KVP') {
-        if (d < new Date('1988-04-01')) return { error: "KVP scheme was launched on 1 April 1988. Date cannot precede scheme inception." };
-        if (d >= new Date('2011-12-01') && d <= new Date('2014-11-17')) {
-          return { error: "KVP sales were discontinued from close of business 30 Nov 2011 and relaunched on 18 Nov 2014. Certificates were not issued during this window." };
-        }
-        for (const r of LOCKED_SCHEME_RATES.KVP) {
-          if (d >= new Date(r.from) && (!r.to || d <= new Date(r.to))) return r;
-        }
-        return LOCKED_SCHEME_RATES.KVP[0];
-      }
-
-      if (schemeKey === 'NSC') {
-        const issue = extraParam || 'VIII';
-        if (issue === 'IX') {
-          if (d < new Date('2011-12-01')) return { error: "NSC IX Issue (10-Year) was introduced on 1 Dec 2011." };
-          if (d > new Date('2015-12-20')) return { error: "NSC IX Issue (10-Year) was discontinued on 20 Dec 2015 (notified 1 Dec 2015). Subsequent to this date, only the 5-Year VIII Issue continues." };
-          for (const r of LOCKED_SCHEME_RATES.NSC_IX) {
-            if (d >= new Date(r.from) && (!r.to || d <= new Date(r.to))) return { ...r, tenure: 10 };
-          }
-        } else {
-          for (const r of LOCKED_SCHEME_RATES.NSC_VIII) {
-            if (d >= new Date(r.from)) return { ...r, tenure: 5 };
-          }
-          return { ...LOCKED_SCHEME_RATES.NSC_VIII[LOCKED_SCHEME_RATES.NSC_VIII.length - 1], tenure: 5 };
-        }
-      }
-
-      if (schemeKey === 'MIS') {
-        let bonusPct = 0;
-        if (d < new Date('2006-02-13')) bonusPct = 10;
-        else if (d >= new Date('2007-12-08') && d <= new Date('2011-11-30')) bonusPct = 5;
-        let rateObj = LOCKED_SCHEME_RATES.MIS[0];
-        for (const r of LOCKED_SCHEME_RATES.MIS) {
-          if (d >= new Date(r.from)) { rateObj = r; break; }
-        }
-        return { rate: rateObj.rate, bonusPct };
-      }
-
-      if (schemeKey === 'SCSS') {
-        if (d < new Date('2004-08-02')) return { error: "SCSS was launched on 2 August 2004. Date cannot precede scheme launch." };
-        for (const r of LOCKED_SCHEME_RATES.SCSS) {
-          if (d >= new Date(r.from)) return r;
-        }
-        return LOCKED_SCHEME_RATES.SCSS[0];
-      }
-
-      if (schemeKey === 'TD') {
-        const t = extraParam || 5;
-        const list = LOCKED_SCHEME_RATES.TD[t] || LOCKED_SCHEME_RATES.TD[5];
-        for (const r of list) { if (d >= new Date(r.from)) return r; }
-        return list[0];
-      }
-
-      if (schemeKey === 'RD') {
-        for (const r of LOCKED_SCHEME_RATES.RD) { if (d >= new Date(r.from)) return r; }
-        return LOCKED_SCHEME_RATES.RD[0];
-      }
-      return null;
-    }
-
-    function runNscEngine() {
-      const dateStr = document.getElementById('nsc-date').value;
-      const issue = document.getElementById('nsc-issue').value;
-      const P = parseFloat(document.getElementById('nsc-principal').value) || 0;
-      const errBox = document.getElementById('nsc-error-box');
-      const outBox = document.getElementById('nsc-output-box');
-
-      const rules = lookupIssueRuleset('NSC', dateStr, issue);
-      if (rules.error) {
-        errBox.innerText = rules.error;
-        errBox.classList.remove('hidden');
-        outBox.classList.add('opacity-30');
-        return;
-      }
-      errBox.classList.add('hidden');
-      outBox.classList.remove('opacity-30');
-
-      const r = rules.rate / 100;
-      const t = rules.tenure;
-      const A = Math.round(P * Math.pow(1 + r, t));
-      document.getElementById('res-nsc-rate').innerText = `${rules.rate}% p.a. (Annual Compound)`;
-      document.getElementById('res-nsc-tenure').innerText = `${t} Years (${issue === 'IX' ? 'IX Issue' : 'VIII Issue'})`;
-      document.getElementById('res-nsc-interest').innerText = '₹' + (A - P).toLocaleString('en-IN');
-      document.getElementById('res-nsc-maturity').innerText = '₹' + A.toLocaleString('en-IN');
-    }
-
-    function runKvpEngine() {
-      const dateStr = document.getElementById('kvp-date').value;
-      const P = parseFloat(document.getElementById('kvp-principal').value) || 0;
-      const errBox = document.getElementById('kvp-error-box');
-      const outBox = document.getElementById('kvp-output-box');
-
-      const rules = lookupIssueRuleset('KVP', dateStr);
-      if (rules.error) {
-        errBox.innerText = rules.error;
-        errBox.classList.remove('hidden');
-        outBox.classList.add('opacity-30');
-        return;
-      }
-      errBox.classList.add('hidden');
-      outBox.classList.remove('opacity-30');
-
-      const m = rules.months;
-      document.getElementById('res-kvp-months').innerText = `${m} Months (${Math.floor(m / 12)} Yrs ${m % 12} Mos)`;
-      document.getElementById('res-kvp-rate').innerText = `${rules.rate}% p.a.`;
-      document.getElementById('res-kvp-maturity').innerText = '₹' + (P * 2).toLocaleString('en-IN');
-    }
-
-    function runTdEngine() {
-      const dateStr = document.getElementById('td-date').value;
-      const tenure = parseInt(document.getElementById('td-tenure').value) || 5;
-      const P = parseFloat(document.getElementById('td-principal').value) || 0;
-      const rules = lookupIssueRuleset('TD', dateStr, tenure);
-      const r = rules.rate / 100;
-      const A = Math.round(P * Math.pow(1 + r / 4, 4 * tenure));
-      const annualInt = Math.round(P * (Math.pow(1 + r / 4, 4) - 1));
-
-      document.getElementById('res-td-rate').innerText = `${rules.rate}% p.a. (Quarterly Compounding)`;
-      document.getElementById('res-td-annual-int').innerText = '₹' + annualInt.toLocaleString('en-IN') + ' / yr';
-      document.getElementById('res-td-maturity').innerText = '₹' + A.toLocaleString('en-IN');
-    }
-
-    function runRdEngine() {
-      const dateStr = document.getElementById('rd-date').value;
-      const M = parseFloat(document.getElementById('rd-monthly').value) || 0;
-      const rules = lookupIssueRuleset('RD', dateStr);
-      const r = rules.rate / 100;
-      let totalMaturity = 0;
-      for (let m = 1; m <= 60; m++) {
-        const rem = 60 - m + 1;
-        totalMaturity += M * Math.pow(1 + r / 4, (4 * rem) / 12);
-      }
-      totalMaturity = Math.round(totalMaturity);
-      const principal = M * 60;
-      document.getElementById('res-rd-rate').innerText = `${rules.rate}% p.a. (Quarterly Compounding)`;
-      document.getElementById('res-rd-total-dep').innerText = '₹' + principal.toLocaleString('en-IN');
-      document.getElementById('res-rd-interest').innerText = '₹' + (totalMaturity - principal).toLocaleString('en-IN');
-      document.getElementById('res-rd-maturity').innerText = '₹' + totalMaturity.toLocaleString('en-IN');
-    }
-
-    function runMisEngine() {
-      const dateStr = document.getElementById('mis-date').value;
-      const P = parseFloat(document.getElementById('mis-principal').value) || 0;
-      const rules = lookupIssueRuleset('MIS', dateStr);
-      const monthly = Math.round((P * (rules.rate / 100)) / 12);
-      const bonus = Math.round((P * rules.bonusPct) / 100);
-
-      document.getElementById('res-mis-rate').innerText = `${rules.rate}% p.a. (Simple Interest)`;
-      document.getElementById('res-mis-monthly').innerText = '₹' + monthly.toLocaleString('en-IN') + ' / month';
-      document.getElementById('res-mis-bonus-pct').innerText = rules.bonusPct > 0 ? `${rules.bonusPct}% (₹${bonus.toLocaleString('en-IN')})` : '0% (Withdrawn from 1 Dec 2011)';
-      document.getElementById('res-mis-total-refund').innerText = '₹' + (P + bonus).toLocaleString('en-IN');
-    }
-
-    function runScssEngine() {
-      const dateStr = document.getElementById('scss-date').value;
-      const P = parseFloat(document.getElementById('scss-principal').value) || 0;
-      const rules = lookupIssueRuleset('SCSS', dateStr);
-      const quarterly = Math.round((P * (rules.rate / 100)) / 4);
-
-      document.getElementById('res-scss-rate').innerText = `${rules.rate}% p.a.`;
-      document.getElementById('res-scss-quarterly').innerText = '₹' + quarterly.toLocaleString('en-IN') + ' / quarter';
-      document.getElementById('res-scss-total-int').innerText = '₹' + (quarterly * 20).toLocaleString('en-IN');
-      document.getElementById('res-scss-maturity').innerText = '₹' + P.toLocaleString('en-IN');
-    }
-
-    function runSbEngine() {
-      const bal = parseFloat(document.getElementById('sb-balance').value) || 0;
-      const months = Math.min(Math.max(parseInt(document.getElementById('sb-months').value) || 12, 1), 12);
-      document.getElementById('res-sb-interest').innerText = '₹' + Math.round((bal * 0.04 * months) / 12).toLocaleString('en-IN');
-    }
-
-    function runPliEngine() {
-      const sector = document.getElementById('pli-sector').value;
-      const plan = document.getElementById('pli-plan').value;
-      const entryAge = parseInt(document.getElementById('pli-entry-age').value) || 25;
-      let matAge = parseInt(document.getElementById('pli-mat-age').value) || 55;
-      const sa = parseFloat(document.getElementById('pli-sum-assured').value) || 500000;
-
-      if (matAge <= entryAge) {
-        matAge = Math.min(60, entryAge + 10);
-        document.getElementById('pli-mat-age').value = matAge;
-      }
-      const term = matAge - entryAge;
-
-      let baseRatePerThousand = 0;
-      if (plan === 'WLA' || plan === 'CWLA') {
-        if (term <= 12) baseRatePerThousand = 5.45;
-        else if (term <= 17) baseRatePerThousand = 3.75;
-        else if (term <= 22) baseRatePerThousand = 2.85;
-        else if (term <= 27) baseRatePerThousand = 2.25;
-        else if (term <= 32) baseRatePerThousand = 1.85;
-        else if (term <= 37) baseRatePerThousand = 1.55;
-        else baseRatePerThousand = 1.35;
-      } else if (plan === 'AEA') {
-        baseRatePerThousand = term <= 15 ? 6.70 : 5.20;
-      } else {
-        if (term <= 7) baseRatePerThousand = 17.15;
-        else if (term <= 12) baseRatePerThousand = 8.35;
-        else if (term <= 17) baseRatePerThousand = 5.35;
-        else if (term <= 22) baseRatePerThousand = 3.95;
-        else if (term <= 27) baseRatePerThousand = 3.15;
-        else if (term <= 32) baseRatePerThousand = 2.55;
-        else if (term <= 37) baseRatePerThousand = 2.05;
-        else baseRatePerThousand = 1.75;
-        if (entryAge > 35) baseRatePerThousand += (entryAge - 35) * 0.02;
-      }
-
-      if (sector === 'RPLI') baseRatePerThousand *= 0.95;
-      const baseMonthly = Math.round((sa / 1000) * baseRatePerThousand);
-      const monthlyRebate = sa >= 100000 ? Math.round((sa / 20000) * 1.0) : 0;
-      const netMonthly = Math.max(0, baseMonthly - monthlyRebate);
-      const firstYearMonthly = netMonthly + Math.round(netMonthly * 0.045);
-      const renewalMonthly = netMonthly + Math.round(netMonthly * 0.0225);
-      const totalPaid = (firstYearMonthly * 12) + (renewalMonthly * 12 * Math.max(0, term - 1));
-
-      const bonusRate = (PLI_BONUS_RATES[sector] && PLI_BONUS_RATES[sector][plan]) ? PLI_BONUS_RATES[sector][plan] : 52;
-      const accruedBonus = Math.round((bonusRate / 1000) * sa * term);
-      const totalMaturity = sa + accruedBonus;
-
-      document.getElementById('res-pli-term-display').innerText = `${term} Years (Till Age ${matAge})`;
-      document.getElementById('res-pli-base-prem').innerText = '₹' + baseMonthly.toLocaleString('en-IN');
-      document.getElementById('res-pli-rebate').innerText = monthlyRebate > 0 ? '−₹' + monthlyRebate.toLocaleString('en-IN') : '₹0';
-      document.getElementById('res-pli-net-prem').innerText = '₹' + netMonthly.toLocaleString('en-IN') + ' / mo';
-      document.getElementById('res-pli-1st-yr').innerText = '₹' + firstYearMonthly.toLocaleString('en-IN') + ' / mo';
-      document.getElementById('res-pli-renewal').innerText = '₹' + renewalMonthly.toLocaleString('en-IN') + ' / mo';
-      document.getElementById('res-pli-total-paid').innerText = '₹' + totalPaid.toLocaleString('en-IN');
-
-      document.getElementById('res-pli-bonus-rate').innerText = `₹${bonusRate} per ₹1,000 SA / yr`;
-      document.getElementById('res-pli-sa').innerText = '₹' + sa.toLocaleString('en-IN');
-      document.getElementById('res-pli-accrued-bonus').innerText = '₹' + accruedBonus.toLocaleString('en-IN');
-      document.getElementById('res-pli-maturity').innerText = '₹' + totalMaturity.toLocaleString('en-IN');
-      document.getElementById('res-pli-gain').innerText = '+₹' + (totalMaturity - totalPaid).toLocaleString('en-IN');
-    }
-
-    /* PPF & SSY PASSBOOK ENGINE */
-    let ppfCurrentScheme = 'PPF', ppfTxnRows = [], ppfTxnIdSeq = 1;
-    const PPF_SCHEME_CONFIG = {
-      PPF: { name: 'Public Provident Fund', cutoffDay: 5, minAnnual: 500, maxAnnual: 150000, tenureYears: 15 },
-      SSY: { name: 'Sukanya Samriddhi Yojana', cutoffDay: 5, minAnnual: 250, maxAnnual: 150000, tenureYears: 15, totalTenureYears: 21 }
-    };
-
-    const toDate = s => { if (!s) return null; const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
-    const lastDayOfMonth = (y, m) => new Date(y, m + 1, 0);
-    const fyStartYearOf = d => d.getMonth() >= 3 ? d.getFullYear() : d.getFullYear() - 1;
-    const fyLabel = fy => `FY ${fy}-${String(fy + 1).slice(2)}`;
-    const monShort = (y, mi) => new Date(y, mi, 1).toLocaleString('en-IN', { month: 'short' });
-
-    function getPpfRate(rateTable, date) {
-      let rate = rateTable.length ? rateTable[0].rate : 7.1;
-      for (const r of rateTable) { if (r.date <= date) rate = r.rate; else break; }
-      return rate;
-    }
-
-    function computePpfLedger({ openingDate, openingBalance, openingBalanceDate, transactions, rateTable, cutoffDay, calcEndDate }) {
-      let allTxns = [];
-      if (openingBalance > 0) allTxns.push({ date: (openingBalanceDate || openingDate), amount: openingBalance, type: 'deposit' });
-      allTxns = allTxns.concat(transactions.map(t => ({
-        date: t.date,
-        amount: t.type === 'withdrawal' ? -Math.abs(t.amount) : Math.abs(t.amount),
-        type: t.type
-      }))).filter(t => t.date && t.amount).sort((a, b) => a.date - b.date);
-
-      if (!openingDate || !calcEndDate || calcEndDate < openingDate) return { results: [] };
-      const startFy = fyStartYearOf(openingDate), endFy = fyStartYearOf(calcEndDate);
-      const sortedRates = rateTable.slice().sort((a, b) => a.date - b.date);
-      let runningBalance = 0; const results = []; let txnIdx = 0;
-
-      for (let fy = startFy; fy <= endFy; fy++) {
-        const fyOpening = runningBalance;
-        let fyDeposits = 0, fyWithdrawals = 0, fyInterest = 0;
-        const seq = [3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2];
-        const monthDetails = []; let reachedEnd = false;
-
-        for (const mi of seq) {
-          const y = mi >= 3 ? fy : fy + 1;
-          const monthStart = new Date(y, mi, 1), monthEnd = lastDayOfMonth(y, mi);
-          if (monthStart > calcEndDate) break;
-          const effMonthEnd = monthEnd < calcEndDate ? monthEnd : calcEndDate;
-          const cutoffDate = new Date(y, mi, Math.min(cutoffDay, monthEnd.getDate()));
-
-          while (txnIdx < allTxns.length && allTxns[txnIdx].date <= cutoffDate) {
-            const amt = allTxns[txnIdx].amount;
-            runningBalance += amt;
-            if (amt > 0) fyDeposits += amt; else fyWithdrawals += Math.abs(amt);
-            txnIdx++;
-          }
-          const balanceAtCutoff = runningBalance;
-
-          while (txnIdx < allTxns.length && allTxns[txnIdx].date <= effMonthEnd) {
-            const amt = allTxns[txnIdx].amount;
-            runningBalance += amt;
-            if (amt > 0) fyDeposits += amt; else fyWithdrawals += Math.abs(amt);
-            txnIdx++;
-          }
-          const balanceAtMonthEnd = runningBalance;
-          const interestBearingBal = Math.max(0, Math.min(balanceAtCutoff, balanceAtMonthEnd));
-          const rate = getPpfRate(sortedRates, monthStart);
-          const mInt = interestBearingBal * (rate / 100 / 12);
-          fyInterest += mInt;
-
-          monthDetails.push({ label: `${monShort(y, mi)} ${y}`, minBal: interestBearingBal, rate, monthInterest: mInt });
-          if (effMonthEnd.getTime() === calcEndDate.getTime()) { reachedEnd = true; break; }
-        }
-
-        fyInterest = Math.round(fyInterest);
-        runningBalance = fyOpening + fyDeposits - fyWithdrawals + fyInterest;
-        results.push({ fy, fyOpening, fyDeposits, fyWithdrawals, fyInterest, closing: runningBalance, monthDetails });
-        if (reachedEnd) break;
-      }
-      return { results };
-    }
-
-    function initPpfSsyModule() {
-      setLedgerScheme('PPF');
-    }
-
-    function setLedgerScheme(sch) {
-      ppfCurrentScheme = sch;
-      document.getElementById('btn-sch-ppf').className = sch === 'PPF' ? "px-4 py-1 text-xs font-bold rounded-full bg-brand-ink text-brand-paper dark:bg-brand-gold dark:text-brand-darkPaper transition" : "px-4 py-1 text-xs font-semibold rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft hover:text-brand-ink dark:hover:text-white transition";
-      document.getElementById('btn-sch-ssy').className = sch === 'SSY' ? "px-4 py-1 text-xs font-bold rounded-full bg-brand-ink text-brand-paper dark:bg-brand-gold dark:text-brand-darkPaper transition" : "px-4 py-1 text-xs font-semibold rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft hover:text-brand-ink dark:hover:text-white transition";
-      
-      const opDate = sch === 'SSY' ? '2023-04-05' : '2020-04-03';
-      document.getElementById('ppf-openingDate').value = opDate;
-      document.getElementById('ppf-openingBalanceDate').value = opDate;
-      document.getElementById('ppf-calcEndDate').value = '2026-03-31';
-      document.getElementById('ppf-cutoffDay').value = PPF_SCHEME_CONFIG[sch].cutoffDay;
-      loadPpfExample();
-    }
-
-    function loadPpfExample() {
-      ppfTxnRows = ppfCurrentScheme === 'SSY' ? [
-        { id: ppfTxnIdSeq++, date: '2023-04-05', type: 'deposit', amount: 10000 },
-        { id: ppfTxnIdSeq++, date: '2023-08-02', type: 'deposit', amount: 10000 },
-        { id: ppfTxnIdSeq++, date: '2024-01-01', type: 'deposit', amount: 7000 }
-      ] : [
-        { id: ppfTxnIdSeq++, date: '2020-04-03', type: 'deposit', amount: 50000 },
-        { id: ppfTxnIdSeq++, date: '2020-07-22', type: 'deposit', amount: 25000 },
-        { id: ppfTxnIdSeq++, date: '2021-04-10', type: 'deposit', amount: 60000 }
-      ];
-      renderPpfTxnTable();
-      recalcPpfLedger();
-    }
-
-    function renderPpfTxnTable() {
-      const tbody = document.getElementById('ppf-txnBody');
-      tbody.innerHTML = '';
-      ppfTxnRows.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="p-1"><input type="date" value="${row.date}" onchange="updatePpfTxn(${row.id}, 'date', this.value)" class="w-full px-1.5 py-1 border rounded font-mono text-[11px] bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></td>
-          <td class="p-1"><select onchange="updatePpfTxn(${row.id}, 'type', this.value)" class="w-full px-1 py-1 border rounded text-[11px] bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"><option value="deposit" ${row.type === 'deposit' ? 'selected' : ''}>Deposit</option><option value="withdrawal" ${row.type === 'withdrawal' ? 'selected' : ''}>Withdrawal</option></select></td>
-          <td class="p-1"><input type="number" value="${row.amount}" oninput="updatePpfTxn(${row.id}, 'amount', this.value)" class="w-full px-1.5 py-1 border rounded font-mono font-bold text-[11px] bg-brand-surface dark:bg-brand-darkSurface border-brand-border dark:border-brand-darkBorder"></td>
-          <td class="p-1 text-center"><button onclick="delPpfTxn(${row.id})" class="text-brand-rust hover:text-brand-darkRust font-bold">✕</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-      document.getElementById('ppf-txnCount').innerText = `${ppfTxnRows.length} entries`;
-    }
-
-    function addPpfTxnRow() {
-      const today = new Date().toISOString().split('T')[0];
-      ppfTxnRows.push({ id: ppfTxnIdSeq++, date: today, type: 'deposit', amount: 10000 });
-      renderPpfTxnTable();
-      recalcPpfLedger();
-    }
-    function updatePpfTxn(id, field, val) {
-      const row = ppfTxnRows.find(r => r.id === id);
-      if (row) { row[field] = field === 'amount' ? parseFloat(val) || 0 : val; recalcPpfLedger(); }
-    }
-    function delPpfTxn(id) {
-      ppfTxnRows = ppfTxnRows.filter(r => r.id !== id);
-      renderPpfTxnTable();
-      recalcPpfLedger();
-    }
-    function clearPpfTxns() {
-      ppfTxnRows = [];
-      renderPpfTxnTable();
-      recalcPpfLedger();
-    }
-
-    function recalcPpfLedger() {
-      const cfg = PPF_SCHEME_CONFIG[ppfCurrentScheme];
-      const openingDate = toDate(document.getElementById('ppf-openingDate').value);
-      const openingBalance = parseFloat(document.getElementById('ppf-openingBalance').value) || 0;
-      const openingBalanceDate = toDate(document.getElementById('ppf-openingBalanceDate').value) || openingDate;
-      const calcEndDate = toDate(document.getElementById('ppf-calcEndDate').value);
-      const cutoffDay = parseInt(document.getElementById('ppf-cutoffDay').value) || 5;
-
-      if (!openingDate || !calcEndDate) return;
-
-      const transactions = ppfTxnRows.filter(t => t.date && t.amount).map(t => ({ date: toDate(t.date), amount: t.amount, type: t.type }));
-      const rateTable = PPF_SSY_RATE_HISTORY[ppfCurrentScheme].map(([d, r]) => ({ date: toDate(d), rate: r }));
-
-      const { results } = computePpfLedger({ openingDate, openingBalance, openingBalanceDate, transactions, rateTable, cutoffDay, calcEndDate });
-
-      const totalDep = results.reduce((s, r) => s + r.fyDeposits, 0);
-      const totalWith = results.reduce((s, r) => s + r.fyWithdrawals, 0);
-      const totalInt = results.reduce((s, r) => s + r.fyInterest, 0);
-      const closing = results.length ? results[results.length - 1].closing : 0;
-
-      document.getElementById('ppf-summaryGrid').innerHTML = `
-        <div class="p-3 postaliq-card"><span class="text-[10px] text-brand-inkFaint block uppercase font-mono">Total Deposited</span><span class="font-serif text-lg font-bold text-brand-teal dark:text-brand-darkTeal">₹${totalDep.toLocaleString('en-IN')}</span></div>
-        <div class="p-3 postaliq-card"><span class="text-[10px] text-brand-inkFaint block uppercase font-mono">Total Withdrawn</span><span class="font-serif text-lg font-bold text-brand-rust dark:text-brand-darkRust">₹${totalWith.toLocaleString('en-IN')}</span></div>
-        <div class="p-3 postaliq-card"><span class="text-[10px] text-brand-inkFaint block uppercase font-mono">Interest Accrued</span><span class="font-serif text-lg font-bold text-brand-gold dark:text-brand-darkGold">₹${totalInt.toLocaleString('en-IN')}</span></div>
-        <div class="p-3 postaliq-card bg-brand-ink text-brand-paper dark:bg-brand-darkSurfaceAlt"><span class="text-[10px] text-brand-paperLine dark:text-brand-darkInkSoft block uppercase font-mono">Closing Balance</span><span class="font-serif text-lg font-bold text-brand-gold dark:text-brand-darkGold">₹${closing.toLocaleString('en-IN')}</span></div>
-      `;
-
-      const warnBox = document.getElementById('ppf-warnings');
-      warnBox.innerHTML = '';
-      results.forEach(r => {
-        if (r.fyDeposits > cfg.maxAnnual) {
-          warnBox.innerHTML += `<div class="p-2.5 rounded-lg bg-brand-rustSoft text-brand-rust dark:bg-brand-darkRustSoft dark:text-brand-darkRust border border-brand-rust text-xs font-medium">${fyLabel(r.fy)}: Deposits of ₹${r.fyDeposits.toLocaleString('en-IN')} exceed statutory ₹1,50,000 limit.</div>`;
-        }
-        if (r.fyDeposits > 0 && r.fyDeposits < cfg.minAnnual) {
-          warnBox.innerHTML += `<div class="p-2.5 rounded-lg bg-brand-goldSoft text-brand-goldDeep dark:bg-brand-darkGoldSoft dark:text-brand-darkGold border border-brand-gold text-xs font-medium">${fyLabel(r.fy)}: Deposits below ₹${cfg.minAnnual} minimum. ₹50 default fee applies.</div>`;
-        }
-      });
-
-      const tbody = document.getElementById('ppf-fyBody');
-      tbody.innerHTML = '';
-      results.forEach(r => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-brand-surfaceAlt dark:hover:bg-brand-darkSurfaceAlt cursor-pointer transition";
-        tr.innerHTML = `
-          <td class="p-2.5 text-left font-semibold text-brand-ink dark:text-brand-darkInk">${fyLabel(r.fy)} <span class="posb-stamp">Interest Credited</span></td>
-          <td class="p-2.5 font-mono">₹${r.fyOpening.toLocaleString('en-IN')}</td>
-          <td class="p-2.5 font-mono text-brand-teal dark:text-brand-darkTeal">₹${r.fyDeposits.toLocaleString('en-IN')}</td>
-          <td class="p-2.5 font-mono text-brand-rust dark:text-brand-darkRust">${r.fyWithdrawals ? '−₹' + r.fyWithdrawals.toLocaleString('en-IN') : '—'}</td>
-          <td class="p-2.5 font-mono text-brand-gold dark:text-brand-darkGold font-bold">₹${r.fyInterest.toLocaleString('en-IN')}</td>
-          <td class="p-2.5 font-mono font-bold text-brand-ink dark:text-brand-darkInk">₹${r.closing.toLocaleString('en-IN')}</td>
-        `;
-
-        const detTr = document.createElement('tr');
-        detTr.className = "hidden bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt border-b border-brand-border dark:border-brand-darkBorder";
-        const mHtml = r.monthDetails.map(m => `
-          <tr><td class="p-1 text-left">${m.label}</td><td class="p-1">${m.rate.toFixed(2)}%</td><td class="p-1">₹${Math.round(m.minBal).toLocaleString('en-IN')}</td><td class="p-1">₹${Math.round(m.monthInterest).toLocaleString('en-IN')}</td></tr>
-        `).join('');
-        detTr.innerHTML = `
-          <td colspan="6" class="p-3">
-            <table class="w-full text-right text-[11px] font-mono">
-              <thead class="text-brand-inkFaint border-b border-brand-border dark:border-brand-darkBorder"><tr><th class="text-left p-1">Month</th><th class="p-1">Rate</th><th class="p-1">Min Bal (5th–End)</th><th class="p-1">Accrual</th></tr></thead>
-              <tbody>${mHtml}</tbody>
-            </table>
-          </td>
-        `;
-        tr.addEventListener('click', () => detTr.classList.toggle('hidden'));
-        tbody.appendChild(tr);
-        tbody.appendChild(detTr);
-      });
-
-      renderPpfChart(results);
-    }
-
-    function renderPpfChart(results) {
-      const svg = document.getElementById('ppf-chart');
-      if (!results.length) { svg.innerHTML = ''; return; }
-      const W = 900, H = 240, pL = 70, pR = 20, pT = 20, pB = 30;
-      const max = Math.max(...results.map(r => r.closing), 1);
-      const n = results.length;
-      const x = i => pL + (n <= 1 ? 0 : (i * (W - pL - pR) / (n - 1)));
-      const y = v => H - pB - (v / max) * (H - pT - pB);
-
-      let gridLines = '';
-      for (let g = 0; g <= 4; g++) {
-        const val = max * g / 4;
-        const yy = y(val);
-        gridLines += `<line x1="${pL}" y1="${yy}" x2="${W - pR}" y2="${yy}" stroke="var(--border)" stroke-dasharray="2" stroke-width="1"/>`;
-        gridLines += `<text x="${pL - 8}" y="${yy + 4}" text-anchor="end" font-family="JetBrains Mono" font-size="10" fill="var(--ink-faint)">${val >= 100000 ? (val / 100000).toFixed(1) + 'L' : Math.round(val)}</text>`;
-      }
-      const pts = results.map((r, i) => `${x(i)},${y(r.closing)}`).join(' ');
-      const dots = results.map((r, i) => `<circle cx="${x(i)}" cy="${y(r.closing)}" r="3.5" fill="var(--gold)"/>`).join('');
-      const labels = results.map((r, i) => `<text x="${x(i)}" y="${H - pB + 16}" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="var(--ink-soft)">'${String(r.fy + 1).slice(2)}</text>`).join('');
-
-      svg.innerHTML = `
-        ${gridLines}
-        <polyline points="${pts}" fill="none" stroke="var(--gold)" stroke-width="2.5"/>
-        ${dots}
-        ${labels}
-      `;
-    }
-
-    /* SALARY & PAYMENT CALCULATORS */
-    function initCalculatorSuite() {
-      const p = RATES_CONFIG.current_parameters;
-      document.getElementById('calc-disclaimer-text').innerText = RATES_CONFIG.disclaimer;
-      document.getElementById('calc-as-of-badge').innerText = `Audited as of: ${RATES_CONFIG.as_of} | Config v${RATES_CONFIG.version} (DA: ${p.da_percentage}%, GPF: ${p.gpf_interest_rate}%, HBA: ${p.hba_interest_rate}%)`;
-      document.getElementById('sal-da-badge').innerText = `DA: ${p.da_percentage}%`;
-      document.getElementById('lbl-sal-da').innerText = `Dearness Allowance (DA @ ${p.da_percentage}%):`;
-      document.getElementById('lbl-pen-dr').innerText = `Dearness Relief (DR @ ${p.da_percentage}%):`;
-      document.getElementById('lbl-gds-da').innerText = `Dearness Allowance on TRCA (@ ${p.da_percentage}%):`;
-
-      runSalaryEngine();
-      runArrearsEngine();
-      runFixationEngine();
-      runIncrementEngine();
-      runPensionEngine();
-      runGratuityEngine();
-      runNpsEngine();
-      runHbaEngine();
-      runTaxEngine();
-      runGdsEngine();
-      runCpc8Engine();
-      
-      runNscEngine();
-      runKvpEngine();
-      runTdEngine();
-      runRdEngine();
-      runMisEngine();
-      runScssEngine();
-      runSbEngine();
-      runPliEngine();
-    }
-
-    function switchCalcModule(modId) {
-      document.querySelectorAll('.calc-module').forEach(el => el.classList.add('hidden'));
-      const target = document.getElementById('module-' + modId);
-      if (target) target.classList.remove('hidden');
-
-      ['salary', 'da-arrears', 'fixation', 'pension', 'nps-hba', 'tax', 'gds', 'cpc8'].forEach(m => {
-        const btn = document.getElementById('modbtn-' + m);
-        if (btn) {
-          btn.className = (m === modId)
-            ? "px-3.5 py-1.5 rounded-full bg-brand-ink text-brand-paper dark:bg-brand-gold dark:text-brand-darkPaper whitespace-nowrap font-bold transition"
-            : "px-3.5 py-1.5 rounded-full bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt text-brand-inkSoft dark:text-brand-darkInkSoft hover:text-brand-ink dark:hover:text-white whitespace-nowrap font-semibold transition";
-        }
-      });
-    }
-
-    function runSalaryEngine() {
-      const p = RATES_CONFIG.current_parameters;
-      const basic = parseFloat(document.getElementById('sal-basic').value) || 0;
-      const level = parseInt(document.getElementById('sal-level').value) || 6;
-      const city = document.getElementById('sal-city').value;
-      const scheme = document.getElementById('sal-scheme').value;
-      const daPct = p.da_percentage;
-      const da = Math.round(basic * (daPct / 100));
-      const hraRate = p.hra_slabs[city] || 0.20;
-      const hra = Math.round(basic * hraRate);
-
-      let taBase = p.transport_allowance[city].L3_to_L8;
-      if (level >= 9) taBase = p.transport_allowance[city].L9_above;
-      else if (level <= 2) taBase = p.transport_allowance[city].L1_to_L2;
-
-      const taDa = Math.round(taBase * (daPct / 100));
-      const totalTa = taBase + taDa;
-      const gross = basic + da + hra + totalTa;
-
-      let retDed = 0, govContrib = 0;
-      if (scheme === 'NPS') {
-        retDed = Math.round((basic + da) * (p.nps_ups.employee_nps_pct / 100));
-        govContrib = Math.round((basic + da) * (p.nps_ups.govt_plain_nps_pct / 100));
-        document.getElementById('lbl-sal-ret').innerText = `NPS (${p.nps_ups.employee_nps_pct}%):`;
-      } else if (scheme === 'UPS') {
-        retDed = Math.round((basic + da) * (p.nps_ups.employee_nps_pct / 100));
-        govContrib = Math.round((basic + da) * (p.nps_ups.govt_ups_pct / 100));
-        document.getElementById('lbl-sal-ret').innerText = `UPS (${p.nps_ups.employee_nps_pct}%):`;
-      } else {
-        retDed = Math.round(basic * 0.06);
-        document.getElementById('lbl-sal-ret').innerText = "GPF (6%):";
-      }
-
-      const cgegis = level >= 10 ? 120 : (level >= 6 ? 60 : 30);
-      document.getElementById('res-sal-cgegis').innerText = '₹' + cgegis;
-      const totalDed = retDed + cgegis + 450 + 200;
-      const net = gross - totalDed;
-
-      document.getElementById('res-sal-basic').innerText = '₹' + basic.toLocaleString('en-IN');
-      document.getElementById('res-sal-da').innerText = '₹' + da.toLocaleString('en-IN');
-      document.getElementById('res-sal-hra').innerText = '₹' + hra.toLocaleString('en-IN');
-      document.getElementById('res-sal-ta').innerText = `₹${totalTa.toLocaleString('en-IN')} (₹${taBase}+₹${taDa})`;
-      document.getElementById('res-sal-gross').innerText = '₹' + gross.toLocaleString('en-IN');
-      document.getElementById('res-sal-pension').innerText = '₹' + retDed.toLocaleString('en-IN');
-      document.getElementById('res-sal-ded').innerText = '₹' + totalDed.toLocaleString('en-IN');
-      document.getElementById('res-sal-net').innerText = '₹' + net.toLocaleString('en-IN');
-      document.getElementById('res-sal-gov-contrib').innerText = '₹' + govContrib.toLocaleString('en-IN');
-    }
-
-    function runArrearsEngine() {
-      const basic = parseFloat(document.getElementById('arr-basic').value) || 0;
-      const level = parseInt(document.getElementById('arr-level').value) || 6;
-      const city = document.getElementById('arr-city').value || 'Y';
-      const oldDa = parseFloat(document.getElementById('arr-old-da').value) || 0;
-      const newDa = parseFloat(document.getElementById('arr-new-da').value) || 0;
-      const months = parseFloat(document.getElementById('arr-months').value) || 0;
-      const p = RATES_CONFIG.current_parameters;
-
-      let taBase = p.transport_allowance[city].L3_to_L8;
-      if (level >= 9) taBase = p.transport_allowance[city].L9_above;
-      else if (level <= 2) taBase = p.transport_allowance[city].L1_to_L2;
-
-      const diffPct = Math.max(0, newDa - oldDa) / 100;
-      const mBasic = Math.round(basic * diffPct);
-      const mTa = Math.round(taBase * diffPct);
-      const mTotal = mBasic + mTa;
-      const total = mTotal * months;
-
-      document.getElementById('res-arr-monthly').innerText = `₹${mTotal.toLocaleString('en-IN')} (Basic: ₹${mBasic} + TA: ₹${mTa})`;
-      document.getElementById('res-arr-total').innerText = '₹' + total.toLocaleString('en-IN');
-    }
-
-    function runFixationEngine() {
-      const basic = parseFloat(document.getElementById('fix-basic').value) || 0;
-      const currLevel = parseInt(document.getElementById('fix-curr-level').value) || 6;
-      const targetLevel = parseInt(document.getElementById('fix-target-level').value) || 7;
-      const currCells = PAY_MATRIX_7CPC[currLevel] || [];
-      const targetCells = PAY_MATRIX_7CPC[targetLevel] || [];
-
-      let notionalInc = Math.round(basic * 0.03);
-      let notionalBasic = basic + notionalInc;
-      const currIndex = currCells.indexOf(basic);
-      if (currIndex !== -1 && currIndex + 1 < currCells.length) {
-        notionalBasic = currCells[currIndex + 1];
-        notionalInc = notionalBasic - basic;
-      }
-
-      let fixedBasic = targetCells[0] || notionalBasic;
-      for (let i = 0; i < targetCells.length; i++) {
-        if (targetCells[i] >= notionalBasic) { fixedBasic = targetCells[i]; break; }
-      }
-
-      document.getElementById('res-fix-notional').innerText = `₹${notionalInc.toLocaleString('en-IN')} (Notional Pay: ₹${notionalBasic.toLocaleString('en-IN')})`;
-      document.getElementById('res-fix-floor').innerText = '₹' + notionalBasic.toLocaleString('en-IN');
-      document.getElementById('res-fix-final').innerText = '₹' + fixedBasic.toLocaleString('en-IN');
-      document.getElementById('res-fix-matrix-cell').innerText = `Fixed at Cell in Level ${targetLevel} (₹${fixedBasic.toLocaleString('en-IN')})`;
-    }
-
-    function runIncrementEngine() {
-      const basic = parseFloat(document.getElementById('inc-basic').value) || 35400;
-      const dStr = document.getElementById('inc-date').value;
-      if (!dStr) return;
-      const d = new Date(dStr);
-      const m = d.getMonth() + 1;
-      const day = d.getDate();
-
-      let cycle = "1 July";
-      let nextYear = d.getFullYear() + 1;
-      if (m === 1 && day === 1) {
-        cycle = "1 July";
-        nextYear = d.getFullYear();
-      } else if ((m === 1 && day >= 2) || (m > 1 && m < 7) || (m === 7 && day === 1)) {
-        cycle = "1 January";
-        nextYear = d.getFullYear() + 1;
-      }
-
-      const newBasic = Math.round(basic * 1.03);
-      document.getElementById('res-inc-cycle').innerText = cycle;
-      document.getElementById('res-inc-next-date').innerText = (cycle === "1 January" ? "01-01-" : "01-07-") + nextYear;
-      document.getElementById('res-inc-new-basic').innerText = '₹' + newBasic.toLocaleString('en-IN');
-    }
-
-    function runPensionEngine() {
-      const p = RATES_CONFIG.current_parameters;
-      const type = document.getElementById('pen-type').value;
-      const emoluments = parseFloat(document.getElementById('pen-emoluments').value) || 0;
-      const years = parseFloat(document.getElementById('pen-years').value) || 0;
-      const daPct = p.da_percentage;
-
-      const warnBox = document.getElementById('pen-eligibility-warning');
-      const outBlock = document.getElementById('pen-output-block');
-
-      if (years < 10) {
-        warnBox.classList.remove('hidden');
-        outBlock.classList.add('opacity-40');
-        document.getElementById('res-pen-basic').innerText = '₹0';
-        document.getElementById('res-pen-dr').innerText = '₹0';
-        document.getElementById('res-pen-total').innerText = '₹0';
-        document.getElementById('pen-ups-lump-box').classList.add('hidden');
-        return;
-      }
-      warnBox.classList.add('hidden');
-      outBlock.classList.remove('opacity-40');
-
-      let basePen = 0, upsLump = 0;
-      if (type === 'OPS') {
-        const fullYears = Math.min(years, 20);
-        basePen = (emoluments * 0.5) * (fullYears / 20);
-        if (basePen < (p.pension?.ops_min_pension || 9000)) basePen = (p.pension?.ops_min_pension || 9000);
-        document.getElementById('pen-ups-lump-box').classList.add('hidden');
-      } else {
-        const fullYears = Math.min(years, 25);
-        basePen = (emoluments * 0.5) * (fullYears / 25);
-        if (years >= 10 && basePen < p.nps_ups.ups_min_pension) basePen = p.nps_ups.ups_min_pension;
-        const halfYears = Math.min(years * 2, 66);
-        const da = Math.round(emoluments * (daPct / 100));
-        upsLump = Math.round((1/10) * (emoluments + da) * halfYears);
-        document.getElementById('pen-ups-lump-box').classList.remove('hidden');
-        document.getElementById('res-pen-ups-lump').innerText = '₹' + upsLump.toLocaleString('en-IN');
-      }
-
-      basePen = Math.round(basePen);
-      const dr = Math.round(basePen * (daPct / 100));
-      document.getElementById('res-pen-basic').innerText = '₹' + basePen.toLocaleString('en-IN');
-      document.getElementById('res-pen-dr').innerText = '₹' + dr.toLocaleString('en-IN');
-      document.getElementById('res-pen-total').innerText = '₹' + (basePen + dr).toLocaleString('en-IN');
-    }
-
-    function runGratuityEngine() {
-      const p = RATES_CONFIG.current_parameters;
-      const mode = document.getElementById('grat-mode').value;
-      const basic = parseFloat(document.getElementById('grat-basic').value) || 0;
-      const years = parseFloat(document.getElementById('grat-years').value) || 0;
-      const elDays = Math.min(parseFloat(document.getElementById('grat-el-days').value) || 0, 300);
-
-      const da = Math.round(basic * (p.da_percentage / 100));
-      const emoluments = basic + da;
-      const halfYears = Math.min(Math.floor(years * 2), p.gratuity.max_half_years);
-
-      let calcGrat = 0;
-      if (mode === 'RET') {
-        calcGrat = Math.round((emoluments / 4) * halfYears);
-      } else {
-        if (years < 1) calcGrat = emoluments * 2;
-        else if (years < 5) calcGrat = emoluments * 6;
-        else if (years < 11) calcGrat = emoluments * 12;
-        else if (years < 20) calcGrat = emoluments * 20;
-        else calcGrat = Math.round((emoluments / 2) * halfYears);
-      }
-
-      const ceil = p.gratuity.ceiling;
-      const finalGrat = Math.min(calcGrat, ceil);
-      const elAmt = Math.round((emoluments / 30) * elDays);
-
-      document.getElementById('res-grat-calc').innerText = '₹' + calcGrat.toLocaleString('en-IN');
-      document.getElementById('res-grat-ceil').innerText = '₹' + ceil.toLocaleString('en-IN');
-      document.getElementById('res-grat-final').innerText = '₹' + finalGrat.toLocaleString('en-IN');
-      document.getElementById('res-el-total').innerText = '₹' + elAmt.toLocaleString('en-IN');
-    }
-
-    function runNpsEngine() {
-      const p = RATES_CONFIG.current_parameters;
-      const basic = parseFloat(document.getElementById('nps-basic').value) || 0;
-      const curr = parseFloat(document.getElementById('nps-curr').value) || 0;
-      const years = parseFloat(document.getElementById('nps-years').value) || 0;
-      const roi = (parseFloat(document.getElementById('nps-roi').value) || 0) / 100;
-      const growth = (parseFloat(document.getElementById('nps-growth').value) || 3.0) / 100;
-      const annRate = (parseFloat(document.getElementById('nps-annuity-rate').value) || 6.5) / 100;
-      const scheme = document.getElementById('nps-type').value;
-
-      const daPct = p.da_percentage / 100;
-      const govPct = scheme === 'ups' ? (p.nps_ups.govt_ups_pct / 100) : (p.nps_ups.govt_plain_nps_pct / 100);
-      const empPct = p.nps_ups.employee_nps_pct / 100;
-      const totalContribRate = empPct + govPct;
-
-      let corpus = curr;
-      let currentYearBasic = basic;
-      for (let y = 0; y < years; y++) {
-        const da = currentYearBasic * daPct;
-        const annualContrib = (currentYearBasic + da) * totalContribRate * 12;
-        corpus = (corpus + annualContrib) * (1 + roi);
-        currentYearBasic = currentYearBasic * (1 + growth);
-      }
-
-      corpus = Math.round(corpus);
-      const lump = Math.round(corpus * 0.60);
-      const annFund = Math.round(corpus * 0.40);
-      const monthlyAnnuity = Math.round((annFund * annRate) / 12);
-
-      document.getElementById('res-nps-corpus').innerText = '₹' + corpus.toLocaleString('en-IN');
-      document.getElementById('res-nps-lump').innerText = '₹' + lump.toLocaleString('en-IN');
-      document.getElementById('res-nps-annuity-fund').innerText = '₹' + annFund.toLocaleString('en-IN');
-      document.getElementById('res-nps-monthly').innerText = '₹' + monthlyAnnuity.toLocaleString('en-IN');
-    }
-
-    function runHbaEngine() {
-      const req = parseFloat(document.getElementById('hba-req').value) || 0;
-      const basic = parseFloat(document.getElementById('hba-basic').value) || 0;
-      const rate = (RATES_CONFIG.current_parameters.hba_interest_rate || 7.44) / 100;
-      const maxSanction = Math.min(req, 2500000, basic * 34);
-      const pMonths = 180, iMonths = 60;
-      const pEmi = Math.round(maxSanction / pMonths);
-      const totalInterest = Math.round((maxSanction * rate * (pMonths + 1)) / (2 * 12));
-      const iEmi = Math.round(totalInterest / iMonths);
-
-      document.getElementById('res-hba-sanctioned').innerText = '₹' + maxSanction.toLocaleString('en-IN');
-      document.getElementById('res-hba-p-emi').innerText = '₹' + pEmi.toLocaleString('en-IN');
-      document.getElementById('res-hba-i-emi').innerText = '₹' + iEmi.toLocaleString('en-IN');
-      document.getElementById('res-hba-rate').innerText = (rate * 100).toFixed(2) + '% p.a.';
-    }
-
-    function runTaxEngine() {
-      const p = RATES_CONFIG.current_parameters;
-      const gross = parseFloat(document.getElementById('tax-gross').value) || 0;
-      const age = document.getElementById('tax-age').value;
-      const c80 = Math.min(parseFloat(document.getElementById('tax-80c').value) || 0, p.income_tax_old_2026.sec_80c_cap);
-      const d80 = parseFloat(document.getElementById('tax-80d').value) || 0;
-      const other = parseFloat(document.getElementById('tax-other').value) || 0;
-
-      function computeSurcharge(taxableInc, taxAmt) {
-        if (taxableInc > 20000000) return Math.round(taxAmt * 0.25);
-        if (taxableInc > 10000000) return Math.round(taxAmt * 0.15);
-        if (taxableInc > 5000000) return Math.round(taxAmt * 0.10);
-        return 0;
-      }
-
-      // NEW REGIME
-      const newTaxable = Math.max(0, gross - p.income_tax_new_2026.standard_deduction);
-      let newTax = 0, prevLim = 0;
-      for (const s of p.income_tax_new_2026.slabs) {
-        if (newTaxable > prevLim) {
-          const chunk = Math.min(newTaxable, s.up_to) - prevLim;
-          newTax += chunk * s.rate;
-          prevLim = s.up_to;
-        }
-      }
-      let newRebate = 0;
-      if (newTaxable <= p.income_tax_new_2026.sec_87a_threshold) {
-        newRebate = Math.min(newTax, p.income_tax_new_2026.sec_87a_rebate_limit);
-        newTax -= newRebate;
-      } else {
-        const excess = newTaxable - p.income_tax_new_2026.sec_87a_threshold;
-        if (newTax > excess) { newRebate = newTax - excess; newTax = excess; }
-      }
-      const newSurcharge = computeSurcharge(newTaxable, newTax);
-      const newFinal = Math.round((newTax + newSurcharge) * (1 + p.income_tax_new_2026.cess));
-
-      // OLD REGIME
-      const oldTaxable = Math.max(0, gross - p.income_tax_old_2026.standard_deduction - c80 - d80 - other);
-      let oldSlabs = p.income_tax_old_2026.slabs_general;
-      if (age === 'senior') oldSlabs = p.income_tax_old_2026.slabs_senior;
-      else if (age === 'super_senior') oldSlabs = p.income_tax_old_2026.slabs_super_senior;
-
-      let oldTax = 0, prevOldLim = 0;
-      for (const s of oldSlabs) {
-        if (oldTaxable > prevOldLim) {
-          const chunk = Math.min(oldTaxable, s.up_to) - prevOldLim;
-          oldTax += chunk * s.rate;
-          prevOldLim = s.up_to;
-        }
-      }
-      let oldRebate = 0;
-      if (oldTaxable <= p.income_tax_old_2026.sec_87a_threshold) {
-        oldRebate = Math.min(oldTax, p.income_tax_old_2026.sec_87a_rebate_limit);
-        oldTax -= oldRebate;
-      }
-      const oldSurcharge = computeSurcharge(oldTaxable, oldTax);
-      const oldFinal = Math.round((oldTax + oldSurcharge) * (1 + p.income_tax_old_2026.cess));
-
-      document.getElementById('res-tax-new-taxable').innerText = '₹' + newTaxable.toLocaleString('en-IN');
-      document.getElementById('res-tax-new-rebate').innerText = '₹' + Math.round(newRebate).toLocaleString('en-IN');
-      document.getElementById('res-tax-new-surcharge').innerText = '₹' + newSurcharge.toLocaleString('en-IN');
-      document.getElementById('res-tax-new-total').innerText = '₹' + newFinal.toLocaleString('en-IN');
-
-      document.getElementById('res-tax-old-taxable').innerText = '₹' + oldTaxable.toLocaleString('en-IN');
-      document.getElementById('res-tax-old-rebate').innerText = '₹' + Math.round(oldRebate).toLocaleString('en-IN');
-      document.getElementById('res-tax-old-surcharge').innerText = '₹' + oldSurcharge.toLocaleString('en-IN');
-      document.getElementById('res-tax-old-total').innerText = '₹' + oldFinal.toLocaleString('en-IN');
-
-      const rec = document.getElementById('res-tax-recommendation');
-      if (newFinal < oldFinal) rec.innerHTML = `<span class="text-brand-teal dark:text-brand-darkTeal">Recommendation: New Tax Regime saves you ₹${(oldFinal - newFinal).toLocaleString('en-IN')} annually.</span>`;
-      else if (oldFinal < newFinal) rec.innerHTML = `<span class="text-brand-teal dark:text-brand-darkTeal">Recommendation: Old Tax Regime saves you ₹${(newFinal - oldFinal).toLocaleString('en-IN')} with current deductions.</span>`;
-      else rec.innerHTML = `<span class="text-brand-inkSoft dark:text-brand-darkInkSoft">Both regimes yield equal tax liability.</span>`;
-    }
-
-    function runGdsEngine() {
-      const stage = parseFloat(document.getElementById('gds-trca-stage').value) || 14500;
-      const cda = parseFloat(document.getElementById('gds-cda').value) || 0;
-      const da = Math.round(stage * (RATES_CONFIG.current_parameters.da_percentage / 100));
-      const gross = stage + da + cda;
-
-      document.getElementById('res-gds-base').innerText = '₹' + stage.toLocaleString('en-IN');
-      document.getElementById('res-gds-da').innerText = '₹' + da.toLocaleString('en-IN');
-      document.getElementById('res-gds-cda').innerText = '₹' + cda.toLocaleString('en-IN');
-      document.getElementById('res-gds-gross').innerText = '₹' + gross.toLocaleString('en-IN');
-    }
-
-    function runCpc8Engine() {
-      const basic = parseFloat(document.getElementById('cpc8-basic').value) || 0;
-      const factor = parseFloat(document.getElementById('cpc8-factor').value) || 2.15;
-      const months = parseFloat(document.getElementById('cpc8-months').value) || 0;
-      const newBasic = Math.round(basic * factor);
-      const diff = Math.max(0, newBasic - basic);
-      document.getElementById('res-cpc8-new-basic').innerText = '₹' + newBasic.toLocaleString('en-IN');
-      document.getElementById('res-cpc8-arrears').innerText = '₹' + (diff * months).toLocaleString('en-IN');
-    }
-
-    /* 2. RENDER ORDERS TABLE */
-    function renderOrdersTable() {
-      const tbody = document.getElementById('orders-tbody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-      const query = (document.getElementById('filter-order-text')?.value || '').toLowerCase();
-      const statusFilter = document.getElementById('filter-order-status')?.value || 'ALL';
-
-      const filtered = DATA_ORDERS.filter(o => {
-        const matchesQ = (o.orderNo || '').toLowerCase().includes(query) || (o.subject || '').toLowerCase().includes(query);
-        const matchesStatus = (statusFilter === 'ALL') || (o.status === statusFilter);
-        return matchesQ && matchesStatus;
-      });
-
-      if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-brand-inkFaint">No verified orders loaded. Check data/orders.json.</td></tr>`;
-        return;
-      }
-
-      filtered.forEach(o => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-brand-surfaceAlt dark:hover:bg-brand-darkSurfaceAlt transition";
-        let badgeClass = "badge-in-force";
-        if (o.status === 'Superseded') badgeClass = "badge-superseded";
-        else if (o.status === 'Partially Modified') badgeClass = "badge-modified";
-
-        tr.innerHTML = `
-          <td class="p-3 font-mono font-bold">${o.orderNo} <div class="text-[10px] text-brand-inkFaint">${o.date || 'Undated'}</div></td>
-          <td class="p-3 text-brand-inkSoft dark:text-brand-darkInkSoft">${o.category}</td>
-          <td class="p-3 font-medium">${o.subject}</td>
-          <td class="p-3"><span class="${badgeClass}">${o.status}</span></td>
-          <td class="p-3 font-mono text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft">${o.supersedes || o.supersededBy || '—'}</td>
-          <td class="p-3 text-right"><button onclick="viewOrderDetail('${o.id}')" class="text-brand-rust dark:text-brand-darkRust font-bold hover:underline">View</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-      lucide.createIcons();
-    }
-
-    function viewOrderDetail(orderId) {
-      const order = DATA_ORDERS.find(o => o.id === orderId);
-      if (!order) return;
-      document.getElementById('modal-order-ref').innerText = order.orderNo;
-      document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated';
-      document.getElementById('modal-order-subj').innerText = order.subject;
-      document.getElementById('modal-order-substance').innerText = order.substance;
-      document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source';
-      document.getElementById('order-detail-modal').classList.remove('hidden');
-    }
-    function closeOrderDetailModal() {
-      document.getElementById('order-detail-modal').classList.add('hidden');
-    }
-
-    /* 3. RENDER POSB RATES HUB TABLE */
-    function renderPosbTable() {
-      const tbody = document.getElementById('posb-tbody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-      DATA_POSB.forEach(s => {
-        const tr = document.createElement('tr');
-        tr.className = "hover:bg-brand-surfaceAlt dark:hover:bg-brand-darkSurfaceAlt";
-        tr.innerHTML = `
-          <td class="p-3 font-semibold">${s.scheme}</td>
-          <td class="p-3 font-mono font-black text-brand-rust dark:text-brand-darkRust">${s.rate}</td>
-          <td class="p-3 text-brand-inkSoft dark:text-brand-darkInkSoft">${s.compounding}</td>
-          <td class="p-3 font-mono">${s.tenure}</td>
-          <td class="p-3 text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft">${s.taxNotes}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
-
-    /* 4. RENDER FORMS CATALOG */
+    /* Render Forms Catalog */
     function renderFormsCatalog() {
       const grid = document.getElementById('forms-grid');
       if (!grid) return;
       grid.innerHTML = '';
+      
       DATA_FORMS.forEach(f => {
         const card = document.createElement('div');
-        card.className = "p-5 postaliq-card space-y-3 flex flex-col justify-between shadow-sm";
+        card.className = "p-5 postaliq-card space-y-3 flex flex-col justify-between shadow-sm hover:border-brand-ink transition";
         card.innerHTML = `
           <div class="space-y-2">
-            <div class="flex justify-between items-start"><span class="font-mono text-xs font-bold text-brand-rust dark:text-brand-darkRust">${f.code}</span><span class="text-[10px] bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt px-2 py-0.5 rounded text-brand-inkSoft dark:text-brand-darkInkSoft">${f.category}</span></div>
+            <div class="flex justify-between items-start">
+              <span class="font-mono text-xs font-bold text-brand-rust dark:text-brand-darkRust">${f.code}</span>
+              <span class="text-[10px] bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt px-2 py-0.5 rounded text-brand-inkSoft dark:text-brand-darkInkSoft">${f.category}</span>
+            </div>
             <h4 class="font-serif font-bold text-sm text-brand-ink dark:text-brand-darkInk">${f.title}</h4>
             <p class="text-[11px] text-brand-inkSoft dark:text-brand-darkInkSoft">${f.ruleRef || ''}</p>
           </div>
           <div class="pt-3 border-t border-brand-border dark:border-brand-darkBorder flex justify-end">
-            <button onclick="openPdfModal('${f.pdfPath}', '${f.title.replace(/'/g, "\\'")}')" class="w-full sm:w-auto text-xs font-bold text-brand-paper dark:text-brand-darkPaper bg-brand-rust hover:bg-brand-darkRust px-4 py-2 rounded-lg shadow-sm transition">Open &amp; Fill</button>
+            <button onclick="openPdfModal('${f.pdfPath}', '${f.title.replace(/'/g, "\\'")}')" class="w-full sm:w-auto text-xs font-bold text-brand-paper dark:text-brand-darkPaper bg-brand-rust hover:bg-brand-darkRust px-4 py-2 rounded-lg shadow-sm transition">
+              Open &amp; Fill
+            </button>
           </div>
         `;
         grid.appendChild(card);
       });
+      const counterEl = document.getElementById('forms-catalog-counter');
+      if (counterEl) counterEl.innerText = `${DATA_FORMS.length} Verified Forms`;
       lucide.createIcons();
     }
 
-    function openPdfModal(pdfPath, title) {
-      const modal = document.getElementById('pdf-viewer-modal');
-      const iframe = document.getElementById('pdf-modal-iframe');
-      if (!modal || !iframe) return;
-      document.getElementById('pdf-modal-title').innerText = title;
-      iframe.src = pdfPath;
-      modal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      lucide.createIcons();
-    }
-    function closePdfViewerModal() {
-      const modal = document.getElementById('pdf-viewer-modal');
-      if (!modal) return;
-      modal.classList.add('hidden');
-      document.getElementById('pdf-modal-iframe').src = '';
-      document.body.style.overflow = '';
-    }
-    function printModalPdf() {
-      const iframe = document.getElementById('pdf-modal-iframe');
-      if (iframe && iframe.contentWindow) {
-        try { iframe.contentWindow.focus(); iframe.contentWindow.print(); } catch (e) { window.print(); }
-      }
-    }
-
-    /* 5. GROUPED PINCODE SEARCH ENGINE */
-    function debounceOfficeSearch() {
-      clearTimeout(officeSearchTimeout);
-      officeSearchTimeout = setTimeout(renderGroupedPincodeResults, 180);
-    }
-
+    /* Render PIN & Offices Initial State */
     function renderGroupedPincodeResults() {
       const container = document.getElementById('pincode-results-container');
       if (!container) return;
       const rawQuery = (document.getElementById('office-search-input')?.value || '').trim().toLowerCase();
 
       if (!DATA_PINCODES_GROUPED || DATA_PINCODES_GROUPED.length === 0) {
-        container.innerHTML = `<div class="p-8 text-center text-brand-inkFaint postaliq-card">Pincode database loading...</div>`;
+        container.innerHTML = `
+          <div class="p-8 text-center text-brand-inkFaint postaliq-card space-y-3">
+            <i data-lucide="map-pin" class="w-8 h-8 mx-auto text-brand-gold opacity-60"></i>
+            <div class="font-serif font-bold text-sm text-brand-ink dark:text-brand-darkInk">All-India Post Office Directory Active</div>
+            <p class="text-xs text-brand-inkSoft dark:text-brand-darkInkSoft max-w-md mx-auto">
+              Type any 6-digit PIN (e.g. <button onclick="quickPinSearch('110001')" class="underline font-mono text-brand-rust">110001</button>, <button onclick="quickPinSearch('504001')" class="underline font-mono text-brand-rust">504001</button>, or <button onclick="quickPinSearch('700001')" class="underline font-mono text-brand-rust">700001</button>) or an office name to view Head Office and Circle linkages.
+            </p>
+          </div>
+        `;
+        lucide.createIcons();
         return;
       }
+
       if (rawQuery.length < 3) {
-        container.innerHTML = `<div class="p-8 text-center text-brand-inkFaint postaliq-card">Type at least 3 digits or letters to search ${DATA_PINCODES_GROUPED.length.toLocaleString('en-IN')} pincodes...</div>`;
+        container.innerHTML = `
+          <div class="p-8 text-center text-brand-inkFaint postaliq-card space-y-3">
+            <i data-lucide="search" class="w-8 h-8 mx-auto text-brand-gold opacity-60"></i>
+            <div class="font-serif font-bold text-sm text-brand-ink dark:text-brand-darkInk">Scan across ${DATA_PINCODES_GROUPED.length.toLocaleString('en-IN')} Pincodes</div>
+            <p class="text-xs text-brand-inkSoft dark:text-brand-darkInkSoft max-w-md mx-auto">
+              Type at least 3 digits of a PIN code, District, or Office name to filter attached Sub Offices and Head Offices.
+            </p>
+          </div>
+        `;
+        lucide.createIcons();
         return;
       }
 
@@ -1919,32 +1084,26 @@
       lucide.createIcons();
     }
 
-    /* 6. ASK LOCAL ENGINE */
-    function executeRuleQuery() {
-      const rawQ = document.getElementById('ask-input').value.trim().toLowerCase();
-      const resContainer = document.getElementById('ask-results');
-      resContainer.classList.remove('hidden');
-      if (!rawQ) { resContainer.innerHTML = `<div class="p-4 text-xs text-brand-inkSoft dark:text-brand-darkInkSoft">Please enter a rule keyword.</div>`; return; }
-
-      const matches = DATA_ORDERS.filter(o => (o.orderNo + ' ' + o.subject + ' ' + o.substance + ' ' + (o.keywords || '')).toLowerCase().includes(rawQ));
-      if (matches.length === 0) {
-        resContainer.innerHTML = `<div class="p-6 bg-brand-surfaceAlt dark:bg-brand-darkSurfaceAlt rounded-xl text-center text-xs text-brand-inkSoft dark:text-brand-darkInkSoft border border-brand-border dark:border-brand-darkBorder">No verified ruling found for "${rawQ}".</div>`;
-        return;
+    function quickPinSearch(pin) {
+      const inp = document.getElementById('office-search-input');
+      if (inp) {
+        inp.value = pin;
+        renderGroupedPincodeResults();
       }
-      resContainer.innerHTML = matches.map(m => `
-        <div class="p-4 postaliq-card space-y-2">
-          <div class="flex justify-between"><span class="font-mono font-bold text-brand-rust dark:text-brand-darkRust text-xs">${m.orderNo}</span><span class="badge-in-force">${m.status}</span></div>
-          <h4 class="font-serif font-bold text-sm text-brand-ink dark:text-brand-darkInk">${m.subject}</h4>
-          <p class="text-xs text-brand-inkSoft dark:text-brand-darkInkSoft leading-relaxed">${m.substance}</p>
-        </div>
-      `).join('');
     }
 
-    /* 7. NAVIGATION & LIFECYCLE */
+    function debounceOfficeSearch() {
+      clearTimeout(officeSearchTimeout);
+      officeSearchTimeout = setTimeout(renderGroupedPincodeResults, 180);
+    }
+
+    /* Tab Switcher Controller */
     function navigateTab(tabId) {
       document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById('view-' + tabId);
-      if (target) target.classList.remove('hidden');
+      if (target) {
+        target.classList.remove('hidden');
+      }
 
       ['dashboard', 'ask', 'orders', 'posb', 'forms', 'offices', 'calculators'].forEach(t => {
         const btn = document.getElementById('btn-tab-' + t);
@@ -1954,29 +1113,15 @@
             : "px-3.5 py-1.5 rounded-full text-brand-inkSoft dark:text-brand-darkInkSoft hover:text-brand-ink dark:hover:text-white flex items-center space-x-1.5 transition";
         }
       });
+
+      if (tabId === 'calculators') initCalculatorSuite();
+      if (tabId === 'forms') renderFormsCatalog();
+      if (tabId === 'offices') renderGroupedPincodeResults();
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function toggleTheme() {
-      const htmlEl = document.documentElement;
-      const isDark = htmlEl.classList.toggle('dark');
-      htmlEl.setAttribute('data-theme', isDark ? 'dark' : 'light');
-      localStorage.setItem('postaliq_theme', isDark ? 'dark' : 'light');
-      updateThemeIcons(isDark);
-    }
-
-    function updateThemeIcons(isDark) {
-      document.getElementById('theme-icon-sun')?.classList.toggle('hidden', !isDark);
-      document.getElementById('theme-icon-moon')?.classList.toggle('hidden', isDark);
-    }
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closePdfViewerModal();
-        closeOrderDetailModal();
-      }
-    });
-
+    /* Initialize Everything on Window Load */
     window.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('postaliq_theme') || 'light';
       if (savedTheme === 'dark') {
@@ -1986,6 +1131,13 @@
       } else {
         document.documentElement.setAttribute('data-theme', 'light');
       }
+      
+      // Render static defaults immediately
+      renderFormsCatalog();
+      renderGroupedPincodeResults();
+      initCalculatorSuite();
+      
+      // Load remote/decoupled JSON datasets
       loadCentralData();
       lucide.createIcons();
     });
