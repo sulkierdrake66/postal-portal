@@ -1,0 +1,93 @@
+:root {
+  --paper: #FAF6EC;
+  --paper-line: #E7DCC2;
+  --surface: #FFFFFF;
+  --surface-alt: #F3EEDF;
+  --border: #DED2AF;
+  --ink: #1C2B45;
+  --ink-soft: #5B6478;
+  --ink-faint: #8B93A3;
+  --gold: #A9762F;
+  --gold-deep: #7C5722;
+  --gold-soft: #EFE1C1;
+  --teal: #0F6B5C;
+  --teal-soft: #DCEEE8;
+  --rust: #A63A2E;
+  --rust-soft: #F5DCD7;
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(28,43,69,.06), 0 8px 24px -12px rgba(28,43,69,.18);
+}
+
+[data-theme="dark"], html.dark {
+  --paper: #161310;
+  --paper-line: #33291C;
+  --surface: #1E1912;
+  --surface-alt: #241D15;
+  --border: #3A2F20;
+  --ink: #F3ECD9;
+  --ink-soft: #C9BFA6;
+  --ink-faint: #8F8570;
+  --gold: #D8A855;
+  --gold-deep: #F0C98A;
+  --gold-soft: #3A2E19;
+  --teal: #4FBFA0;
+  --teal-soft: #12332C;
+  --rust: #E08670;
+  --rust-soft: #3A211B;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+}
+
+/* Reusable Component Classes */
+.postaliq-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.badge-in-force {
+  background: var(--teal-soft);
+  color: var(--teal);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.badge-modified {
+  background: var(--gold-soft);
+  color: var(--gold-deep);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.badge-superseded {
+  background: var(--rust-soft);
+  color: var(--rust);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.posb-stamp {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  color: var(--teal);
+  border: 1.5px dashed var(--teal);
+  border-radius: 5px;
+  padding: 1px 5px;
+  transform: rotate(-2deg);
+  text-transform: uppercase;
+}
