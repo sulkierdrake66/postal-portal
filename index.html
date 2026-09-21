@@ -114,32 +114,43 @@
       text-transform: uppercase;
     }
 
-    /* Orders Register / full-screen reading makeover */
-    .order-detail-shell { font-size: 16px; }
-    .order-detail-scroll { scrollbar-width: thin; scrollbar-color: #94a3b8 transparent; }
+    /* Orders Register / centered document modal */
+    .order-detail-shell { font-size: 16px; width: min(76vw, 980px); height: 72vh; min-height: 480px; max-height: 760px; margin: auto; }
+    .order-detail-scroll { scrollbar-width: thin; scrollbar-color: #94a3b8 transparent; text-align: left; }
     .order-detail-scroll::-webkit-scrollbar { width: 10px; }
     .order-detail-scroll::-webkit-scrollbar-track { background: transparent; }
     .order-detail-scroll::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
-    .order-section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: #64748b; margin-bottom: 8px; }
-    .order-subject { font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.55; font-weight: 800; color: #0f172a; }
+    .order-reading-column { width: min(100%, 820px); margin: 0 auto; text-align: left !important; }
+    .order-section-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: #64748b; margin-bottom: 8px; text-align: left; }
+    .order-subject { font-size: clamp(1.08rem, 1.55vw, 1.28rem); line-height: 1.55; font-weight: 800; color: #0f172a; text-align: left !important; margin: 0; }
     .dark .order-subject { color: #f8fafc; }
-    .order-body-text { font-size: 17px; line-height: 1.82; color: #334155; white-space: pre-wrap; overflow-wrap: anywhere; font-family: Georgia, 'Times New Roman', serif; }
+    .order-body-text { font-size: 17px; line-height: 1.78; color: #334155; white-space: pre-wrap; overflow-wrap:anywhere; font-family: Georgia, 'Times New Roman', serif; text-align: left !important; margin: 0; }
     .dark .order-body-text { color: #cbd5e1; }
-    .order-text-size-btn { min-width: 38px; height: 34px; padding: 0 9px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; font-size: 13px; font-weight: 800; cursor: pointer; transition: .15s ease; }
+    .order-text-size-group { display: inline-flex; align-items: center; gap: 4px; padding: 4px; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; }
+    .dark .order-text-size-group { border-color: #475569; background: #1e293b; }
+    .order-text-size-label { font-size: 11px; font-weight: 800; color: #64748b; padding: 0 6px; }
+    .dark .order-text-size-label { color: #94a3b8; }
+    .order-text-size-btn { min-width: 36px; height: 30px; padding: 0 8px; border-radius: 7px; border: 1px solid transparent; background: transparent; color: #334155; font-size: 13px; font-weight: 800; cursor: pointer; transition: .15s ease; }
     .order-text-size-btn:hover { background: #e2e8f0; }
-    .dark .order-text-size-btn { background: #1e293b; border-color: #475569; color: #e2e8f0; }
+    .dark .order-text-size-btn { color: #e2e8f0; }
     .dark .order-text-size-btn:hover { background: #334155; }
-    .order-text-size-current { color: #b91c1c; }
-    .dark .order-text-size-current { color: #f87171; }
+    .order-text-size-current { background: #fff; border-color: #cbd5e1; color: #b91c1c !important; }
+    .dark .order-text-size-current { background: #0f172a; border-color: #475569; color: #f87171 !important; }
     .order-close-icon { width: 36px; height: 36px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; color: #64748b; background: transparent; border: 1px solid transparent; cursor: pointer; }
     .order-close-icon:hover { background: #e2e8f0; color: #0f172a; }
     .dark .order-close-icon:hover { background: #334155; color: #fff; }
     .order-close-btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 15px; border-radius: 9px; background: #b91c1c; color: #fff; font-size: 13px; font-weight: 800; border: 0; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
     .order-close-btn:hover { background: #991b1b; }
+    @media (max-width: 900px) {
+      .order-detail-shell { width: 88vw; height: 74vh; }
+      .order-reading-column { width: min(100%, 720px); }
+    }
     @media (max-width: 640px) {
-      .order-detail-shell { width: 96vw; height: 88vh; min-height: 0; border-radius: 14px; }
-      .order-body-text { font-size: 16px; line-height: 1.75; }
-      .order-detail-header { padding: 14px 15px; }
+      .order-detail-shell { width: 94vw; height: 84vh; min-height: 0; border-radius: 14px; }
+      .order-reading-column { width: 100%; }
+      .order-body-text { font-size: 16px; line-height: 1.72; }
+      .order-detail-header { padding: 13px 14px; }
+      .order-text-size-label { display: none; }
     }
   </style>
 </head>
@@ -1043,26 +1054,31 @@
   </div>
 
   <!-- ORDER DETAIL MODAL -->
-  <div id="order-detail-modal" class="fixed inset-0 bg-black/65 backdrop-blur-sm z-[70] hidden overflow-y-auto p-4 sm:p-6 md:p-8" role="dialog" aria-modal="true" aria-labelledby="modal-order-ref">
-    <div class="order-detail-shell bg-brand-card dark:bg-brand-darkCard rounded-2xl border border-brand-border dark:border-brand-darkBorder shadow-2xl w-[min(88vw,1100px)] h-[82vh] min-h-[520px] mx-auto my-auto flex flex-col overflow-hidden">
-      <div class="order-detail-header flex items-start justify-between gap-4 px-5 sm:px-7 py-4 border-b border-brand-border dark:border-brand-darkBorder bg-brand-card dark:bg-brand-darkCard flex-shrink-0">
-        <div class="min-w-0">
-          <div class="text-[10px] uppercase tracking-[0.16em] font-mono font-bold text-slate-400 mb-1">Department of Posts · SB Order</div>
-          <div class="font-mono font-black text-brand-red dark:text-red-400 text-xl sm:text-2xl leading-tight break-words" id="modal-order-ref">—</div>
-          <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1" id="modal-order-date">—</div>
-        </div>
-        <div class="flex items-center gap-2 flex-shrink-0">
-          <button type="button" onclick="setOrderTextSize(-1)" class="order-text-size-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
-          <button type="button" onclick="resetOrderTextSize()" class="order-text-size-btn order-text-size-current" title="Reset text size" aria-label="Reset text size">A</button>
-          <button type="button" onclick="setOrderTextSize(1)" class="order-text-size-btn" title="Increase text size" aria-label="Increase text size">A+</button>
-          <button type="button" onclick="closeOrderDetailModal()" class="order-close-icon" title="Close order" aria-label="Close order">
-            <i data-lucide="x" class="w-5 h-5"></i>
-          </button>
+  <div id="order-detail-modal" class="fixed inset-0 bg-black/60 backdrop-blur-[2px] z-[70] hidden flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modal-order-ref">
+    <div class="order-detail-shell bg-brand-card dark:bg-brand-darkCard rounded-2xl border border-brand-border dark:border-brand-darkBorder shadow-2xl flex flex-col overflow-hidden">
+      <div class="order-detail-header flex items-start justify-center px-5 sm:px-7 py-4 border-b border-brand-border dark:border-brand-darkBorder bg-brand-card dark:bg-brand-darkCard flex-shrink-0">
+        <div class="order-reading-column flex items-start justify-between gap-4">
+          <div class="min-w-0">
+            <div class="text-[10px] uppercase tracking-[0.16em] font-mono font-bold text-slate-400 mb-1">Department of Posts · SB Order</div>
+            <div class="font-mono font-black text-brand-red dark:text-red-400 text-xl sm:text-2xl leading-tight break-words" id="modal-order-ref">—</div>
+            <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1" id="modal-order-date">—</div>
+          </div>
+          <div class="flex items-center gap-2 flex-shrink-0">
+            <div class="order-text-size-group" aria-label="Text size controls">
+              <span class="order-text-size-label">Text size</span>
+              <button type="button" onclick="setOrderTextSize(-1)" class="order-text-size-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
+              <button type="button" onclick="resetOrderTextSize()" class="order-text-size-btn order-text-size-current" title="Reset text size" aria-label="Reset text size">A</button>
+              <button type="button" onclick="setOrderTextSize(1)" class="order-text-size-btn" title="Increase text size" aria-label="Increase text size">A+</button>
+            </div>
+            <button type="button" onclick="closeOrderDetailModal()" class="order-close-icon" title="Close order" aria-label="Close order">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
         </div>
       </div>
 
       <div id="order-detail-scroll" class="flex-1 overflow-y-auto px-5 sm:px-7 py-5 sm:py-6">
-        <div class="space-y-6">
+        <div class="order-reading-column space-y-5">
           <section>
             <div class="order-section-label">Subject</div>
             <p class="order-subject" id="modal-order-subj">—</p>
@@ -2494,7 +2510,13 @@
       document.getElementById('modal-order-ref').innerText = order.orderNo;
       document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated';
       document.getElementById('modal-order-subj').innerText = order.subject || '—';
-      document.getElementById('modal-order-substance').innerText = order.fullText || order.substance || '—';
+      const rawOrderText = order.fullText || order.substance || '—';
+      const cleanOrderText = String(rawOrderText)
+        .replace(/\r\n?/g, '\n')
+        .replace(/[ \t]+\n/g, '\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+      document.getElementById('modal-order-substance').innerText = cleanOrderText;
       document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source';
 
       const supersededBy = displayRelationValue(order.supersededBy);
