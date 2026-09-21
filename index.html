@@ -113,6 +113,34 @@
       transform: rotate(-2deg);
       text-transform: uppercase;
     }
+
+    /* Orders Register / full-screen reading makeover */
+    .order-detail-shell { font-size: 16px; }
+    .order-detail-scroll { scrollbar-width: thin; scrollbar-color: #94a3b8 transparent; }
+    .order-detail-scroll::-webkit-scrollbar { width: 10px; }
+    .order-detail-scroll::-webkit-scrollbar-track { background: transparent; }
+    .order-detail-scroll::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 999px; border: 3px solid transparent; background-clip: padding-box; }
+    .order-section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: #64748b; margin-bottom: 8px; }
+    .order-subject { font-size: clamp(1.05rem, 1.7vw, 1.35rem); line-height: 1.55; font-weight: 800; color: #0f172a; }
+    .dark .order-subject { color: #f8fafc; }
+    .order-body-text { font-size: 17px; line-height: 1.82; color: #334155; white-space: pre-wrap; overflow-wrap: anywhere; font-family: Georgia, 'Times New Roman', serif; }
+    .dark .order-body-text { color: #cbd5e1; }
+    .order-text-size-btn { min-width: 38px; height: 34px; padding: 0 9px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; font-size: 13px; font-weight: 800; cursor: pointer; transition: .15s ease; }
+    .order-text-size-btn:hover { background: #e2e8f0; }
+    .dark .order-text-size-btn { background: #1e293b; border-color: #475569; color: #e2e8f0; }
+    .dark .order-text-size-btn:hover { background: #334155; }
+    .order-text-size-current { color: #b91c1c; }
+    .dark .order-text-size-current { color: #f87171; }
+    .order-close-icon { width: 36px; height: 36px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; color: #64748b; background: transparent; border: 1px solid transparent; cursor: pointer; }
+    .order-close-icon:hover { background: #e2e8f0; color: #0f172a; }
+    .dark .order-close-icon:hover { background: #334155; color: #fff; }
+    .order-close-btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 15px; border-radius: 9px; background: #b91c1c; color: #fff; font-size: 13px; font-weight: 800; border: 0; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+    .order-close-btn:hover { background: #991b1b; }
+    @media (max-width: 640px) {
+      .order-detail-shell { width: 96vw; height: 88vh; min-height: 0; border-radius: 14px; }
+      .order-body-text { font-size: 16px; line-height: 1.75; }
+      .order-detail-header { padding: 14px 15px; }
+    }
   </style>
 </head>
 <body class="bg-brand-surface dark:bg-brand-darkSurface text-slate-800 dark:text-slate-100 flex flex-col min-h-full font-sans antialiased transition-colors duration-200">
@@ -276,6 +304,9 @@
           <p class="text-xs text-slate-500">Trace active vs superseded orders based on centralized repository data.</p>
         </div>
         <div class="flex flex-wrap gap-2">
+          <select id="filter-order-year" onchange="renderOrdersTable()" aria-label="Filter orders by year" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 font-semibold">
+            <option value="ALL">All Years</option>
+          </select>
           <input type="text" id="filter-order-text" oninput="renderOrdersTable()" placeholder="Search subject or order ref..." class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 w-48 sm:w-64">
           <select id="filter-order-status" onchange="renderOrdersTable()" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
             <option value="ALL">All Statuses</option>
@@ -1012,24 +1043,58 @@
   </div>
 
   <!-- ORDER DETAIL MODAL -->
-  <div id="order-detail-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-brand-card dark:bg-brand-darkCard rounded-2xl max-w-xl w-full p-6 border border-brand-border dark:border-brand-darkBorder shadow-2xl space-y-4 text-xs">
-      <div class="flex justify-between items-start pb-2 border-b">
-        <div><span class="font-mono font-bold text-brand-red dark:text-red-400 text-sm" id="modal-order-ref">—</span><div class="text-[10px] text-slate-400" id="modal-order-date">—</div></div>
-        <button onclick="closeOrderDetailModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+  <div id="order-detail-modal" class="fixed inset-0 bg-black/65 backdrop-blur-sm z-[70] hidden overflow-y-auto p-4 sm:p-6 md:p-8" role="dialog" aria-modal="true" aria-labelledby="modal-order-ref">
+    <div class="order-detail-shell bg-brand-card dark:bg-brand-darkCard rounded-2xl border border-brand-border dark:border-brand-darkBorder shadow-2xl w-[min(88vw,1100px)] h-[82vh] min-h-[520px] mx-auto my-auto flex flex-col overflow-hidden">
+      <div class="order-detail-header flex items-start justify-between gap-4 px-5 sm:px-7 py-4 border-b border-brand-border dark:border-brand-darkBorder bg-brand-card dark:bg-brand-darkCard flex-shrink-0">
+        <div class="min-w-0">
+          <div class="text-[10px] uppercase tracking-[0.16em] font-mono font-bold text-slate-400 mb-1">Department of Posts · SB Order</div>
+          <div class="font-mono font-black text-brand-red dark:text-red-400 text-xl sm:text-2xl leading-tight break-words" id="modal-order-ref">—</div>
+          <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1" id="modal-order-date">—</div>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button type="button" onclick="setOrderTextSize(-1)" class="order-text-size-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
+          <button type="button" onclick="resetOrderTextSize()" class="order-text-size-btn order-text-size-current" title="Reset text size" aria-label="Reset text size">A</button>
+          <button type="button" onclick="setOrderTextSize(1)" class="order-text-size-btn" title="Increase text size" aria-label="Increase text size">A+</button>
+          <button type="button" onclick="closeOrderDetailModal()" class="order-close-icon" title="Close order" aria-label="Close order">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
       </div>
-      <div class="space-y-3">
-        <div><span class="font-semibold block text-slate-500">Subject:</span><p class="font-bold text-slate-900 dark:text-white" id="modal-order-subj">—</p></div>
-        <div><span class="font-semibold block text-slate-500">Substance &amp; Ruling:</span><p class="text-slate-700 dark:text-slate-300 leading-relaxed" id="modal-order-substance">—</p></div>
-        <div id="modal-superseded-box" class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900 rounded-lg text-rose-800 dark:text-rose-300 space-y-1 hidden">
-          <div class="font-bold flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Caution: Superseded Order</div>
-          <p class="text-[11px]">This order has been superseded. Replaced by: <strong id="modal-superseded-by-ref">—</strong></p>
+
+      <div id="order-detail-scroll" class="flex-1 overflow-y-auto px-5 sm:px-7 py-5 sm:py-6">
+        <div class="space-y-6">
+          <section>
+            <div class="order-section-label">Subject</div>
+            <p class="order-subject" id="modal-order-subj">—</p>
+          </section>
+
+          <section>
+            <div class="order-section-label">Order text / Substance &amp; Ruling</div>
+            <div class="order-body-text" id="modal-order-substance">—</div>
+          </section>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div id="modal-superseded-box" class="p-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900 rounded-xl text-rose-800 dark:text-rose-300 space-y-1 hidden">
+              <div class="font-bold flex items-center gap-2"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Caution: Superseded Order</div>
+              <p class="text-sm">This order has been superseded. Replaced by: <strong id="modal-superseded-by-ref">—</strong></p>
+            </div>
+            <div id="modal-replaces-box" class="p-4 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900 rounded-xl text-amber-800 dark:text-amber-300 space-y-1 hidden">
+              <div class="font-bold flex items-center gap-2"><i data-lucide="info" class="w-4 h-4"></i> Supersedes Predecessor</div>
+              <p class="text-sm">This order replaces: <strong id="modal-replaces-ref">—</strong></p>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-brand-border dark:border-brand-darkBorder text-sm text-slate-500 dark:text-slate-400">
+            Source Document: <strong id="modal-source-doc" class="font-mono text-slate-700 dark:text-slate-300">—</strong>
+          </div>
         </div>
-        <div id="modal-replaces-box" class="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-900 rounded-lg text-amber-800 dark:text-amber-300 space-y-1 hidden">
-          <div class="font-bold flex items-center gap-1.5"><i data-lucide="info" class="w-4 h-4"></i> Supersedes Predecessor</div>
-          <p class="text-[11px]">This order replaces: <strong id="modal-replaces-ref">—</strong></p>
-        </div>
-        <div class="text-[11px] text-slate-400 pt-2 border-t">Source Document: <strong id="modal-source-doc" class="font-mono text-slate-600 dark:text-slate-300">—</strong></div>
+      </div>
+
+      <div class="order-detail-footer flex flex-col sm:flex-row items-center justify-between gap-3 px-5 sm:px-7 py-3 border-t border-brand-border dark:border-brand-darkBorder bg-slate-50/80 dark:bg-slate-900/40 flex-shrink-0">
+        <span class="text-xs text-slate-400">Use A− / A / A+ to adjust reading size.</span>
+        <button type="button" onclick="closeOrderDetailModal()" class="order-close-btn">
+          <i data-lucide="x" class="w-4 h-4"></i><span>Close Window</span>
+        </button>
       </div>
     </div>
   </div>
@@ -1377,6 +1442,7 @@
         ]);
 
         DATA_ORDERS = orders;
+        populateOrderYearFilter();
         DATA_POSB = (posb && posb.length > 0) ? posb : POSB_MASTER_SCHEMES;
         DATA_FORMS = (forms && forms.length > 0) ? forms : VERIFIED_FORMS_FALLBACK;
         DATA_PINCODES_GROUPED = buildGroupedPincodeData(rawPins);
@@ -1384,6 +1450,7 @@
       } catch (e) {
         console.warn('Dataset sync fallback active:', e);
       } finally {
+        populateOrderYearFilter();
         updateDashboardCounters();
         renderOrdersTable();
         renderPosbTable();
@@ -2348,38 +2415,77 @@
     }
 
     /* 2. RENDER ORDERS TABLE */
+    function populateOrderYearFilter() {
+      const select = document.getElementById('filter-order-year');
+      if (!select) return;
+      const current = select.value || 'ALL';
+      const years = [...new Set(DATA_ORDERS.map(o => Number(o.year)).filter(y => y >= 2000))].sort((a,b) => b-a);
+      select.innerHTML = '<option value="ALL">All Years</option>' + years.map(y => `<option value="${y}">${y}</option>`).join('');
+      if (years.includes(Number(current))) select.value = current;
+      else select.value = 'ALL';
+    }
+
     function renderOrdersTable() {
       const tbody = document.getElementById('orders-tbody');
       if (!tbody) return;
       tbody.innerHTML = '';
-      const query = (document.getElementById('filter-order-text')?.value || '').toLowerCase();
+      const query = (document.getElementById('filter-order-text')?.value || '').toLowerCase().trim();
+      const yearFilter = document.getElementById('filter-order-year')?.value || 'ALL';
       const statusFilter = document.getElementById('filter-order-status')?.value || 'ALL';
 
       const filtered = DATA_ORDERS.filter(o => {
-        const matchesQ = (o.orderNo || '').toLowerCase().includes(query) || (o.subject || '').toLowerCase().includes(query);
-        const matchesStatus = (statusFilter === 'ALL') || (o.status === statusFilter);
-        return matchesQ && matchesStatus;
+        const matchesQ = !query || (o.orderNo || '').toLowerCase().includes(query) || (o.subject || '').toLowerCase().includes(query);
+        const matchesYear = yearFilter === 'ALL' || Number(o.year) === Number(yearFilter);
+        const matchesStatus = statusFilter === 'ALL' || (o.status || '') === statusFilter;
+        return matchesQ && matchesYear && matchesStatus;
+      }).sort((a,b) => {
+        const da = a.date ? new Date(a.date).getTime() : 0;
+        const db = b.date ? new Date(b.date).getTime() : 0;
+        return db - da || String(b.orderNo).localeCompare(String(a.orderNo), undefined, {numeric:true});
       });
 
       if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400">No verified orders loaded.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="p-10 text-center text-slate-400 text-sm">No orders found for the selected filters.</td></tr>`;
         return;
       }
 
       filtered.forEach(o => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800 transition";
+        const relation = Array.isArray(o.supersedes) && o.supersedes.length ? `Supersedes: ${o.supersedes.join(', ')}` : (Array.isArray(o.supersededBy) && o.supersededBy.length ? `Replaced by: ${o.supersededBy.join(', ')}` : '—');
         tr.innerHTML = `
-          <td class="p-3 font-mono font-bold">${o.orderNo} <div class="text-[10px] text-slate-400">${o.date || 'Undated'}</div></td>
-          <td class="p-3 text-slate-500">${o.category}</td>
-          <td class="p-3 font-medium">${o.subject}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${o.status === 'In Force' ? 'bg-emerald-100 text-emerald-800' : o.status === 'Superseded' ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'}">${o.status}</span></td>
-          <td class="p-3 font-mono text-[11px] text-slate-500">${o.supersedes || o.supersededBy || '—'}</td>
-          <td class="p-3 text-right"><button onclick="viewOrderDetail('${o.id}')" class="text-brand-red dark:text-red-400 font-bold hover:underline">View</button></td>
+          <td class="p-3 font-mono"><div class="font-black text-sm text-slate-900 dark:text-white">${o.orderNo}</div><div class="text-[11px] text-slate-400 mt-0.5">${o.date || 'Undated'}</div></td>
+          <td class="p-3 text-slate-500 text-sm">${o.category}</td>
+          <td class="p-3 font-medium text-sm leading-6">${o.subject}</td>
+          <td class="p-3"><span class="px-2 py-1 rounded text-[10px] font-bold ${o.status === 'In Force' ? 'bg-emerald-100 text-emerald-800' : o.status === 'Superseded' ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'}">${o.status}</span></td>
+          <td class="p-3 font-mono text-[11px] text-slate-500">${relation}</td>
+          <td class="p-3 text-right"><button onclick="viewOrderDetail('${o.id}')" class="text-brand-red dark:text-red-400 font-bold hover:underline text-sm">View</button></td>
         `;
         tbody.appendChild(tr);
       });
       lucide.createIcons();
+    }
+
+    let orderTextSize = 17;
+    function applyOrderTextSize() {
+      const el = document.getElementById('modal-order-substance');
+      if (el) el.style.fontSize = orderTextSize + 'px';
+      document.querySelectorAll('.order-text-size-btn').forEach(b => b.classList.remove('order-text-size-current'));
+      const current = document.querySelector('.order-text-size-btn[title="Reset text size"]');
+      if (current && orderTextSize === 17) current.classList.add('order-text-size-current');
+    }
+    function setOrderTextSize(delta) {
+      orderTextSize = Math.max(13, Math.min(25, orderTextSize + delta * 2));
+      applyOrderTextSize();
+    }
+    function resetOrderTextSize() {
+      orderTextSize = 17;
+      applyOrderTextSize();
+    }
+
+    function displayRelationValue(value) {
+      if (Array.isArray(value)) return value.filter(Boolean).join(', ');
+      return value || '';
     }
 
     function viewOrderDetail(orderId) {
@@ -2387,14 +2493,36 @@
       if (!order) return;
       document.getElementById('modal-order-ref').innerText = order.orderNo;
       document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated';
-      document.getElementById('modal-order-subj').innerText = order.subject;
-      document.getElementById('modal-order-substance').innerText = order.fullText || order.substance;
+      document.getElementById('modal-order-subj').innerText = order.subject || '—';
+      document.getElementById('modal-order-substance').innerText = order.fullText || order.substance || '—';
       document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source';
+
+      const supersededBy = displayRelationValue(order.supersededBy);
+      const supersedes = displayRelationValue(order.supersedes);
+      const sb = document.getElementById('modal-superseded-box');
+      const rb = document.getElementById('modal-replaces-box');
+      document.getElementById('modal-superseded-by-ref').innerText = supersededBy || '—';
+      document.getElementById('modal-replaces-ref').innerText = supersedes || '—';
+      sb.classList.toggle('hidden', !supersededBy);
+      rb.classList.toggle('hidden', !supersedes);
+
+      resetOrderTextSize();
+      document.getElementById('order-detail-scroll').scrollTop = 0;
       document.getElementById('order-detail-modal').classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      lucide.createIcons();
     }
     function closeOrderDetailModal() {
       document.getElementById('order-detail-modal').classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
     }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('order-detail-modal');
+        if (modal && !modal.classList.contains('hidden')) closeOrderDetailModal();
+      }
+    });
 
     /* 3. RENDER POSB RATES HUB TABLE */
     function renderPosbTable() {
