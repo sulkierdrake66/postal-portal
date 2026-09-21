@@ -1287,19 +1287,12 @@
     /* 1. CENTRAL CONTROLLER INITIALIZATION */
     /*
      * Orders / Circulars data
-     * The site accepts the three year-specific JSON files directly.
-     * Put them in /data/ with these exact filenames:
-     *   sb_orders_2024.json
-     *   sb_orders_2025.json
-     *   sb_orders_01_to_10_2026.json
-     *
-     * Their source schemas are slightly different, so normalize them here into
-     * the schema used by the Orders Register and Ask Rules engine.
+     * The site reads one master order register.
+     * Put /data/orders.json in the site. Source-year JSON files can remain
+     * archived separately; the master file is the runtime source for the UI.
      */
     const ORDER_DATASET_FILES = [
-      'sb_orders_2024.json',
-      'sb_orders_2025.json',
-      'sb_orders_01_to_10_2026.json'
+      'orders.json'
     ];
 
     function extractOrderSubject(text) {
@@ -1311,7 +1304,7 @@
 
     function normalizeOrderRecord(raw, sourceYear, sourceFile, index) {
       const year = Number(raw.year || sourceYear || String(raw.order_number || '').slice(-4)) || 0;
-      const orderNo = String(raw.order_no || raw.order_number || '').trim();
+      const orderNo = String(raw.order_no || raw.order_number || raw.orderNo || '').trim();
       const ref = orderNo.includes('/') ? orderNo : `${orderNo}/${year}`;
       const text = String(raw.text || raw.substance || '');
       const subject = String(raw.subject || extractOrderSubject(text) || 'Department of Posts SB Order');
@@ -1338,12 +1331,13 @@
         category,
         subject,
         status,
-        supersedes: raw.supersedes || '',
-        supersededBy: raw.supersededBy || '',
-        keywords: `${ref} ${year} ${category} ${subject}`.toLowerCase(),
+        supersedes: raw.supersedes || [],
+        supersededBy: raw.supersededBy || [],
+        references: raw.references || [],
+        keywords: `${ref} ${year} ${category} ${subject} ${(raw.references || []).join(' ')}`.toLowerCase(),
         substance,
         fullText: text,
-        sourceDocument: sourceFile,
+        sourceDocument: raw.source_document || raw.sourceDocument || sourceFile,
         sourcePages: pageStart ? `${pageStart}${pageEnd && pageEnd !== pageStart ? '-' + pageEnd : ''}` : ''
       };
     }
@@ -2379,7 +2373,7 @@
           <td class="p-3 font-mono font-bold">${o.orderNo} <div class="text-[10px] text-slate-400">${o.date || 'Undated'}</div></td>
           <td class="p-3 text-slate-500">${o.category}</td>
           <td class="p-3 font-medium">${o.subject}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${o.status === 'In Force' ? 'bg-emerald-100 text-emerald-800' : o.status === 'Source Record' ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300' : 'bg-rose-100 text-rose-800'}">${o.status}</span></td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${o.status === 'In Force' ? 'bg-emerald-100 text-emerald-800' : o.status === 'Superseded' ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300'}">${o.status}</span></td>
           <td class="p-3 font-mono text-[11px] text-slate-500">${o.supersedes || o.supersededBy || '—'}</td>
           <td class="p-3 text-right"><button onclick="viewOrderDetail('${o.id}')" class="text-brand-red dark:text-red-400 font-bold hover:underline">View</button></td>
         `;
