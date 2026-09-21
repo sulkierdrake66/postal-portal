@@ -227,7 +227,7 @@
         <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder">
           <span class="text-xs text-slate-500 font-medium">Orders Loaded</span>
           <div class="text-xl font-mono font-black text-slate-900 dark:text-white mt-1" id="dash-count-orders">0</div>
-          <span class="text-[11px] text-slate-400">From /data/orders.json</span>
+          <span class="text-[11px] text-slate-400">From /data/2024–2026 SB Order datasets</span>
         </div>
         <div class="bg-brand-card dark:bg-brand-darkCard p-4 rounded-xl border border-brand-border dark:border-brand-darkBorder">
           <span class="text-xs text-slate-500 font-medium">POSB &amp; PLI Plans</span>
@@ -1285,10 +1285,97 @@
     }
 
     /* 1. CENTRAL CONTROLLER INITIALIZATION */
+    /*
+     * Orders / Circulars data
+     * The site accepts the three year-specific JSON files directly.
+     * Put them in /data/ with these exact filenames:
+     *   sb_orders_2024.json
+     *   sb_orders_2025.json
+     *   sb_orders_01_to_10_2026.json
+     *
+     * Their source schemas are slightly different, so normalize them here into
+     * the schema used by the Orders Register and Ask Rules engine.
+     */
+    const ORDER_DATASET_FILES = [
+      'sb_orders_2024.json',
+      'sb_orders_2025.json',
+      'sb_orders_01_to_10_2026.json'
+    ];
+
+    function extractOrderSubject(text) {
+      const clean = String(text || '').replace(/\r/g, '');
+      const m = clean.match(/Subject:\s*([\s\S]*?)(?=\n(?:Madam|Sir|Madam \/ Sir|$))/i);
+      if (!m) return '';
+      return m[1].replace(/\s+/g, ' ').replace(/\s+-\s*$/, '').trim();
+    }
+
+    function normalizeOrderRecord(raw, sourceYear, sourceFile, index) {
+      const year = Number(raw.year || sourceYear || String(raw.order_number || '').slice(-4)) || 0;
+      const orderNo = String(raw.order_no || raw.order_number || '').trim();
+      const ref = orderNo.includes('/') ? orderNo : `${orderNo}/${year}`;
+      const text = String(raw.text || raw.substance || '');
+      const subject = String(raw.subject || extractOrderSubject(text) || 'Department of Posts SB Order');
+      const date = String(raw.date || '').trim();
+      const pages = raw.source_pages || {};
+      const pageStart = raw.start_page || pages.pdf_start || '';
+      const pageEnd = raw.end_page || pages.pdf_end || pageStart;
+
+      let category = 'SB Order / Circular';
+      const searchable = `${subject} ${text}`.toLowerCase();
+      if (/interest rate|small savings|posb|ppf|nsc|kvp|mis|scss|rd|td|mssc/.test(searchable)) category = 'Small Savings / POSB';
+      else if (/e-?kyc|aadhaar|finacle|transaction|account opening|withdrawal|deposit/.test(searchable)) category = 'POSB Operations';
+      else if (/income[- ]tax|pan|tds|tax|sft|form no/.test(searchable)) category = 'Tax / Compliance';
+
+      const status = raw.status || 'Source Record';
+      const substance = text.length > 1400 ? text.slice(0, 1400).trim() + '…' : text.trim();
+      const id = `sb-order-${year}-${String(orderNo).replace(/\W+/g, '-') || index}`;
+
+      return {
+        id,
+        orderNo: ref,
+        year,
+        date,
+        category,
+        subject,
+        status,
+        supersedes: raw.supersedes || '',
+        supersededBy: raw.supersededBy || '',
+        keywords: `${ref} ${year} ${category} ${subject}`.toLowerCase(),
+        substance,
+        fullText: text,
+        sourceDocument: sourceFile,
+        sourcePages: pageStart ? `${pageStart}${pageEnd && pageEnd !== pageStart ? '-' + pageEnd : ''}` : ''
+      };
+    }
+
+    function normalizeOrdersPayload(payload, fallbackYear, sourceFile) {
+      const list = Array.isArray(payload) ? payload : (Array.isArray(payload?.orders) ? payload.orders : []);
+      return list.map((item, i) => normalizeOrderRecord(item, fallbackYear, sourceFile, i));
+    }
+
+    async function loadOrdersDatasets() {
+      const loaded = [];
+      for (const filename of ORDER_DATASET_FILES) {
+        const payload = await fetchDataset(filename, null);
+        if (payload) {
+          const yearMatch = filename.match(/(20\d{2})/);
+          loaded.push(...normalizeOrdersPayload(payload, yearMatch ? Number(yearMatch[1]) : 0, filename));
+        }
+      }
+
+      // Remove accidental duplicate order IDs while preserving source order.
+      const seen = new Set();
+      return loaded.filter(o => {
+        if (seen.has(o.id)) return false;
+        seen.add(o.id);
+        return true;
+      });
+    }
+
     async function loadCentralData() {
       try {
         const [orders, posb, forms, rawPins, cfg] = await Promise.all([
-          fetchDataset('orders.json', []),
+          loadOrdersDatasets(),
           fetchDataset('posb-rates.json', POSB_MASTER_SCHEMES),
           fetchDataset('forms.json', VERIFIED_FORMS_FALLBACK),
           fetchDataset('pincodes.json', []).then(res => res.length ? res : fetchDataset('india_pincodes_flat.json', [])),
@@ -2292,7 +2379,7 @@
           <td class="p-3 font-mono font-bold">${o.orderNo} <div class="text-[10px] text-slate-400">${o.date || 'Undated'}</div></td>
           <td class="p-3 text-slate-500">${o.category}</td>
           <td class="p-3 font-medium">${o.subject}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${o.status === 'In Force' ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">${o.status}</span></td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${o.status === 'In Force' ? 'bg-emerald-100 text-emerald-800' : o.status === 'Source Record' ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300' : 'bg-rose-100 text-rose-800'}">${o.status}</span></td>
           <td class="p-3 font-mono text-[11px] text-slate-500">${o.supersedes || o.supersededBy || '—'}</td>
           <td class="p-3 text-right"><button onclick="viewOrderDetail('${o.id}')" class="text-brand-red dark:text-red-400 font-bold hover:underline">View</button></td>
         `;
@@ -2307,7 +2394,7 @@
       document.getElementById('modal-order-ref').innerText = order.orderNo;
       document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated';
       document.getElementById('modal-order-subj').innerText = order.subject;
-      document.getElementById('modal-order-substance').innerText = order.substance;
+      document.getElementById('modal-order-substance').innerText = order.fullText || order.substance;
       document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source';
       document.getElementById('order-detail-modal').classList.remove('hidden');
     }
@@ -2461,18 +2548,30 @@
       const rawQ = document.getElementById('ask-input').value.trim().toLowerCase();
       const resContainer = document.getElementById('ask-results');
       resContainer.classList.remove('hidden');
-      if (!rawQ) { resContainer.innerHTML = `<div class="p-4 text-xs text-slate-500">Please enter a rule keyword.</div>`; return; }
-
-      const matches = DATA_ORDERS.filter(o => (o.orderNo + ' ' + o.subject + ' ' + o.substance + ' ' + (o.keywords || '')).toLowerCase().includes(rawQ));
-      if (matches.length === 0) {
-        resContainer.innerHTML = `<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-xs text-slate-500">No verified ruling found for "${rawQ}".</div>`;
+      if (!rawQ) {
+        resContainer.innerHTML = `<div class="p-4 text-xs text-slate-500">Please enter a rule keyword.</div>`;
         return;
       }
-      resContainer.innerHTML = matches.map(m => `
+
+      const terms = rawQ.split(/\s+/).filter(Boolean);
+      const matches = DATA_ORDERS.map(o => {
+        const haystack = `${o.orderNo} ${o.date} ${o.subject} ${o.category} ${o.keywords || ''} ${o.substance || ''} ${o.fullText || ''}`.toLowerCase();
+        const score = terms.reduce((n, term) => n + (haystack.includes(term) ? 1 : 0), 0);
+        return { o, score };
+      }).filter(x => x.score > 0).sort((a, b) => b.score - a.score || String(b.o.date).localeCompare(String(a.o.date))).slice(0, 10);
+
+      if (matches.length === 0) {
+        resContainer.innerHTML = `<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-xs text-slate-500">No verified order record found for "${rawQ.replace(/</g,'&lt;')}".</div>`;
+        return;
+      }
+
+      resContainer.innerHTML = matches.map(({o}) => `
         <div class="p-4 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-2">
-          <div class="flex justify-between"><span class="font-mono font-bold text-brand-red text-xs">${m.orderNo}</span><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">${m.status}</span></div>
-          <h4 class="font-bold text-sm text-slate-900 dark:text-white">${m.subject}</h4>
-          <p class="text-xs text-slate-600 dark:text-slate-300">${m.substance}</p>
+          <div class="flex justify-between gap-3"><span class="font-mono font-bold text-brand-red dark:text-red-400 text-xs">${o.orderNo}</span><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${o.date || 'Undated'}</span></div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white">${o.subject}</h4>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">${o.category} · ${o.sourceDocument || 'Direct Source'}${o.sourcePages ? ` · PDF pages ${o.sourcePages}` : ''}</p>
+          <p class="text-xs text-slate-600 dark:text-slate-300 whitespace-pre-line">${o.substance}</p>
+          <button onclick="viewOrderDetail('${o.id}')" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View full order</button>
         </div>
       `).join('');
     }
