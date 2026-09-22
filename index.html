@@ -124,7 +124,13 @@
     .order-section-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; color: #64748b; margin-bottom: 8px; text-align: left; }
     .order-subject { font-size: clamp(1.08rem, 1.55vw, 1.28rem); line-height: 1.55; font-weight: 800; color: #0f172a; text-align: left !important; margin: 0; }
     .dark .order-subject { color: #f8fafc; }
-    .order-body-text { font-size: 17px; line-height: 1.78; color: #334155; white-space: pre-wrap; overflow-wrap:anywhere; font-family: Georgia, 'Times New Roman', serif; text-align: left !important; margin: 0; }
+    .order-body-text { font-size: 17px; line-height: 1.78; color: #334155; overflow-wrap:anywhere; font-family: Georgia, 'Times New Roman', serif; text-align: left !important; margin: 0; }
+    .order-page-block { margin: 0 0 1.65rem; }
+    .order-page-label { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #94a3b8; margin-bottom: .55rem; }
+    .order-page-text { white-space: pre-wrap; }
+    .order-visual { display:block; width:100%; max-width:760px; max-height:620px; object-fit:contain; margin: .9rem auto 0; border:1px solid rgba(148,163,184,.28); border-radius:10px; background:#fff; box-shadow:0 4px 16px rgba(15,23,42,.08); }
+    .order-visual-caption { font-family: ui-sans-serif, system-ui, sans-serif; font-size: 11px; line-height:1.45; color:#94a3b8; text-align:center; margin-top:.4rem; }
+    .order-source-page { display:block; width:100%; max-width:760px; max-height:760px; object-fit:contain; margin:.9rem auto 0; border:1px solid rgba(148,163,184,.35); border-radius:10px; background:#fff; }
     .dark .order-body-text { color: #cbd5e1; }
     .order-text-size-group { display: inline-flex; align-items: center; gap: 4px; padding: 4px; border: 1px solid #cbd5e1; border-radius: 10px; background: #f8fafc; }
     .dark .order-text-size-group { border-color: #475569; background: #1e293b; }
@@ -2504,6 +2510,48 @@
       return value || '';
     }
 
+    function escapeOrderHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function renderOrderContent(order, rawText) {
+      const text = String(rawText || '').replace(/\r\n?/g, '\n');
+      const visualByPage = {};
+      (order.visual_assets || []).forEach(a => { (visualByPage[a.page] ||= []).push(a); });
+      const sourceByPage = {};
+      (order.source_page_images || []).forEach(a => { (sourceByPage[a.page] ||= []).push(a); });
+
+      const parts = text.split(/\[PAGE\s+(\d+)\]/gi);
+      let html = '';
+      if (parts.length === 1) {
+        html += `<div class="order-page-block"><div class="order-page-text">${escapeOrderHtml(text.replace(/\n{3,}/g,'\n\n').trim())}</div></div>`;
+      } else {
+        const leading = parts[0].trim();
+        if (leading) html += `<div class="order-page-block"><div class="order-page-text">${escapeOrderHtml(leading)}</div></div>`;
+        for (let i = 1; i < parts.length; i += 2) {
+          const page = Number(parts[i]);
+          const pageText = String(parts[i+1] || '').replace(/\n{3,}/g,'\n\n').trim();
+          html += `<div class="order-page-block">`;
+          html += `<div class="order-page-label">PDF page ${page}</div>`;
+          if (pageText) html += `<div class="order-page-text">${escapeOrderHtml(pageText)}</div>`;
+          (visualByPage[page] || []).forEach(a => {
+            html += `<img class="order-visual" src="${escapeOrderHtml(a.src)}" alt="${escapeOrderHtml(a.caption || 'Visual content from order')}" loading="lazy">`;
+            if (a.caption) html += `<div class="order-visual-caption">${escapeOrderHtml(a.caption)}</div>`;
+          });
+          (sourceByPage[page] || []).forEach(a => {
+            html += `<div class="order-page-label mt-4">Original source page</div><img class="order-source-page" src="${escapeOrderHtml(a.src)}" alt="${escapeOrderHtml(a.caption || 'Original source page')}" loading="lazy">`;
+          });
+          html += `</div>`;
+        }
+      }
+      return html || '<div class="order-page-text">—</div>';
+    }
+
     function viewOrderDetail(orderId) {
       const order = DATA_ORDERS.find(o => o.id === orderId);
       if (!order) return;
@@ -2511,12 +2559,7 @@
       document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated';
       document.getElementById('modal-order-subj').innerText = order.subject || '—';
       const rawOrderText = order.fullText || order.substance || '—';
-      const cleanOrderText = String(rawOrderText)
-        .replace(/\r\n?/g, '\n')
-        .replace(/[ \t]+\n/g, '\n')
-        .replace(/\n{3,}/g, '\n\n')
-        .trim();
-      document.getElementById('modal-order-substance').innerText = cleanOrderText;
+      document.getElementById('modal-order-substance').innerHTML = renderOrderContent(order, rawOrderText);
       document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source';
 
       const supersededBy = displayRelationValue(order.supersededBy);

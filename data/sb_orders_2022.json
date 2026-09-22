@@ -27,7 +27,75 @@
       "text": "[PAGE 6]\nSB Order No.O2l2O22\nF.No. 25'09/20r2-FS-CBS-Part (1)\nGovt. of India\nMinistry of Communications\nDepartment of Posts\n(F.S. Divisiod\nDak Bhawan, New Delhi - 110001\nDated : 25.0t.2022\nTo\nAll Head of Circles / Regione\nSubject: Iutroduction of online PAN verification functionality in Finacle CBS\nSystem - Reg.\nSir / Madam,\nAt present, in Finacle CBS System, the PAN Card of the Depositors are\nupdated as part of KYC compliance. The PAN Card entered in the system is\nvalidated only based on the standard PAN format i.e. 10 ALPHA Numeric\nCharacters. But the correctness of the PAN card numbers provided by the\nDepositors or the PAN entered by the Post Offrce offrcials are not validated with\nNSDL currently.\n2. During the f,ling of TDS returns, many of the PAN numbers are not\naccepted in Income Tax statements due to invalid / wrong PAN, which leads to\ncomplaints from Depositors regarding non availability ofTDS deducted details in\nForm 26,4'5 of the Depositors. In order to settle these complaints, the DDOs are\nrequired to file correction TDS statements which unnecessarily put the DDOs\nand Depositors in trouble.\n3. Further, as per Rule 6 of Govt. Savings Promotion General Rules 2018\n(GSPR 2018), w.e.f.. L8.L2.2019, for opening of any account in Post Of6ce,\nsubmission of either PAN Number or Form - 60 is mandatory and if Form - 60 is\nsubmitted by the customer, PAN Number is to be submitted by the Depositor\nwithout fail, within next six months. If a depositor who has already opened an\naccount prior to the date of notification (GSPR 2018) and has not already\nsubmitted his Permanent Account Number, the depositor shall do so within a\nperiod of six months from the date of notification (GSPR 2018) and in the event\nof the failure of the depositor to submit the Permanent Account Number within\nthe specified period of six months, his account shall cease to be operational till\nthe time the depositor submits the PAN Number.\n4. Hence, it has been decided to restrict the account opening without\nentering either PAN or Form - 60 details and validate the correctness of the\nPAN number entered by availing the facility of online verification of PAN\nNumbers being provided by NSDL. Accordingly Finacle CBS System is\nintegrated with NSDL System. \n2...\n\n[PAGE 7]\nt2t\n5. Patches have been deployed in CBS Finacle System to validate the PAN\nentered at the time of creation and modification of CIFs of the Customers /\nDepositors and when any cash transaction exceeding Rs. 50,000/- is carried out.\n6. A detailed Standard Operating Procedure for online validation of PAN is\nattached herewith.\n7. Checking and validation of the PAN by the Post Offrce officials has to be\ndone with care to avoid mistakes: Details of the PO users validating the PAN are\ncaptured in audit trials.\n8. Circles are requested to take necessary action in this regard and this order\nmay be circulated to all the Post Offices.\n9. This is issued with the approval of DDG (FS).\nEncl:As above\n>L-\nAsst. Director General (FS'II)\nCopv to:-\n1. Sr. PPS to Secretary (Posts)\n2. PS to Director General Postal Services.\n3. PPS/ PS to Addl. DG (Co'ordinatiod/I\\ttember (Banking)/Ivlember (O)/lVlember (p)l\nMember (Planning & HRD)A{ember (Pl,t)nUember (TecD/AS & FA\n4. Addl. Director General, APS, New Delhi\n5. Chief General Manager, BD Directorate I Parcel Directorate I PLI Directorate\n6. Sr. Deputy Director General $ig) 8, CVO) / Sr. Deputy Director General (PAF)\n7. Director, RAKNPA / CGM, CEPT / Directors of all PTCs.\n8. Director General P & T (Audit), Civil Lines, New Delhi\n9. Secretary, Postal Services Board/ All Deputy Directors General\n10. All General Managers (Finance) / Directors Postal Accounts / DDAP\n11. Chief Engineer (Clvil), Postal Directorate\n12. All recognized Federations / Unions / Associations\n13. The Under Secretary, MOF (DEII), NS'II Section, North Block, New Delhi.\n14. The Joint Director & HOD, National Savings Institute, ICCW Building, 4\nDeendayal Upadhyay Marg, New Delhi'110002\n15. GM, CEPT, Mysuru ' for uploading the order on the India Post website.\n16. Guard File\nI\n\n[PAGE 8]\nSOP for ePAN (SB Order No. 02/2022)  Page 1 of 8  \nStandard Operating Procedure for online PAN Validation  \n \nIntroduction \n \nAt present, in Finacle CBS System, the PAN Card numbers of the Depositors are \nupdated as part of KYC compliance. The  PAN card number entered in the system is \nvalidated only b ased on the standard PAN format i.e. 10 ALPHA Numeric Characters.  \nBut the correctness of the PAN card numbers provided by the Depositors or the PAN \nentered by the Post Office officials are not validated with NSDL currently. \n \nDuring the submission of TDS, many of the PAN numbers are not accepted in \nIncome Tax statements due to invalid / wrong PAN numbers, which leads to complaints \nfrom Depositors regarding non availability of TDS deducted in Form 26AS of the \nDepositors. In order to settle these complaints, the DDOs  are required to file correction \nTDS statements which unnecessarily put the DDOs and Depositors in trouble.  \n \nHence, it has been decided to validate the correctness of the PAN number \nentered at the time of creation and modification of CIFs of the Customers / Depositors \nand at time of  any cash transaction exceeding Rs. 50,000/ -. Accordingly, the Finacle \nSystem and NSDL System has been integrated for availing facility of online verification \nof PAN numbers. \n \nPatches have been deployed in CBS Finacle System \n \n(i). To validate a PAN captured during CIF Creation and CIF modification.  \n(ii). To restrict creation and modification of CIF without validation of PAN. \n(iii). To restrict opening / modificatio n of account and performing cash \ntransactions exceeding Rs. 50,000/- without validation of PAN. \n(iii). To view the PAN Verification Status at Post Office Counters / e -Banking \nand Mobile Banking Apps \n(iv). To generate reports related to PAN Verification \n \n1. Procedure for validation of PAN in Finacle Core System \n \n As per Rule 6 of Govt. Savings Promotion General Rules 2018 (GSPR 2018), w.e.f. \n18.12.2019, for opening of any account in Post Office, either PAN Number or Form – 60 \nis mandatory and if Form – 60 is  submitted by the customer, PAN Number is to be \nsubmitted by the Depositor without fail, within next six months. If a depositor who has \nalready opened an account prior to the date of notification i.e. GSPR 2018 and has not \nalready submitted his Permanent A ccount Number, the depositor shall do so within a \nperiod of six months from the date of notification (GSPR 2018) and in the event of the \nfailure of the depositor to submit the Permanent Account Number within the specified \nperiod of six months, his account shall cease to be operational till the time the depositor \nsubmits the PAN Number.\n\n[PAGE 9]\nSOP for ePAN (SB Order No. 02/2022)  Page 2 of 8  \n(A). At the time of Creation of New CIF (Customer Information File) \n \ni. The Counter PA shall ask the Customer to submit either PAN Card detail or the \nForm – 60. \n \nii. The Counter PA shall create the CIF using CCRC menu in Finacle. On the CIF \nCreation screen, after entering name of the Customer, the Counter PA should \nselect the Tax status  as “PAN Card Available” , if the Customer provided PAN \nDetails.  \n \niii. Immediately after selecting the Tax status, an alert message prompting the \nCounter PA to capture the PAN card will be thrown by the System as follows.  \n \n \niv. The Counter PA shall accept the alert message and enter the PAN number in the \ndesired field viz. “PAN  Card No ”. As soon as the PAN Number is entered, the \nCounter PA will be prompted by the System to authenticate the captured PAN \nNumber as follows.  \n \n \n \nv. The Counter PA should accept the alert message by clicking OK and then he/she \nshould Click on “Validate” Button. The Finacle system will connect with NSDL \nsystem. After Validation at NSDL, Finacle System will show the details of PAN \nstatus from NSDL, Name, Name on Card and Aadhar Seeding Status with PAN.  \nThe Finacle system will display the PAN status as E-EXISTING AND VALID or\n\n[PAGE 10]\nSOP for ePAN (SB Order No. 02/2022)  Page 3 of 8  \nINVALID based on response from NSDL and if the PAN is Existing and Valid, \nthe screen will appear as follows. \n          \n \n \nvi. The Counter PA should verify the name of the customer entered in Finacle \nSystem with the name details displayed from NSDL system.  \n \nNote: Finacle system will not match the name in the Finacle System with the \nname displayed from the NSDL System. Hence, it is the responsibility of the Post \nOffice Counter Officials to verify both the names to ensure genuineness of the \nPAN submitted by the Customer. There may be difference in the order of the first \nname, middle name and last name between the name captured in th e PAN from \nNSDL and those details in the CIF. PO Counter officials  shall verify upon the \ncorrectness of the same. \n \nvii. PAN number entered in the PAN Card No. field which has been validated from  \nNSDL will be auto populated in the document details , if the selected document \ncode is PANCD .  Hence, the Counter PA shall not be required to enter the PAN \nnumber once again in the document details.  \n \nviii. If the entered PAN number is already linked to any other CIF, the System will \nnot allow to enter the same PAN number  during CIF creation and a message \n“PAN is already linked with CIF ID xxxxxxxxxx” will be displayed as follows. In \nsuch cases the PAN Number already available in the other CIF should be \nvalidated and if there is any difference in the name of the depositor with the one \ndisplayed on PAN validation, the wrong PAN Number shall be removed and it \nshould be intimated to the CPC through email by the Postmaster, for further \naction to enter the correct PAN in the CIF.\n\n[PAGE 11]\nSOP for ePAN (SB Order No. 02/2022)  Page 4 of 8  \n \n \nix If the  PAN Number entered by the Counter PA is invalid, the following result \nscreen will be displayed.  \n \n \n \nNote: If the customer submits the forged document, it shall be reported under \nSuspected Transaction Report (STR) by the Post Office concerned as prescribed \nunder AML/CFT norms. \n \nx. The Counter PA will not be able to proceed further with CIF creation if the PAN \nCARD status is INVALID.  \n \nxi. If the PAN status is Existing and Valid , the Counter PA shall enter the \nremaining information required for creation of CIF in CCRC menu and create the \nCIF as it is being done already.  \n \nNote-1:  If PAN Card details are entered, CIF will be created only when the PAN  \nstatus is “E-Existing and Valid”.  \nNote-2: To create a CIF, either capturing and validating PAN as prescribed above \nor selecting Form 60 option is mandatory. New CIF cannot be created either without \nForm 60 or VALIDATED PAN. \nNote-3:  If Name of the PAN holder differ s, then PO user needs to cancel CIF \ncreation in CCRC /  modification in CMRC and confirm the PAN details with the \ncustomer once again before proceeding with CIF creation / modification.\n\n[PAGE 12]\nSOP for ePAN (SB Order No. 02/2022)  Page 5 of 8  \n \nxii. Whenever a CIF for Minor Account Holder is created, validation of PAN number \nin the Guardian’s CIF is mandatory. Hence, before creation of mino r’s CIF, the Counter \nPA shall validate the PAN number in the Guardian’s CIF through CIF modification \nprocess using CMRC menu in Finacle.  \n \n(B). At the time of Modification of CIF  \n \ni). In order to ensure validity of all the existing PANs already linked with CIFs and \nto ensure compliance of Rule 6 of GSPR 2018, any modification in the CIF will be \nallowed only when the PAN linked with CIF is validated successfully with NSDL.  \n \nii). The procedure at para (A) above prescribed for validati on of PAN at the time of \ncreation of CIF shall be applicable, for CIF modification activity also \n \n(C). At the time of Account Opening or Account Modification \n \ni). Whenever any new account is opened  or modification is done in any existing \naccount, the system will check whether the validated PAN or Form – 60 is available in \nthe CIF of the Customer. If the PAN linked at CIF level is not validated, the Counter PA \nwill be prompted to validate the PAN or select Form 60 at CIF level, to proceed further. \nFinacle System will restrict the Counter PA to open or modify the account, till the PAN \nlinked with CIF concerned is validated successfully. \n \nii). For validation of PAN, the Counter PA shall perform the CIF modification \nprocess using CMRC menu in Finacle. \n \niii). If the Form – 60 is available in the CIF, an alert message as shown below will be \nthrown prompting the Counter PA to inform the Customer. The Counter should inform \nthe Customer about the provisions of Rule 6 of GSPR 2018. \n \n \n \niv). In case of Joint Accoun ts, System will check the PAN validity status of the First \nJoint Holder’s CIF. But the Counter PA should ensure that the PANs in all the Joint \nAccount Holders are validated.\n\n[PAGE 13]\nSOP for ePAN (SB Order No. 02/2022)  Page 6 of 8  \nv). In case of Accounts opened on behalf of Minor or Person of unsound mind, the \nCounter PA should ensure that the PAN of the Guardian is validated and if the account \nis operated by minor himself, PAN of the minor should be validated.  \n \n(D). At the time of Cash Transactions  \n \ni). Whenever any Cash Transaction exceeding Rs. 50,000/- in an account is initiated \nusing the menus viz. CTM, CPDTM, CRDP, HPAYOFF and HLAUPAY, if the PAN is \navailable in the Finacle System , System  will check whether the PAN of the account \nholder is validated. If the PAN is not validated, any cash transact ion exceeding Rs. \n50,000/- will not be allowed and the System will prompt the Counter PA to authenticate \nthe PAN at CIF level, to proceed further.  \n \nii). The Counter PA should validate the PAN of the Account Holder through CIF \nmodification process using CMRC menu. \n \niii). In case of Form 60  is available in the system , System will allow to perform cash \ntransaction exceeding Rs. 50,000/- after displaying an alert message as shown below. \n \n                                                          \n \n2. Inquiry of PAN Validation Status \n \na). The Post Office officials can inquire the validation status of the PAN linked with \na CIF using the Mobile Number or Aadhaar Number of the Customer using CCIFINQ \nmenu in Finacle. The details will be displayed as below.  \n \n3. PAN Validation Status in eBanking \n \nDOP e-Banking users can view the status of the PAN linked with their CIF. I n \nEB Application, a link “View Your PAN Status in DOP” under “My Profile” Tab is\n\n[PAGE 14]\nSOP for ePAN (SB Order No. 02/2022)  Page 7 of 8  \nprovided for the Customers to check the validation status of their PAN. If the PAN is \nnot validated, such customer will be prompted to get the  PAN validated by visiting the \nhome branch as below.  \n \n \n \n \n4. PAN Validation Status in M-Banking \n \nDOP M-Banking users can view the status of the PAN linked with their CIF. In \nMB Application, a link “View Your PAN Status in DOP” under Home Screen is provided \nfor the Customers to check the validation status of their PAN. If the PAN is not \nvalidated, such customer will be prompted to get the PAN validated by visiting the home \nbranch as below.\n\n[PAGE 15]\nSOP for ePAN (SB Order No. 02/2022)  Page 8 of 8  \n5. Reports Available for ePAN Validation  \n \na). Two types of reports viz EPAN Detailed report and EPAN Summary Report will \nbe available in Finacle Core System. These reports can be generated by the Post Offices. \n  \nb). EPAN Detailed Report can be generated SOL ID Wise for any given date.  This \nreport shows the details of the PAN numbers validated on a given date. The status of \nAadhar Seeding with the PAN is also included in this report. The report will be in the \nfollowing format. \n \n \n \nc). EPAN Summary Report can be generated SOL  ID / SET ID wise for a period. \nThis report will show the total number of PANs validated during the said period and the \nreport format will be as follows. \n \n \n \n************************************",
       "supersedes": [],
       "supersededBy": [],
-      "year": 2022
+      "year": 2022,
+      "visual_assets": [
+        {
+          "page": 9,
+          "src": "images/orders/2022/02-2022/p0009-image1.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 9"
+        },
+        {
+          "page": 9,
+          "src": "images/orders/2022/02-2022/p0009-image2.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 9"
+        },
+        {
+          "page": 10,
+          "src": "images/orders/2022/02-2022/p0010-image1.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 10"
+        },
+        {
+          "page": 11,
+          "src": "images/orders/2022/02-2022/p0011-image1.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 11"
+        },
+        {
+          "page": 11,
+          "src": "images/orders/2022/02-2022/p0011-image2.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 11"
+        },
+        {
+          "page": 12,
+          "src": "images/orders/2022/02-2022/p0012-image1.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 12"
+        },
+        {
+          "page": 13,
+          "src": "images/orders/2022/02-2022/p0013-image2.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 13"
+        },
+        {
+          "page": 14,
+          "src": "images/orders/2022/02-2022/p0014-image1.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 14"
+        },
+        {
+          "page": 14,
+          "src": "images/orders/2022/02-2022/p0014-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 14"
+        },
+        {
+          "page": 15,
+          "src": "images/orders/2022/02-2022/p0015-image1.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 15"
+        },
+        {
+          "page": 15,
+          "src": "images/orders/2022/02-2022/p0015-image2.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 15"
+        }
+      ]
     },
     {
       "order_number": "03/2022",
@@ -107,7 +175,171 @@
       "supersededBy": [],
       "notes": "Includes the 17.05.2022 SB Order and the 18.05.2022 clarification.",
       "clarification_date": "2022-05-18",
-      "year": 2022
+      "year": 2022,
+      "visual_assets": [
+        {
+          "page": 52,
+          "src": "images/orders/2022/08-2022/p0052-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 52"
+        },
+        {
+          "page": 52,
+          "src": "images/orders/2022/08-2022/p0052-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 52"
+        },
+        {
+          "page": 53,
+          "src": "images/orders/2022/08-2022/p0053-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 53"
+        },
+        {
+          "page": 54,
+          "src": "images/orders/2022/08-2022/p0054-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 54"
+        },
+        {
+          "page": 54,
+          "src": "images/orders/2022/08-2022/p0054-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 54"
+        },
+        {
+          "page": 55,
+          "src": "images/orders/2022/08-2022/p0055-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 55"
+        },
+        {
+          "page": 55,
+          "src": "images/orders/2022/08-2022/p0055-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 55"
+        },
+        {
+          "page": 56,
+          "src": "images/orders/2022/08-2022/p0056-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 56"
+        },
+        {
+          "page": 56,
+          "src": "images/orders/2022/08-2022/p0056-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 56"
+        },
+        {
+          "page": 57,
+          "src": "images/orders/2022/08-2022/p0057-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 57"
+        },
+        {
+          "page": 57,
+          "src": "images/orders/2022/08-2022/p0057-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 57"
+        },
+        {
+          "page": 58,
+          "src": "images/orders/2022/08-2022/p0058-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 58"
+        },
+        {
+          "page": 59,
+          "src": "images/orders/2022/08-2022/p0059-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 59"
+        },
+        {
+          "page": 59,
+          "src": "images/orders/2022/08-2022/p0059-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 59"
+        },
+        {
+          "page": 60,
+          "src": "images/orders/2022/08-2022/p0060-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 60"
+        },
+        {
+          "page": 60,
+          "src": "images/orders/2022/08-2022/p0060-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 60"
+        },
+        {
+          "page": 61,
+          "src": "images/orders/2022/08-2022/p0061-image1.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 61"
+        },
+        {
+          "page": 61,
+          "src": "images/orders/2022/08-2022/p0061-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 61"
+        },
+        {
+          "page": 62,
+          "src": "images/orders/2022/08-2022/p0062-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 62"
+        },
+        {
+          "page": 62,
+          "src": "images/orders/2022/08-2022/p0062-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 62"
+        },
+        {
+          "page": 63,
+          "src": "images/orders/2022/08-2022/p0063-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 63"
+        },
+        {
+          "page": 63,
+          "src": "images/orders/2022/08-2022/p0063-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 63"
+        },
+        {
+          "page": 64,
+          "src": "images/orders/2022/08-2022/p0064-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 64"
+        },
+        {
+          "page": 64,
+          "src": "images/orders/2022/08-2022/p0064-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 64"
+        },
+        {
+          "page": 65,
+          "src": "images/orders/2022/08-2022/p0065-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 65"
+        },
+        {
+          "page": 65,
+          "src": "images/orders/2022/08-2022/p0065-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 65"
+        },
+        {
+          "page": 67,
+          "src": "images/orders/2022/08-2022/p0067-image8.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 67"
+        }
+      ]
     },
     {
       "order_number": "09/2022",
@@ -172,7 +404,93 @@
       "text": "[PAGE 134]\nSOP-Sec 194N TDS deduction (SB Order No. 18/2022) P age 1 of 8 \nStandard Operating Pr Standard Operating Pr Standard Operating Pr Standard Operating Procedure for ocedure for ocedure for ocedure for deduction of TDS under Sec deduction of TDS under Sec deduction of TDS under Sec deduction of TDS under Sec 194 in Finacle 194 in Finacle 194 in Finacle 194 in Finacle    \n \nIntroduction Introduction Introduction Introduction    \n \nAs per Section 194(N) of IT Act-1961 inserted throu gh Finance Act (No. 2) \nof 2019 and further amended through Finance Bill 20 20, TDS in respect of cash TDS in respect of cash TDS in respect of cash TDS in respect of cash \nwithdrawal by withdrawal by withdrawal by withdrawal by    an an an an    account holder of National Savings Schemes taken t ogether account holder of National Savings Schemes taken to gether account holder of National Savings Schemes taken to gether account holder of National Savings Schemes taken to gether \nhas to be deducted as has to be deducted as has to be deducted as has to be deducted as    follows. follows. follows. follows.    \n \n(a).  In case account holder is Income Tax Return ( ITR) filers, 2% TDS is \napplicable on all cash withdrawal in excess of Rs 1 crore from 01.09.2019. \n \n(b).  In case account holder is non-Income Tax Retu rn (ITR) filers \n \n(i).  If aggregate cash withdrawals exceed Rs. 20 L akhs, but does not \nexceed Rs. 1 Crore during a financial year, 2% of T DS on the amount exceeding \nRs. 20 Lakhs is applicable from 01.07.2020. \n \n(ii).  If aggregate cash withdrawals exceed Rs. 1 C rore during a financial \nyear, 5% of TDS on the amount exceeding Rs. 1 Crore is applicable from \n01.07.2020. \n \n2. Provision for the deduction under Section 194N o f IT Act was not available \nin Finacle and the post offices were ordered to ded uct the TDS manually. Now, \nthe functionality for deduction of TDS under Sectio n 194N of IT Act 1961 has \nbeen deployed in Finacle and five patches were depl oyed on 30.05.2022, \n22.06.2022 and 04.08.2022.  \n \n3. While doing withdrawal transactions using CTM me nu, if cumulative \namount of cash withdrawal by an account holder in s avings account(s) during a \nFinancial Year is about to exceed ` 20 Lakh, Finacle system will throw a \nmessage to capture the TDS percentage applicable to  the account holder based \non his ITR filing status. The screen will be as follows. \n  \n \n4. In such cases, Post Offices should process withd rawal transaction only \nafter updating the TDS percentage of the account ho lder in Finacle. Post offices\n\n[PAGE 135]\nSOP-Sec 194N TDS deduction (SB Order No. 18/2022) P age 2 of 8 \nshould follow the following procedure to capture th e applicable percentage of \nTDS to be deducted under Section 194N and TDS deduction. \n \n(II) (II) (II) (II).. ..    Procedure to Procedure to Procedure to Procedure to    find out find out find out find out    the the the the percentage of percentage of percentage of percentage of TDS TDS TDS TDS applicable to the account applicable to the account applicable to the account applicable to the account \nholder holder holder holder    \n             The percentage of TDS to be deducted under Section 194N for an account \nholder is required to be obtained from the Income Tax portal.  \n2. The Counter PA at the post office should \n(i). Open the undermentioned IT Portal link using t he same web browser in a \nseparate page/window or any other available web browser. \nwww.incometax.gov.in/iec/foportal  \n(ii). Click on “TDS On Cash Withdrawal” option whic h will be available under \nQuick Links option as shown below. \n             \n \n(iii). Scroll down the Quick Links Quick Links Quick Links Quick Links Pane and click the option ‘TDS on Cash ‘TDS on Cash ‘TDS on Cash ‘TDS on Cash \nWithdrawal’ Withdrawal’ Withdrawal’ Withdrawal’. On clicking the option, next page will be loaded as below.\n\n[PAGE 136]\nSOP-Sec 194N TDS deduction (SB Order No. 18/2022) P age 3 of 8 \n(iv). Enter the PAN number of the account holder an d Mobile number of the \nperson who is checking the TDS percentage. Mobile n umber may be either of the \nCounter PA or the Supervisor or the Account Holder.  \n \n \n        \n(v). Click continue after entering the details. An OTP will be sent to the \nmobile number which has been entered.  \n \n  \n \n(vi). Enter the OTP, click continue. The percentage  of TDS to be deduction will The percentage of TDS to be deduction will The percentage of TDS to be deduction will The percentage of TDS to be deduction will \nappear on the screen appear on the screen appear on the screen appear on the screen for    the entered PAN and the screen will appear as follows.\n\n[PAGE 137]\nSOP-Sec 194N TDS deduction (SB Order No. 18/2022) P age 4 of 8 \n    \n    \nThe Counter PA has to note down the same on the top  of the Withdrawal \nform in red ink as ‘TDS Deducted on Cash WD txns @ 2% above 1C OR TDS \nDeducted on Cash WD txns @ 2% above 20L and @ 5% above 1C” \n    \n(III) (III) (III) (III).. ..    Procedure to update TDS Percentage in Finacle Procedure to update TDS Percentage in Finacle Procedure to update TDS Percentage in Finacle Procedure to update TDS Percentage in Finacle    \n \n A new menu CITFM CITFM CITFM CITFM is to be used to capture TDS percentage appli cable to \nthe account holders. This menu is available for CPA  work-class and Supervisor \nWork-class.  \n    \n2. After finding the percentage of TDS applicable t o the account holder, the \nCounter PA has to update the same for the respectiv e CIF ID using the menu \nCITFM. Before updation using CIT Before updation using CIT Before updation using CIT Before updation using CITFM menu, the Counter PA should ensure that FM menu, the Counter PA should ensure that FM menu, the Counter PA should ensure that FM menu, the Counter PA should ensure that \nthe PAN of the account holder is verified from NSDL  Portal as it is mandatory the PAN of the account holder is verified from NSDL  Portal as it is mandatory the PAN of the account holder is verified from NSDL  Portal as it is mandatory the PAN of the account holder is verified from NSDL  Portal as it is mandatory \nfor updating in CITFM MENU. Non validated PAN will not be linked in CITFM for updating in CITFM MENU. Non validated PAN will not be linked in CITFM for updating in CITFM MENU. Non validated PAN will not be linked in CITFM for updating in CITFM MENU. Non validated PAN will not be linked in CITFM \nmenu. menu. menu. menu.     \n \n3. Counter PA should invoke CITFM menu and Select -  Add function. Then, \nhe/she should enter the CIF ID of the account holder and click on GO button.  \n \n4. PAN Number of the account holder will appear. Co unter PA should check \nwhether the PAN Number linked to CIF is same as dis played in the PAN \nNUMBER field. \n5. Then, the Counter PA has to select the percentag e of TDS applicable to \nthe account holder, which was noted down from IT Po rtal. There will be two \nradio buttons with options \n                a) TDS Deducted on Cash WD txns @ 2% above 1C \n                b) TDS Deducted on Cash WD txns @ 2% above 20L and @ 5% above 1C \nThe screen shall be as follows.\n\n[PAGE 138]\nSOP-Sec 194N TDS deduction (SB Order No. 18/2022) P age 5 of 8 \n6. Counter PA after the selecting the TDS Percentag e which was listed in the \nIT Portal website should click on submit. It is the  responsibility of the Counter \nPA to check and select the correct option of TDS pe rcentage in the CITFM menu. \nWrong capturing of TDS percentage will result in wr ong calculation Wrong capturing of TDS percentage will result in wr ong calculation Wrong capturing of TDS percentage will result in wr ong calculation Wrong capturing of TDS percentage will result in wr ong calculation / deduction / deduction / deduction / deduction \nof TDS which will in turn affect TDS filing of TDS which will in turn affect TDS filing of TDS which will in turn affect TDS filing of TDS which will in turn affect TDS filing, , , , corrections in the Traces corrections in the Traces corrections in the Traces corrections in the Traces    portal and portal and portal and portal and \ncustomers’ customers’ customers’ customers’ grievances grievances grievances grievances.. ..    Hence, the Counter PA should be very careful while  Hence, the Counter PA should be very careful while Hence, the Counter PA should be very careful while Hence, the Counter PA should be very careful while \nupdating the TDS percentage. updating the TDS percentage. updating the TDS percentage. updating the TDS percentage.  \n \n7. Counter PA after clicking SUBMIT should confirm the same by clicking \nOK button. If the TDS percentage is wrongly selecte d, Counter PA should click \non CANCEL button and modify the option of TDS perce ntage selected.  The \nscreen will appear as follows. \n    \n8. Then the Postmaster / Supervisor should verify t he TDS percentage by \ninvoking CITFM menu. Before verification in CITFM m enu, the Supervisor \nshould find out the TDS percentage applicable to th e account holder from IT \nPortal, by following the procedure stated in para I I. The Postmaster / Supervisor \ncan use Cancel function to cancel the CITFM entry i f the option selected is \nincorrect.  \n \n(I (I (I (IV). V). V). V).    Intimation to the Depositors Intimation to the Depositors Intimation to the Depositors Intimation to the Depositors    \n \n A short message (SMS) will be sent to the register ed mobile number of the \nDepositors concerned as and when the TDS is deducte d under Section 194N of IT \nAct 1961. \n \n(( ((V). V). V). V).    Other Important points Other Important points Other Important points Other Important points    \n \n1. System will not allow Cash withdrawals beyond ` 20 lakhs if CITFM \nentries are not available.   Error message will be thrown if CITFM entry is not \nmade for that particular CIF.\n\n[PAGE 139]\nSOP-Sec 194N TDS deduction (SB Order No. 18/2022) P age 6 of 8 \n2. Ent Ent Ent Entries made in CITFM are only for ries made in CITFM are only for ries made in CITFM are only for ries made in CITFM are only for the current the current the current the current    Financial Year Financial Year Financial Year Financial Year. TDS \npercentage needs to be captured afresh captured afresh captured afresh captured afresh every every every every financial year financial year financial year financial year whenever a warning \nmessage is displayed in the system for that particular customer.  \n \n3. In RICT and ATM, a Static message “Please update  the ITR filing status \nat home branch post office if aggregate cash withdr awal exceeds 20 lakh in a \nfinancial year. If not updated, TDS will be deducte d at higher rate” will be \ndisplayed.  The screen shall be as follows. \n \n \n \n4. 4. 4. 4.    TDS TDS TDS TDS -- --    LIEN LIEN LIEN LIEN MARKING MARKING MARKING MARKING    \n \n(i). During transaction which involves 194N TDS ded uction, lien equivalent to \nTDS amount will be marked in the respective account . This lien will be user \ndefined lien and it can be viewed through HALM menu .  This lien cannot be \nmodified by the user. TDS will be deducted via batc h job and once deducted, Lien \nwill be lifted by the system. TDS deduction transac tions can be viewed in the \nTDS Detailed report after successful execution of b atch job. TDS due to be \nrecovered under section 194N for cash withdrawals h appened via all channels \nwill be marked as lien \n \n(ii). TDS lien marking can also be viewed using men u HALM – user defined \nlien.  \n \n(iii). TDS lien marked will not form part of effect ive balance and lien marked \nunder 194N cannot be modified. Lien amount will be deducted as TDS when \nautomated batch job is executed and the same will be reflected in the last column \nof the Section 194N TDS Deduction Detail report. \n \n5. 194N 194N 194N 194N TDS TDS TDS TDS deduction deduction deduction deduction on RICT / AMT Withdrawals: on RICT / AMT Withdrawals: on RICT / AMT Withdrawals: on RICT / AMT Withdrawals:     \n \nIn case of cash withdrawals through RICT and ATM, only a static message \non 194N TDS deduction will be displayed in ATM / RI CT applications. If TDS \npercentage is not updated in CITFM menu, higher TDS  percentage at 5% will be \ndeducted for all cash withdrawals exceeding ` 20 lakh. Hence, the post office \nofficials should apprise such account holders to ge t the TDS percentage updated \nevery financial year.\n\n[PAGE 140]\nSOP-Sec 194N TDS deduction (SB Order No. 18/2022) P age 7 of 8 \n 66 66.. ..    Post Offices shall not Post Offices shall not Post Offices shall not Post Offices shall not perform perform perform perform any credit or debit any credit or debit any credit or debit any credit or debit transaction transaction transaction transaction using CTM using CTM using CTM using CTM \nmenu for any incorrect deposit / withdrawal menu for any incorrect deposit / withdrawal menu for any incorrect deposit / withdrawal menu for any incorrect deposit / withdrawal transac tions transactions transactions transactions    adjustment adjustment adjustment adjustment. In case of . In case of . In case of . In case of \nany wrong deposit / withdrawal, the transaction mus t be reversed using HCRT any wrong deposit / withdrawal, the transaction mus t be reversed using HCRT any wrong deposit / withdrawal, the transaction mus t be reversed using HCRT any wrong deposit / withdrawal, the transaction mus t be reversed using HCRT \nmenu. menu. menu. menu. Adjustment of wrong credit / debit using CTM menu will lead to wrong \ndeduction of TDS under Section 194N, wrong reportin g of cash transactions to IT \nDepartment in SFT-005 and thereby customer grievances. \n    \nNote Note Note Note:   Validations have been built in CTM menu to limit withdrawals, \nupto the maximum amount including 194N TDS recovery  and the minimum \nbalance. As such, in a SB account, falling under th e 194N TDS purview, cash \nwithdrawals will be limited to the maximum eligible  amount (i.e. effective \nbalance minus the TDS recovery plus the liens if an y and minimum balance) and \nthe same will be calculated by the system and throw n as an information, in case \nthe withdrawal amount is more than that of the maximum eligible amount.  \n    \n    \n(V (V (V (VII II). ). ). ).    Reports Reports Reports Reports    \n \n1. Two reports related to TDS deduction under Secti on 194N are available in \nHFINRPT menu. \n \n(a). (a). (a). (a).    Section 194N TDS Deduction Detail report Section 194N TDS Deduction Detail report Section 194N TDS Deduction Detail report Section 194N TDS Deduction Detail report    \n \nThis report will detail the list of Transactions fo r which TDS is deducted \nalong with Transaction details. Transaction date will be the actual date on which \nthe withdrawal transaction occurred. TDS Trans date  is the date when the batch \njob has been executed. This report can be generated for a day.\n\n[PAGE 141]\nG). Section 194N TDS Deduction Summary\nThis report will generate total TDS deducted SOL'wise. This report can be\ngenerated for SOL ID / HO SET ID and for a range of dates.\nq\nFrffiDat:\nTooeb :\nSol lD, S.r lO\nINDIA POST\nSECTION \n'94N \nTDS DEDUCTION SUMMARY\nRunDat : 18lO1EO?27:tr5PMol-a1.20i22\n18.01 -2022\n60001700 THYGARAYANAGAR(H.O)\nS.No sol lD Charn.l lD Total TDS Amount\n60001700. THYGARAYANAGAR (H OI BRN 191,61S.595.00 4.487,241.@\n60&)1700 - THYGARAYANAGAR (H.O) swl 215,320.O0 8,675.00\nr9 t,834.915.00 4.49t,91o-(xl\n-!-\nSOP-Sec 194N TDS deduction (SB Order No. 18/2022) Page 8 of 8\nTotll Tnn Amoum\n\n[PAGE 142]\nSB Order No. 1 9t2022\nF. No. FS-13/712020-FS\nGovernment of lndia\nMinistry of Communications\nDepartment of Posts\n(Financial Services Division)\nDak Bhawan, New Delhi-110001\nDaled: 12.10.2022\nTo,\nAll Head of Circles/Regions\nSubiect lntroduction of e-Passbook facility for National (Small)\nSavings Schemes account holders'\nSiriMadam,\nThe competent authority has decided to introduce e-Passbook facility w.e.f.\n12.10.2022 in order to provide simplified and enhanced digital facilities to National\n(Small) Savings Schemes account holders.\n2. With introduction of the facility, Post Office Small Savings customers will be able\nto access the account details anytime, anywhere and without the need of having Net\nBanking or the Mobile Banking access. e-Passbook facility can be accessed by an\naccount holder through the registered mobile number. The service will be available\nfree of cost.\n3. Facilities available under e-Passbook will be as follows: -\n(i) Balance lnquiry: - ln this option, user can view balance of all National savings\nScheme accounts.\n(ii)Mini statement: - Mini statement will be available for Po Savings Account\n(POSA), Sukanya Samriddhi Account (SSA) and Public\nProvident Fund Account (PPF) to start with and will be\nextended to other schemes in a phased manner' Last 10\ntransactions will be displayed and mini statement can be\ndownloaded in Pdf format.\nFull statement will be made available in a phased manner.\nCustomer will be able to generate account statement for\nspecified date range.\n(iii) Full Statement: -\nPage 1of 3\n\n[PAGE 143]\n4. The link for e-Passbook is made available on lndia Post website (at link\nhttps://www.indiapost.gov.in/Financial/Pages/ContenUPost-Office-Saving-\nschemes.aspx) and IPPB website www.ippbonline.com. The facility will also be\nmade available in Postlnfo App subsequently. Account holders may follow the\nprocess outlined below to use this facility: -\nclick on e-Passbook link provided on www.indiapost.gov.in or www.ippbonline.com.\n. Enter mobile number and CAPTCHA ) Login ) Enter OTP ) Submit\n. Select e-Passbook\n. Select Scheme Type, Enter account number, registered mobile\nnumber and CAPTCHA ) Continue ) Enter OTP ) Verify\n. Select option\n(a) Balance Enquiry\n(b) Mini Statement\n(c) Full Statement\n. Balance or Mini Statement or Full statement will be displayed based on the\nservice chosen by customer. Mini Statement and Full statement can also be\ndownloaded if required.\n&:E: - lf the entered mobile number is not linked with the account, system will throw\nappropriate error message. ln such cases account holders are requested\nto link mobile number to their accounts by visiting the post office where the\naccount stands.\n5. lt is requested to circulate this to all concerned for information, guidance\nand necessary action. Adequate promotion ol this functionality is to be done and the\nsame may also be placed on notice board of the post office(s)'\n6. Hindi version will be issued in due course\n7. This is issued with the approval of the Competent Authority'\nYours F thfully\nt2e\n(Devend ra harma)\nAssistant Director (SB-ll)\nt)-\nPage 2 of 3\n\n[PAGE 144]\nGopy to: -\n1. Sr. PPS to Secretary (Posts)\nz. PS to Director General Postal Services.\n3. PPS/ PS to Addl. DG (Co-ordination)/Member (Banking)/ Member (O)/\nMember (P)/ Member (Planning & HRDy Member (PLl)/ Member (Tech)/AS &\nFA\n4. Addl. Director General, APS, New Delhi\ns. Chief General Manager, BD Directorate / Parcel Directorate / PLI Directorate\n6. Sr. Deputy Director General (Vigilance) & CVO) / Sr. Deputy Director General\n(PAF)\n7. Director, RAKNPA / GM, CEPT / Directors of all PTCs\n8. Director General P & T (Audit), Civil Lines, New Delhi\ns. Secretary, Postal Services Board/ All Deputy Directors General\nr0. All General Managers (Finance) / Directors Postal Accounts / DDAP\nrr. Chief Engineer (Civil), Postal Directorate\n12. All Sections of Postal Directorate\n13. All recognized Federations / Unions/ Associations\nr+. GM, CEPT for uploading the order on the lndia Post website.\nrs. MOF(DEA), NS-ll, North Block, New Delhi'\n16. Joint Director & HOD, ICCW Building, 4 Deendayal Upadhyay Marg, New\nDelhi-1 10002\n17. Guard File\nPage 3 of 3\n\n[PAGE 145]\nFile No. FS- 101 L7 12020-FS'Part(1)\nGovernment of India\nMinistry of Communications\nDepartment of Posts\nG.S. oivision)\nDak Bhawan, New Delhi - 110001\nDated: 20.L0.2022\nTo\nAII Chief Postmasters General\nSubject: Clarification on operation of SB Pension Accounts and Joint Accounts\nopened by three adults jointly opened before 18.L2.20L9 - Reg.\n***\nThis has the reference to Rajasthan Circle's Letter No. ICO/I'llRuling Cow.12022\ndated L9.09.2022.\n2. In connection with the operation of SB Pension Accounts and Joint Accounts\nopened by three adults jointly opened before L8.12.2019, the following clarifications are\nissued.\n(il. Since there is no restriction on operation of the existing SB pension accounts and\nJoint accounts opened by three adults jointly in POSA Scheme 20L9, all such accounts\nopened before 18.12.2019 may be continued as normal savings accounts for operation\nand they may not be treated as accounts in operation in contravention to Rules.\n(iil. If any depositor is already having one SB Pension Single Account and one normal\nSB Single Account opened before 18.12.2019, both the accounts can be continued in\noperation and they shall be treated as normal savings accounts for operation.\n(iiil. Existing SB Pension Accounts opened jointly with spouse before 18.12.2019 shall\nbe continued and they shall be treated as normal savings account for operation. Such\naccounts can continue to operate even though the same set of depositors of SB Pension\nAccount operates another normal joint savings account opened before 18.12.2019.\n(iv). Existing Post Office Saving Accounts opened by three adults jointly before\n18.12.2019 shall be continued till the death of two of the joint account holders. On the\ndeath of two of the joint account holders in such accounts opened by three adults jointly,\nthe surviving account holder shall be treated as the sole owner of the account and he\nmay continue the account in accordance with the provisions of POSA Scheme 2019\nprovided another single account is not held in his name. In case a single account exists\nin the name of the surviving holder, the account shall have to be closed, in accordance\nwith the provision in Rule 3(2) of POSA Scheme 2019.\n4. This is issued with the approval of competent authority.\n(SB.I)",
       "supersedes": [],
       "supersededBy": [],
-      "year": 2022
+      "year": 2022,
+      "visual_assets": [
+        {
+          "page": 134,
+          "src": "images/orders/2022/18-2022/p0134-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 134"
+        },
+        {
+          "page": 135,
+          "src": "images/orders/2022/18-2022/p0135-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 135"
+        },
+        {
+          "page": 135,
+          "src": "images/orders/2022/18-2022/p0135-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 135"
+        },
+        {
+          "page": 136,
+          "src": "images/orders/2022/18-2022/p0136-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 136"
+        },
+        {
+          "page": 136,
+          "src": "images/orders/2022/18-2022/p0136-image2.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 136"
+        },
+        {
+          "page": 136,
+          "src": "images/orders/2022/18-2022/p0136-image3.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 136"
+        },
+        {
+          "page": 136,
+          "src": "images/orders/2022/18-2022/p0136-image4.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 136"
+        },
+        {
+          "page": 137,
+          "src": "images/orders/2022/18-2022/p0137-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 137"
+        },
+        {
+          "page": 137,
+          "src": "images/orders/2022/18-2022/p0137-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 137"
+        },
+        {
+          "page": 138,
+          "src": "images/orders/2022/18-2022/p0138-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 138"
+        },
+        {
+          "page": 138,
+          "src": "images/orders/2022/18-2022/p0138-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 138"
+        },
+        {
+          "page": 139,
+          "src": "images/orders/2022/18-2022/p0139-image1.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 139"
+        },
+        {
+          "page": 139,
+          "src": "images/orders/2022/18-2022/p0139-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 139"
+        },
+        {
+          "page": 140,
+          "src": "images/orders/2022/18-2022/p0140-image1.png",
+          "type": "image",
+          "caption": "Visual content from PDF page 140"
+        }
+      ]
     },
     {
       "order_number": "20/2022",
@@ -198,7 +516,21 @@
       "text": "[PAGE 148]\nSB Order No. 21 I 2022\nFile No. tt4'0212002-SB (Pt'D\nGovernment of India\nMinistry of Communications\nDepartment of Posts\n(r.S. otvision)\nDak Bhawan, New Delhi - 110001\nDated: 16.LL.2022\nSubject Amendment in SB-5 and SB'5A passbooks used in Post Offices -\nRegarding.\n*:kr(\nThis has the reference to SB Order No. 28/2020 and addendum, issued\nvide this office letter No. 114'0212002-3B (pt.t) dated 10.08.2020 and 24.09.2020\nrespectively.\n2. POSB has been allotted unique IFSC code in connection with\nimplementation of NEFT / RTGS service for POSB Account Holders for funds\ntransfer through NEFT / RTGS payment channels. In order to publicize the\navailability of NEFT/RTGS service in POSB and for quick reference to the\naccount holders, it has been decided by competent authority for printing of IFSC\ncode in the first page of the passbook as well as on the title page of the\npassbooks\n3. In connection with the celebration of 'Azadi Ka Amrit Mahotsav' (AKAM),\nprinting of AKAM Logo on the title page of the POSB passbooks, as instructed in\nthe Lr. No. FS'L41512021-FS'DOP dated 22.11.2021 shall be continued.\n4. Accordingly, revised titte page(s) for SB'5 and SB'5A with AIGM Logo\nand without AI(AM Logo are enclosed for information and further necessary\naction. These revised cover pages will be used for new procurement / printing.\nOther specifications (i.e. size, paper, thread etc.) will remain same as already\nprescribed.\n5. Existing stock of passbooks should continue to be used till it is exhausted.\n6. This may be circulated to all the Offices for information and necessary\nactions.\n7 . This is issued with the approval of competent authority.\nEncl: As above.\nAYAN)\nAs (SB.I)\n\n[PAGE 149]\nCopy to:-\n1. Sr. PPS to Secretary (Posts)\n2. PS to Director General Postal Services.\n3. PPS/ PS to AddI. DG (Co'ordination)/Member (Banking)/Member (OXVIember\n(P)l Member (Planning & HRD)/Member (pl,t)lttttember (Tech)/AS & FA\n4. Addl. Director General, APS, New Delhi\n5. Chief General Manager, BD Directorate / Parcel Directorate / PLI Directorate\n6. Sr. Deputy Director General (Vig) & CVO) / Sr. Deputy Director General\n(PAF)\n7. Director, RAKNPA / GM, CEPT / Directors of all PTCs.\n8. Director General P & T (Audit), Civil Lines, New Delhi\n9. Secretary, Postal Services Board/ All Deputy Directors General\n10.All General Managers (Finance) / Directors Postal Accounts / DDAP\n1 1. Chief Engineer (Civil), Postal Directorate\n12.All recognized Federations / Unions / Associations\n13.The Under Secretary, MOF (DEA), NS'II Section, North Block, New Delhi.\n14.The Joint Director & HOD, National Savings Institute, ICCW Building, 4\nDeendayal Upadhyay Marg, New Delhi'110002\n15. GM, CEPT, Bengaluru ' for uploading the order on the India Post website.\n16. Guard File\n(rc\nAsst. (SB.I)\n\n[PAGE 150]\nSB-5\nDepartment of Posts, India \nPassbook \nNational (Small) Savings Schemes \nFor more information visit : www.indiapost.gov.in \nFor Net Banking : ebanking.indiapost.gov.in \nIFSC Code IPOS0000DOP \nPost Office \nCIF ID \nAccount No. \nScheme\n\n[PAGE 151]\nSB-5A \nDepartment of Posts, India \nPassbook \nNational (Small) Savings Schemes \nFor more information visit : www.indiapost.gov.in \nFor Net Banking : ebanking.indiapost.gov.in \nIFSC Code IPOS0000DOP \nPost Office \nCIF ID \nAccount No. \nScheme\n\n[PAGE 152]\nSB-5\nDepartment of Posts, India \nPassbook \nNational (Small) Savings Schemes \nFor more information visit : www.indiapost.gov.in \nFor Net Banking : ebanking.indiapost.gov.in \nIFSC Code IPOS0000DOP \nPost Office \nCIF ID \nAccount No. \nScheme\n\n[PAGE 153]\nSB-5A \nDepartment of Posts, India \nPassbook \nNational (Small) Savings Schemes \nFor more information visit : www.indiapost.gov.in \nFor Net Banking : ebanking.indiapost.gov.in \nIFSC Code IPOS0000DOP \nPost Office \nCIF ID \nAccount No. \nScheme",
       "supersedes": [],
       "supersededBy": [],
-      "year": 2022
+      "year": 2022,
+      "visual_assets": [
+        {
+          "page": 152,
+          "src": "images/orders/2022/21-2022/p0152-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 152"
+        },
+        {
+          "page": 153,
+          "src": "images/orders/2022/21-2022/p0153-image2.jpeg",
+          "type": "image",
+          "caption": "Visual content from PDF page 153"
+        }
+      ]
     },
     {
       "order_number": "22/2022",
