@@ -2506,7 +2506,10 @@
     let orderTextSize = 17;
     function applyOrderTextSize() {
       const el = document.getElementById('modal-order-substance');
-      if (el) el.style.fontSize = orderTextSize + 'px';
+      if (el) {
+        el.style.setProperty('--order-text-size', orderTextSize + 'px');
+        el.querySelectorAll('.order-text-clean, .order-structured-content').forEach(n => n.style.setProperty('font-size', orderTextSize + 'px', 'important'));
+      }
       document.querySelectorAll('.order-text-size-btn').forEach(b => b.classList.remove('order-text-size-current'));
       const current = document.querySelector('.order-text-size-btn[title="Reset text size"]');
       if (current && orderTextSize === 17) current.classList.add('order-text-size-current');
@@ -2874,12 +2877,26 @@
     const ref=document.getElementById('modal-order-ref')?.innerText||'SB Order';
     const date=document.getElementById('modal-order-date')?.innerText||'';
     const subj=document.getElementById('modal-order-subj')?.innerText||'';
-    const content=mode==='original' ? (box.querySelector('.order-original-view')?.innerHTML||'') : (box.querySelector('.order-structured-content')?.outerHTML||box.querySelector('.order-text-clean')?.outerHTML||'');
     const w=window.open('','_blank','width=900,height=800');
     if(!w){alert('Please allow pop-ups to print this order.');return;}
     const safeTitle=String(ref).replace(/[<>]/g,'');
-    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>body{font-family:Arial,sans-serif;color:#111;margin:28px}h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.text{font-family:Georgia,serif;font-size:12pt;line-height:1.6;white-space:pre-wrap;text-align:left}.note{padding:10px;background:#fff8dc;border:1px solid #e5c45b;margin-bottom:16px}.img{display:block;max-width:100%;height:auto;margin:0 auto 18px;page-break-inside:avoid}</style></head><body><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2>'+content+'</body></html>');
-    w.document.close(); w.focus(); setTimeout(()=>w.print(),700);
+
+    let bodyHtml='';
+    let printCss='';
+    if(mode==='original'){
+      // Print ONLY the source images. No modal container, source note, order header, or subject.
+      const imgs=[...box.querySelectorAll('.order-original-view img')];
+      bodyHtml=imgs.map((img,i)=>'<img class="source-page" src="'+img.getAttribute('src')+'" alt="Original source page '+(i+1)+'">').join('');
+      printCss='@page{margin:0}html,body{margin:0!important;padding:0!important;background:#fff!important}body{width:100vw}.source-page{display:block;width:100vw;max-width:none;height:auto;margin:0;padding:0;border:0;page-break-after:always;break-after:page;box-sizing:border-box}.source-page:last-child{page-break-after:auto;break-after:auto}';
+    } else {
+      const content=box.querySelector('.order-structured-content')?.outerHTML||box.querySelector('.order-text-clean')?.outerHTML||'';
+      bodyHtml='<header class="print-head"><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2></header><main class="print-text">'+content+'</main>';
+      printCss='@page{margin:18mm 16mm}html,body{margin:0;padding:0;background:#fff;color:#111}body{font-family:Arial,sans-serif}.print-head h1{font-size:20px;margin:0 0 4px}.print-head h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.print-text{font-family:Georgia,\'Times New Roman\',serif;font-size:'+orderTextSize+'px!important;line-height:1.65;text-align:left;white-space:normal}.print-text *{font-family:inherit;line-height:inherit}.print-text p{margin:0 0 .9em}.print-text div{margin:0 0 .5em}.print-text pre{white-space:pre-wrap;font:inherit;margin:0}.print-text table{border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:.9em}.print-text td,.print-text th{border:1px solid #999;padding:5px;vertical-align:top}.print-text img{max-width:100%;height:auto}';
+    }
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>'+printCss+'</style></head><body>'+bodyHtml+'</body></html>');
+    w.document.close(); w.focus();
+    const imgs=[...w.document.images];
+    Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(r=>{img.onload=img.onerror=r;}))).then(()=>setTimeout(()=>w.print(),250));
   };
   const oldView=window.viewOrderDetail;
   window.viewOrderDetail=function(id){
@@ -2891,13 +2908,79 @@
     let h=order.structured_html ? '<div class="order-structured-content">'+order.structured_html+'</div>' : '<div class="order-text-clean">'+escapeOrderHtml(text)+'</div>'; h+='<div class="order-original-view">';
     if(imgs.length){h+='<div class="order-source-note">Original source pages for this order.</div>'; imgs.forEach((src,i)=>h+='<img class="order-original-page" loading="lazy" src="'+escapeOrderHtml(src)+'" alt="Original source page '+(i+1)+'">');}
     else h+='<div class="order-source-note">Original source images are not available for this order.</div>';
-    h+='</div>'; box.innerHTML=h; setOrderViewMode('text');
+    h+='</div>'; box.innerHTML=h; setOrderViewMode('text'); if (typeof applyOrderTextSize === 'function') applyOrderTextSize();
   };
   document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{
     const sel=document.getElementById('filter-order-year'); const ly=latestYear();
     if(sel&&ly){sel.value=String(ly); renderOrdersTable();}
     ensureTabs();
   },500));
+})();
+</script>
+
+
+<script>
+/* PostalIQ final order-reading/printing fix */
+(function(){
+  function esc(v){
+    return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+  }
+  function plainTextToHtml(raw){
+    const normalized=String(raw||'').replace(/\r\n?/g,'\n').trim();
+    if(!normalized) return '<p>—</p>';
+    return normalized.split(/\n\s*\n/).map(block=>{
+      const lines=block.split('\n').map(x=>x.trim()).filter(Boolean);
+      return lines.length ? '<p>'+lines.map(esc).join('<br>')+'</p>' : '';
+    }).filter(Boolean).join('');
+  }
+  const oldView=window.viewOrderDetail;
+  window.viewOrderDetail=function(id){
+    oldView(id);
+    if(typeof ensureTabs==='function') ensureTabs();
+    const order=DATA_ORDERS.find(o=>String(o.id)===String(id)||String(o.orderNo)===String(id));
+    const box=document.getElementById('modal-order-substance');
+    if(!order||!box) return;
+    const text=String(order.fullText||order.substance||'').replace(/\r\n?/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+    const imgs=Array.isArray(order.sourceImages)?order.sourceImages:[];
+    let h=order.structured_html
+      ? '<div class="order-structured-content">'+order.structured_html+'</div>'
+      : '<div class="order-text-clean">'+plainTextToHtml(text)+'</div>';
+    h+='<div class="order-original-view">';
+    if(imgs.length){
+      h+='<div class="order-source-note">Original source pages for this order.</div>';
+      imgs.forEach((src,i)=>h+='<img class="order-original-page" loading="lazy" src="'+esc(src)+'" alt="Original source page '+(i+1)+'">');
+    }else h+='<div class="order-source-note">Original source images are not available for this order.</div>';
+    h+='</div>';
+    box.innerHTML=h;
+    setOrderViewMode('text');
+    if(typeof applyOrderTextSize==='function') applyOrderTextSize();
+  };
+
+  window.printCurrentOrder=function(){
+    const box=document.getElementById('modal-order-substance');
+    if(!box) return;
+    const mode=box.dataset.printMode||'text';
+    const ref=document.getElementById('modal-order-ref')?.innerText||'SB Order';
+    const date=document.getElementById('modal-order-date')?.innerText||'';
+    const subj=document.getElementById('modal-order-subj')?.innerText||'';
+    const w=window.open('','_blank','width=900,height=800');
+    if(!w){alert('Please allow pop-ups to print this order.');return;}
+    let body='',css='';
+    if(mode==='original'){
+      const imgs=[...box.querySelectorAll('.order-original-view img.order-original-page')];
+      body=imgs.map((img,i)=>'<img class="source-page" src="'+img.getAttribute('src')+'" alt="">').join('');
+      css='@page{margin:0}html,body{margin:0!important;padding:0!important;background:#fff!important;width:100%}body{width:100vw}.source-page{display:block;width:100vw;max-width:100vw;height:auto;margin:0!important;padding:0!important;border:0;box-shadow:none;page-break-after:always;break-after:page}.source-page:last-child{page-break-after:auto;break-after:auto}';
+    }else{
+      const content=box.querySelector('.order-structured-content')?.outerHTML||box.querySelector('.order-text-clean')?.outerHTML||'';
+      body='<div class="print-head"><div class="print-order">'+esc(ref)+'</div><div><b>Date:</b> '+esc(date)+'</div><div><b>Subject:</b> '+esc(subj)+'</div><hr></div><main class="print-text">'+content+'</main>';
+      css='@page{margin:16mm}html,body{margin:0;padding:0;background:#fff;color:#111}body{font-family:Arial,sans-serif}.print-order{font-size:20px;font-weight:800;margin-bottom:6px}.print-head{margin-bottom:12px}.print-text{font-family:Arial,sans-serif;font-size:'+Number(orderTextSize||17)+'px;line-height:1.55;text-align:left;white-space:normal}.print-text p{margin:0 0 1em}.print-text div{margin:0 0 .5em}.print-text table{border-collapse:collapse;width:100%;margin:18px 0}.print-text td,.print-text th{border:1px solid #888;padding:7px;text-align:left;vertical-align:top}.print-text img{max-width:100%;height:auto}';
+    }
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+esc(ref)+'</title><base href="'+document.baseURI+'"><style>'+css+'</style></head><body>'+body+'</body></html>');
+    w.document.close(); w.focus();
+    const imgs=[...w.document.images];
+    Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(r=>{img.onload=img.onerror=r;}))).then(()=>setTimeout(()=>w.print(),300));
+  };
 })();
 </script>
 
