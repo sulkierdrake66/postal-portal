@@ -1431,7 +1431,8 @@
         fullText: text,
         sourceDocument: raw.source_document || raw.sourceDocument || sourceFile,
         documentPages: raw.document_pages || raw.documentPages || [],
-        sourcePages: pageStart ? `${pageStart}${pageEnd && pageEnd !== pageStart ? '-' + pageEnd : ''}` : ''
+        sourcePages: pageStart ? `${pageStart}${pageEnd && pageEnd !== pageStart ? '-' + pageEnd : ''}` : '',
+        sourceImages: Array.isArray(raw.source_images || raw.sourceImages) ? (raw.source_images || raw.sourceImages) : []
       };
     }
 
@@ -2836,5 +2837,69 @@
       lucide.createIcons();
     });
   </script>
+<style>
+.order-detail-shell{width:min(1100px,92vw);height:min(86vh,900px)}
+.order-mode-tabs{display:flex;align-items:center;gap:.5rem;padding:.65rem 1.25rem;border-bottom:1px solid #e2e8f0;flex-shrink:0;background:#fff}
+.order-mode-tab,.order-print-btn{border:1px solid #cbd5e1;background:#fff;border-radius:.55rem;padding:.45rem .8rem;font-size:.75rem;font-weight:800;cursor:pointer;color:#334155}
+.order-mode-tab.active{background:#8f1111;color:#fff;border-color:#8f1111}
+.order-original-view{display:none}
+.order-original-page{display:block;width:100%;height:auto;margin:0 auto 1rem;border:1px solid #dbe1e8;border-radius:.5rem}
+.order-text-clean{max-width:850px;margin:0 auto;text-align:left;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;white-space:pre-wrap}
+.order-source-note{padding:.75rem 1rem;border:1px solid #f2cf66;background:#fffbeb;border-radius:.65rem;font-size:.8rem;line-height:1.5;margin-bottom:1rem}
+@media print{body *{visibility:hidden!important}#postal-print-frame,#postal-print-frame *{visibility:visible!important}#postal-print-frame{position:absolute!important;left:0!important;top:0!important;width:100%!important;background:#fff!important;padding:25px!important}#postal-print-frame img{max-width:100%!important;page-break-inside:avoid!important}}
+</style>
+<script>
+(function(){
+  function latestYear(){
+    const years=[...new Set(DATA_ORDERS.map(o=>Number(o.year)).filter(y=>y>=2000))].sort((a,b)=>b-a); return years[0]||null;
+  }
+  function ensureTabs(){
+    const modal=document.getElementById('order-detail-modal'); const scroll=document.getElementById('order-detail-scroll');
+    if(!modal||!scroll||document.getElementById('order-mode-tabs')) return;
+    const bar=document.createElement('div'); bar.id='order-mode-tabs'; bar.className='order-mode-tabs';
+    bar.innerHTML='<button type="button" id="order-text-tab" class="order-mode-tab active" onclick="setOrderViewMode(\'text\')">Text</button><button type="button" id="order-original-tab" class="order-mode-tab" onclick="setOrderViewMode(\'original\')">Original Document</button><span style="flex:1"></span><button type="button" class="order-print-btn" onclick="printCurrentOrder()">🖨 Print</button>';
+    scroll.parentNode.insertBefore(bar,scroll);
+  }
+  window.setOrderViewMode=function(mode){
+    const box=document.getElementById('modal-order-substance'); if(!box) return;
+    const t=box.querySelector('.order-text-clean'), o=box.querySelector('.order-original-view');
+    if(t) t.style.display=mode==='text'?'block':'none'; if(o) o.style.display=mode==='original'?'block':'none';
+    document.getElementById('order-text-tab')?.classList.toggle('active',mode==='text');
+    document.getElementById('order-original-tab')?.classList.toggle('active',mode==='original');
+    box.dataset.printMode=mode;
+  };
+  window.printCurrentOrder=function(){
+    const box=document.getElementById('modal-order-substance'); if(!box) return;
+    const mode=box.dataset.printMode||'text';
+    const ref=document.getElementById('modal-order-ref')?.innerText||'SB Order';
+    const date=document.getElementById('modal-order-date')?.innerText||'';
+    const subj=document.getElementById('modal-order-subj')?.innerText||'';
+    const content=mode==='original' ? (box.querySelector('.order-original-view')?.innerHTML||'') : (box.querySelector('.order-structured-content')?.outerHTML||box.querySelector('.order-text-clean')?.outerHTML||'');
+    const w=window.open('','_blank','width=900,height=800');
+    if(!w){alert('Please allow pop-ups to print this order.');return;}
+    const safeTitle=String(ref).replace(/[<>]/g,'');
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>body{font-family:Arial,sans-serif;color:#111;margin:28px}h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.text{font-family:Georgia,serif;font-size:12pt;line-height:1.6;white-space:pre-wrap;text-align:left}.note{padding:10px;background:#fff8dc;border:1px solid #e5c45b;margin-bottom:16px}.img{display:block;max-width:100%;height:auto;margin:0 auto 18px;page-break-inside:avoid}</style></head><body><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2>'+content+'</body></html>');
+    w.document.close(); w.focus(); setTimeout(()=>w.print(),700);
+  };
+  const oldView=window.viewOrderDetail;
+  window.viewOrderDetail=function(id){
+    oldView(id); ensureTabs();
+    const order=DATA_ORDERS.find(o=>String(o.id)===String(id)||String(o.orderNo)===String(id));
+    const box=document.getElementById('modal-order-substance'); if(!order||!box) return;
+    const text=String(order.fullText||order.substance||'').replace(/\r\n?/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+    const imgs=Array.isArray(order.sourceImages)?order.sourceImages:[];
+    let h=order.structured_html ? '<div class="order-structured-content">'+order.structured_html+'</div>' : '<div class="order-text-clean">'+escapeOrderHtml(text)+'</div>'; h+='<div class="order-original-view">';
+    if(imgs.length){h+='<div class="order-source-note">Original source pages for this order.</div>'; imgs.forEach((src,i)=>h+='<img class="order-original-page" loading="lazy" src="'+escapeOrderHtml(src)+'" alt="Original source page '+(i+1)+'">');}
+    else h+='<div class="order-source-note">Original source images are not available for this order.</div>';
+    h+='</div>'; box.innerHTML=h; setOrderViewMode('text');
+  };
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{
+    const sel=document.getElementById('filter-order-year'); const ly=latestYear();
+    if(sel&&ly){sel.value=String(ly); renderOrdersTable();}
+    ensureTabs();
+  },500));
+})();
+</script>
+
 </body>
 </html>
