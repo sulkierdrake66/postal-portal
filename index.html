@@ -2579,7 +2579,11 @@
       document.getElementById('modal-order-subj').innerText = order.subject || '—';
       const rawOrderText = order.fullText || order.substance || '—';
       document.getElementById('modal-order-substance').innerHTML = renderOrderContent(order, rawOrderText);
-      document.getElementById('modal-source-doc').innerText = order.sourceDocument || 'Direct Source';
+
+      // Source label is optional in the modal markup. Do not let a missing
+      // optional element prevent the order detail window from opening.
+      const sourceDocEl = document.getElementById('modal-source-doc');
+      if (sourceDocEl) sourceDocEl.innerText = order.sourceDocument || 'Direct Source';
 
       const supersededBy = displayRelationValue(order.supersededBy);
       const supersedes = displayRelationValue(order.supersedes);
