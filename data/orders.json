@@ -3291,7 +3291,1255 @@
         "caption": "Visual content from PDF page 1056"
       }
     ],
-    "source_page_images": []
+    "source_page_images": [
+      {
+        "page": 1045,
+        "src": "images/orders/2026/09-2026/p1045-source.jpg",
+        "caption": "Original source page"
+      },
+      {
+        "page": 1046,
+        "src": "images/orders/2026/09-2026/p1046-source.jpg",
+        "caption": "Original source page"
+      }
+    ],
+    "document_pages": [
+      {
+        "page": 1045,
+        "local_page": 1,
+        "type": "scan",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "SB Order No.09/2026\nFS-16t212024-FS-DOP\nGovernment of lndia",
+            "align": "left",
+            "y": 51.6
+          },
+          {
+            "type": "text",
+            "text": "tt/ inistry of Comm unications\nDepartment of Posts\n(Financial Services Division)\nDak Bhawan, New Delhi - 110001\nDated: 24.07.2026",
+            "align": "left",
+            "y": 98.04
+          },
+          {
+            "type": "text",
+            "text": "To",
+            "align": "left",
+            "y": 198.36
+          },
+          {
+            "type": "text",
+            "text": "All Head of Circles/Regions",
+            "align": "left",
+            "y": 218.77
+          },
+          {
+            "type": "text",
+            "text": "Subj ect: Sta ndard operating Procedure (SoP) for Accou nting & Verification of\nPOS B Accou ntin g at Post offices afte r m pleme ntation of APT 2 0.",
+            "align": "center",
+            "y": 241.58
+          },
+          {
+            "type": "text",
+            "text": "Sir/lVadam,",
+            "align": "left",
+            "y": 306.89
+          },
+          {
+            "type": "text",
+            "text": "Kindly refer SB Order No.12t2025 dated 15.09.2025, and SB Order No. 1 6t2O2S\ndated 02.12.2025, regarding accounting of CBS transactions and verification daily at\nvarious levels.\n2.\nA detailed Standing Operating Procedure (SOP) for verification of CBS data\nreflected in the Daily Cash Book at HO, by SBCO has been prepared in accordance with\nthe Para a(c) & 5 of SB order No.1212025 dated 15.0g.202s, and is enclosed herewith\nas Annexure-l\n3'\nThis SOP shall be strictly adhered to by all concerned. All POSB transactions\ncarried out before the issuance of this SOP, may also be immediately verified\naccordingly' A report in this regard, may be submitted to PAO forfurther necessary action.\n4'\nlt is requested to circulate this SOP to all concerned for information, guidance,\nand necessary action.\n5.\nThis issue with the approval of the competent authority",
+            "align": "center",
+            "y": 329.64
+          },
+          {
+            "type": "text",
+            "text": "Yours faithfully,",
+            "align": "left",
+            "y": 606.36
+          },
+          {
+            "type": "text",
+            "text": ",T€\n\"t\\D,\n(Devender\nmar Sharma)",
+            "align": "left",
+            "y": 635.65
+          },
+          {
+            "type": "text",
+            "text": "Assistant Director (SB-l l)",
+            "align": "left",
+            "y": 684.3
+          },
+          {
+            "type": "text",
+            "text": "(Comp. No. 3138361)",
+            "align": "left",
+            "y": 789.04
+          }
+        ],
+        "table": null,
+        "images": [
+          {
+            "page": 1045,
+            "src": "images/orders/2026/09-2026/p1045-image2.png",
+            "type": "image",
+            "caption": "Visual content from PDF page 1045"
+          }
+        ],
+        "source_page_image": "images/orders/2026/09-2026/p1045-source.jpg"
+      },
+      {
+        "page": 1046,
+        "local_page": 2,
+        "type": "scan",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "coPy to: -",
+            "align": "left",
+            "y": 47.82
+          },
+          {
+            "type": "text",
+            "text": "1. Sr. PPS to Secretary (Posts)\n2. Sr. PPS to Director General postal Services\n3. PPS/ PS to [Member (Financial Services)/l\\4ember (O)/lVember (p)/\nl/lember\n(HRD)/ lVlember (Tech)/ Member (Service Quality and fi/arketing),'Member\n(lnfrastructure), AS & FA\n4. Addl. Director General, APS, New Delhi\n5. Chief General fi/lanager, BD Directorate / Parcel Directorate / pll Directorate.\n6. CG[/, CEPT for kind information and necessary action.\n7. Sr. Deputy Director General (Vig) & CVO) / Sr. Deputy Director General (pAF)\n8. Director, RAKNPA / Directors of all pTCs\n9. Director, CPRC Chennai.\nl0.Director General P & T (Audit), Civil Lines, New Delhi",
+            "align": "center",
+            "y": 93.37
+          },
+          {
+            "type": "text",
+            "text": "1 i.secretary, Postal services Board / All Deputy Directors General\nl2.All General lvanagers (Finance) / Directors postal Accounts / DDAP\n13.The Joint Director & HOD, National Savings lnstitute, ICCW Building, 4\nDeendayal Upadhyay l/larg, New Delhi-11OOO2\n14.The Under secretary, lvoF (DEA), NS-ll Section, North Block, New Delhi.\nl5.All recognized Federations / Unions / Associations\nl6.Guard File/e-File\n,^#",
+            "align": "center",
+            "y": 278.82
+          },
+          {
+            "type": "text",
+            "text": "(Devend\nrySharma)\nAssistant Director (SB-l l)",
+            "align": "left",
+            "y": 409.86
+          },
+          {
+            "type": "text",
+            "text": "SB Order No.09/2026\nPage 2 of 16",
+            "align": "left",
+            "y": 767.57
+          }
+        ],
+        "table": null,
+        "images": [
+          {
+            "page": 1046,
+            "src": "images/orders/2026/09-2026/p1046-image2.png",
+            "type": "image",
+            "caption": "Visual content from PDF page 1046"
+          }
+        ],
+        "source_page_image": "images/orders/2026/09-2026/p1046-source.jpg"
+      },
+      {
+        "page": 1047,
+        "local_page": 3,
+        "type": "text",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Annexure-I",
+            "align": "left",
+            "y": 53.77
+          },
+          {
+            "type": "text",
+            "text": "STANDARD OPERATING PROCEDURE (SOP)",
+            "align": "center",
+            "y": 76.31
+          },
+          {
+            "type": "text",
+            "text": "Reference: SB Order No. 12/2025 dated 15.09.2025 | SB Order No. 16/2025 dated 02.12.2025",
+            "align": "center",
+            "y": 95.94
+          },
+          {
+            "type": "text",
+            "text": "The CBS transactions carried out in Finacle and DREAM App by the Post Offices are\naccounted through Application Programming Interface (API) integration, before\nperforming Day End in APT Module, to ensure same day accounting in APT Application.\nThe Day-End process followed in Finacle, before the data is fetched for accounting in\nAPT, is briefly given below.",
+            "align": "center",
+            "y": 123.01
+          },
+          {
+            "type": "text",
+            "text": "i.\nCBS Transactions are carried out in Finacle or through DREAM App in the post\noffices.",
+            "align": "center",
+            "y": 205.09
+          },
+          {
+            "type": "text",
+            "text": "ii.\nCSMDAY menu is executed in Finacle, by the Head Post Office/Sub Post\nOffices to mark completion of transactions in Finacle, for the day.",
+            "align": "center",
+            "y": 242.53
+          },
+          {
+            "type": "text",
+            "text": "iii.\nIn DREAM App, Branch Post Offices (BOs) mark completion of Counter\nTransactions, for the day, through Counter Operations =>Close Account.",
+            "align": "center",
+            "y": 279.85
+          },
+          {
+            "type": "text",
+            "text": "iv.\nTherefore, no further transactions should be carried out after successful\ncompletion of CSMDAY in HOs/SOs and Close Account in BOs",
+            "align": "center",
+            "y": 317.17
+          },
+          {
+            "type": "text",
+            "text": "After CSMDAY in Finacle and Close Account in DREAM App, CBS accounting data is\nextracted from Finacle for accounting in APT.",
+            "align": "center",
+            "y": 354.49
+          },
+          {
+            "type": "text",
+            "text": "Procedure for Accounting and Verification of accounted data in Finacle and\nAPT 2.0 data",
+            "align": "center",
+            "y": 399.01
+          },
+          {
+            "type": "text",
+            "text": "1. At Branch Post Offices",
+            "align": "left",
+            "y": 454.93
+          },
+          {
+            "type": "text",
+            "text": "i.\nStart the day's operations by performing Day Begin in the DREAM Application.",
+            "align": "center",
+            "y": 483.01
+          },
+          {
+            "type": "text",
+            "text": "ii.\nPerform all CBS transactions only through the DREAM Application between Day\nBegin and Close Account/Day End.",
+            "align": "center",
+            "y": 505.45
+          },
+          {
+            "type": "text",
+            "text": "iii.\nBefore performing Close Account/Day End, check for pending CBS transactions\nby opening Core Banking Services → Pending Transaction Status.",
+            "align": "center",
+            "y": 542.77
+          },
+          {
+            "type": "text",
+            "text": "iv.\nIf any transaction is displayed as Pending/Not Posted to Finacle due to network\nor technical issues, select Update Pending Transactions to synchronize it with\nFinacle. Repeat the process until no pending transaction remains.",
+            "align": "center",
+            "y": 580.09
+          },
+          {
+            "type": "text",
+            "text": "v.\nGenerate the Core Banking Services → Daily Transaction Report.",
+            "align": "center",
+            "y": 632.41
+          },
+          {
+            "type": "text",
+            "text": "vi.\nVerify that all CBS transactions processed during the day are correctly reflected in\nthe Daily Transaction Report.",
+            "align": "center",
+            "y": 654.85
+          },
+          {
+            "type": "text",
+            "text": "vii.\nEnsure that all CBS transactions reflected in the Daily Transaction Report are\nalso correctly reflected in the BO Daily Account (BODA).",
+            "align": "center",
+            "y": 692.17
+          },
+          {
+            "type": "text",
+            "text": "Page 3 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.32
+          }
+        ],
+        "table": null,
+        "images": []
+      },
+      {
+        "page": 1048,
+        "local_page": 4,
+        "type": "text",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "viii.\nIf any CBS transaction is not reflected in the BO Daily Account (BODA) due to\ntechnical reasons, account the corresponding amount separately under:",
+            "align": "center",
+            "y": 53.77
+          },
+          {
+            "type": "text",
+            "text": "a.\nCBS Receipt Mismatch, or",
+            "align": "left",
+            "y": 90.66
+          },
+          {
+            "type": "text",
+            "text": "b.\nCBS Payment Mismatch, as applicable.",
+            "align": "left",
+            "y": 115.02
+          },
+          {
+            "type": "text",
+            "text": "ix.\nCBS Receipt Mismatch and CBS Payment Mismatch shall be accounted for\nseparately. Under no circumstances shall receipt and payment mismatches be\nnetted off or accounted for, based on cash in hand. For example, if there is a\ndiscrepancy of ₹ 5,000 in Receipt side and a discrepancy of ₹ 2,000 in\nPayment side, the amounts shall be accounted for separately under the\nrespective heads i.e., CBS Receipt Mismatch ₹ 5,000/- and CBS Payment\nMismatch - ₹ 2,000/- , as case may be, and shall not be accounted as CBS\nMismatch Receipt - ₹ 3,000/- by netting the discrepancy.",
+            "align": "center",
+            "y": 139.81
+          },
+          {
+            "type": "text",
+            "text": "x.\nRecord the details of all CBS Receipt Mismatch and CBS Payment Mismatch\nentries in the BO Daily Account (BODA) manually and communicate the same to\nthe Account Office for reconciliation and rectification during BODA verification in\nthe Sub Accounts Module of APT.",
+            "align": "center",
+            "y": 266.77
+          },
+          {
+            "type": "text",
+            "text": "Note-1: BPM shall be responsible for ensuring daily incorporation & correctness of\nCBS Transaction data in the BO Daily Account (BODA) and furnishing information of\nmismatch details to Account Office, as mentioned above.\nNote-2: For process flow in Dream App please refer Annexure-II",
+            "align": "center",
+            "y": 334.45
+          },
+          {
+            "type": "text",
+            "text": "2. At Head Post Office/Sub Post Office – Own Office Transactions",
+            "align": "center",
+            "y": 418.64
+          },
+          {
+            "type": "text",
+            "text": "i.\nAll Transactions shall strictly be carried out through FINACLE Application. Direct\naccounting of POSB – CBS transactions in APT shall be avoided.\nii.\nTransactions shall be carried out between the Day Begin and CSMDAY in Finacle.\niii.\nPayments through cheques should be processed with utmost care to avoid\nduplicate entries in APT.\niv.\nCBS Accounts Data should be fetched through API from Finacle, before the Day\nEnd process is done in APT.\nv.\nAll CBS Transactions data should be incorporated in the Daily Transaction Report\n(DTR) and all the CBS receipts and payments should be tallied before the Day End\nProcess in APT.\nvi.\nIn case of any missing data arising due to technical issues, the corresponding\nreceipt or payment shall be accounted under “CBS Receipt Mismatch” or “CBS\nPayment Mismatch” account codes to ensure that the total amount of receipts and\npayments are tallied separately, without netting. In no case, the net amount should\nbe accounted under Mismatch Receipt or Mismatch Payment on the basis of cash\nin hand.",
+            "align": "center",
+            "y": 446.48
+          },
+          {
+            "type": "text",
+            "text": "Page 4 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.32
+          }
+        ],
+        "table": null,
+        "images": []
+      },
+      {
+        "page": 1049,
+        "local_page": 5,
+        "type": "table",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Note-1: Postmaster / SPM shall be responsible for ensuring daily incorporation &\ncorrectness of CBS Transaction data of its own office, furnishing information of\nmismatch details to its Account Office, as mentioned above\nNote-2: For generating various reports in Finacle and APT modules, please refer\nAnnexure-III",
+            "align": "center",
+            "y": 54.25
+          },
+          {
+            "type": "text",
+            "text": "3. At Head Post Office/Sub Post Office – Subordinate Office Transactions",
+            "align": "center",
+            "y": 151.88
+          },
+          {
+            "type": "text",
+            "text": "i.\nCBS reports should be generated in Finacle for the previous dates of subordinate\noffices. (Refer to Annexure-III for the procedure).\nii.\nThe correctness of accounted CBS data should be verified in BODA / SODA, as\napplicable, at SO or HO level.\niii.\nIn case any discrepancy in accounting is found, the same may be reconciled in the\nSub Accounts Module with reference to the Finacle reports.\niv.\nSubordinate Offices shall intimate their respective Account Office through a\nmanual entry in the SO Daily Account (SODA), detailing all transactions accounted\nfor under CBS Receipt Mismatch and CBS Payment Mismatch, for reconciliation\nand rectification during SODA verification by the Account Office in the Sub\nAccounts Module of APT.\nv.\nThe following action shall be taken by the Account Offices and Subordinate\nOffices.",
+            "align": "center",
+            "y": 179.6
+          },
+          {
+            "type": "text",
+            "text": "Page 5 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.32
+          }
+        ],
+        "table": {
+          "rows": [
+            [
+              "Sl. Description No.",
+              "",
+              "Action by Account Office",
+              "Action by Subordinate Office",
+              "Remarks"
+            ],
+            [
+              "1",
+              "CBS Receipt Mismatch / CBS Payment Mismatch observed in BODA or SODA",
+              "Reconcile to correct Account Code in Sub Accounts with reference to Finacle Reports and classify the mismatch receipt and payment under the correct account codes.",
+              "Details of transactions posted under CBS Mismatch Receipts and Payments shall be provided to Account Office.",
+              "--"
+            ],
+            [
+              "2",
+              "CBS Receipts Mismatch / CBS Payments Mismatch is NOT observed in BODA or SODA, but Receipts / Payments are not tallied with Finacle Reports",
+              "1. Raise an error book entry and call for details/reasons from the SPM/ BPM. 2. No accounting correction is to be done for the day in APT. If same error is 3. repeated, by Post Offices, the matter is to be reported to Divisional Head for further investigation.",
+              "Check the Cash Balances and provide reasons for non-accounting. The unaccounted transaction shall be brought into account immediately to close the Error Book entry.",
+              "Closing Balance of each Office should be tallied on a daily basis. Hence, non- accounting results in suppressing correct Closing balance."
+            ]
+          ],
+          "columns": 5,
+          "accuracy": 97.58
+        },
+        "images": []
+      },
+      {
+        "page": 1050,
+        "local_page": 6,
+        "type": "text",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "vi.\nSub Account PA, while handing over the vouchers to SBCO, shall provide a copy\nof the error book entries made in connection with the discrepancies in CBS\naccounting.",
+            "align": "center",
+            "y": 53.72
+          },
+          {
+            "type": "text",
+            "text": "Note: SPM/Postmaster shall be responsible to ensure daily incorporation &\ncorrectness of CBS Transaction data, furnishing information of mismatch transaction\ndetails to Account Office, as mentioned above.",
+            "align": "center",
+            "y": 93.94
+          },
+          {
+            "type": "text",
+            "text": "(4) At Head Post Offices – Action by SBCO",
+            "align": "left",
+            "y": 165.85
+          },
+          {
+            "type": "text",
+            "text": "i.\nRefer to Annexure-III for the procedure to generate the required CBS reports in\nFinacle for previous dates pertaining to the Head Office (HO) and all its\nsubordinate offices.\nii.\nGenerate the GL IT 2.0 Report – GL Wise (Including HO, SO & BOs) (Previous\nDay) in Finacle by entering the HO SOL ID. This report shall serve as the\nconsolidated CBS record of all transactions accounted for under the Head Office\nand its subordinate offices.\niii.\nGenerate or download the HO Cash Book for the corresponding date in PDF or\nExcel format.\niv.\nVerify the correctness of the CBS transactions accounted for in the HO Cash Book\nby comparing the Cash Book with the consolidated Finacle GL Wise Report,\naccount code-wise, on a daily basis. The objective of this verification is to ensure\nthat all CBS transactions have been correctly accounted for in the Daily Accounts.\nv.\nIf any discrepancy is noticed during the above verification, generate the GL IT 2.0\n– Transaction Report Consolidated (Previous Day) by entering the HO SET ID\nand compare the report with the relevant SO Summaries and Daily Accounts to\nidentify the exact source and nature of the discrepancy.\nvi.\nEvery discrepancy detected shall be immediately reported to the Postmaster for\nnecessary rectification. SBCO shall maintain a Discrepancy Register in the\nformat prescribed under Table 3 of Annexure-IV, recording the details of each\ndiscrepancy, the action taken, and the date of settlement. This register shall be\npreserved permanently.\nvii.\nSBCO shall continuously monitor the settlement of the discrepancies by keeping\nwatch over the error entries raised by the Sub Accounts PA and ensuring that the\nrequired corrective action is taken.\nviii.\nSBCO shall also monitor the rectification of the accounts and obtain from the\nPostmaster the details of Transfer Entries posted in APT and Mismatch\nAdjustment Entries effected for settlement of the discrepancies recorded in the\nregister. The discrepancy shall be treated as settled only after verification of the\nrectification.\nix.\nOn or before the 4th day of the succeeding month, SBCO shall submit a\nMonthly Report to the PAO in the format prescribed under Annexure-IV (Table\n1 and Table 2). The report shall be jointly signed by the In-charge, SBCO and the\nPostmaster of the Head Office, with a copy endorsed to the Divisional Office. The\ndate of submission of the report shall also be reflected in the Monthly Progress\nReport of the SBCO Branch forwarded to the ICO (SB).\nx.\nAll the above activities shall be carried out under the supervision of the\nSupervisor/In-charge, SBCO, who shall be responsible for ensuring timely\nverification, reporting, monitoring, and submission of the prescribed reports.",
+            "align": "center",
+            "y": 194.0
+          },
+          {
+            "type": "text",
+            "text": "Page 6 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.32
+          }
+        ],
+        "table": null,
+        "images": []
+      },
+      {
+        "page": 1051,
+        "local_page": 7,
+        "type": "text",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Note: For preparation of monthly report, Finacle receipts and payments SOL-wise,\ndate-wise and account-code wise data shall be extracted by CBS Reports Team every\nmonth and will be kept in a SFTP folder. This data will be available for a period of\nmaximum three months. The In-Charge SBCO shall download the data every month.\nThe said data should ideally tally with the Monthly Cash Account data provided that the\ndaily reconciliation is carried out properly.",
+            "align": "center",
+            "y": 53.84
+          },
+          {
+            "type": "text",
+            "text": "(5) At HO – Action by Postmaster",
+            "align": "left",
+            "y": 168.01
+          },
+          {
+            "type": "text",
+            "text": "It shall be the duty of the Postmaster to ensure that:",
+            "align": "left",
+            "y": 190.45
+          },
+          {
+            "type": "text",
+            "text": "i.\nAll POSB transactions are carried out in the HO before the CSMDAY is executed\nin Finacle\nii.\nCBS Mismatch entries are adjusted through Sub Account Module\niii.\nAll Error entries related to un-accounted CBS transactions by subordinate offices\nare attended by the SPMs immediately on the subsequent working day\niv.\nEither softcopy of the HO cash book may be provided to SBCO or the In-charge\nSBCO may be authorized to download the cash book from APT.\nv.\nHO Cash Book Data is compared with the Finacle Reports by SBCO\nvi.\nAll CBS transactions data are tallied account code wise, on daily basis\nvii.\nDiscrepancies raised by the SBCO are settled on the next day by rectifying the\naccounts through posting Misc. Transactions in Departmental Post Offices or\nTransfer Entries in the Head Post Offices.\nviii.\nHO Summary (HO Daily Account), SO Summary, SODA and BODA are provided\nto SBCO if required.\nix.\nMonthly Report as per Annexure-IV, signed jointly by In-charge SBCO and\nPostmaster of the HO, with a copy to Divisional Office is to be submitted on due\ndate.",
+            "align": "center",
+            "y": 218.48
+          },
+          {
+            "type": "text",
+            "text": "(6) By Sub Divisional Office & Divisional Office",
+            "align": "left",
+            "y": 467.53
+          },
+          {
+            "type": "text",
+            "text": "I.\nSub Divisional Office shall monitor to ensure that the BOs/SOs are following the\nabove said procedure.\nII.\nDivisional Office shall monitor to ensure that the HOs & SBCOs are following the\nabove said procedure.",
+            "align": "center",
+            "y": 495.56
+          },
+          {
+            "type": "text",
+            "text": "(7) By Inspecting Authorities",
+            "align": "left",
+            "y": 564.13
+          },
+          {
+            "type": "text",
+            "text": "During the Inspection of HO, all Inspecting Authorities shall verify the CBS Daily\nDiscrepancy Reconciliation Register maintained by SBCO and suitable remarks\nshall be included in their Inspection Report.",
+            "align": "center",
+            "y": 586.57
+          },
+          {
+            "type": "text",
+            "text": "*******",
+            "align": "center",
+            "y": 638.77
+          },
+          {
+            "type": "text",
+            "text": "Page 7 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.32
+          }
+        ],
+        "table": null,
+        "images": []
+      },
+      {
+        "page": 1052,
+        "local_page": 8,
+        "type": "mixed",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Annexure-II",
+            "align": "left",
+            "y": 53.73
+          },
+          {
+            "type": "text",
+            "text": "DREAM APP - AT BRANCH POST OFFICES",
+            "align": "center",
+            "y": 74.01
+          },
+          {
+            "type": "text",
+            "text": "Page 8 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.31
+          }
+        ],
+        "table": null,
+        "images": [
+          {
+            "page": 1052,
+            "src": "images/orders/2026/09-2026/p1052-image5.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1052"
+          },
+          {
+            "page": 1052,
+            "src": "images/orders/2026/09-2026/p1052-image6.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1052"
+          },
+          {
+            "page": 1052,
+            "src": "images/orders/2026/09-2026/p1052-image8.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1052"
+          },
+          {
+            "page": 1052,
+            "src": "images/orders/2026/09-2026/p1052-image9.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1052"
+          }
+        ]
+      },
+      {
+        "page": 1053,
+        "local_page": 9,
+        "type": "mixed",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Annexure-III",
+            "align": "left",
+            "y": 53.73
+          },
+          {
+            "type": "text",
+            "text": "FINCALE REPORTS FOR DAILY RECONCILIATION & RECTIFICATION OF ACCOUNTING",
+            "align": "center",
+            "y": 74.13
+          },
+          {
+            "type": "text",
+            "text": "ENTRIES AT SO/HO/GPO",
+            "align": "center",
+            "y": 86.97
+          },
+          {
+            "type": "text",
+            "text": "Generation of CBS Reports from Finacle: For reconciliation purposes, the following CBS\nreports shall be generated from Finacle in PDF or Excel Format.",
+            "align": "center",
+            "y": 127.77
+          },
+          {
+            "type": "text",
+            "text": "Production Server (Same Day)",
+            "align": "left",
+            "y": 160.77
+          },
+          {
+            "type": "text",
+            "text": "(a) GL IT 2.0 Transaction Report – Consolidated (Today)\n(b) GL IT 2.0 Transaction Report – Detailed (Today)\n(c) GL IT 2.0 Report GL Wise – Consolidated (Today)",
+            "align": "left",
+            "y": 181.29
+          },
+          {
+            "type": "text",
+            "text": "MIS Server (Previous Days)",
+            "align": "left",
+            "y": 227.13
+          },
+          {
+            "type": "text",
+            "text": "(a) GL IT 2.0 Transaction Report – Consolidated (Previous Day)\n(b) GL IT 2.0 Transaction Report – Detailed (Previous Day)\n(c) GL IT 2.0 Report GL Wise – Consolidated (Previous Day)",
+            "align": "left",
+            "y": 247.65
+          },
+          {
+            "type": "text",
+            "text": "GL IT 2.0 Consolidated Report (Previous day)– in PDF Format",
+            "align": "left",
+            "y": 313.89
+          },
+          {
+            "type": "text",
+            "text": "Page 9 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.31
+          }
+        ],
+        "table": null,
+        "images": [
+          {
+            "page": 1053,
+            "src": "images/orders/2026/09-2026/p1053-image1.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1053"
+          }
+        ]
+      },
+      {
+        "page": 1054,
+        "local_page": 10,
+        "type": "mixed",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "GL IT 2.0 Consolidated Report (Previous day)– in Excel Format",
+            "align": "left",
+            "y": 53.73
+          },
+          {
+            "type": "text",
+            "text": "GL IT 2.0 Transaction GL wise Report (Incl HO, SO & Bos) -Consolidated (Previous Day)\nin PDF Format",
+            "align": "center",
+            "y": 319.89
+          },
+          {
+            "type": "text",
+            "text": "Page 10 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.31
+          }
+        ],
+        "table": null,
+        "images": [
+          {
+            "page": 1054,
+            "src": "images/orders/2026/09-2026/p1054-image1.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1054"
+          },
+          {
+            "page": 1054,
+            "src": "images/orders/2026/09-2026/p1054-image2.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1054"
+          }
+        ]
+      },
+      {
+        "page": 1055,
+        "local_page": 11,
+        "type": "mixed",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "GL IT 2.0 Transaction GL wise Report (Incl HO, SO & Bos) -Consolidated (Previous Day)\nin Excel Format",
+            "align": "center",
+            "y": 53.85
+          },
+          {
+            "type": "text",
+            "text": "Reports generated will be available under HPR menu",
+            "align": "left",
+            "y": 288.57
+          },
+          {
+            "type": "text",
+            "text": "PDF report can be saved by clicking the Save icon.",
+            "align": "left",
+            "y": 445.65
+          },
+          {
+            "type": "text",
+            "text": "Page 11 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.31
+          }
+        ],
+        "table": null,
+        "images": [
+          {
+            "page": 1055,
+            "src": "images/orders/2026/09-2026/p1055-image1.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1055"
+          },
+          {
+            "page": 1055,
+            "src": "images/orders/2026/09-2026/p1055-image2.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1055"
+          },
+          {
+            "page": 1055,
+            "src": "images/orders/2026/09-2026/p1055-image3.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1055"
+          }
+        ]
+      },
+      {
+        "page": 1056,
+        "local_page": 12,
+        "type": "mixed",
+        "orientation": "portrait",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Excel reports can be saved using the \" Save As \" option in the prescribed location",
+            "align": "center",
+            "y": 53.73
+          },
+          {
+            "type": "text",
+            "text": "Page 12 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 723.31
+          }
+        ],
+        "table": null,
+        "images": [
+          {
+            "page": 1056,
+            "src": "images/orders/2026/09-2026/p1056-image1.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1056"
+          },
+          {
+            "page": 1056,
+            "src": "images/orders/2026/09-2026/p1056-image2.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1056"
+          },
+          {
+            "page": 1056,
+            "src": "images/orders/2026/09-2026/p1056-image3.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1056"
+          },
+          {
+            "page": 1056,
+            "src": "images/orders/2026/09-2026/p1056-image4.jpeg",
+            "type": "image",
+            "caption": "Visual content from PDF page 1056"
+          }
+        ]
+      },
+      {
+        "page": 1057,
+        "local_page": 13,
+        "type": "table",
+        "orientation": "landscape",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Annexure-IV",
+            "align": "left",
+            "y": 79.51
+          },
+          {
+            "type": "text",
+            "text": "CBS Monthly Reconciliation Report to PAO by the HO",
+            "align": "center",
+            "y": 100.03
+          },
+          {
+            "type": "text",
+            "text": "(Due Date: 4th of every month)",
+            "align": "center",
+            "y": 112.63
+          },
+          {
+            "type": "text",
+            "text": "Table-1",
+            "align": "center",
+            "y": 145.87
+          },
+          {
+            "type": "text",
+            "text": "DDO Code:\nMonth:",
+            "align": "center",
+            "y": 166.15
+          },
+          {
+            "type": "text",
+            "text": "* Monthly Cash Account = Sum of Daily Cash Books + Approved Transfer Entries of DDO",
+            "align": "left",
+            "y": 425.23
+          },
+          {
+            "type": "text",
+            "text": "SBCO In-charge\nPostmaster\nHO\nHO\nForwarded to the General Manager(F) / DA(P)\nCopy to: The S/SPOs,\nDivision for information.",
+            "align": "center",
+            "y": 466.03
+          },
+          {
+            "type": "text",
+            "text": "Page 13 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 517.24
+          }
+        ],
+        "table": {
+          "rows": [
+            [
+              "Sl",
+              "Account Code",
+              "Account Code Description",
+              "Finacle",
+              "",
+              "Monthly Cash Account*",
+              "",
+              "Difference (Finacle – Cash Account)",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "Receipts (In Rs.)",
+              "Payments (In Rs.)",
+              "Receipts (In Rs.)",
+              "Payments (In Rs.)",
+              "Receipts (In Rs.)",
+              "Payments (In Rs.)"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "TOTAL",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ],
+          "columns": 9,
+          "accuracy": 96.0
+        },
+        "images": []
+      },
+      {
+        "page": 1058,
+        "local_page": 14,
+        "type": "table",
+        "orientation": "landscape",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Detailed CBS Monthly Reconciliation Report to PAO by the HO",
+            "align": "center",
+            "y": 79.51
+          },
+          {
+            "type": "text",
+            "text": "(Due Date: 4th of every month)",
+            "align": "center",
+            "y": 92.23
+          },
+          {
+            "type": "text",
+            "text": "Table-2",
+            "align": "center",
+            "y": 125.47
+          },
+          {
+            "type": "text",
+            "text": "DDO Code:\nMonth:",
+            "align": "center",
+            "y": 145.87
+          },
+          {
+            "type": "text",
+            "text": "(a) Reasons for pending for rectification\n:\n(b) Date by which the pendency is cleared\n:",
+            "align": "left",
+            "y": 336.07
+          },
+          {
+            "type": "text",
+            "text": "SBCO In-charge\nPostmaster",
+            "align": "center",
+            "y": 415.15
+          },
+          {
+            "type": "text",
+            "text": "HO\nHO",
+            "align": "center",
+            "y": 435.55
+          },
+          {
+            "type": "text",
+            "text": "Forwarded to the General Manager(F) / DA(P)",
+            "align": "left",
+            "y": 455.83
+          },
+          {
+            "type": "text",
+            "text": "Copy to: The S/SPOs,\nDivision for information.",
+            "align": "left",
+            "y": 476.23
+          },
+          {
+            "type": "text",
+            "text": "Page 14 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 517.24
+          }
+        ],
+        "table": {
+          "rows": [
+            [
+              "",
+              "Sl Account Code",
+              "Account Code Description",
+              "Opening Balance in the Difference Finacle – Cash Account",
+              "",
+              "Current Month Difference (Finacle – Cash Account)",
+              "",
+              "Rectified During the Current Month (Finacle – Cash Account)",
+              "",
+              "Pending for Rectification",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "Receipts (In Rs.)",
+              "Payments (In Rs.)",
+              "Receipts (In Rs.)",
+              "Payments (In Rs.)",
+              "Receipts (In Rs.)",
+              "Payments (In Rs.)",
+              "Receipts (In Rs.)",
+              "Payments (In Rs.)"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "TOTAL",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ],
+          "columns": 11,
+          "accuracy": 92.66
+        },
+        "images": []
+      },
+      {
+        "page": 1059,
+        "local_page": 15,
+        "type": "table",
+        "orientation": "landscape",
+        "blocks": [
+          {
+            "type": "text",
+            "text": "Receipt as per CBS (in",
+            "align": "left",
+            "y": 164.84
+          },
+          {
+            "type": "text",
+            "text": "Particulars of Transfer",
+            "align": "left",
+            "y": 165.12
+          },
+          {
+            "type": "text",
+            "text": "Initials of Postmaster",
+            "align": "left",
+            "y": 168.15
+          },
+          {
+            "type": "text",
+            "text": "discrepancy is found",
+            "align": "left",
+            "y": 168.71
+          },
+          {
+            "type": "text",
+            "text": "Date of Rectification",
+            "align": "left",
+            "y": 170.44
+          },
+          {
+            "type": "text",
+            "text": "Initials of In-Charge",
+            "align": "left",
+            "y": 172.08
+          },
+          {
+            "type": "text",
+            "text": "Transaction Posted",
+            "align": "left",
+            "y": 172.47
+          },
+          {
+            "type": "text",
+            "text": "Particulars of Misc.",
+            "align": "left",
+            "y": 172.91
+          },
+          {
+            "type": "text",
+            "text": "Initials of PA / APM",
+            "align": "left",
+            "y": 173.28
+          },
+          {
+            "type": "text",
+            "text": "office in which the",
+            "align": "left",
+            "y": 175.19
+          },
+          {
+            "type": "text",
+            "text": "Name of the Post",
+            "align": "left",
+            "y": 178.15
+          },
+          {
+            "type": "text",
+            "text": "Entries Posted",
+            "align": "left",
+            "y": 184.09
+          },
+          {
+            "type": "text",
+            "text": "Description of",
+            "align": "left",
+            "y": 185.68
+          },
+          {
+            "type": "text",
+            "text": "(in Rs.)",
+            "align": "left",
+            "y": 202.82
+          },
+          {
+            "type": "text",
+            "text": "SBCO",
+            "align": "left",
+            "y": 205.48
+          },
+          {
+            "type": "text",
+            "text": "Date",
+            "align": "left",
+            "y": 209.15
+          },
+          {
+            "type": "text",
+            "text": "Rs.)",
+            "align": "left",
+            "y": 210.62
+          },
+          {
+            "type": "text",
+            "text": "Page 15 of 15\nSB Order No.09/2026",
+            "align": "left",
+            "y": 517.24
+          }
+        ],
+        "table": {
+          "rows": [
+            [
+              "Sl. No.",
+              "Date",
+              "Account Code",
+              "Description of Account Code",
+              "Name of the Post office in which the discrepancy is found",
+              "Receipt as per CBS (in Rs.)",
+              "Payment as per CBS (in Rs.)",
+              "Receipt as per Cash Book (in Rs.)",
+              "Payment as per Cash Book (in Rs.)",
+              "Difference (CBS - Cashbook) in Receipt (in Rs.)",
+              "Difference (CBS - Cashbook) in Payment (in Rs.)",
+              "Initials of In-Charge SBCO",
+              "Date of Rectification",
+              "Particulars of Misc. Transaction Posted",
+              "Particulars of Transfer Entries Posted"
+            ],
+            [
+              "(a)",
+              "(b)",
+              "(c)",
+              "(d)",
+              "(e)",
+              "(f)",
+              "(g)",
+              "(h)",
+              "(i)",
+              "(f) - (h)",
+              "(g) - (i)",
+              "(j)",
+              "(k)",
+              "(l)",
+              "(m)"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          ],
+          "columns": 15,
+          "accuracy": 100.0
+        },
+        "images": []
+      }
+    ],
+    "content_version": "v5-structured-pages"
   },
   {
     "order_no": "10/2026",
