@@ -171,6 +171,19 @@
 <style>
 .manual-card{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;transition:.15s ease}.manual-card:hover{transform:translateY(-1px);border-color:#cbd5e1;box-shadow:0 5px 16px rgba(15,23,42,.07)}.dark .manual-card{border-color:#334155;background:#0f172a}.manual-card-title{font-size:14px;font-weight:800;color:#0f172a;line-height:1.4}.dark .manual-card-title{color:#f8fafc}.manual-card-type{margin-top:4px;font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.manual-open{flex-shrink:0;padding:8px 11px;border-radius:8px;background:#b91c1c;color:#fff;font-size:11px;font-weight:800;text-decoration:none}.manual-open:hover{background:#991b1b}
 </style>
+
+<style>
+.ask-index-badge{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:#f1f5f9;color:#64748b;font-size:10px;font-weight:800;white-space:nowrap}
+.ask-index-badge.loading{background:#fff7ed;color:#c2410c}
+.dark .ask-index-badge{background:#1e293b;color:#94a3b8}.dark .ask-index-badge.loading{background:#451a03;color:#fdba74}
+.ask-example{padding:6px 9px;border:1px solid #e2e8f0;border-radius:999px;background:#fff;color:#64748b;font-weight:700;transition:.15s}.ask-example:hover{border-color:#b91c1c;color:#b91c1c}
+.dark .ask-example{background:#0f172a;border-color:#334155;color:#94a3b8}.dark .ask-example:hover{border-color:#f87171;color:#f87171}
+.ask-answer-card,.ask-result-card{border:1px solid #e2e8f0;border-radius:14px;background:#fff;padding:16px}.ask-answer-card{background:linear-gradient(135deg,#fff,#f8fafc)}
+.dark .ask-answer-card,.dark .ask-result-card{background:#1e293b;border-color:#334155}.ask-source-count{font-size:10px;font-weight:800;padding:5px 8px;border-radius:999px;background:#f1f5f9;color:#64748b}
+.dark .ask-source-count{background:#0f172a;color:#94a3b8}.ask-kind,.ask-match{display:inline-flex;align-items:center;padding:4px 7px;border-radius:999px;font-size:9px;font-weight:800}.ask-kind{background:#f1f5f9;color:#475569}.ask-match.direct{background:#dcfce7;color:#166534}.ask-match.support{background:#dbeafe;color:#1d4ed8}.ask-match.related{background:#fef3c7;color:#92400e}
+.dark .ask-kind{background:#0f172a;color:#94a3b8}.dark .ask-match.direct{background:#052e16;color:#86efac}.dark .ask-match.support{background:#172554;color:#93c5fd}.dark .ask-match.related{background:#451a03;color:#fcd34d}
+.ask-loading{font-size:12px;color:#64748b;background:#f8fafc}.dark .ask-loading{background:#0f172a;color:#94a3b8}
+</style>
 </head>
 <body class="bg-brand-surface dark:bg-brand-darkSurface text-slate-800 dark:text-slate-100 flex flex-col min-h-full font-sans antialiased transition-colors duration-200">
 
@@ -307,21 +320,29 @@
     <!-- VIEW 2: ASK -->
     <div id="view-ask" class="tab-view hidden space-y-6">
       <div class="bg-brand-card dark:bg-brand-darkCard p-6 rounded-2xl border border-brand-border dark:border-brand-darkBorder space-y-4">
-        <div>
-          <h2 class="text-xl font-serif font-bold text-slate-900 dark:text-white flex items-center space-x-2">
-            <i data-lucide="sparkles" class="w-5 h-5 text-brand-gold"></i>
-            <span>Rule &amp; Order Consultation Engine</span>
-          </h2>
-          <p class="text-xs text-slate-500 mt-1">Queries run directly against verified dataset entries without external APIs.</p>
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-serif font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+              <i data-lucide="sparkles" class="w-5 h-5 text-brand-gold"></i>
+              <span>Ask PostalIQ</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-1">Searches SB Orders and Manuals &amp; Guides using weighted relevance, source sections and related terms.</p>
+          </div>
+          <span id="ask-index-status" class="ask-index-badge">Index ready</span>
         </div>
-        <div class="flex gap-2">
-          <input type="text" id="ask-input" onkeydown="if(event.key==='Enter') executeRuleQuery()" placeholder="Ask a rule question (e.g., 'deceased claim limit', 'TA submission deadline')..." class="flex-grow px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-brand-red focus:outline-none">
-          <button onclick="executeRuleQuery()" class="bg-brand-red hover:bg-brand-darkRed text-white px-4 py-2 rounded-lg text-xs font-bold transition flex items-center space-x-1.5">
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input type="text" id="ask-input" onkeydown="if(event.key==='Enter') executeRuleQuery()" placeholder="Ask naturally — e.g. “Can an RD account be closed before maturity?”" class="flex-grow px-4 py-3 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-brand-red focus:outline-none">
+          <button onclick="executeRuleQuery()" class="bg-brand-red hover:bg-brand-darkRed text-white px-5 py-3 rounded-xl text-sm font-bold transition flex items-center justify-center space-x-1.5">
             <i data-lucide="search" class="w-4 h-4"></i>
-            <span>Consult</span>
+            <span>Ask</span>
           </button>
         </div>
-        <div id="ask-results" class="pt-4 space-y-4 hidden"></div>
+        <div class="flex flex-wrap gap-2 text-[11px]">
+          <button onclick="askExample('premature withdrawal from RD')" class="ask-example">Premature RD withdrawal</button>
+          <button onclick="askExample('interest rate for monthly income account')" class="ask-example">MIS interest rate</button>
+          <button onclick="askExample('claim by nominee after death')" class="ask-example">Death / nominee claim</button>
+        </div>
+        <div id="ask-results" class="pt-2 space-y-4 hidden"></div>
       </div>
     </div>
 
@@ -2742,37 +2763,157 @@
       lucide.createIcons();
     }
 
-    /* 6. ASK LOCAL ENGINE */
-    function executeRuleQuery() {
-      const rawQ = document.getElementById('ask-input').value.trim().toLowerCase();
-      const resContainer = document.getElementById('ask-results');
-      resContainer.classList.remove('hidden');
-      if (!rawQ) {
-        resContainer.innerHTML = `<div class="p-4 text-xs text-slate-500">Please enter a rule keyword.</div>`;
-        return;
+    /* 6. ASK POSTALIQ — SMART CLIENT-SIDE RULE ENGINE */
+    const ASK_MANUALS = [
+      {name:'General Financial Rules 2017', file:'manuals/GFR_2017.html', type:'Guide / Financial Rules'},
+      {name:'Indian Post Office Rules, 1933', file:'manuals/Indian_Post_Office_Rules_1933.html', type:'Rules'},
+      {name:'Post Office Savings Bank Manual — Volume I', file:'manuals/POSB_Manual_Volume_I.html', type:'POSB Manual'},
+      {name:'Post Office Savings Bank Manual — Volume II', file:'manuals/Postal_SB_Manual_Volume_II.html', type:'POSB Manual'},
+      {name:'Financial Handbook — Volume II', file:'manuals/Financial_Handbook_Volume_II.html', type:'Financial Handbook'},
+      {name:'Postal Manual Volume V', file:'manuals/Postal_Manual_V.html', type:'Postal Manual'},
+      {name:'Postal Manual Volume VII', file:'manuals/Postal_Manual_Volume_VII.html', type:'Postal Manual'}
+    ];
+
+    let ASK_INDEX = [];
+    let ASK_INDEX_PROMISE = null;
+    const ASK_STOPWORDS = new Set('a an and are as at be before by can could did do does for from how i in is it may me of on or please the this to was what when where which who with would you your'.split(' '));
+    const ASK_ALIASES = {
+      deceased:['deceased','death','dead','died','demise','claimant','nominee','legal heir'],
+      claim:['claim','claims','settlement','payment','death claim','nominee'],
+      withdrawal:['withdraw','withdrawal','premature','closure','close','closing','encash','encashment'],
+      deposit:['deposit','depositor','deposited','account'],
+      interest:['interest','rate','rates','yield'],
+      rd:['rd','recurring deposit','recurring'],
+      mis:['mis','monthly income account','monthly income'],
+      td:['td','time deposit','term deposit'],
+      sb:['sb','savings bank','savings account','posb'],
+      kyc:['kyc','e-kyc','ekyc','identity','aadhaar'],
+      nominee:['nominee','nomination','nominee claim'],
+      maturity:['maturity','mature','matures'],
+      transfer:['transfer','transferred','transferee'],
+      closure:['closure','closed','closing','close'],
+      interest_rate:['interest rate','rate of interest','roi']
+    };
+
+    function askNormalize(s){
+      return String(s||'').toLowerCase().replace(/[“”‘’]/g,'"').replace(/[^a-z0-9₹%./ -]/g,' ').replace(/\s+/g,' ').trim();
+    }
+    function askTokens(q){
+      return askNormalize(q).split(/\s+/).filter(t=>t && !ASK_STOPWORDS.has(t) && t.length>1);
+    }
+    function askConcepts(q){
+      const n=askNormalize(q), out=[];
+      Object.entries(ASK_ALIASES).forEach(([key,vals])=>{ if(vals.some(v=>n.includes(v))) out.push(key); });
+      return out;
+    }
+    function askEsc(s){ return escapeOrderHtml(String(s||'')); }
+    function askSnippet(text, tokens){
+      const clean=String(text||'').replace(/\s+/g,' ').trim();
+      if(!clean) return '';
+      let best=0;
+      tokens.forEach(t=>{const i=clean.toLowerCase().indexOf(t); if(i>=0 && (best===0 || i<best)) best=i;});
+      const start=Math.max(0,(best||0)-170), end=Math.min(clean.length,start+520);
+      return (start>0?'…':'')+clean.slice(start,end)+(end<clean.length?'…':'');
+    }
+    function askClassify(item, query){
+      const q=askNormalize(query), t=askNormalize(item.text), title=askNormalize(item.title), heading=askNormalize(item.heading||'');
+      const concepts=askConcepts(q);
+      const directPhrase=q.length>7 && t.includes(q);
+      const conceptHits=concepts.filter(c=>{
+        const vals=ASK_ALIASES[c]||[c]; return vals.some(v=>t.includes(v));
+      }).length;
+      if(directPhrase || (concepts.length && conceptHits>=Math.max(1,Math.ceil(concepts.length*.7)))) return 'Direct source match';
+      if(conceptHits>0 || title.includes(q)) return 'Supporting source';
+      return 'Related source';
+    }
+    function scoreAskItem(item, query){
+      const q=askNormalize(query), tokens=askTokens(q), concepts=askConcepts(q);
+      const title=askNormalize(item.title), heading=askNormalize(item.heading||''), text=askNormalize(item.text), source=askNormalize(item.source);
+      let score=0;
+      if(q && title.includes(q)) score+=80;
+      if(q && heading.includes(q)) score+=55;
+      if(q && text.includes(q)) score+=45;
+      tokens.forEach(t=>{
+        if(title.includes(t)) score+=14;
+        if(heading.includes(t)) score+=10;
+        if(text.includes(t)) score+=3;
+        if(source.includes(t)) score+=2;
+      });
+      concepts.forEach(c=>{
+        const vals=ASK_ALIASES[c]||[c];
+        if(vals.some(v=>title.includes(v))) score+=22;
+        if(vals.some(v=>heading.includes(v))) score+=14;
+        if(vals.some(v=>text.includes(v))) score+=7;
+      });
+      if(item.kind==='order') score+=6;
+      if(/order|rule|manual|handbook|circular/.test(source)) score+=2;
+      return score;
+    }
+    function askOrderIndex(){
+      return DATA_ORDERS.map(o=>({
+        kind:'order', id:o.id, title:o.subject||o.orderNo, heading:o.orderNo, text:`${o.subject||''} ${o.fullText||o.substance||''}`,
+        source:`SB Order ${o.orderNo}`, meta:o
+      }));
+    }
+    async function loadAskManualIndex(){
+      const chunks=[];
+      const parser=new DOMParser();
+      const loaded=await Promise.all(ASK_MANUALS.map(async m=>{
+        try{const r=await fetch(m.file,{cache:'force-cache'});if(!r.ok)throw new Error('HTTP '+r.status);return {m,html:await r.text()};}
+        catch(e){return {m,error:e};}
+      }));
+      loaded.forEach(({m,html,error})=>{
+        if(error || !html) return;
+        const doc=parser.parseFromString(html,'text/html');
+        const nodes=[...doc.querySelectorAll('.rule,.heading,.subheading,.plain')];
+        if(!nodes.length){
+          const body=(doc.body?.innerText||'').trim();
+          if(body) chunks.push({kind:'manual',id:m.file,title:m.name,heading:'',text:body,source:m.name,meta:m});
+          return;
+        }
+        let heading='';
+        nodes.forEach((el,i)=>{
+          const cls=String(el.className||'');
+          const txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim();
+          if(!txt) return;
+          if(/heading|subheading/.test(cls)){ heading=txt; return; }
+          chunks.push({kind:'manual',id:m.file+'#'+i,title:m.name,heading,text:txt,source:m.name,meta:m});
+        });
+      });
+      return chunks;
+    }
+    async function ensureAskIndex(){
+      if(ASK_INDEX.length) return ASK_INDEX;
+      if(ASK_INDEX_PROMISE) return ASK_INDEX_PROMISE;
+      const status=document.getElementById('ask-index-status');
+      if(status){status.textContent='Building source index…';status.classList.add('loading');}
+      ASK_INDEX_PROMISE=(async()=>{
+        const manuals=await loadAskManualIndex();
+        ASK_INDEX=[...askOrderIndex(),...manuals];
+        if(status){status.textContent=`${ASK_INDEX.length.toLocaleString('en-IN')} source sections indexed`;status.classList.remove('loading');}
+        return ASK_INDEX;
+      })();
+      return ASK_INDEX_PROMISE;
+    }
+    function askExample(q){const i=document.getElementById('ask-input');if(i){i.value=q;executeRuleQuery();}}
+    async function executeRuleQuery(){
+      const input=document.getElementById('ask-input'), res=document.getElementById('ask-results');
+      const raw=String(input?.value||'').trim();
+      res.classList.remove('hidden');
+      if(!raw){res.innerHTML='<div class="p-5 text-sm text-slate-500">Ask a specific question about a rule, order, account, procedure or manual provision.</div>';return;}
+      res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Searching SB Orders and Manuals…</div>';
+      const index=await ensureAskIndex();
+      const ranked=index.map(item=>({...item,score:scoreAskItem(item,raw)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,8);
+      if(!ranked.length){
+        res.innerHTML=`<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-sm text-slate-500"><div class="font-bold text-slate-700 dark:text-slate-200 mb-1">No direct source match found</div><div>PostalIQ could not locate a relevant provision in the indexed Orders and Manuals.</div></div>`;return;
       }
-
-      const terms = rawQ.split(/\s+/).filter(Boolean);
-      const matches = DATA_ORDERS.map(o => {
-        const haystack = `${o.orderNo} ${o.date} ${o.subject} ${o.category} ${o.keywords || ''} ${o.substance || ''} ${o.fullText || ''}`.toLowerCase();
-        const score = terms.reduce((n, term) => n + (haystack.includes(term) ? 1 : 0), 0);
-        return { o, score };
-      }).filter(x => x.score > 0).sort((a, b) => b.score - a.score || String(b.o.date).localeCompare(String(a.o.date))).slice(0, 10);
-
-      if (matches.length === 0) {
-        resContainer.innerHTML = `<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-xs text-slate-500">No verified order record found for "${rawQ.replace(/</g,'&lt;')}".</div>`;
-        return;
-      }
-
-      resContainer.innerHTML = matches.map(({o}) => `
-        <div class="p-4 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-2">
-          <div class="flex justify-between gap-3"><span class="font-mono font-bold text-brand-red dark:text-red-400 text-xs">${o.orderNo}</span><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">${o.date || 'Undated'}</span></div>
-          <h4 class="font-bold text-sm text-slate-900 dark:text-white">${o.subject}</h4>
-          <p class="text-[11px] text-slate-500 dark:text-slate-400">${o.category}${o.sourcePages ? ` · PDF pages ${o.sourcePages}` : ''}</p>
-          <p class="text-xs text-slate-600 dark:text-slate-300 whitespace-pre-line">${o.substance}</p>
-          <button onclick="viewOrderDetail('${o.id}')" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View full order</button>
-        </div>
-      `).join('');
+      const direct=ranked.filter(x=>askClassify(x,raw)==='Direct source match').slice(0,3);
+      const shown=direct.length?direct:ranked.slice(0,5);
+      const lead=direct.length?'Direct source match':'Best available source matches';
+      res.innerHTML=`<div class="ask-answer-card"><div class="flex items-center justify-between gap-3"><div><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">${lead}</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">Source-based results for “${askEsc(raw)}”</h3></div><span class="ask-source-count">${shown.length} sources</span></div><p class="text-xs text-slate-500 mt-2">PostalIQ shows the relevant source passages rather than inventing a rule. Verify the full provision when the question depends on dates, exceptions or later orders.</p></div>`+
+        shown.map((x,i)=>{const cls=askClassify(x,raw);const m=x.meta||{};const snippet=askSnippet(x.text,askTokens(raw));
+          return `<div class="ask-result-card"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="ask-kind">${askEsc(x.kind==='order'?'SB Order':'Manual / Guide')}</span><span class="ask-match ${cls==='Direct source match'?'direct':cls==='Supporting source'?'support':'related'}">${askEsc(cls)}</span>${x.kind==='order'&&m.date?`<span class="text-[10px] text-slate-400">${askEsc(m.date)}</span>`:''}</div><h4 class="font-bold text-sm text-slate-900 dark:text-white">${askEsc(x.title)}</h4>${x.heading?`<div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-1">${askEsc(x.heading)}</div>`:''}<p class="text-xs leading-6 text-slate-600 dark:text-slate-300 mt-3">${askEsc(snippet)}</p><div class="mt-3 flex flex-wrap gap-3 items-center">${x.kind==='order'?`<button onclick="viewOrderDetail('${askEsc(m.id)}')" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Order</button>`:`<a href="${askEsc(x.meta.file)}" target="_blank" rel="noopener" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Manual / Guide</a>`}<span class="text-[10px] text-slate-400">Relevance ${Math.round(x.score)}</span></div></div>`;}).join('');
+      lucide.createIcons();
     }
 
     /* 7. NAVIGATION & APP LIFECYCLE */
