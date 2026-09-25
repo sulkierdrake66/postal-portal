@@ -2890,6 +2890,7 @@ const MANUALS=[
 {name:"Indian Post Office Rules, 1933",file:"manuals/Indian_Post_Office_Rules_1933.html",type:"Rules"},
 {name:"Post Office Savings Bank Manual — Volume I",file:"manuals/POSB_Manual_Volume_I.html",type:"POSB Manual"},
 {name:"Post Office Savings Bank Manual — Volume II",file:"manuals/Postal_SB_Manual_Volume_II.html",type:"POSB Manual"},
+{name:"Financial Handbook — Volume II",file:"manuals/Financial_Handbook_Volume_II.html",type:"Financial Handbook"},
 {name:"Postal Manual Volume V",file:"manuals/Postal_Manual_V.html",type:"Postal Manual"},
 {name:"Postal Manual Volume VII",file:"manuals/Postal_Manual_Volume_VII.html",type:"Postal Manual"}];
 window.renderManuals=function(query){const list=document.getElementById('manuals-list');if(!list)return;const q=String(query||'').trim().toLowerCase();const a=MANUALS.filter(m=>!q||(m.name+' '+m.type).toLowerCase().includes(q));list.innerHTML=a.length?a.map(m=>'<div class="manual-card"><div class="min-w-0"><div class="manual-card-title">'+escapeOrderHtml(m.name)+'</div><div class="manual-card-type">'+escapeOrderHtml(m.type)+'</div></div><a class="manual-open" href="'+escapeOrderHtml(m.file)+'" target="_blank" rel="noopener">Open</a></div>').join(''):'<div class="col-span-full p-8 text-center text-sm text-slate-500 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">No manual or guide found.</div>';if(window.lucide)lucide.createIcons();};
