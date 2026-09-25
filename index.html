@@ -2763,7 +2763,7 @@
       lucide.createIcons();
     }
 
-    /* 6. ASK POSTALIQ — SMART CLIENT-SIDE RULE ENGINE */
+    /* 6. ASK POSTALIQ — QUESTION UNDERSTANDING + SOURCE GROUNDED ANSWERS */
     const ASK_MANUALS = [
       {name:'General Financial Rules 2017', file:'manuals/GFR_2017.html', type:'Guide / Financial Rules'},
       {name:'Indian Post Office Rules, 1933', file:'manuals/Indian_Post_Office_Rules_1933.html', type:'Rules'},
@@ -2776,143 +2776,166 @@
 
     let ASK_INDEX = [];
     let ASK_INDEX_PROMISE = null;
-    const ASK_STOPWORDS = new Set('a an and are as at be before by can could did do does for from how i in is it may me of on or please the this to was what when where which who with would you your'.split(' '));
+    const ASK_STOPWORDS = new Set('a an and are as at be before by can could did do does for from how i in is it may me of on or please the this to was what when where which who with would you your tell give get rate rates current now latest today right'.split(' '));
+
+    /* Question understanding vocabulary.  A question is converted into intent,
+       scheme, operation and time words before source ranking. */
+    const ASK_SCHEMES = {
+      sb:['sb','savings bank','savings account','post office savings','posb','ordinary savings'],
+      rd:['rd','recurring deposit','recurring account','recurring'],
+      td:['td','time deposit','term deposit','fixed deposit'],
+      ppf:['ppf','public provident fund'],
+      ssy:['ssy','sukanya','sukanya samriddhi','sukanya account'],
+      nsc:['nsc','national savings certificate'],
+      kvp:['kvp','kisan vikas patra'],
+      mis:['mis','monthly income scheme','monthly income account'],
+      scss:['scss','senior citizen savings scheme','senior citizen scheme'],
+      mssc:['mssc','mahila samman','mahila samman savings certificate'],
+      pli:['pli','postal life insurance'],
+      rpli:['rpli','rural postal life insurance']
+    };
+    const ASK_INTENTS = {
+      current_rate:['current interest rate','interest rate','rate of interest','roi','rate','how much interest','what interest','interest percentage','percentage'],
+      rate_history:['previous rate','old rate','earlier rate','rate history','changed rate','change in rate','when did rate change'],
+      eligibility:['eligible','eligibility','who can','who is eligible','can i open','can one open'],
+      maturity:['maturity','matures','mature'],
+      withdrawal:['withdraw','withdrawal','premature withdrawal','partial withdrawal','take out'],
+      closure:['close','closure','closing','premature closure','prematurely close'],
+      death_claim:['death','deceased','died','demise','nominee','legal heir','claim after death','death claim'],
+      nomination:['nominee','nomination','nominate'],
+      deposit:['deposit','deposits','minimum deposit','maximum deposit','limit','limits'],
+      account_opening:['open account','opening account','account opening','open a'],
+      tax:['tax','taxable','tds','80c','80tta','80ttb'],
+      transfer:['transfer','transferred','transferee'],
+      procedure:['procedure','process','how to','steps','documents','required documents','what is required','requirements'],
+      rule:['rule','rules','provision','provisions','manual','section','paragraph','regulation'],
+      order_lookup:['order no','order number','sb order','circular','notification'],
+      comparison:['difference','compare','versus','vs','better than','which one'],
+      definition:['what is','meaning','define','explain']
+    };
     const ASK_ALIASES = {
       deceased:['deceased','death','dead','died','demise','claimant','nominee','legal heir'],
       claim:['claim','claims','settlement','payment','death claim','nominee'],
-      withdrawal:['withdraw','withdrawal','premature','closure','close','closing','encash','encashment'],
+      withdrawal:['withdraw','withdrawal','premature','encash','encashment'],
       deposit:['deposit','depositor','deposited','account'],
       interest:['interest','rate','rates','yield'],
-      rd:['rd','recurring deposit','recurring'],
-      mis:['mis','monthly income account','monthly income'],
-      td:['td','time deposit','term deposit'],
-      sb:['sb','savings bank','savings account','posb'],
-      kyc:['kyc','e-kyc','ekyc','identity','aadhaar'],
-      nominee:['nominee','nomination','nominee claim'],
-      maturity:['maturity','mature','matures'],
-      transfer:['transfer','transferred','transferee'],
-      closure:['closure','closed','closing','close'],
-      interest_rate:['interest rate','rate of interest','roi']
+      rd:['rd','recurring deposit','recurring'], mis:['mis','monthly income account','monthly income'],
+      td:['td','time deposit','term deposit'], sb:['sb','savings bank','savings account','posb'],
+      kyc:['kyc','e-kyc','ekyc','identity','aadhaar'], nominee:['nominee','nomination','nominee claim'],
+      maturity:['maturity','mature','matures'], transfer:['transfer','transferred','transferee'],
+      closure:['closure','closed','closing','close'], interest_rate:['interest rate','rate of interest','roi']
     };
 
     function askNormalize(s){
       return String(s||'').toLowerCase().replace(/[“”‘’]/g,'"').replace(/[^a-z0-9₹%./ -]/g,' ').replace(/\s+/g,' ').trim();
     }
-    function askTokens(q){
-      return askNormalize(q).split(/\s+/).filter(t=>t && !ASK_STOPWORDS.has(t) && t.length>1);
-    }
+    function askTokens(q){ return askNormalize(q).split(/\s+/).filter(t=>t && !ASK_STOPWORDS.has(t) && t.length>1); }
     function askConcepts(q){
       const n=askNormalize(q), out=[];
       Object.entries(ASK_ALIASES).forEach(([key,vals])=>{ if(vals.some(v=>n.includes(v))) out.push(key); });
       return out;
     }
+    function askScheme(q){
+      const n=askNormalize(q), hits=[];
+      Object.entries(ASK_SCHEMES).forEach(([key,vals])=>{
+        let best=0; vals.forEach(v=>{ if(n.includes(v)) best=Math.max(best,v.length); });
+        if(best) hits.push({key,score:best});
+      });
+      hits.sort((a,b)=>b.score-a.score); return hits[0]?.key||null;
+    }
+    function askIntent(q){
+      const n=askNormalize(q), scores={};
+      Object.entries(ASK_INTENTS).forEach(([intent,vals])=>{
+        let sc=0; vals.forEach(v=>{ if(n.includes(v)) sc += v.length>=8 ? 3 : 1; }); scores[intent]=sc;
+      });
+      if(/\b(current|now|latest|today|right now)\b/.test(n) && /\b(rate|interest)\b/.test(n)) scores.current_rate=(scores.current_rate||0)+10;
+      if(/\bhow much\b/.test(n) && /\binterest\b/.test(n)) scores.current_rate=(scores.current_rate||0)+8;
+      return Object.entries(scores).sort((a,b)=>b[1]-a[1])[0]?.[1]>0 ? Object.entries(scores).sort((a,b)=>b[1]-a[1])[0][0] : 'rule';
+    }
+    function askQuestion(q){
+      const n=askNormalize(q);
+      return {raw:q, normalized:n, scheme:askScheme(n), intent:askIntent(n), concepts:askConcepts(n), tokens:askTokens(n), current:/\b(current|now|latest|today|right now)\b/.test(n), question:n};
+    }
     function askEsc(s){ return escapeOrderHtml(String(s||'')); }
     function askSnippet(text, tokens){
-      const clean=String(text||'').replace(/\s+/g,' ').trim();
-      if(!clean) return '';
-      let best=0;
-      tokens.forEach(t=>{const i=clean.toLowerCase().indexOf(t); if(i>=0 && (best===0 || i<best)) best=i;});
-      const start=Math.max(0,(best||0)-170), end=Math.min(clean.length,start+520);
+      const clean=String(text||'').replace(/\s+/g,' ').trim(); if(!clean) return '';
+      let best=-1; tokens.forEach(t=>{const i=clean.toLowerCase().indexOf(t); if(i>=0 && (best<0 || i<best)) best=i;});
+      const start=Math.max(0,(best<0?0:best)-180), end=Math.min(clean.length,start+560);
       return (start>0?'…':'')+clean.slice(start,end)+(end<clean.length?'…':'');
     }
-    function askClassify(item, query){
-      const q=askNormalize(query), t=askNormalize(item.text), title=askNormalize(item.title), heading=askNormalize(item.heading||'');
-      const concepts=askConcepts(q);
-      const directPhrase=q.length>7 && t.includes(q);
-      const conceptHits=concepts.filter(c=>{
-        const vals=ASK_ALIASES[c]||[c]; return vals.some(v=>t.includes(v));
-      }).length;
-      if(directPhrase || (concepts.length && conceptHits>=Math.max(1,Math.ceil(concepts.length*.7)))) return 'Direct source match';
-      if(conceptHits>0 || title.includes(q)) return 'Supporting source';
+    function askRateMatches(q){
+      const scheme=q.scheme, rows=Array.isArray(DATA_POSB)&&DATA_POSB.length?DATA_POSB:POSB_MASTER_SCHEMES;
+      if(!scheme) return rows.filter(r=>/rate|interest/i.test(r.scheme||'')).slice(0,12);
+      const aliases=ASK_SCHEMES[scheme]||[];
+      return rows.filter(r=>aliases.some(a=>askNormalize(r.scheme).includes(a)||a.includes(askNormalize(r.scheme))));
+    }
+    function askRateAnswer(q){
+      if(q.intent!=='current_rate' && !(q.current && q.concepts.includes('interest'))) return null;
+      const rows=askRateMatches(q); if(!rows.length) return null;
+      return rows.map(r=>({scheme:r.scheme,rate:r.rate,compounding:r.compounding,tenure:r.tenure,taxNotes:r.taxNotes}));
+    }
+    function askRateCard(rows,q){
+      const heading=q.scheme ? `${rows.length===1?'Current rate':'Current POSB rates'}` : 'Current POSB interest rates';
+      return `<div class="ask-answer-card"><div class="flex items-center justify-between gap-3"><div><div class="text-[10px] uppercase tracking-wider font-black text-emerald-700 dark:text-emerald-300">Current structured site data</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${heading}</h3></div><span class="ask-source-count">Q2 FY 2026-27</span></div><div class="mt-3 overflow-x-auto"><table class="w-full text-xs"><thead><tr class="border-b border-slate-200 dark:border-slate-700"><th class="text-left p-2">Scheme</th><th class="text-left p-2">Rate</th><th class="text-left p-2">Compounding / payout</th><th class="text-left p-2">Tenure</th></tr></thead><tbody>${rows.map(r=>`<tr class="border-b border-slate-100 dark:border-slate-800"><td class="p-2 font-bold">${askEsc(r.scheme)}</td><td class="p-2 font-black text-brand-red dark:text-red-400">${askEsc(r.rate)}</td><td class="p-2">${askEsc(r.compounding||'')}</td><td class="p-2">${askEsc(r.tenure||'')}</td></tr>`).join('')}</tbody></table></div><p class="text-[11px] text-slate-500 mt-3">PostalIQ is using the current rate dataset already loaded by this site, rather than relying on a historical SB Order search.</p></div>`;
+    }
+    function askClassify(item, q){
+      const t=askNormalize(item.text), title=askNormalize(item.title), heading=askNormalize(item.heading||'');
+      const concepts=q.concepts, hits=concepts.filter(c=>(ASK_ALIASES[c]||[c]).some(v=>t.includes(v)||title.includes(v)||heading.includes(v))).length;
+      const schemeHit=!q.scheme || (ASK_SCHEMES[q.scheme]||[]).some(v=>t.includes(v)||title.includes(v)||heading.includes(v));
+      if((q.scheme && schemeHit && hits>=1) || (q.concepts.length && hits>=Math.max(1,Math.ceil(q.concepts.length*.6)))) return 'Direct source match';
+      if(hits>0 || (q.scheme && schemeHit)) return 'Supporting source';
       return 'Related source';
     }
-    function scoreAskItem(item, query){
-      const q=askNormalize(query), tokens=askTokens(q), concepts=askConcepts(q);
+    function scoreAskItem(item,q){
       const title=askNormalize(item.title), heading=askNormalize(item.heading||''), text=askNormalize(item.text), source=askNormalize(item.source);
       let score=0;
-      if(q && title.includes(q)) score+=80;
-      if(q && heading.includes(q)) score+=55;
-      if(q && text.includes(q)) score+=45;
-      tokens.forEach(t=>{
-        if(title.includes(t)) score+=14;
-        if(heading.includes(t)) score+=10;
-        if(text.includes(t)) score+=3;
-        if(source.includes(t)) score+=2;
-      });
-      concepts.forEach(c=>{
-        const vals=ASK_ALIASES[c]||[c];
-        if(vals.some(v=>title.includes(v))) score+=22;
-        if(vals.some(v=>heading.includes(v))) score+=14;
-        if(vals.some(v=>text.includes(v))) score+=7;
-      });
-      if(item.kind==='order') score+=6;
-      if(/order|rule|manual|handbook|circular/.test(source)) score+=2;
+      if(q.scheme){const vals=ASK_SCHEMES[q.scheme]||[]; if(vals.some(v=>title.includes(v)))score+=45; if(vals.some(v=>heading.includes(v)))score+=30; if(vals.some(v=>text.includes(v)))score+=14;}
+      q.tokens.forEach(t=>{if(title.includes(t))score+=16;if(heading.includes(t))score+=11;if(text.includes(t))score+=3;if(source.includes(t))score+=2;});
+      q.concepts.forEach(c=>{const vals=ASK_ALIASES[c]||[c];if(vals.some(v=>title.includes(v)))score+=22;if(vals.some(v=>heading.includes(v)))score+=14;if(vals.some(v=>text.includes(v)))score+=7;});
+      if(q.intent==='order_lookup'&&item.kind==='order')score+=30;
+      if(q.intent==='rule'&&item.kind==='manual')score+=8;
+      if(q.intent==='death_claim' && /death|deceased|nominee|claim/.test(text))score+=15;
+      if(q.intent==='withdrawal' && /withdraw|premature|closure/.test(text))score+=15;
+      if(q.intent==='procedure' && /procedure|process|application|documents|form/.test(text))score+=10;
+      if(item.kind==='order')score+=5;
       return score;
     }
-    function askOrderIndex(){
-      return DATA_ORDERS.map(o=>({
-        kind:'order', id:o.id, title:o.subject||o.orderNo, heading:o.orderNo, text:`${o.subject||''} ${o.fullText||o.substance||''}`,
-        source:`SB Order ${o.orderNo}`, meta:o
-      }));
-    }
+    function askOrderIndex(){ return DATA_ORDERS.map(o=>({kind:'order',id:o.id,title:o.subject||o.orderNo,heading:o.orderNo,text:`${o.subject||''} ${o.fullText||o.substance||''}`,source:`SB Order ${o.orderNo}`,meta:o})); }
     async function loadAskManualIndex(){
-      const chunks=[];
-      const parser=new DOMParser();
-      const loaded=await Promise.all(ASK_MANUALS.map(async m=>{
-        try{const r=await fetch(m.file,{cache:'force-cache'});if(!r.ok)throw new Error('HTTP '+r.status);return {m,html:await r.text()};}
-        catch(e){return {m,error:e};}
-      }));
-      loaded.forEach(({m,html,error})=>{
-        if(error || !html) return;
-        const doc=parser.parseFromString(html,'text/html');
-        const nodes=[...doc.querySelectorAll('.rule,.heading,.subheading,.plain')];
-        if(!nodes.length){
-          const body=(doc.body?.innerText||'').trim();
-          if(body) chunks.push({kind:'manual',id:m.file,title:m.name,heading:'',text:body,source:m.name,meta:m});
-          return;
-        }
-        let heading='';
-        nodes.forEach((el,i)=>{
-          const cls=String(el.className||'');
-          const txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim();
-          if(!txt) return;
-          if(/heading|subheading/.test(cls)){ heading=txt; return; }
-          chunks.push({kind:'manual',id:m.file+'#'+i,title:m.name,heading,text:txt,source:m.name,meta:m});
-        });
-      });
+      const chunks=[], parser=new DOMParser();
+      const loaded=await Promise.all(ASK_MANUALS.map(async m=>{try{const r=await fetch(m.file,{cache:'force-cache'});if(!r.ok)throw new Error('HTTP '+r.status);return {m,html:await r.text()};}catch(e){return {m,error:e};}}));
+      loaded.forEach(({m,html,error})=>{if(error||!html)return;const doc=parser.parseFromString(html,'text/html');const nodes=[...doc.querySelectorAll('.rule,.heading,.subheading,.plain')];if(!nodes.length){const body=(doc.body?.innerText||'').trim();if(body)chunks.push({kind:'manual',id:m.file,title:m.name,heading:'',text:body,source:m.name,meta:m});return;}let heading='';nodes.forEach((el,i)=>{const cls=String(el.className||'');const txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim();if(!txt)return;if(/heading|subheading/.test(cls)){heading=txt;return;}chunks.push({kind:'manual',id:m.file+'#'+i,title:m.name,heading,text:txt,source:m.name,meta:m});});});
       return chunks;
     }
     async function ensureAskIndex(){
-      if(ASK_INDEX.length) return ASK_INDEX;
-      if(ASK_INDEX_PROMISE) return ASK_INDEX_PROMISE;
-      const status=document.getElementById('ask-index-status');
-      if(status){status.textContent='Building source index…';status.classList.add('loading');}
-      ASK_INDEX_PROMISE=(async()=>{
-        const manuals=await loadAskManualIndex();
-        ASK_INDEX=[...askOrderIndex(),...manuals];
-        if(status){status.textContent=`${ASK_INDEX.length.toLocaleString('en-IN')} source sections indexed`;status.classList.remove('loading');}
-        return ASK_INDEX;
-      })();
-      return ASK_INDEX_PROMISE;
+      if(ASK_INDEX.length)return ASK_INDEX;if(ASK_INDEX_PROMISE)return ASK_INDEX_PROMISE;
+      const status=document.getElementById('ask-index-status');if(status){status.textContent='Building question index…';status.classList.add('loading');}
+      ASK_INDEX_PROMISE=(async()=>{const manuals=await loadAskManualIndex();ASK_INDEX=[...askOrderIndex(),...manuals];if(status){status.textContent=`${ASK_INDEX.length.toLocaleString('en-IN')} source sections indexed`;status.classList.remove('loading');}return ASK_INDEX;})();return ASK_INDEX_PROMISE;
     }
     function askExample(q){const i=document.getElementById('ask-input');if(i){i.value=q;executeRuleQuery();}}
+    function askQuestionSummary(q){
+      const parts=[]; if(q.scheme)parts.push((ASK_SCHEMES[q.scheme]?.[0]||q.scheme).toUpperCase());
+      const labels={current_rate:'current interest rate',rate_history:'rate history',death_claim:'death/claim provision',withdrawal:'withdrawal',closure:'closure',procedure:'procedure',eligibility:'eligibility',maturity:'maturity',deposit:'deposit/limits',tax:'tax',rule:'rule/provision',comparison:'comparison',definition:'definition'};
+      if(labels[q.intent])parts.push(labels[q.intent]);
+      return parts.join(' · ');
+    }
     async function executeRuleQuery(){
-      const input=document.getElementById('ask-input'), res=document.getElementById('ask-results');
-      const raw=String(input?.value||'').trim();
-      res.classList.remove('hidden');
-      if(!raw){res.innerHTML='<div class="p-5 text-sm text-slate-500">Ask a specific question about a rule, order, account, procedure or manual provision.</div>';return;}
-      res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Searching SB Orders and Manuals…</div>';
+      const input=document.getElementById('ask-input'),res=document.getElementById('ask-results');
+      const raw=String(input?.value||'').trim();res.classList.remove('hidden');
+      if(!raw){res.innerHTML='<div class="p-5 text-sm text-slate-500">Ask a question in your own words — for example, “What is the current RD interest rate?” or “Can an RD account be closed before maturity if the depositor dies?”</div>';return;}
+      const q=askQuestion(raw);
+      res.innerHTML=`<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Understanding: <b>${askEsc(askQuestionSummary(q)||'PostalIQ rule question')}</b>…</div>`;
+      /* Current factual values are answered from the site's structured data first. */
+      const rates=askRateAnswer(q);
+      if(rates){res.innerHTML=askRateCard(rates,q);lucide.createIcons();return;}
+      res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Searching the relevant SB Orders and Manual provisions…</div>';
       const index=await ensureAskIndex();
-      const ranked=index.map(item=>({...item,score:scoreAskItem(item,raw)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,8);
-      if(!ranked.length){
-        res.innerHTML=`<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-sm text-slate-500"><div class="font-bold text-slate-700 dark:text-slate-200 mb-1">No direct source match found</div><div>PostalIQ could not locate a relevant provision in the indexed Orders and Manuals.</div></div>`;return;
-      }
-      const direct=ranked.filter(x=>askClassify(x,raw)==='Direct source match').slice(0,3);
-      const shown=direct.length?direct:ranked.slice(0,5);
-      const lead=direct.length?'Direct source match':'Best available source matches';
-      res.innerHTML=`<div class="ask-answer-card"><div class="flex items-center justify-between gap-3"><div><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">${lead}</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">Source-based results for “${askEsc(raw)}”</h3></div><span class="ask-source-count">${shown.length} sources</span></div><p class="text-xs text-slate-500 mt-2">PostalIQ shows the relevant source passages rather than inventing a rule. Verify the full provision when the question depends on dates, exceptions or later orders.</p></div>`+
-        shown.map((x,i)=>{const cls=askClassify(x,raw);const m=x.meta||{};const snippet=askSnippet(x.text,askTokens(raw));
-          return `<div class="ask-result-card"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="ask-kind">${askEsc(x.kind==='order'?'SB Order':'Manual / Guide')}</span><span class="ask-match ${cls==='Direct source match'?'direct':cls==='Supporting source'?'support':'related'}">${askEsc(cls)}</span>${x.kind==='order'&&m.date?`<span class="text-[10px] text-slate-400">${askEsc(m.date)}</span>`:''}</div><h4 class="font-bold text-sm text-slate-900 dark:text-white">${askEsc(x.title)}</h4>${x.heading?`<div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-1">${askEsc(x.heading)}</div>`:''}<p class="text-xs leading-6 text-slate-600 dark:text-slate-300 mt-3">${askEsc(snippet)}</p><div class="mt-3 flex flex-wrap gap-3 items-center">${x.kind==='order'?`<button onclick="viewOrderDetail('${askEsc(m.id)}')" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Order</button>`:`<a href="${askEsc(x.meta.file)}" target="_blank" rel="noopener" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Manual / Guide</a>`}<span class="text-[10px] text-slate-400">Relevance ${Math.round(x.score)}</span></div></div>`;}).join('');
+      const ranked=index.map(item=>({...item,score:scoreAskItem(item,q)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,10);
+      if(!ranked.length){res.innerHTML=`<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-sm text-slate-500"><div class="font-bold text-slate-700 dark:text-slate-200 mb-1">No sufficiently relevant source found</div><div>Try naming the scheme or subject, such as RD, MIS, PPF, nominee, premature closure, withdrawal, maturity or KYC.</div></div>`;return;}
+      const direct=ranked.filter(x=>askClassify(x,q)==='Direct source match').slice(0,4),shown=direct.length?direct:ranked.slice(0,6);
+      const lead=direct.length?'Relevant provision found':'Closest source provisions';
+      res.innerHTML=`<div class="ask-answer-card"><div class="flex items-center justify-between gap-3"><div><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">${askEsc(lead)}</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">I understood your question as: ${askEsc(askQuestionSummary(q)||raw)}</h3></div><span class="ask-source-count">${shown.length} sources</span></div><p class="text-xs text-slate-500 mt-2">PostalIQ matches the scheme, action and subject of your question before selecting source passages. The answer is grounded in the indexed site sources.</p></div>`+
+        shown.map(x=>{const cls=askClassify(x,q),m=x.meta||{},snippet=askSnippet(x.text,q.tokens);return `<div class="ask-result-card"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="ask-kind">${askEsc(x.kind==='order'?'SB Order':'Manual / Guide')}</span><span class="ask-match ${cls==='Direct source match'?'direct':cls==='Supporting source'?'support':'related'}">${askEsc(cls)}</span>${x.kind==='order'&&m.date?`<span class="text-[10px] text-slate-400">${askEsc(m.date)}</span>`:''}</div><h4 class="font-bold text-sm text-slate-900 dark:text-white">${askEsc(x.title)}</h4>${x.heading?`<div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-1">${askEsc(x.heading)}</div>`:''}<p class="text-xs leading-6 text-slate-600 dark:text-slate-300 mt-3">${askEsc(snippet)}</p><div class="mt-3 flex flex-wrap gap-3 items-center">${x.kind==='order'?`<button onclick="viewOrderDetail('${askEsc(m.id)}')" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Order</button>`:`<a href="${askEsc(x.meta.file)}" target="_blank" rel="noopener" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Manual / Guide</a>`}<span class="text-[10px] text-slate-400">Relevance ${Math.round(x.score)}</span></div></div>`;}).join('');
       lucide.createIcons();
     }
 
