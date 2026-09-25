@@ -168,6 +168,9 @@
       .order-text-size-label { display: none; }
     }
   </style>
+<style>
+.manual-card{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;transition:.15s ease}.manual-card:hover{transform:translateY(-1px);border-color:#cbd5e1;box-shadow:0 5px 16px rgba(15,23,42,.07)}.dark .manual-card{border-color:#334155;background:#0f172a}.manual-card-title{font-size:14px;font-weight:800;color:#0f172a;line-height:1.4}.dark .manual-card-title{color:#f8fafc}.manual-card-type{margin-top:4px;font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.08em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.manual-open{flex-shrink:0;padding:8px 11px;border-radius:8px;background:#b91c1c;color:#fff;font-size:11px;font-weight:800;text-decoration:none}.manual-open:hover{background:#991b1b}
+</style>
 </head>
 <body class="bg-brand-surface dark:bg-brand-darkSurface text-slate-800 dark:text-slate-100 flex flex-col min-h-full font-sans antialiased transition-colors duration-200">
 
@@ -203,7 +206,7 @@
         </button>
         <button onclick="navigateTab('orders')" id="btn-tab-orders" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5">
           <i data-lucide="file-text" class="w-4 h-4"></i>
-          <span>Orders Register</span>
+          <span>Orders and Manuals</span>
         </button>
         <button onclick="navigateTab('posb')" id="btn-tab-posb" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5">
           <i data-lucide="badge-percent" class="w-4 h-4 text-brand-gold"></i>
@@ -240,7 +243,7 @@
   <div class="no-print lg:hidden bg-brand-card dark:bg-brand-darkCard border-b border-brand-border dark:border-brand-darkBorder px-3 py-2 flex space-x-2 overflow-x-auto text-xs">
     <button onclick="navigateTab('dashboard')" class="whitespace-nowrap px-2.5 py-1.5 rounded bg-slate-100 dark:bg-slate-800 font-bold text-brand-red dark:text-red-400">Dashboard</button>
     <button onclick="navigateTab('ask')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Ask</button>
-    <button onclick="navigateTab('orders')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Orders</button>
+    <button onclick="navigateTab('orders')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Orders and Manuals</button>
     <button onclick="navigateTab('posb')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">POSB &amp; PLI</button>
     <button onclick="navigateTab('forms')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Forms</button>
     <button onclick="navigateTab('offices')" class="whitespace-nowrap px-2.5 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">PINs</button>
@@ -324,41 +327,20 @@
 
     <!-- VIEW 3: ORDERS REGISTER -->
     <div id="view-orders" class="tab-view hidden space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3">
-        <div>
-          <h2 class="text-xl font-serif font-bold text-slate-900 dark:text-white">Orders &amp; Circulars Directory</h2>
-          <p class="text-xs text-slate-500">Trace active vs superseded orders based on centralized repository data.</p>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <select id="filter-order-year" onchange="renderOrdersTable()" aria-label="Filter orders by year" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 font-semibold">
-            <option value="ALL">All Years</option>
-          </select>
-          <input type="text" id="filter-order-text" oninput="renderOrdersTable()" placeholder="Search subject or order ref..." class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 w-48 sm:w-64">
-          <select id="filter-order-status" onchange="renderOrdersTable()" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900">
-            <option value="ALL">All Statuses</option>
-            <option value="In Force">In Force</option>
-            <option value="Superseded">Superseded</option>
-            <option value="Partially Modified">Partially Modified</option>
-          </select>
-        </div>
-      </div>
-      <div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder overflow-x-auto shadow-sm">
-        <table class="w-full text-left text-xs">
-          <thead class="bg-slate-50 dark:bg-slate-800 text-slate-500 font-mono border-b border-brand-border dark:border-brand-darkBorder">
-            <tr>
-              <th class="p-3">Order Ref &amp; Date</th>
-              <th class="p-3">Category</th>
-              <th class="p-3">Subject</th>
-              <th class="p-3">Status</th>
-              <th class="p-3">Supersedes / Replaced By</th>
-              <th class="p-3 text-right">Action</th>
-            </tr>
-          </thead>
-          <tbody id="orders-tbody" class="divide-y divide-slate-200 dark:divide-slate-800 font-sans"></tbody>
-        </table>
-      </div>
-    </div>
-
+<div class="flex flex-col lg:flex-row lg:items-end justify-between pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3">
+<div><h2 class="text-xl font-serif font-bold text-slate-900 dark:text-white">Orders and Manuals</h2><p class="text-xs text-slate-500">India Post / POSB orders, manuals and practical reference guides.</p></div>
+<div class="flex flex-wrap gap-2"><button type="button" id="orders-subbtn-sb" onclick="switchOrdersSub('sb')" class="px-3 py-1.5 rounded-lg bg-brand-red text-white text-xs font-bold">SB Orders</button><button type="button" id="orders-subbtn-manuals" onclick="switchOrdersSub('manuals')" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold">Manuals and Guides</button></div>
+</div>
+<div id="orders-sub-sb" class="space-y-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-brand-border dark:border-brand-darkBorder gap-3"><div><div class="font-mono text-xs font-bold text-brand-red dark:text-red-400 uppercase tracking-wider mb-1">Savings Bank Orders</div><p class="text-xs text-slate-500">Search and open the existing SB Order repository.</p></div>
+<div class="flex flex-wrap gap-2"><select id="filter-order-year" onchange="renderOrdersTable()" aria-label="Filter orders by year" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 font-semibold"><option value="ALL">All Years</option></select><input type="text" id="filter-order-text" oninput="renderOrdersTable()" placeholder="Search subject or order ref..." class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 w-48 sm:w-64"><select id="filter-order-status" onchange="renderOrdersTable()" class="px-3 py-1.5 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900"><option value="ALL">All Statuses</option><option value="In Force">In Force</option><option value="Superseded">Superseded</option><option value="Partially Modified">Partially Modified</option></select></div></div>
+<div class="bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder overflow-x-auto shadow-sm"><table class="w-full text-left text-xs"><thead class="bg-slate-50 dark:bg-slate-800 text-slate-500 font-mono border-b border-brand-border dark:border-brand-darkBorder"><tr><th class="p-3">Order Ref &amp; Date</th><th class="p-3">Category</th><th class="p-3">Subject</th><th class="p-3">Status</th><th class="p-3">Supersedes / Replaced By</th><th class="p-3 text-right">Action</th></tr></thead><tbody id="orders-tbody" class="divide-y divide-slate-200 dark:divide-slate-800 font-sans"></tbody></table></div>
+</div>
+<div id="orders-sub-manuals" class="hidden space-y-4">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3"><div><div class="font-mono text-xs font-bold text-brand-red dark:text-red-400 uppercase tracking-wider mb-1">Manuals and Guides</div><p class="text-xs text-slate-500">Open a manual or guide in its own page.</p></div>
+<div class="flex items-center gap-2 w-full lg:w-auto"><input id="manual-search-input" type="search" placeholder="Search manual / guide..." aria-label="Search manuals and guides" class="px-3 py-2 text-xs rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 w-full sm:w-72 focus:ring-2 focus:ring-brand-red focus:outline-none"><button type="button" onclick="findManuals()" class="shrink-0 bg-brand-red hover:bg-brand-darkRed text-white px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5"><i data-lucide="search" class="w-4 h-4"></i><span>Find</span></button></div></div>
+<div id="manuals-list" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+</div></div>
     <!-- ============================================================= -->
     <!-- VIEW 4: POSB & PLI CALCULATOR SUITE                           -->
     <!-- ============================================================= -->
@@ -2506,10 +2488,7 @@
     let orderTextSize = 17;
     function applyOrderTextSize() {
       const el = document.getElementById('modal-order-substance');
-      if (el) {
-        el.style.setProperty('--order-text-size', orderTextSize + 'px');
-        el.querySelectorAll('.order-text-clean, .order-structured-content').forEach(n => n.style.setProperty('font-size', orderTextSize + 'px', 'important'));
-      }
+      if (el) el.style.fontSize = orderTextSize + 'px';
       document.querySelectorAll('.order-text-size-btn').forEach(b => b.classList.remove('order-text-size-current'));
       const current = document.querySelector('.order-text-size-btn[title="Reset text size"]');
       if (current && orderTextSize === 17) current.classList.add('order-text-size-current');
@@ -2877,26 +2856,12 @@
     const ref=document.getElementById('modal-order-ref')?.innerText||'SB Order';
     const date=document.getElementById('modal-order-date')?.innerText||'';
     const subj=document.getElementById('modal-order-subj')?.innerText||'';
+    const content=mode==='original' ? (box.querySelector('.order-original-view')?.innerHTML||'') : (box.querySelector('.order-structured-content')?.outerHTML||box.querySelector('.order-text-clean')?.outerHTML||'');
     const w=window.open('','_blank','width=900,height=800');
     if(!w){alert('Please allow pop-ups to print this order.');return;}
     const safeTitle=String(ref).replace(/[<>]/g,'');
-
-    let bodyHtml='';
-    let printCss='';
-    if(mode==='original'){
-      // Print ONLY the source images. No modal container, source note, order header, or subject.
-      const imgs=[...box.querySelectorAll('.order-original-view img')];
-      bodyHtml=imgs.map((img,i)=>'<img class="source-page" src="'+img.getAttribute('src')+'" alt="Original source page '+(i+1)+'">').join('');
-      printCss='@page{margin:0}html,body{margin:0!important;padding:0!important;background:#fff!important}body{width:100vw}.source-page{display:block;width:100vw;max-width:none;height:auto;margin:0;padding:0;border:0;page-break-after:always;break-after:page;box-sizing:border-box}.source-page:last-child{page-break-after:auto;break-after:auto}';
-    } else {
-      const content=box.querySelector('.order-structured-content')?.outerHTML||box.querySelector('.order-text-clean')?.outerHTML||'';
-      bodyHtml='<header class="print-head"><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2></header><main class="print-text">'+content+'</main>';
-      printCss='@page{margin:18mm 16mm}html,body{margin:0;padding:0;background:#fff;color:#111}body{font-family:Arial,sans-serif}.print-head h1{font-size:20px;margin:0 0 4px}.print-head h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.print-text{font-family:Georgia,\'Times New Roman\',serif;font-size:'+orderTextSize+'px!important;line-height:1.65;text-align:left;white-space:normal}.print-text *{font-family:inherit;line-height:inherit}.print-text p{margin:0 0 .9em}.print-text div{margin:0 0 .5em}.print-text pre{white-space:pre-wrap;font:inherit;margin:0}.print-text table{border-collapse:collapse;width:100%;font-family:Arial,sans-serif;font-size:.9em}.print-text td,.print-text th{border:1px solid #999;padding:5px;vertical-align:top}.print-text img{max-width:100%;height:auto}';
-    }
-    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>'+printCss+'</style></head><body>'+bodyHtml+'</body></html>');
-    w.document.close(); w.focus();
-    const imgs=[...w.document.images];
-    Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(r=>{img.onload=img.onerror=r;}))).then(()=>setTimeout(()=>w.print(),250));
+    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>body{font-family:Arial,sans-serif;color:#111;margin:28px}h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.text{font-family:Georgia,serif;font-size:12pt;line-height:1.6;white-space:pre-wrap;text-align:left}.note{padding:10px;background:#fff8dc;border:1px solid #e5c45b;margin-bottom:16px}.img{display:block;max-width:100%;height:auto;margin:0 auto 18px;page-break-inside:avoid}</style></head><body><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2>'+content+'</body></html>');
+    w.document.close(); w.focus(); setTimeout(()=>w.print(),700);
   };
   const oldView=window.viewOrderDetail;
   window.viewOrderDetail=function(id){
@@ -2908,7 +2873,7 @@
     let h=order.structured_html ? '<div class="order-structured-content">'+order.structured_html+'</div>' : '<div class="order-text-clean">'+escapeOrderHtml(text)+'</div>'; h+='<div class="order-original-view">';
     if(imgs.length){h+='<div class="order-source-note">Original source pages for this order.</div>'; imgs.forEach((src,i)=>h+='<img class="order-original-page" loading="lazy" src="'+escapeOrderHtml(src)+'" alt="Original source page '+(i+1)+'">');}
     else h+='<div class="order-source-note">Original source images are not available for this order.</div>';
-    h+='</div>'; box.innerHTML=h; setOrderViewMode('text'); if (typeof applyOrderTextSize === 'function') applyOrderTextSize();
+    h+='</div>'; box.innerHTML=h; setOrderViewMode('text');
   };
   document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{
     const sel=document.getElementById('filter-order-year'); const ly=latestYear();
@@ -2918,69 +2883,19 @@
 })();
 </script>
 
-
 <script>
-/* PostalIQ final order-reading/printing fix */
 (function(){
-  function esc(v){
-    return String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
-  }
-  function plainTextToHtml(raw){
-    const normalized=String(raw||'').replace(/\r\n?/g,'\n').trim();
-    if(!normalized) return '<p>—</p>';
-    return normalized.split(/\n\s*\n/).map(block=>{
-      const lines=block.split('\n').map(x=>x.trim()).filter(Boolean);
-      return lines.length ? '<p>'+lines.map(esc).join('<br>')+'</p>' : '';
-    }).filter(Boolean).join('');
-  }
-  const oldView=window.viewOrderDetail;
-  window.viewOrderDetail=function(id){
-    oldView(id);
-    if(typeof ensureTabs==='function') ensureTabs();
-    const order=DATA_ORDERS.find(o=>String(o.id)===String(id)||String(o.orderNo)===String(id));
-    const box=document.getElementById('modal-order-substance');
-    if(!order||!box) return;
-    const text=String(order.fullText||order.substance||'').replace(/\r\n?/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
-    const imgs=Array.isArray(order.sourceImages)?order.sourceImages:[];
-    let h=order.structured_html
-      ? '<div class="order-structured-content">'+order.structured_html+'</div>'
-      : '<div class="order-text-clean">'+plainTextToHtml(text)+'</div>';
-    h+='<div class="order-original-view">';
-    if(imgs.length){
-      h+='<div class="order-source-note">Original source pages for this order.</div>';
-      imgs.forEach((src,i)=>h+='<img class="order-original-page" loading="lazy" src="'+esc(src)+'" alt="Original source page '+(i+1)+'">');
-    }else h+='<div class="order-source-note">Original source images are not available for this order.</div>';
-    h+='</div>';
-    box.innerHTML=h;
-    setOrderViewMode('text');
-    if(typeof applyOrderTextSize==='function') applyOrderTextSize();
-  };
-
-  window.printCurrentOrder=function(){
-    const box=document.getElementById('modal-order-substance');
-    if(!box) return;
-    const mode=box.dataset.printMode||'text';
-    const ref=document.getElementById('modal-order-ref')?.innerText||'SB Order';
-    const date=document.getElementById('modal-order-date')?.innerText||'';
-    const subj=document.getElementById('modal-order-subj')?.innerText||'';
-    const w=window.open('','_blank','width=900,height=800');
-    if(!w){alert('Please allow pop-ups to print this order.');return;}
-    let body='',css='';
-    if(mode==='original'){
-      const imgs=[...box.querySelectorAll('.order-original-view img.order-original-page')];
-      body=imgs.map((img,i)=>'<img class="source-page" src="'+img.getAttribute('src')+'" alt="">').join('');
-      css='@page{margin:0}html,body{margin:0!important;padding:0!important;background:#fff!important;width:100%}body{width:100vw}.source-page{display:block;width:100vw;max-width:100vw;height:auto;margin:0!important;padding:0!important;border:0;box-shadow:none;page-break-after:always;break-after:page}.source-page:last-child{page-break-after:auto;break-after:auto}';
-    }else{
-      const content=box.querySelector('.order-structured-content')?.outerHTML||box.querySelector('.order-text-clean')?.outerHTML||'';
-      body='<div class="print-head"><div class="print-order">'+esc(ref)+'</div><div><b>Date:</b> '+esc(date)+'</div><div><b>Subject:</b> '+esc(subj)+'</div><hr></div><main class="print-text">'+content+'</main>';
-      css='@page{margin:16mm}html,body{margin:0;padding:0;background:#fff;color:#111}body{font-family:Arial,sans-serif}.print-order{font-size:20px;font-weight:800;margin-bottom:6px}.print-head{margin-bottom:12px}.print-text{font-family:Arial,sans-serif;font-size:'+Number(orderTextSize||17)+'px;line-height:1.55;text-align:left;white-space:normal}.print-text p{margin:0 0 1em}.print-text div{margin:0 0 .5em}.print-text table{border-collapse:collapse;width:100%;margin:18px 0}.print-text td,.print-text th{border:1px solid #888;padding:7px;text-align:left;vertical-align:top}.print-text img{max-width:100%;height:auto}';
-    }
-    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+esc(ref)+'</title><base href="'+document.baseURI+'"><style>'+css+'</style></head><body>'+body+'</body></html>');
-    w.document.close(); w.focus();
-    const imgs=[...w.document.images];
-    Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(r=>{img.onload=img.onerror=r;}))).then(()=>setTimeout(()=>w.print(),300));
-  };
+const MANUALS=[
+{name:"General Financial Rules 2017",file:"manuals/GFR_2017.html",type:"Guide / Financial Rules"},
+{name:"Indian Post Office Rules, 1933",file:"manuals/Indian_Post_Office_Rules_1933.html",type:"Rules"},
+{name:"Post Office Savings Bank Manual — Volume I",file:"manuals/POSB_Manual_Volume_I.html",type:"POSB Manual"},
+{name:"Post Office Savings Bank Manual — Volume II",file:"manuals/Postal_SB_Manual_Volume_II.html",type:"POSB Manual"},
+{name:"Postal Manual Volume V",file:"manuals/Postal_Manual_V.html",type:"Postal Manual"},
+{name:"Postal Manual Volume VII",file:"manuals/Postal_Manual_Volume_VII.html",type:"Postal Manual"}];
+window.renderManuals=function(query){const list=document.getElementById('manuals-list');if(!list)return;const q=String(query||'').trim().toLowerCase();const a=MANUALS.filter(m=>!q||(m.name+' '+m.type).toLowerCase().includes(q));list.innerHTML=a.length?a.map(m=>'<div class="manual-card"><div class="min-w-0"><div class="manual-card-title">'+escapeOrderHtml(m.name)+'</div><div class="manual-card-type">'+escapeOrderHtml(m.type)+'</div></div><a class="manual-open" href="'+escapeOrderHtml(m.file)+'" target="_blank" rel="noopener">Open</a></div>').join(''):'<div class="col-span-full p-8 text-center text-sm text-slate-500 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">No manual or guide found.</div>';if(window.lucide)lucide.createIcons();};
+window.findManuals=function(){const i=document.getElementById('manual-search-input');renderManuals(i?i.value:'');};
+window.switchOrdersSub=function(mode){const sb=document.getElementById('orders-sub-sb'),mg=document.getElementById('orders-sub-manuals'),a=document.getElementById('orders-subbtn-sb'),b=document.getElementById('orders-subbtn-manuals');if(!sb||!mg)return;const m=mode==='manuals';sb.classList.toggle('hidden',m);mg.classList.toggle('hidden',!m);a.className=m?'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold':'px-3 py-1.5 rounded-lg bg-brand-red text-white text-xs font-bold';b.className=!m?'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold':'px-3 py-1.5 rounded-lg bg-brand-red text-white text-xs font-bold';if(m)renderManuals();};
+document.addEventListener('DOMContentLoaded',()=>{renderManuals();const i=document.getElementById('manual-search-input');if(i)i.addEventListener('keydown',e=>{if(e.key==='Enter')findManuals();});});
 })();
 </script>
 
