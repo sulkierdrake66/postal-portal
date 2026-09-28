@@ -3618,5 +3618,53 @@ input,select,textarea{border-radius:10px!important}
   window.addEventListener('afterprint',clearAfterPrint);
 })();
 </script>
+<!-- PostalIQ Firebase AI Logic — browser-module integration -->
+<script type="module" id="postaliq-firebase-ai">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js";
+  import { getAI, getGenerativeModel, GoogleAIBackend } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-ai.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC4-xFICFQmrttaFMLGyiWNPK5OohVudaU",
+    authDomain: "postaliq-110e8.firebaseapp.com",
+    projectId: "postaliq-110e8",
+    storageBucket: "postaliq-110e8.firebasestorage.app",
+    messagingSenderId: "500412068226",
+    appId: "1:500412068226:web:d9b65427615a5e31025f9b",
+    measurementId: "G-S0CBXPLJE1"
+  };
+  const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LfO9dMtAAAAAIbVDFUilq5dmFoR--AmJcqf3oQb";
+
+  try {
+    const firebaseApp = initializeApp(firebaseConfig);
+    initializeAppCheck(firebaseApp, {
+      provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
+      isTokenAutoRefreshEnabled: true
+    });
+    const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
+    const model = getGenerativeModel(ai, {
+      model: "gemini-3.8-flash",
+      generationConfig: { temperature: 0.2, maxOutputTokens: 800 }
+    });
+    window.PostalIQGemini = {
+      ready: true,
+      error: null,
+      model,
+      async ask(prompt) {
+        const result = await model.generateContent(prompt);
+        return result.response.text();
+      }
+    };
+    console.info("PostalIQ Firebase AI Logic initialized.");
+  } catch (error) {
+    console.error("PostalIQ Firebase AI Logic initialization failed:", error);
+    window.PostalIQGemini = {
+      ready: false,
+      error: error?.message || String(error),
+      model: null,
+      async ask() { throw error; }
+    };
+  }
+</script>
 </body>
 </html>
