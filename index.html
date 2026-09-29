@@ -1551,7 +1551,9 @@
         sourceDocument: raw.source_document || raw.sourceDocument || sourceFile,
         documentPages: raw.document_pages || raw.documentPages || [],
         sourcePages: pageStart ? `${pageStart}${pageEnd && pageEnd !== pageStart ? '-' + pageEnd : ''}` : '',
-        sourceImages: Array.isArray(raw.source_images || raw.sourceImages) ? (raw.source_images || raw.sourceImages) : []
+        sourceImages: Array.isArray(raw.source_images || raw.sourceImages) ? (raw.source_images || raw.sourceImages) : [],
+        visualAssets: Array.isArray(raw.visual_assets || raw.visualAssets) ? (raw.visual_assets || raw.visualAssets) : [],
+        sourcePageImages: Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : []
       };
     }
 
@@ -2681,34 +2683,41 @@
     function renderOrderContent(order, rawText) {
       const esc = escapeOrderHtml;
       const pages = Array.isArray(order.documentPages) ? order.documentPages : [];
+      const sourceImages = Array.isArray(order.sourcePageImages) ? order.sourcePageImages : [];
+      const visualAssets = Array.isArray(order.visualAssets) ? order.visualAssets : [];
+      const fallbackImages = visualAssets.map(a => typeof a === 'string' ? a : a.src).filter(Boolean);
+      const originals = sourceImages.length ? sourceImages : fallbackImages;
+
+      let textHtml = '';
       if (!pages.length) {
         const t=String(rawText||'').replace(/\r\n?/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
-        return `<div class="order-page-text left">${esc(t)}</div>`;
-      }
-      let html='';
-      pages.forEach(p=>{
-        html += `<div class="order-page-block ${p.orientation==='landscape'?'order-page-landscape':''}` + `">`;
-        html += `<div class="order-page-label">Page ${esc(p.local_page || p.page)}</div>`;
-        (p.blocks||[]).forEach(b=>{
-          const cls=b.align==='center'?'center':'left';
-          html += `<div class="order-page-text ${cls}" style="margin:0 0 .85rem;">${esc(b.text)}</div>`;
-        });
-        if(p.table && p.table.rows && p.table.rows.length){
-          html += `<div class="order-table-wrap"><table class="order-table"><tbody>`;
-          p.table.rows.forEach((row,ri)=>{
-            html += '<tr>'+row.map(c=>`<td>${esc(c)}</td>`).join('')+'</tr>';
+        textHtml = `<div class="order-page-text left">${esc(t)}</div>`;
+      } else {
+        pages.forEach(p=>{
+          textHtml += `<div class="order-page-block ${p.orientation==='landscape'?'order-page-landscape':''}">`;
+          textHtml += `<div class="order-page-label">Page ${esc(p.local_page || p.page)}</div>`;
+          (p.blocks||[]).forEach(b=>{
+            const cls=b.align==='center'?'center':'left';
+            textHtml += `<div class="order-page-text ${cls}" style="margin:0 0 .85rem;">${esc(b.text)}</div>`;
           });
-          html += '</tbody></table></div>';
-        }
-        (p.images||[]).forEach(a=>{
-          html += `<img class="order-visual" src="${esc(a.src)}" alt="${esc(a.caption||'Visual content from order')}" loading="lazy">`;
+          if(p.table && p.table.rows && p.table.rows.length){
+            textHtml += `<div class="order-table-wrap"><table class="order-table"><tbody>`;
+            p.table.rows.forEach(row=>{ textHtml += '<tr>'+row.map(c=>`<td>${esc(c)}</td>`).join('')+'</tr>'; });
+            textHtml += '</tbody></table></div>';
+          }
+          (p.images||[]).forEach(a=>{
+            const src=typeof a==='string'?a:a.src;
+            if(src) textHtml += `<img class="order-visual" src="${esc(src)}" alt="${esc((a&&a.caption)||'Visual content from order')}" loading="lazy">`;
+          });
+          textHtml += '</div>';
         });
-        if(p.source_page_image){
-          html += `<img class="order-source-page" src="${esc(p.source_page_image)}" alt="Original source page ${esc(p.local_page || p.page)}" loading="lazy">`;
-        }
-        html += '</div>';
-      });
-      return html;
+      }
+
+      const originalHtml = originals.length
+        ? `<div class="order-original-view" style="display:none">${originals.map((src,i)=>`<img class="order-original-page" src="${esc(src)}" alt="Original source page ${i+1}" loading="lazy">`).join('')}</div>`
+        : `<div class="order-original-view order-original-unavailable" style="display:none"><div class="p-5 rounded-xl border border-amber-300 bg-amber-50 text-amber-800 text-sm">Original source images are not attached to this order's data record.</div></div>`;
+
+      return `<div class="order-text-clean"><div class="order-structured-content">${textHtml}</div></div>${originalHtml}`;
     }
 
     function viewOrderDetail(orderId) {
@@ -2724,6 +2733,7 @@
       document.getElementById('modal-order-subj').innerText = order.subject || '—';
       const rawOrderText = order.fullText || order.substance || '—';
       document.getElementById('modal-order-substance').innerHTML = renderOrderContent(order, rawOrderText);
+      document.getElementById('modal-order-substance').dataset.printMode = 'text';
 
       // Source label is optional in the modal markup. Do not let a missing
       // optional element prevent the order detail window from opening.
@@ -3347,17 +3357,24 @@ document.addEventListener('DOMContentLoaded',()=>{renderManuals();const i=docume
     const ref=document.getElementById('modal-order-ref')?.innerText||'SB Order';
     const date=document.getElementById('modal-order-date')?.innerText||'';
     const subj=document.getElementById('modal-order-subj')?.innerText||'';
-    let content=mode==='original' ? (box.querySelector('.order-original-view')?.innerHTML||'') : (box.querySelector('.order-structured-content')?.outerHTML||box.querySelector('.order-text-clean')?.outerHTML||'');
-    content=content.replace(/\sloading=(?:"[^"]*"|'[^']*')/gi,'');
     const w=window.open('','_blank','width=1000,height=900');
     if(!w){alert('Please allow pop-ups to print this order.');return;}
     const safeTitle=String(ref).replace(/[<>]/g,'');
-    w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>@page{margin:12mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#111;background:#fff;margin:0;font-size:11pt;line-height:1.55}h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.text,.order-text-clean{font-family:Georgia,serif;font-size:12pt;line-height:1.6;white-space:pre-wrap;text-align:left}.order-structured-content{font-size:11pt}.order-source-note{padding:10px;background:#fff8dc;border:1px solid #e5c45b;margin:0 0 16px}.order-original-view{display:block}.order-original-page,.img{display:block;max-width:100%;height:auto;margin:0 auto 18px;break-inside:avoid;page-break-inside:avoid}.order-structured-content table{width:100%;border-collapse:collapse}.order-structured-content th,.order-structured-content td{border:1px solid #888;padding:5px;vertical-align:top}.order-structured-content{break-before:auto;page-break-before:auto}</style></head><body><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2>'+content+'</body></html>');
+
+    if(mode==='original'){
+      const images=[...box.querySelectorAll('.order-original-page')];
+      if(!images.length){ w.close(); alert('Original Document is not available for this order.'); return; }
+      const imageHtml=images.map((img,i)=>'<img class="source-page" src="'+escapeOrderHtml(img.getAttribute('src')||'')+'" alt="'+escapeOrderHtml(img.getAttribute('alt')||('Original source page '+(i+1)))+'">').join('');
+      w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+' - Original Document</title><base href="'+document.baseURI+'"><style>@page{size:A4 portrait;margin:0}*{box-sizing:border-box}html,body{margin:0!important;padding:0!important;background:#fff!important}body{font-size:0;line-height:0}.source-page{display:block;width:100%;height:auto;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid}.source-page:last-child{break-after:auto;page-break-after:auto}</style></head><body>'+imageHtml+'</body></html>');
+    } else {
+      const content=box.querySelector('.order-text-clean')?.outerHTML || '<p>No order text available.</p>';
+      w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>@page{margin:12mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#111;background:#fff;margin:0;font-size:11pt;line-height:1.55}h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.order-text-clean{font-family:Georgia,serif;font-size:12pt;line-height:1.6;white-space:normal;text-align:left}.order-page-text{white-space:pre-wrap}.order-page-block{margin:0 0 18px}.order-page-label{font:700 9pt Arial,sans-serif;color:#666;margin-bottom:6px}.order-table-wrap{overflow:visible!important;margin:12px 0}.order-table{width:100%;border-collapse:collapse}.order-table td{border:1px solid #888;padding:5px;vertical-align:top}.order-visual{display:block;max-width:100%;height:auto;margin:10px auto}.order-original-view{display:none!important}</style></head><body><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2>'+content+'</body></html>');
+    }
     w.document.close();
-    const printNow=()=>{w.focus();w.print();};
+    const printNow=()=>{try{w.focus();w.print();}catch(e){}};
     const imgs=[...w.document.images];
-    if(imgs.length){ Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(r=>{img.onload=img.onerror=r;}))).then(()=>setTimeout(printNow,200)); }
-    else setTimeout(printNow,200);
+    if(imgs.length){Promise.all(imgs.map(img=>img.complete?Promise.resolve():new Promise(r=>{img.onload=img.onerror=r;}))).then(()=>setTimeout(printNow,250));}
+    else setTimeout(printNow,250);
   };
 
   document.addEventListener('DOMContentLoaded',function(){
@@ -3618,6 +3635,54 @@ input,select,textarea{border-radius:10px!important}
   window.addEventListener('afterprint',clearAfterPrint);
 })();
 </script>
+<!-- PostalIQ order viewer/print reliability + Gemini Ask Rules integration -->
+<script>
+(function(){
+  function esc(v){ return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
+  window.executeRuleQuery = async function(){
+    const input=document.getElementById('ask-input'), res=document.getElementById('ask-results');
+    const raw=String(input?.value||'').trim();
+    if(!res) return;
+    res.classList.remove('hidden');
+    if(!raw){res.innerHTML='<div class="p-5 text-sm text-slate-500">Ask a question in your own words.</div>';return;}
+    const q=askQuestion(raw);
+    res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Understanding the question and checking PostalIQ sources…</div>';
+
+    // Current rates remain deterministic and local; no AI request is needed for these.
+    const rates=askRateAnswer(q);
+    if(rates){res.innerHTML=askRateCard(rates,q);lucide.createIcons();return;}
+
+    const index=await ensureAskIndex();
+    const ranked=index.map(item=>({...item,score:scoreAskItem(item,q)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,8);
+    if(!ranked.length){res.innerHTML='<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-sm text-slate-500"><div class="font-bold text-slate-700 dark:text-slate-200 mb-1">No sufficiently relevant source found</div><div>Try naming the scheme, operation, order number or subject.</div></div>';return;}
+
+    const direct=ranked.filter(x=>askClassify(x,q)==='Direct source match');
+    const shown=(direct.length?direct:ranked).slice(0,6);
+    const evidence=shown.map((x,i)=>{
+      const m=x.meta||{};
+      const snippet=askSnippet(x.text,q.tokens);
+      return `[SOURCE ${i+1}]\nType: ${x.kind==='order'?'SB Order':'Manual / Guide'}\nTitle: ${x.title}\n${x.kind==='order'?'Order: '+(m.orderNo||'')+'\nDate: '+(m.date||''):'File: '+(m.file||'')}\nEvidence:\n${snippet}`;
+    }).join('\n\n');
+
+    let answer='';
+    let aiUsed=false;
+    if(window.PostalIQGemini?.ready){
+      const prompt=`You are Ask PostalIQ, a source-grounded assistant for India Post/POSB operational reference work. Answer the user's question using ONLY the supplied PostalIQ evidence. Do not invent rules, dates, rates, permissions, or procedures. If the evidence is insufficient or conflicting, say that clearly.\n\nUSER QUESTION:\n${raw}\n\nPOSTALIQ EVIDENCE:\n${evidence}\n\nWrite a concise practical answer. State the applicable rule/provision when supported. Do not cite a source that is not in the evidence. Do not mention that you are an AI. Keep the answer focused on the question.`;
+      try{ answer=await window.PostalIQGemini.ask(prompt); aiUsed=true; }
+      catch(err){ console.warn('PostalIQ Gemini answer failed; showing local evidence only.',err); }
+    }
+
+    const sourceCards=shown.map(x=>{const cls=askClassify(x,q),m=x.meta||{},snippet=askSnippet(x.text,q.tokens);return `<div class="ask-result-card"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="ask-kind">${esc(x.kind==='order'?'SB Order':'Manual / Guide')}</span><span class="ask-match ${cls==='Direct source match'?'direct':cls==='Supporting source'?'support':'related'}">${esc(cls)}</span>${x.kind==='order'&&m.date?`<span class="text-[10px] text-slate-400">${esc(m.date)}</span>`:''}</div><h4 class="font-bold text-sm text-slate-900 dark:text-white">${esc(x.title)}</h4>${x.heading?`<div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-1">${esc(x.heading)}</div>`:''}<p class="text-xs leading-6 text-slate-600 dark:text-slate-300 mt-3">${esc(snippet)}</p><div class="mt-3 flex flex-wrap gap-3 items-center">${x.kind==='order'?`<button onclick="viewOrderDetail('${esc(m.id)}')" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Order</button>`:`<a href="${esc(x.meta.file)}" target="_blank" rel="noopener" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Manual / Guide</a>`}</div></div>`;}).join('');
+
+    const answerHtml=aiUsed
+      ? `<div class="ask-answer-card"><div class="flex items-center justify-between gap-3"><div><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">PostalIQ answer</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${esc(askQuestionSummary(q)||raw)}</h3></div><span class="ask-source-count">${shown.length} sources</span></div><div class="text-sm leading-7 text-slate-700 dark:text-slate-200 mt-4 whitespace-pre-wrap">${esc(answer)}</div><p class="text-[10px] text-slate-400 mt-4">Answer generated from the PostalIQ source passages shown below.</p></div>`
+      : `<div class="ask-answer-card"><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">Relevant source material</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${esc(askQuestionSummary(q)||raw)}</h3><p class="text-xs text-slate-500 mt-2">Gemini was not available for this request, so PostalIQ is showing the retrieved evidence without inventing an answer.</p></div>`;
+    res.innerHTML=answerHtml+sourceCards;
+    lucide.createIcons();
+  };
+})();
+</script>
+
 <!-- PostalIQ Firebase AI Logic — browser-module integration -->
 <script type="module" id="postaliq-firebase-ai">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
