@@ -1553,7 +1553,23 @@
         sourcePages: pageStart ? `${pageStart}${pageEnd && pageEnd !== pageStart ? '-' + pageEnd : ''}` : '',
         sourceImages: Array.isArray(raw.source_images || raw.sourceImages) ? (raw.source_images || raw.sourceImages) : [],
         visualAssets: Array.isArray(raw.visual_assets || raw.visualAssets) ? (raw.visual_assets || raw.visualAssets) : [],
-        sourcePageImages: Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : []
+        sourcePageImages: Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : [],
+        // The rendered source-page images in the repository follow a stable
+        // year/order/page-NNNN.jpg convention. Build these only as a fallback
+        // when the JSON record does not explicitly carry image paths.
+        derivedSourceImages: (() => {
+          const explicit = Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : [];
+          if (explicit.length) return explicit;
+          const assets = Array.isArray(raw.visual_assets || raw.visualAssets) ? (raw.visual_assets || raw.visualAssets) : [];
+          if (assets.length) return assets.map(a => typeof a === 'string' ? a : a?.src).filter(Boolean);
+          const start = Number(pageStart), end = Number(pageEnd);
+          const num = String(raw.order_no || raw.order_number || raw.orderNo || '').match(/\d+/)?.[0];
+          if (!year || !num || !Number.isFinite(start) || !Number.isFinite(end)) return [];
+          const padded = String(Number(num)).padStart(2,'0');
+          const out=[];
+          for(let pg=start; pg<=end; pg++) out.push(`images/orders/${year}/${padded}/page-${String(pg).padStart(4,'0')}.jpg`);
+          return out;
+        })()
       };
     }
 
@@ -2685,8 +2701,9 @@
       const pages = Array.isArray(order.documentPages) ? order.documentPages : [];
       const sourceImages = Array.isArray(order.sourcePageImages) ? order.sourcePageImages : [];
       const visualAssets = Array.isArray(order.visualAssets) ? order.visualAssets : [];
-      const fallbackImages = visualAssets.map(a => typeof a === 'string' ? a : a.src).filter(Boolean);
-      const originals = sourceImages.length ? sourceImages : fallbackImages;
+      const derivedImages = Array.isArray(order.derivedSourceImages) ? order.derivedSourceImages : [];
+      const fallbackImages = visualAssets.map(a => typeof a === 'string' ? a : a?.src).filter(Boolean);
+      const originals = sourceImages.length ? sourceImages : (fallbackImages.length ? fallbackImages : derivedImages);
 
       let textHtml = '';
       if (!pages.length) {
@@ -3054,8 +3071,47 @@
     function askOrderIndex(){ return DATA_ORDERS.map(o=>({kind:'order',id:o.id,title:o.subject||o.orderNo,heading:o.orderNo,text:`${o.subject||''} ${o.fullText||o.substance||''}`,source:`SB Order ${o.orderNo}`,meta:o})); }
     async function loadAskManualIndex(){
       const chunks=[], parser=new DOMParser();
-      const loaded=await Promise.all(ASK_MANUALS.map(async m=>{try{const r=await fetch(m.file,{cache:'force-cache'});if(!r.ok)throw new Error('HTTP '+r.status);return {m,html:await r.text()};}catch(e){return {m,error:e};}}));
-      loaded.forEach(({m,html,error})=>{if(error||!html)return;const doc=parser.parseFromString(html,'text/html');const nodes=[...doc.querySelectorAll('.rule,.heading,.subheading,.plain')];if(!nodes.length){const body=(doc.body?.innerText||'').trim();if(body)chunks.push({kind:'manual',id:m.file,title:m.name,heading:'',text:body,source:m.name,meta:m});return;}let heading='';nodes.forEach((el,i)=>{const cls=String(el.className||'');const txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim();if(!txt)return;if(/heading|subheading/.test(cls)){heading=txt;return;}chunks.push({kind:'manual',id:m.file+'#'+i,title:m.name,heading,text:txt,source:m.name,meta:m});});});
+      const loaded=await Promise.all(ASK_MANUALS.map(async m=>{
+        try{const r=await fetch(m.file,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return {m,html:await r.text()};}
+        catch(e){console.warn('PostalIQ: manual index load failed',m.file,e);return {m,error:e};}
+      }));
+      loaded.forEach(({m,html,error})=>{
+        if(error||!html)return;
+        const doc=parser.parseFromString(html,'text/html');
+        const root=doc.body;
+        if(!root)return;
+        let sectionHeading=''; let sectionParts=[]; let sectionNo=0;
+        const flush=()=>{
+          const text=sectionParts.join(' ').replace(/\s+/g,' ').trim();
+          if(text.length>=25){
+            chunks.push({kind:'manual',id:m.file+'#section-'+(++sectionNo),title:m.name,heading:sectionHeading,text,source:m.name,meta:m});
+          }
+          sectionParts=[];
+        };
+        const els=[...root.querySelectorAll('h1,h2,h3,h4,h5,h6,.rule,.heading,.subheading,.section-title,.chapter-title,p,li,td,th')];
+        els.forEach(el=>{
+          if(el.closest('script,style,noscript'))return;
+          const txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim();
+          if(!txt || txt.length<2)return;
+          const tag=el.tagName.toLowerCase();
+          const cls=String(el.className||'').toLowerCase();
+          const isHeading=/^h[1-6]$/.test(tag)||/heading|subheading|section-title|chapter-title/.test(cls);
+          if(isHeading){
+            flush();
+            sectionHeading=txt;
+          }else{
+            sectionParts.push(txt);
+            // Keep chunks reasonably small so Gemini receives several precise
+            // provisions instead of one giant manual.
+            if(sectionParts.join(' ').length>1800) flush();
+          }
+        });
+        flush();
+        if(!chunks.some(x=>x.meta===m)){
+          const body=(root.innerText||'').replace(/\s+/g,' ').trim();
+          if(body)chunks.push({kind:'manual',id:m.file,title:m.name,heading:'',text:body,source:m.name,meta:m});
+        }
+      });
       return chunks;
     }
     async function ensureAskIndex(){
@@ -3667,7 +3723,7 @@ input,select,textarea{border-radius:10px!important}
     let answer='';
     let aiUsed=false;
     if(window.PostalIQGemini?.ready){
-      const prompt=`You are Ask PostalIQ, a source-grounded assistant for India Post/POSB operational reference work. Answer the user's question using ONLY the supplied PostalIQ evidence. Do not invent rules, dates, rates, permissions, or procedures. If the evidence is insufficient or conflicting, say that clearly.\n\nUSER QUESTION:\n${raw}\n\nPOSTALIQ EVIDENCE:\n${evidence}\n\nWrite a concise practical answer. State the applicable rule/provision when supported. Do not cite a source that is not in the evidence. Do not mention that you are an AI. Keep the answer focused on the question.`;
+      const prompt=`You are Ask PostalIQ, a source-grounded assistant for India Post/POSB operational reference work. Answer the user's question using ONLY the supplied PostalIQ evidence. Do not invent rules, dates, rates, permissions, or procedures. If the evidence is insufficient or conflicting, say that clearly.\n\nUSER QUESTION:\n${raw}\n\nPOSTALIQ EVIDENCE:\n${evidence}\n\nWrite a clear, useful explanation, not just a one- or two-line summary. Start with the direct answer. Then explain the applicable rule/procedure in plain language, including conditions, exceptions, time limits, documents or steps when the evidence supports them. If several provisions work together, explain how they relate. End with a short 'Source basis' sentence naming the relevant order/manual and section or heading when available. Do not cite a source that is not in the evidence. Do not invent missing details. Do not mention that you are an AI. Prefer 3-7 short paragraphs or numbered points when appropriate.`;
       try{ answer=await window.PostalIQGemini.ask(prompt); aiUsed=true; }
       catch(err){ console.warn('PostalIQ Gemini answer failed; showing local evidence only.',err); }
     }
@@ -3686,7 +3742,7 @@ input,select,textarea{border-radius:10px!important}
 <!-- PostalIQ Firebase AI Logic — browser-module integration -->
 <script type="module" id="postaliq-firebase-ai">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-  import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js";
+  import { initializeAppCheck, ReCaptchaEnterpriseProvider, getToken } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js";
   import { getAI, getGenerativeModel, GoogleAIBackend } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-ai.js";
 
   const firebaseConfig = {
@@ -3702,14 +3758,17 @@ input,select,textarea{border-radius:10px!important}
 
   try {
     const firebaseApp = initializeApp(firebaseConfig);
-    initializeAppCheck(firebaseApp, {
+    const appCheck = initializeAppCheck(firebaseApp, {
       provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
       isTokenAutoRefreshEnabled: true
     });
+    // Verify App Check before advertising Gemini as ready. This prevents the UI
+    // from claiming AI is available when Firebase will reject the request with 401.
+    await getToken(appCheck, false);
     const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
     const model = getGenerativeModel(ai, {
       model: "gemini-3.8-flash",
-      generationConfig: { temperature: 0.2, maxOutputTokens: 800 }
+      generationConfig: { temperature: 0.2, maxOutputTokens: 1600 }
     });
     window.PostalIQGemini = {
       ready: true,
@@ -3731,5 +3790,14 @@ input,select,textarea{border-radius:10px!important}
     };
   }
 </script>
+<style id="postaliq-october-fixes">
+/* October baseline fixes: keep the existing modal geometry, but let the reader resize it. */
+.order-detail-shell{resize:both;overflow:hidden;min-width:min(520px,92vw);min-height:420px;max-width:96vw;max-height:92vh;box-sizing:border-box}
+.order-detail-shell .order-detail-scroll{min-height:0;height:100%}
+/* Keep Ask PostalIQ readable: no patterned/polka-dot background behind the answer. */
+.ask-answer-card,.ask-result-card{background:#fff !important;background-image:none !important;background-color:#fff !important}
+.dark .ask-answer-card,.dark .ask-result-card{background:#1e293b !important;background-image:none !important}
+</style>
+
 </body>
 </html>
