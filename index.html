@@ -1553,23 +1553,7 @@
         sourcePages: pageStart ? `${pageStart}${pageEnd && pageEnd !== pageStart ? '-' + pageEnd : ''}` : '',
         sourceImages: Array.isArray(raw.source_images || raw.sourceImages) ? (raw.source_images || raw.sourceImages) : [],
         visualAssets: Array.isArray(raw.visual_assets || raw.visualAssets) ? (raw.visual_assets || raw.visualAssets) : [],
-        sourcePageImages: Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : [],
-        // The rendered source-page images in the repository follow a stable
-        // year/order/page-NNNN.jpg convention. Build these only as a fallback
-        // when the JSON record does not explicitly carry image paths.
-        derivedSourceImages: (() => {
-          const explicit = Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : [];
-          if (explicit.length) return explicit;
-          const assets = Array.isArray(raw.visual_assets || raw.visualAssets) ? (raw.visual_assets || raw.visualAssets) : [];
-          if (assets.length) return assets.map(a => typeof a === 'string' ? a : a?.src).filter(Boolean);
-          const start = Number(pageStart), end = Number(pageEnd);
-          const num = String(raw.order_no || raw.order_number || raw.orderNo || '').match(/\d+/)?.[0];
-          if (!year || !num || !Number.isFinite(start) || !Number.isFinite(end)) return [];
-          const padded = String(Number(num)).padStart(2,'0');
-          const out=[];
-          for(let pg=start; pg<=end; pg++) out.push(`images/orders/${year}/${padded}/page-${String(pg).padStart(4,'0')}.jpg`);
-          return out;
-        })()
+        sourcePageImages: Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : []
       };
     }
 
@@ -2701,9 +2685,8 @@
       const pages = Array.isArray(order.documentPages) ? order.documentPages : [];
       const sourceImages = Array.isArray(order.sourcePageImages) ? order.sourcePageImages : [];
       const visualAssets = Array.isArray(order.visualAssets) ? order.visualAssets : [];
-      const derivedImages = Array.isArray(order.derivedSourceImages) ? order.derivedSourceImages : [];
-      const fallbackImages = visualAssets.map(a => typeof a === 'string' ? a : a?.src).filter(Boolean);
-      const originals = sourceImages.length ? sourceImages : (fallbackImages.length ? fallbackImages : derivedImages);
+      const fallbackImages = visualAssets.map(a => typeof a === 'string' ? a : a.src).filter(Boolean);
+      const originals = sourceImages.length ? sourceImages : fallbackImages;
 
       let textHtml = '';
       if (!pages.length) {
@@ -3071,47 +3054,8 @@
     function askOrderIndex(){ return DATA_ORDERS.map(o=>({kind:'order',id:o.id,title:o.subject||o.orderNo,heading:o.orderNo,text:`${o.subject||''} ${o.fullText||o.substance||''}`,source:`SB Order ${o.orderNo}`,meta:o})); }
     async function loadAskManualIndex(){
       const chunks=[], parser=new DOMParser();
-      const loaded=await Promise.all(ASK_MANUALS.map(async m=>{
-        try{const r=await fetch(m.file,{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);return {m,html:await r.text()};}
-        catch(e){console.warn('PostalIQ: manual index load failed',m.file,e);return {m,error:e};}
-      }));
-      loaded.forEach(({m,html,error})=>{
-        if(error||!html)return;
-        const doc=parser.parseFromString(html,'text/html');
-        const root=doc.body;
-        if(!root)return;
-        let sectionHeading=''; let sectionParts=[]; let sectionNo=0;
-        const flush=()=>{
-          const text=sectionParts.join(' ').replace(/\s+/g,' ').trim();
-          if(text.length>=25){
-            chunks.push({kind:'manual',id:m.file+'#section-'+(++sectionNo),title:m.name,heading:sectionHeading,text,source:m.name,meta:m});
-          }
-          sectionParts=[];
-        };
-        const els=[...root.querySelectorAll('h1,h2,h3,h4,h5,h6,.rule,.heading,.subheading,.section-title,.chapter-title,p,li,td,th')];
-        els.forEach(el=>{
-          if(el.closest('script,style,noscript'))return;
-          const txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim();
-          if(!txt || txt.length<2)return;
-          const tag=el.tagName.toLowerCase();
-          const cls=String(el.className||'').toLowerCase();
-          const isHeading=/^h[1-6]$/.test(tag)||/heading|subheading|section-title|chapter-title/.test(cls);
-          if(isHeading){
-            flush();
-            sectionHeading=txt;
-          }else{
-            sectionParts.push(txt);
-            // Keep chunks reasonably small so Gemini receives several precise
-            // provisions instead of one giant manual.
-            if(sectionParts.join(' ').length>1800) flush();
-          }
-        });
-        flush();
-        if(!chunks.some(x=>x.meta===m)){
-          const body=(root.innerText||'').replace(/\s+/g,' ').trim();
-          if(body)chunks.push({kind:'manual',id:m.file,title:m.name,heading:'',text:body,source:m.name,meta:m});
-        }
-      });
+      const loaded=await Promise.all(ASK_MANUALS.map(async m=>{try{const r=await fetch(m.file,{cache:'force-cache'});if(!r.ok)throw new Error('HTTP '+r.status);return {m,html:await r.text()};}catch(e){return {m,error:e};}}));
+      loaded.forEach(({m,html,error})=>{if(error||!html)return;const doc=parser.parseFromString(html,'text/html');const nodes=[...doc.querySelectorAll('.rule,.heading,.subheading,.plain')];if(!nodes.length){const body=(doc.body?.innerText||'').trim();if(body)chunks.push({kind:'manual',id:m.file,title:m.name,heading:'',text:body,source:m.name,meta:m});return;}let heading='';nodes.forEach((el,i)=>{const cls=String(el.className||'');const txt=(el.innerText||el.textContent||'').replace(/\s+/g,' ').trim();if(!txt)return;if(/heading|subheading/.test(cls)){heading=txt;return;}chunks.push({kind:'manual',id:m.file+'#'+i,title:m.name,heading,text:txt,source:m.name,meta:m});});});
       return chunks;
     }
     async function ensureAskIndex(){
@@ -3695,44 +3639,184 @@ input,select,textarea{border-radius:10px!important}
 <script>
 (function(){
   function esc(v){ return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;'); }
+
+  /*
+   * FAST RETRIEVAL LAYER
+   * Exact identifiers are deliberately resolved before the broad semantic index.
+   * A query such as "Rule 121 from Financial Handbook Volume II" must never send
+   * Rules 1, 37, 55, 62 and 126 to Gemini merely because they are nearby matches.
+   */
+  function askExtractExactRule(raw){
+    const n=askNormalize(raw);
+    const m=n.match(/\brule\s*(\d+[a-z]?(?:\([^)]+\))?(?:\s*[-.]?\s*\([^)]+\))?)\b/i);
+    if(!m) return null;
+    return m[1].replace(/\s+/g,'').toLowerCase();
+  }
+
+  function askManualTarget(raw){
+    const n=askNormalize(raw);
+    const matches=[];
+    ASK_MANUALS.forEach(m=>{
+      const name=askNormalize(m.name);
+      const aliases=[name];
+      if(/financial handbook/.test(name)) aliases.push('financial handbook volume 2','financial handbook vol 2','fhb volume 2','fhb vol 2');
+      if(/general financial rules/.test(name)) aliases.push('gfr 2017','general financial rules');
+      if(/post office savings bank manual/.test(name)) aliases.push('posb manual');
+      let score=0; aliases.forEach(a=>{if(n.includes(a)) score=Math.max(score,a.length);});
+      if(score) matches.push({m,score});
+    });
+    matches.sort((a,b)=>b.score-a.score);
+    return matches[0]?.m||null;
+  }
+
+  function askCleanManualText(doc){
+    const clone=doc.cloneNode(true);
+    clone.querySelectorAll('script,style,noscript,nav,header,footer').forEach(el=>el.remove());
+    return String(clone.body?.innerText||clone.documentElement?.innerText||'').replace(/\r/g,'').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+  }
+
+  async function askFetchManual(m){
+    const r=await fetch(m.file,{cache:'force-cache'});
+    if(!r.ok) throw new Error('HTTP '+r.status+' for '+m.file);
+    return new DOMParser().parseFromString(await r.text(),'text/html');
+  }
+
+  function askFindRuleInText(text, ruleId){
+    const raw=String(text||'').replace(/\r/g,'');
+    const id=String(ruleId||'').replace(/\s+/g,'').toLowerCase();
+    if(!id) return null;
+    const re=new RegExp('(^|\\n|\\s)(Rule\\s*'+id.replace(/[.*+?^${}()|[\\]\\]/g,'\\$&')+')(?![0-9a-z])','i');
+    const m=re.exec(raw);
+    if(!m) return null;
+    const start=Math.max(0,m.index);
+    const tail=raw.slice(start);
+    const next=tail.search(/\n\s*Rule\s*\d+[a-z]?(?:\([^)]+\))?/i);
+    const chunk=(next>20?tail.slice(0,next):tail.slice(0,4200)).replace(/\n{3,}/g,'\n\n').trim();
+    return chunk;
+  }
+
+  async function askExactRuleLookup(raw){
+    const ruleId=askExtractExactRule(raw);
+    if(!ruleId) return null;
+    const manual=askManualTarget(raw);
+    if(!manual) return null;
+    try{
+      const doc=await askFetchManual(manual);
+      const text=askCleanManualText(doc);
+      const ruleText=askFindRuleInText(text,ruleId);
+      if(!ruleText) return null;
+      return {ruleId,manual,ruleText};
+    }catch(err){
+      console.warn('PostalIQ exact manual lookup failed:',err);
+      return null;
+    }
+  }
+
+  function askExtractExactOrder(raw){
+    const n=askNormalize(raw).replace(/\bsb\s+order\b/g,'order');
+    const m=n.match(/\border\s*(\d+)\s*[\/ -]\s*(20\d{2})\b/i);
+    if(!m) return null;
+    return `${m[1]}/${m[2]}`;
+  }
+
+  function askExactOrderLookup(raw){
+    const ref=askExtractExactOrder(raw);
+    if(!ref || !Array.isArray(DATA_ORDERS)) return null;
+    const target=ref.toLowerCase();
+    return DATA_ORDERS.find(o=>String(o.orderNo||'').trim().toLowerCase()===target)||null;
+  }
+
+  function askExactRuleCard(hit){
+    return `<div class="ask-answer-card"><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">Exact rule found</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${esc(hit.manual.name)} — Rule ${esc(hit.ruleId)}</h3><div class="mt-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 p-4 text-sm leading-7 text-slate-700 dark:text-slate-200 whitespace-pre-wrap">${esc(hit.ruleText)}</div><p class="text-[10px] text-slate-400 mt-4">Source basis: ${esc(hit.manual.name)}, Rule ${esc(hit.ruleId)}.</p></div>`;
+  }
+
+  function askExactOrderCard(order){
+    const text=String(order.fullText||order.substance||'').replace(/\n{3,}/g,'\n\n').trim();
+    return `<div class="ask-answer-card"><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">Exact SB Order found</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">SB Order ${esc(order.orderNo)}</h3><div class="text-xs text-slate-500 mt-1">${esc(order.date?'Dated: '+order.date:'')} · ${esc(order.subject||'')}</div><div class="mt-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 p-4 text-sm leading-7 text-slate-700 dark:text-slate-200 whitespace-pre-wrap">${esc(text.slice(0,12000))}</div><div class="mt-4 flex gap-3 items-center"><button onclick="viewOrderDetail('${esc(order.id)}')" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Order</button><span class="text-[10px] text-slate-400">Exact identifier match</span></div></div>`;
+  }
+
+  function askBuildGeminiPrompt(raw,evidence,kind){
+    const task=kind==='rule'
+      ? 'Explain the exact rule in plain language. Preserve every condition and qualification in the supplied rule. Do not add a procedure, exception, time limit, authority or document unless it appears in the supplied rule.'
+      : kind==='order'
+        ? 'Explain what this exact SB Order says, including its purpose, changes, effective date and operational implications only where the supplied order supports them. Never substitute another order.'
+        : 'Answer the question using only the supplied relevant evidence. Explain the applicable rule/procedure and conditions where supported.';
+    return `You are Ask PostalIQ, a source-grounded India Post/POSB reference assistant.\n\nUSER QUESTION:\n${raw}\n\nTASK:\n${task}\n\nSOURCE EVIDENCE (ONLY):\n${evidence}\n\nWrite a useful answer in 3-6 short paragraphs or numbered points. Start with the direct answer. End with one short Source basis sentence. If the evidence does not establish something, say so. Do not invent or substitute sources.`;
+  }
+
+  async function askGeminiWithTimeout(prompt,ms){
+    if(!window.PostalIQGemini?.ready) return null;
+    try{
+      const result=await Promise.race([
+        window.PostalIQGemini.ask(prompt),
+        new Promise((_,reject)=>setTimeout(()=>reject(new Error('Gemini response timeout')),ms))
+      ]);
+      return result;
+    }catch(err){
+      console.warn('PostalIQ Gemini request failed or timed out:',err);
+      return null;
+    }
+  }
+
   window.executeRuleQuery = async function(){
     const input=document.getElementById('ask-input'), res=document.getElementById('ask-results');
     const raw=String(input?.value||'').trim();
     if(!res) return;
     res.classList.remove('hidden');
     if(!raw){res.innerHTML='<div class="p-5 text-sm text-slate-500">Ask a question in your own words.</div>';return;}
-    const q=askQuestion(raw);
-    res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Understanding the question and checking PostalIQ sources…</div>';
 
-    // Current rates remain deterministic and local; no AI request is needed for these.
+    const q=askQuestion(raw);
+    res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Understanding the question…</div>';
+
+    // 1. Deterministic site data: no Gemini request.
     const rates=askRateAnswer(q);
     if(rates){res.innerHTML=askRateCard(rates,q);lucide.createIcons();return;}
 
+    // 2. Exact SB Order identifier: never perform broad semantic retrieval first.
+    const exactOrder=askExactOrderLookup(raw);
+    if(exactOrder){
+      const evidence=`Title: SB Order ${exactOrder.orderNo}\nDate: ${exactOrder.date||'Not stated'}\nSubject: ${exactOrder.subject||'Not stated'}\nOrder text:\n${String(exactOrder.fullText||exactOrder.substance||'').slice(0,14000)}`;
+      const asksExplanation=/\b(explain|what does|what is|what in|meaning|summarize|summary|details|describe)\b/i.test(raw);
+      if(asksExplanation){
+        res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Exact SB Order found. Asking Gemini to explain only that order…</div>';
+        const answer=await askGeminiWithTimeout(askBuildGeminiPrompt(raw,evidence,'order'),15000);
+        if(answer){res.innerHTML=`<div class="ask-answer-card"><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">PostalIQ answer</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">SB Order ${esc(exactOrder.orderNo)}</h3><div class="text-sm leading-7 text-slate-700 dark:text-slate-200 mt-4 whitespace-pre-wrap">${esc(answer)}</div><p class="text-[10px] text-slate-400 mt-4">Source basis: SB Order ${esc(exactOrder.orderNo)}, dated ${esc(exactOrder.date||'not stated')}.</p></div>`+askExactOrderCard(exactOrder);lucide.createIcons();return;}
+      }
+      res.innerHTML=askExactOrderCard(exactOrder);lucide.createIcons();return;
+    }
+
+    // 3. Exact manual rule lookup: fetch only the named manual, not all seven manuals.
+    const exactRule=await askExactRuleLookup(raw);
+    if(exactRule){
+      const explain=/\b(explain|what does|what is|what in|meaning|summarize|summary|details|describe)\b/i.test(raw);
+      if(explain){
+        const evidence=`Manual: ${exactRule.manual.name}\nRule ${exactRule.ruleId}:\n${exactRule.ruleText}`;
+        res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Exact rule found. Asking Gemini to explain only Rule '+esc(exactRule.ruleId)+'…</div>';
+        const answer=await askGeminiWithTimeout(askBuildGeminiPrompt(raw,evidence,'rule'),15000);
+        if(answer){res.innerHTML=`<div class="ask-answer-card"><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">PostalIQ answer</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${esc(exactRule.manual.name)} — Rule ${esc(exactRule.ruleId)}</h3><div class="text-sm leading-7 text-slate-700 dark:text-slate-200 mt-4 whitespace-pre-wrap">${esc(answer)}</div><p class="text-[10px] text-slate-400 mt-4">Source basis: ${esc(exactRule.manual.name)}, Rule ${esc(exactRule.ruleId)}.</p></div>`+askExactRuleCard(exactRule);lucide.createIcons();return;}
+      }
+      res.innerHTML=askExactRuleCard(exactRule);lucide.createIcons();return;
+    }
+
+    // 4. Only now use the broader semantic index. Keep the evidence set small.
+    res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Searching the most relevant PostalIQ provisions…</div>';
     const index=await ensureAskIndex();
-    const ranked=index.map(item=>({...item,score:scoreAskItem(item,q)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,8);
+    const ranked=index.map(item=>({...item,score:scoreAskItem(item,q)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,6);
     if(!ranked.length){res.innerHTML='<div class="p-6 bg-slate-50 dark:bg-slate-800/80 rounded-xl text-center text-sm text-slate-500"><div class="font-bold text-slate-700 dark:text-slate-200 mb-1">No sufficiently relevant source found</div><div>Try naming the scheme, operation, order number or subject.</div></div>';return;}
 
     const direct=ranked.filter(x=>askClassify(x,q)==='Direct source match');
-    const shown=(direct.length?direct:ranked).slice(0,6);
+    const shown=(direct.length?direct:ranked).slice(0,3);
     const evidence=shown.map((x,i)=>{
       const m=x.meta||{};
-      const snippet=askSnippet(x.text,q.tokens);
-      return `[SOURCE ${i+1}]\nType: ${x.kind==='order'?'SB Order':'Manual / Guide'}\nTitle: ${x.title}\n${x.kind==='order'?'Order: '+(m.orderNo||'')+'\nDate: '+(m.date||''):'File: '+(m.file||'')}\nEvidence:\n${snippet}`;
+      return `[SOURCE ${i+1}]\nType: ${x.kind==='order'?'SB Order':'Manual / Guide'}\nTitle: ${x.title}\n${x.kind==='order'?'Order: '+(m.orderNo||'')+'\nDate: '+(m.date||''):'File: '+(m.file||'')}\nSection: ${x.heading||'Not stated'}\nEvidence:\n${askSnippet(x.text,q.tokens)}`;
     }).join('\n\n');
 
-    let answer='';
-    let aiUsed=false;
-    if(window.PostalIQGemini?.ready){
-      const prompt=`You are Ask PostalIQ, a source-grounded assistant for India Post/POSB operational reference work. Answer the user's question using ONLY the supplied PostalIQ evidence. Do not invent rules, dates, rates, permissions, or procedures. If the evidence is insufficient or conflicting, say that clearly.\n\nUSER QUESTION:\n${raw}\n\nPOSTALIQ EVIDENCE:\n${evidence}\n\nWrite a clear, useful explanation, not just a one- or two-line summary. Start with the direct answer. Then explain the applicable rule/procedure in plain language, including conditions, exceptions, time limits, documents or steps when the evidence supports them. If several provisions work together, explain how they relate. End with a short 'Source basis' sentence naming the relevant order/manual and section or heading when available. Do not cite a source that is not in the evidence. Do not invent missing details. Do not mention that you are an AI. Prefer 3-7 short paragraphs or numbered points when appropriate.`;
-      try{ answer=await window.PostalIQGemini.ask(prompt); aiUsed=true; }
-      catch(err){ console.warn('PostalIQ Gemini answer failed; showing local evidence only.',err); }
-    }
-
+    res.innerHTML='<div class="ask-loading p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder">Relevant provisions found. Generating a grounded explanation…</div>';
+    const answer=await askGeminiWithTimeout(askBuildGeminiPrompt(raw,evidence,'general'),15000);
     const sourceCards=shown.map(x=>{const cls=askClassify(x,q),m=x.meta||{},snippet=askSnippet(x.text,q.tokens);return `<div class="ask-result-card"><div class="flex flex-wrap items-center gap-2 mb-2"><span class="ask-kind">${esc(x.kind==='order'?'SB Order':'Manual / Guide')}</span><span class="ask-match ${cls==='Direct source match'?'direct':cls==='Supporting source'?'support':'related'}">${esc(cls)}</span>${x.kind==='order'&&m.date?`<span class="text-[10px] text-slate-400">${esc(m.date)}</span>`:''}</div><h4 class="font-bold text-sm text-slate-900 dark:text-white">${esc(x.title)}</h4>${x.heading?`<div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-1">${esc(x.heading)}</div>`:''}<p class="text-xs leading-6 text-slate-600 dark:text-slate-300 mt-3">${esc(snippet)}</p><div class="mt-3 flex flex-wrap gap-3 items-center">${x.kind==='order'?`<button onclick="viewOrderDetail('${esc(m.id)}')" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Order</button>`:`<a href="${esc(x.meta.file)}" target="_blank" rel="noopener" class="text-brand-red dark:text-red-400 text-xs font-bold hover:underline">View Manual / Guide</a>`}</div></div>`;}).join('');
-
-    const answerHtml=aiUsed
-      ? `<div class="ask-answer-card"><div class="flex items-center justify-between gap-3"><div><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">PostalIQ answer</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${esc(askQuestionSummary(q)||raw)}</h3></div><span class="ask-source-count">${shown.length} sources</span></div><div class="text-sm leading-7 text-slate-700 dark:text-slate-200 mt-4 whitespace-pre-wrap">${esc(answer)}</div><p class="text-[10px] text-slate-400 mt-4">Answer generated from the PostalIQ source passages shown below.</p></div>`
-      : `<div class="ask-answer-card"><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">Relevant source material</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${esc(askQuestionSummary(q)||raw)}</h3><p class="text-xs text-slate-500 mt-2">Gemini was not available for this request, so PostalIQ is showing the retrieved evidence without inventing an answer.</p></div>`;
+    const answerHtml=answer
+      ? `<div class="ask-answer-card"><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">PostalIQ answer</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${esc(askQuestionSummary(q)||raw)}</h3><div class="text-sm leading-7 text-slate-700 dark:text-slate-200 mt-4 whitespace-pre-wrap">${esc(answer)}</div><p class="text-[10px] text-slate-400 mt-4">Answer generated only from the relevant PostalIQ passages shown below.</p></div>`
+      : `<div class="ask-answer-card"><div class="text-[10px] uppercase tracking-wider font-black text-brand-red">Relevant source material</div><h3 class="font-bold text-base text-slate-900 dark:text-white mt-1">${esc(askQuestionSummary(q)||raw)}</h3><p class="text-xs text-slate-500 mt-2">Gemini did not return within the response window, so PostalIQ is showing the retrieved evidence without inventing an answer.</p></div>`;
     res.innerHTML=answerHtml+sourceCards;
     lucide.createIcons();
   };
@@ -3742,7 +3826,7 @@ input,select,textarea{border-radius:10px!important}
 <!-- PostalIQ Firebase AI Logic — browser-module integration -->
 <script type="module" id="postaliq-firebase-ai">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-  import { initializeAppCheck, ReCaptchaEnterpriseProvider, getToken } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js";
+  import { initializeAppCheck, ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js";
   import { getAI, getGenerativeModel, GoogleAIBackend } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-ai.js";
 
   const firebaseConfig = {
@@ -3758,17 +3842,14 @@ input,select,textarea{border-radius:10px!important}
 
   try {
     const firebaseApp = initializeApp(firebaseConfig);
-    const appCheck = initializeAppCheck(firebaseApp, {
+    initializeAppCheck(firebaseApp, {
       provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
       isTokenAutoRefreshEnabled: true
     });
-    // Verify App Check before advertising Gemini as ready. This prevents the UI
-    // from claiming AI is available when Firebase will reject the request with 401.
-    await getToken(appCheck, false);
     const ai = getAI(firebaseApp, { backend: new GoogleAIBackend() });
     const model = getGenerativeModel(ai, {
       model: "gemini-3.8-flash",
-      generationConfig: { temperature: 0.2, maxOutputTokens: 1600 }
+      generationConfig: { maxOutputTokens: 1000 }
     });
     window.PostalIQGemini = {
       ready: true,
@@ -3790,14 +3871,5 @@ input,select,textarea{border-radius:10px!important}
     };
   }
 </script>
-<style id="postaliq-october-fixes">
-/* October baseline fixes: keep the existing modal geometry, but let the reader resize it. */
-.order-detail-shell{resize:both;overflow:hidden;min-width:min(520px,92vw);min-height:420px;max-width:96vw;max-height:92vh;box-sizing:border-box}
-.order-detail-shell .order-detail-scroll{min-height:0;height:100%}
-/* Keep Ask PostalIQ readable: no patterned/polka-dot background behind the answer. */
-.ask-answer-card,.ask-result-card{background:#fff !important;background-image:none !important;background-color:#fff !important}
-.dark .ask-answer-card,.dark .ask-result-card{background:#1e293b !important;background-image:none !important}
-</style>
-
 </body>
 </html>
