@@ -284,6 +284,11 @@
         <button onclick="navigateTab('posb')" class="pi-btn pi-btn-light"><i data-lucide="badge-percent"></i>Open POSB &amp; PLI</button>
         <button onclick="navigateTab('orders')" class="pi-btn pi-btn-ghost"><i data-lucide="file-text"></i>Orders &amp; Manuals</button>
       </div>
+      <a class="pi-feature-tile" href="manuals/LTC_Rules_FAQ.html" target="_blank" rel="noopener" aria-label="Open LTC Rules FAQ">
+        <span class="pi-feature-icon" aria-hidden="true">✈</span>
+        <span class="pi-feature-copy"><span class="pi-feature-eyebrow">NEW QUICK REFERENCE</span><strong>LTC Rules FAQ</strong><small>CCS (LTC) Rules, 1988 · blocks, family eligibility, travel, claims and advances</small></span>
+        <span class="pi-feature-arrow" aria-hidden="true">↗</span>
+      </a>
     </div>
     <div class="pi-ask-card">
       <div class="pi-stamp-edge"><div class="pi-ask-inner">
@@ -3023,7 +3028,8 @@
       {name:'Post Office Savings Bank Manual — Volume II', file:'manuals/Postal_SB_Manual_Volume_II.html', type:'POSB Manual'},
       {name:'Financial Handbook — Volume II', file:'manuals/Financial_Handbook_Volume_II.html', type:'Financial Handbook'},
       {name:'Postal Manual Volume V', file:'manuals/Postal_Manual_V.html', type:'Postal Manual'},
-      {name:'Postal Manual Volume VII', file:'manuals/Postal_Manual_Volume_VII.html', type:'Postal Manual'}
+      {name:'Postal Manual Volume VII', file:'manuals/Postal_Manual_Volume_VII.html', type:'Postal Manual'},
+      {name:'LTC Rules FAQ', file:'manuals/LTC_Rules_FAQ.html', type:'Rules / FAQ'}
     ];
 
     let ASK_INDEX = [];
@@ -3316,7 +3322,8 @@ const MANUALS=[
 {name:"Post Office Savings Bank Manual — Volume II",file:"manuals/Postal_SB_Manual_Volume_II.html",type:"POSB Manual"},
 {name:"Financial Handbook — Volume II",file:"manuals/Financial_Handbook_Volume_II.html",type:"Financial Handbook"},
 {name:"Postal Manual Volume V",file:"manuals/Postal_Manual_V.html",type:"Postal Manual"},
-{name:"Postal Manual Volume VII",file:"manuals/Postal_Manual_Volume_VII.html",type:"Postal Manual"}];
+{name:"Postal Manual Volume VII",file:"manuals/Postal_Manual_Volume_VII.html",type:"Postal Manual"},
+{name:"LTC Rules FAQ",file:"manuals/LTC_Rules_FAQ.html",type:"Rules / FAQ"}];
 window.renderManuals=function(query){const list=document.getElementById('manuals-list');if(!list)return;const q=String(query||'').trim().toLowerCase();const a=MANUALS.filter(m=>!q||(m.name+' '+m.type).toLowerCase().includes(q));list.innerHTML=a.length?a.map(m=>'<div class="manual-card"><div class="min-w-0"><div class="manual-card-title">'+escapeOrderHtml(m.name)+'</div><div class="manual-card-type">'+escapeOrderHtml(m.type)+'</div></div><a class="manual-open" href="'+escapeOrderHtml(m.file)+'" target="_blank" rel="noopener">Open</a></div>').join(''):'<div class="col-span-full p-8 text-center text-sm text-slate-500 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">No manual or guide found.</div>';if(window.lucide)lucide.createIcons();};
 window.findManuals=function(){const i=document.getElementById('manual-search-input');renderManuals(i?i.value:'');};
 window.switchOrdersSub=function(mode){const sb=document.getElementById('orders-sub-sb'),mg=document.getElementById('orders-sub-manuals'),a=document.getElementById('orders-subbtn-sb'),b=document.getElementById('orders-subbtn-manuals');if(!sb||!mg)return;const m=mode==='manuals';sb.classList.toggle('hidden',m);mg.classList.toggle('hidden',!m);a.className=m?'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold':'px-3 py-1.5 rounded-lg bg-brand-red text-white text-xs font-bold';b.className=!m?'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold':'px-3 py-1.5 rounded-lg bg-brand-red text-white text-xs font-bold';if(m)renderManuals();};
@@ -3510,6 +3517,15 @@ header nav button i.text-brand-gold{color:var(--piq-gold)!important}
 main{max-width:1180px!important;padding:0 24px 56px!important}
 .tab-view{animation:piqFade .18s ease-out}
 @keyframes piqFade{from{opacity:.55;transform:translateY(3px)}to{opacity:1;transform:none}}
+
+/* First homepage quick-reference tile; designed to become a row/grid of tiles later. */
+.pi-feature-tile{display:flex;align-items:center;gap:15px;max-width:620px;margin-top:22px;padding:17px 19px;border:1px solid #ead8b0;border-left:4px solid #b71c1c;border-radius:13px;background:linear-gradient(110deg,#fffaf0,#fff 78%);color:#18202b;text-decoration:none;box-shadow:0 5px 18px rgba(24,32,43,.045);transition:transform .16s,box-shadow .16s,border-color .16s}
+.pi-feature-tile:hover{transform:translateY(-2px);box-shadow:0 9px 24px rgba(24,32,43,.09);border-color:#d5b76f}
+.pi-feature-icon{display:grid;place-items:center;flex:0 0 43px;height:43px;border-radius:11px;background:#b71c1c;color:#fff;font-size:21px;font-weight:800}
+.pi-feature-copy{display:flex;flex-direction:column;gap:3px;min-width:0}.pi-feature-eyebrow{font-size:9px;letter-spacing:.12em;font-weight:800;color:#94600a}.pi-feature-copy strong{font-size:16px;line-height:1.25}.pi-feature-copy small{font-size:11px;line-height:1.5;color:#586477}.pi-feature-arrow{margin-left:auto;flex:0 0 auto;color:#94600a;font-size:20px;font-weight:700}
+.dark .pi-feature-tile{background:linear-gradient(110deg,#1f2937,#111827 78%);border-color:#5b4630;border-left-color:#ef4444;color:#f8fafc}.dark .pi-feature-copy small{color:#cbd5e1}.dark .pi-feature-eyebrow,.dark .pi-feature-arrow{color:#fbbf24}
+@media(max-width:620px){.pi-feature-tile{max-width:none;padding:15px 14px;gap:11px}.pi-feature-copy strong{font-size:15px}.pi-feature-copy small{font-size:10px}}
+
 /* Dashboard hero takes the polished homepage's editorial treatment. */
 #view-dashboard > div:first-child{background:#fff!important;color:var(--piq-text)!important;border:1px solid var(--piq-line)!important;border-radius:20px!important;padding:48px!important;box-shadow:0 18px 45px rgba(21,34,54,.08)!important;position:relative;overflow:hidden}
 #view-dashboard > div:first-child:after{content:"";position:absolute;right:-100px;top:-120px;width:340px;height:340px;border-radius:50%;background:var(--piq-gold-soft);opacity:.75;pointer-events:none}

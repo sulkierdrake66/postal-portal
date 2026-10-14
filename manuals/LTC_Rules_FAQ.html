@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PostalIQ | CCS (LTC) Rules, 1988 — Reference Desk</title>
+  <meta name="theme-color" content="#152236">
+  <meta name="description" content="Searchable PostalIQ reference desk for CCS (LTC) Rules, 1988 FAQs and operational references.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- MathJax for Mathematical & Financial Formulas -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <style>
+    :root{--piq-red:#b71c1c;--piq-red-dk:#8c1414;--piq-ink:#152236;--piq-gold:#f3a51b;--piq-paper:#f4f5f7;--piq-card:#fff;--piq-line:#e2e6ec;--piq-text:#18202b;--piq-muted:#586477;--piq-serif:'Source Serif 4',Georgia,serif;--piq-sans:Inter,Arial,sans-serif}
+    html{scroll-behavior:smooth;scroll-padding-top:170px}body{background:var(--piq-paper)!important;color:var(--piq-text)!important;font-family:var(--piq-sans)!important;-webkit-font-smoothing:antialiased}
+    header.piq-header{background:var(--piq-ink)!important;border-bottom:4px solid var(--piq-gold)!important}
+    .piq-brandline{display:flex;align-items:center;gap:10px;margin-bottom:18px;color:#f5c46a;font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+    .piq-brandmark{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--piq-red);color:#fff;font-family:var(--piq-serif);font-size:20px;box-shadow:inset 0 0 0 1px #ffffff30}
+    .piq-eyebrow{font-size:11px!important;letter-spacing:.11em!important}
+    header h1{font-family:var(--piq-serif)!important;letter-spacing:-.035em!important;line-height:1.12!important;max-width:850px}
+    header p{max-width:780px}
+    .piq-header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+    .piq-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 13px;border-radius:10px;border:1px solid #ffffff40;color:#fff;background:#ffffff0d;font-size:12px;font-weight:700;cursor:pointer;transition:.18s}
+    .piq-action:hover{background:#ffffff18;border-color:#ffffff70}.piq-action.primary{background:var(--piq-red);border-color:var(--piq-red)}.piq-action.primary:hover{background:var(--piq-red-dk)}
+    .piq-controls{background:rgba(255,255,255,.96)!important;border-color:var(--piq-line)!important;backdrop-filter:blur(14px);box-shadow:0 5px 20px #1522360a!important}
+    #faq-search{background:#f8f9fb!important;border-color:#d9dfe7!important;color:var(--piq-text)!important;min-height:42px}
+    #faq-search:focus{background:#fff!important;box-shadow:0 0 0 3px #b71c1c1b!important;border-color:var(--piq-red)!important}
+    .filter-pill{border:1px solid #e0e4ea!important;background:#f3f5f7!important;color:#465266!important;padding:8px 12px!important;font-weight:700!important}
+    .filter-pill:hover{border-color:#d6a4a4!important;background:#fff!important}.filter-pill.active{background:var(--piq-red)!important;border-color:var(--piq-red)!important;color:#fff!important}
+    #btn-expand-all,#btn-collapse-all{border-color:#dce1e8!important;background:#fff!important;color:#39465a!important;padding:8px 11px!important;font-weight:700!important}
+    .faq-card{background:var(--piq-card)!important;border-color:var(--piq-line)!important;border-radius:14px!important;box-shadow:0 4px 14px #15223608!important;scroll-margin-top:180px}
+    .faq-card:hover{border-color:#d4b0b0!important;box-shadow:0 7px 22px #1522360c!important}
+    .faq-toggle{padding:19px 21px!important}.faq-toggle:hover{background:#faf8f7!important}
+    .faq-toggle h2{font-family:var(--piq-sans)!important;font-size:15px!important;line-height:1.55!important;letter-spacing:-.01em}
+    .faq-toggle [class*="uppercase"]{font-size:10px!important;letter-spacing:.075em!important}
+    .faq-answer{padding:20px 22px 24px!important;line-height:1.75!important;border-top-color:var(--piq-line)!important}
+    .faq-answer li{padding-left:2px}.faq-answer strong{color:inherit}
+    .faq-answer table{border-collapse:separate;border-spacing:0;width:100%;border-radius:10px;overflow:hidden}
+    .faq-answer th,.faq-answer td{border-color:var(--piq-line)!important;line-height:1.55}
+    #empty-state{border-color:var(--piq-line)!important;border-radius:14px!important}
+    footer.piq-footer{background:var(--piq-ink)!important;border-top:3px solid var(--piq-gold)!important}
+    button:focus-visible,input:focus-visible{outline:3px solid #f3a51b99;outline-offset:2px}
+    .piq-results{font-size:11px;color:var(--piq-muted);font-weight:700;white-space:nowrap}
+    /* Dark mode intentionally targets every common Tailwind surface used in the supplied reader. */
+    .dark body{background:#0b1220!important;color:#e5eaf2!important}
+    .dark .piq-controls{background:rgba(15,23,42,.97)!important;border-color:#334155!important}
+    .dark #faq-search{background:#111c2e!important;color:#f1f5f9!important;border-color:#3b4a60!important}
+    .dark #faq-search:focus{background:#152238!important}
+    .dark .filter-pill{background:#182337!important;color:#cbd5e1!important;border-color:#334155!important}
+    .dark .filter-pill:hover{background:#223149!important}.dark .filter-pill.active{background:var(--piq-red)!important;color:#fff!important;border-color:var(--piq-red)!important}
+    .dark #btn-expand-all,.dark #btn-collapse-all{background:#182337!important;color:#dbe3ef!important;border-color:#3b4a60!important}
+    .dark .faq-card{background:#111c2e!important;border-color:#2d3b50!important;box-shadow:0 6px 18px #0000001a!important}
+    .dark .faq-card:hover{border-color:#754044!important}.dark .faq-toggle{color:#e5eaf2!important}.dark .faq-toggle:hover{background:#17253a!important}
+    .dark .faq-toggle h2{color:#f1f5f9!important}.dark .faq-answer{color:#cbd5e1!important;border-top-color:#2d3b50!important}
+    .dark .faq-answer .text-slate-600,.dark .faq-answer .text-slate-700,.dark .faq-answer .text-slate-800,.dark .faq-answer .text-slate-500{color:#cbd5e1!important}
+    .dark .faq-answer .bg-slate-50,.dark .faq-answer .bg-slate-100{background:#18263b!important;color:#e2e8f0!important;border-color:#334155!important}
+    .dark .faq-answer .bg-blue-50{background:#172d4c!important;color:#bfdbfe!important;border-color:#294b78!important}
+    .dark .faq-answer .bg-amber-50{background:#392b17!important;color:#fde68a!important;border-color:#6b4c20!important}
+    .dark .faq-answer .bg-purple-50{background:#302341!important;color:#e9d5ff!important;border-color:#553c6d!important}
+    .dark .faq-answer .bg-emerald-50{background:#14352f!important;color:#a7f3d0!important;border-color:#23614f!important}
+    .dark .faq-answer .bg-rose-50,.dark .faq-answer .bg-rose-50\/60{background:#3a2029!important;color:#fecdd3!important;border-color:#71313f!important}
+    .dark .faq-answer .bg-indigo-50{background:#202746!important;color:#c7d2fe!important;border-color:#3d4b7d!important}
+    .dark .faq-answer .border-slate-100,.dark .faq-answer .border-slate-200,.dark .faq-answer .border-blue-200,.dark .faq-answer .border-amber-200{border-color:#334155!important}
+    .dark .faq-answer table thead{background:#1b2940!important;color:#f1f5f9!important}.dark .faq-answer table td{border-color:#334155!important}
+    .dark #empty-state{background:#111c2e!important;border-color:#2d3b50!important}.dark #empty-state p{color:#e2e8f0!important}
+    .dark .piq-results{color:#aab7c9}
+    @media(max-width:640px){header.piq-header>div{padding-top:25px!important;padding-bottom:25px!important}header h1{font-size:28px!important}.piq-header-actions{width:100%}.piq-action{flex:1}.faq-toggle{padding:16px!important}.faq-answer{padding:16px!important}.filter-pill{font-size:10px!important}}
+    @media print{
+      @page{size:auto;margin:14mm 13mm}
+      body{background:#fff!important;color:#111!important;font-size:10pt!important;display:block!important}
+      .no-print,.piq-header-actions,#category-filter-bar,#faq-search,#btn-expand-all,#btn-collapse-all{display:none!important}
+      header.piq-header{background:#fff!important;color:#111!important;border-bottom:2px solid #b71c1c!important;box-shadow:none!important;padding:0!important}
+      header.piq-header h1,header.piq-header p{color:#111!important}header.piq-header .text-slate-400{color:#444!important}
+      main{max-width:none!important;padding:8mm 0!important}.faq-card{display:block!important;background:#fff!important;color:#111!important;border:1px solid #bbb!important;box-shadow:none!important;border-radius:4px!important;margin:0 0 8px!important;break-inside:avoid;page-break-inside:avoid}
+      .faq-answer,.faq-answer.hidden{display:block!important;color:#111!important;padding:10px 12px!important}.faq-toggle{padding:10px 12px!important;background:#fff!important;color:#111!important}.faq-toggle h2{color:#111!important;font-size:11pt!important}
+      .faq-answer .bg-amber-50,.faq-answer .bg-slate-50,.faq-answer .bg-rose-50,.faq-answer .bg-rose-50\/60,.faq-answer .bg-blue-50,.faq-answer .bg-slate-100{background:#f7f7f7!important;color:#111!important;border-color:#ccc!important}
+      footer{display:none!important}#empty-state{display:none!important}
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+
+  <!-- Header Banner -->
+  <header class="piq-header text-white border-b shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <div class="piq-brandline"><span class="piq-brandmark">P</span><span>PostalIQ · Administrative Reference Desk</span></div>
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30">
+              Department of Personnel & Training (DoPT)
+            </span>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+              Updated 2026 Compendium (22 Master Rulings)
+            </span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            Master Administrative Compendium & FAQ: CCS (LTC) Rules, 1988
+          </h1>
+          <p class="text-slate-400 text-sm sm:text-base mt-1">
+            Exhaustive operational rulings, DDO audit checks, edge cases, financial liabilities, and statutory citations.
+          </p>
+        </div>
+        <div class="piq-header-actions no-print">
+          <button id="theme-toggle" type="button" class="piq-action" onclick="toggleLtcTheme()" aria-label="Switch to dark mode" title="Toggle dark mode">
+            <i data-lucide="moon" id="ltc-theme-moon" class="w-4 h-4"></i><i data-lucide="sun" id="ltc-theme-sun" class="w-4 h-4 hidden"></i><span id="ltc-theme-label">Dark mode</span>
+          </button>
+          <button onclick="window.print()" class="piq-action primary"><i data-lucide="printer" class="w-4 h-4"></i>Print / Export PDF</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Control & Filter Bar -->
+  <div class="piq-controls sticky top-0 z-30 border-b no-print">
+    <div class="max-w-6xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <!-- Search Input -->
+        <div class="relative w-full sm:w-96">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <i data-lucide="search" class="w-4 h-4"></i>
+          </div>
+          <input 
+            type="text" 
+            id="faq-search" 
+            placeholder="Search OM number, rule, keyword (e.g. 9000, Vande Bharat, cab, LPR)..." 
+            class="block w-full pl-9 pr-4 py-2 border border-slate-300 rounded-lg text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition"
+          >
+        </div>
+
+        <!-- Global Action Buttons -->
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <button id="btn-expand-all" class="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-md border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition">
+            Expand All
+          </button>
+          <button id="btn-collapse-all" class="text-xs sm:text-sm font-medium px-3 py-1.5 rounded-md border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 transition">
+            Collapse All
+          </button>
+        </div>
+        <div class="piq-results" id="results-count" aria-live="polite">25 topics</div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto pt-3 pb-1 no-scrollbar text-xs font-medium" id="category-filter-bar">
+        <button data-cat="all" class="filter-pill active whitespace-nowrap px-3 py-1.5 rounded-full transition" aria-pressed="true">All Topics (<span id="count-all">0</span>)</button>
+        <button data-cat="blocks" class="filter-pill whitespace-nowrap px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition">1. Blocks & Carry-Over (4)</button>
+        <button data-cat="family" class="filter-pill whitespace-nowrap px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition">2. Family & Dependency (4)</button>
+        <button data-cat="entitlements" class="filter-pill whitespace-nowrap px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition">3. Entitlements & ATAs (4)</button>
+        <button data-cat="advances" class="filter-pill whitespace-nowrap px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition">4. Advances & Encashment (3)</button>
+        <button data-cat="procedures" class="filter-pill whitespace-nowrap px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition">5. Penalties & Deadlines (4)</button>
+        <button data-cat="operational" class="filter-pill whitespace-nowrap px-3 py-1.5 rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200 transition">6. Operational Edge Cases (6)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8 flex-grow w-full">
+    
+    <!-- Empty Search State -->
+    <div id="empty-state" class="hidden text-center py-12 bg-white rounded-xl border border-slate-200">
+      <p class="text-slate-600 font-medium">No matching LTC rulings found for your search query.</p>
+      <button id="btn-reset-search" class="mt-3 text-xs font-semibold text-blue-600 hover:underline">Reset Filters</button>
+    </div>
+
+    <div id="faq-container" class="space-y-4">
+
+      <!-- ========================================== -->
+      <!-- SECTION 1: BLOCK MECHANICS & CARRY-OVER    -->
+      <!-- ========================================== -->
+
+      <!-- Q1.1 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="blocks">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">Q1.1 • Block Architecture & Grace Year</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What constitutes the standard four-year and two-year block architecture under CCS (LTC) Rules, and how does the carry-over/grace year operate across block boundaries?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 8 and Rule 10, CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/12/2007-Estt.(A) dated November 29, 2007.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li>The concession to visit <strong>"Any Place in India" (All India LTC / AILTC)</strong> is admissible once in a four-year calendar block (e.g., 2022–2025, 2026–2029).</li>
+            <li>The four-year block is divided into two 2-year sub-blocks (e.g., Sub-block 1: 2022–2023; Sub-block 2: 2024–2025). In each sub-block, a Government Servant (GS) is entitled to Home Town LTC.</li>
+            <li>Under Rule 8(2), AILTC can be availed against (and in lieu of) one of the two Home Town concessions in the 4-year block.</li>
+            <li><strong>The Grace Year (Rule 10):</strong> A concession not availed in a given 2-year or 4-year block may be carried forward and availed in the <strong>first year of the succeeding block</strong> (the "Grace Year").
+              <ul class="list-disc pl-5 mt-1 space-y-1 text-slate-600">
+                <li><em>Example:</em> If Home Town LTC for sub-block 2022–2023 is unutilized, it can be availed up to December 31, 2024.</li>
+                <li><em>Example:</em> If AILTC for the 2022–2025 block is unutilized, it can be carried over and availed up to December 31, 2026.</li>
+              </ul>
+            </li>
+            <li><strong>Outward Journey Rule:</strong> To legally establish carry-over utilization, the <strong>outward journey must commence on or before December 31 of the grace year</strong>. The return journey may legally fall in the subsequent calendar year without forfeiting the concession.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q1.2 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="blocks">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">Q1.2 • Overlapping Blocks & Deemed Lapse</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              How are overlapping carried-over blocks handled without triggering a deemed lapse?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 10, CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/7/2013-Estt.(A-IV) dated September 26, 2014.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li>An employee carrying over an unutilized LTC from a previous block into a grace year may avail <strong>both</strong> the carried-forward concession and the concession due for the current block during the same calendar year, provided they are not undertaken on the identical continuous spell of leave.</li>
+            <li><strong>Order of Depletion:</strong> The carried-over LTC must be exhausted first. If an employee performs an LTC journey in the grace year without explicitly declaring it against the carried-forward block, administrative processing by default debits the older, lapsing concession first to prevent financial detriment.</li>
+            <li><strong>Lapse Principle:</strong> If the outward journey of the carried-over concession does not commence by 23:59 hours on December 31 of the grace year, the concession lapses permanently. An administrative authority possesses no statutory power to relax this rule without express concurrence from the DoPT and Department of Expenditure.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q1.3 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="blocks">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">Q1.3 • Fresh Recruit 8-Year Pattern</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What is the exact 8-year concession pattern for fresh recruits, and what happens at the transition to the general block system?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 8, Note 2 of CCS (LTC) Rules, 1988, inserted vide DoPT Notification No. 31011/7/2013-Estt.(A-IV) dated September 26, 2014.
+          </div>
+          <p class="mb-3">Fresh recruits entering Central Government service are entitled to LTC on a yearly basis for the first 8 continuous years of service:</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3 text-center text-xs font-semibold">
+            <div class="p-2 bg-slate-100 rounded border border-slate-200">Year 1: Home Town</div>
+            <div class="p-2 bg-slate-100 rounded border border-slate-200">Year 2: Home Town</div>
+            <div class="p-2 bg-slate-100 rounded border border-slate-200">Year 3: Home Town</div>
+            <div class="p-2 bg-blue-50 text-blue-700 rounded border border-blue-200">Year 4: All India (AILTC)</div>
+            <div class="p-2 bg-slate-100 rounded border border-slate-200">Year 5: Home Town</div>
+            <div class="p-2 bg-slate-100 rounded border border-slate-200">Year 6: Home Town</div>
+            <div class="p-2 bg-slate-100 rounded border border-slate-200">Year 7: Home Town</div>
+            <div class="p-2 bg-blue-50 text-blue-700 rounded border border-blue-200">Year 8: All India (AILTC)</div>
+          </div>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Grace Year Inapplicability:</strong> The carry-over grace year facility under Rule 10 is <strong>not applicable</strong> during the 8-year fresh recruit cycle. Concessions must be availed within the specific 12-month anniversary/calendar window or they lapse.</li>
+            <li><strong>Transition Mechanics:</strong> After completing 8 full years, the employee merges directly into the prevailing national 4-year block. If the 8th year ends mid-way through a regular nationwide 4-year block, the employee is granted entitlement for the remaining sub-blocks in accordance with DoPT date-of-joining matrices.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q1.4 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="blocks">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded border border-blue-200">Q1.4 • Change of Home Town</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              How does a permanent change of designated Home Town operate, and can it be altered repeatedly?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 5, CCS (LTC) Rules, 1988; Ministry of Home Affairs O.M. No. 43/15/57-Ests.(A) dated June 24, 1958.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li>The Home Town declared by a Government servant on initial appointment is verified and recorded in the Service Book based on specific criteria: permanent residence of parents, ownership of immovable property, agricultural ties, or ancestral origin.</li>
+            <li><strong>One-Time Alteration:</strong> Under Rule 5(2), the declaration of Home Town once made is normally treated as final. However, the Head of Department (HoD) may allow an alteration <strong>only once in the entire service career</strong>, provided the employee establishes that circumstances have materially changed (e.g., permanent acquisition of residential property, total severance of connections from ancestral village, relocation of living parents).</li>
+            <li>An employee cannot switch Home Town back and forth to exploit travel distance reimbursements under Home Town LTC.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- SECTION 2: FAMILY & DEPENDENCY             -->
+      <!-- ========================================== -->
+
+      <!-- Q2.1 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="family">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded border border-purple-200">Q2.1 • Dependency Income Ceiling Formula</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What is the exact income ceiling for determining "dependency" under CCS (LTC) Rules, and how is Dearness Relief (DR) calculated on family pension?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 4(d), CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/4/2008-Estt.(A) dated September 23, 2008; clarified vide O.M. No. 11012/1/2016-Estt.A-IV dated June 2, 2016.
+          </div>
+          <ol class="list-decimal pl-5 space-y-2">
+            <li>A member of the family is deemed "wholly dependent" on the Government servant if their total monthly income from all sources (including pension, stipend, commercial property rentals, and agricultural returns) <strong>does not exceed the minimum family pension admissible under the Central Government, plus the Dearness Relief (DR) sanctioned thereon</strong>.</li>
+            <li>Following the 7th CPC, the minimum family pension is fixed at <strong>₹9,000 per month</strong>.</li>
+            <li><strong>Operational Income Formula:</strong>
+              <div class="my-2 p-3 bg-slate-50 border border-slate-200 rounded text-center">
+                $$\text{Income Ceiling} = ₹9,000 + \left(₹9,000 \times \frac{\text{Current Rate of DR}}{100}\right)$$
+              </div>
+            </li>
+            <li>If an employee's parent receives a basic pension of ₹9,000 and DR at the current rate, their total income equals the threshold. However, if their basic pension or outside income is even ₹9,001 (excluding DR), or if total income exceeds the ceiling calculated on the date the journey commences, dependency is legally severed, and the LTC claim for that dependent must be disallowed.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q2.2 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="family">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded border border-purple-200">Q2.2 • Divorced, Widowed & Surviving Children</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              Can divorced, widowed, or deserted daughters, and unmarried minor/major sons be included under the LTC family umbrella?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 4(d), CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/4/2008-Estt.(A) dated September 23, 2008.
+          </div>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Unmarried Son:</strong> Admissible irrespective of age, provided he is wholly dependent on the GS, resides with them, and his monthly income does not exceed the ₹9,000 + DR threshold.</li>
+            <li><strong>Daughter:</strong> Unmarried daughters of any age are covered, provided they are dependent.</li>
+            <li><strong>Divorced / Widowed / Deserted Daughters:</strong> Fully eligible to be treated as members of the family for LTC, irrespective of age, subject to two binding conditions:
+              <ol class="list-decimal pl-5 mt-1 space-y-1">
+                <li>They must reside with the Government servant.</li>
+                <li>Their aggregate monthly income (including maintenance, family pension from late husband, or child support) does not exceed the dependency income ceiling ($₹9,000 + \text{DR}$).</li>
+              </ol>
+            </li>
+            <li><strong>Children of Widowed/Divorced Daughters:</strong> Dependent minor children of a widowed or divorced daughter residing with the GS are also covered under the definition of family.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q2.3 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="family">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded border border-purple-200">Q2.3 • Twin / Triplet Births & Two-Child Norm</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              How does the "Two-Child Norm" apply to LTC in complex scenarios like twin or triplet subsequent births?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 4(d), Explanation 2, CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/3/2014-Estt.(A-IV) dated May 14, 2014.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li>The concession is restricted to <strong>two surviving unmarried children or stepchildren</strong>.</li>
+            <li><strong>Statutory Exceptions:</strong>
+              <ul class="list-disc pl-5 mt-1 space-y-1">
+                <li>The restriction does not apply in respect of children born prior to October 20, 1997.</li>
+                <li>Where the first childbirth results in a single child, and the <strong>subsequent second delivery results in multiple births (twins or triplets)</strong>, all children born out of the subsequent delivery are eligible for LTC (total 3 or 4 children allowed).</li>
+              </ul>
+            </li>
+            <li><strong>The Inverse Disqualification Scenario:</strong> If an employee has twins in the <em>first</em> delivery (resulting in 2 surviving children), and subsequently has a third child from a second pregnancy, the third child is <strong>strictly ineligible</strong> for LTC.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q2.4 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="family">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded border border-purple-200">Q2.4 • Both Spouses Government Employees</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What operational dynamics govern LTC when both husband and wife are Central or State Government employees?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 8(3), CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/8/89-Estt.(A) dated May 8, 1990.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Joint Declaration:</strong> The husband and wife must declare to their respective Controlling Officers who will claim LTC for the family unit, or whether they will claim separately as independent Government servants.</li>
+            <li><strong>Option A (Treated as Independent Employees):</strong> Each spouse may claim for themselves and their own dependent parents/siblings. Spouses cannot claim for each other simultaneously. Children can be claimed in the bill of either spouse, but <strong>never both</strong> for the same sub-block/block.</li>
+            <li><strong>Option B (Treated as One Family Unit):</strong> One spouse claims LTC as the primary Government servant; the other spouse travels as a dependent family member. The non-claiming spouse cannot claim an advance, leave encashment, or independent travel allowance from their own department for that block.</li>
+            <li><strong>Home Town Disparity:</strong> If the spouses have different declared Home Towns, either spouse can declare the other's Home Town as their own for the purpose of Home Town LTC, or they may visit their respective Home Towns independently under their own entitlement.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- SECTION 3: TRAVEL ENTITLEMENTS & ATAs      -->
+      <!-- ========================================== -->
+
+      <!-- Q3.1 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="entitlements">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">Q3.1 • Pay Matrix Levels 1–18 Travel Matrix</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What are the exact travel entitlements across Pay Levels 1 to 18 for Rail, Air, and Sea travel?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Ministry of Finance, DoE O.M. No. 19030/1/2017-E.IV dated July 13, 2017; DoPT O.M. No. 31011/8/2017-Estt.A-IV dated September 19, 2017.
+          </div>
+          <div class="overflow-x-auto my-3">
+            <table class="min-w-full text-xs text-left border border-slate-200 rounded-lg">
+              <thead class="bg-slate-100 text-slate-800 font-semibold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5 border-r">Pay Matrix Level</th>
+                  <th class="p-2.5 border-r">Rail Entitlement</th>
+                  <th class="p-2.5 border-r">Air Entitlement (LTC)</th>
+                  <th class="p-2.5">Sea / River Steamer</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr>
+                  <td class="p-2.5 font-semibold border-r">Level 1 to 5</td>
+                  <td class="p-2.5 border-r">Sleeper Class / Second Class</td>
+                  <td class="p-2.5 border-r text-rose-600 font-medium">Not Entitled (Train/Bus only)</td>
+                  <td class="p-2.5">Lowest Class (Bunk Class)</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-semibold border-r">Level 6 to 8</td>
+                  <td class="p-2.5 border-r">AC 3-Tier / AC Chair Car</td>
+                  <td class="p-2.5 border-r text-emerald-700 font-medium">Economy Class</td>
+                  <td class="p-2.5">Middle Class / Second Cabin</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-semibold border-r">Level 9 to 11</td>
+                  <td class="p-2.5 border-r">AC 2-Tier / First Class</td>
+                  <td class="p-2.5 border-r text-emerald-700 font-medium">Economy Class</td>
+                  <td class="p-2.5">First Class / State Cabin</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-semibold border-r">Level 12 & 13</td>
+                  <td class="p-2.5 border-r">AC 2-Tier / First Class</td>
+                  <td class="p-2.5 border-r text-emerald-700 font-medium">Economy Class</td>
+                  <td class="p-2.5">Highest Class / Deluxe Cabin</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-semibold border-r">Level 14 & above</td>
+                  <td class="p-2.5 border-r">AC First Class / Executive Class</td>
+                  <td class="p-2.5 border-r text-emerald-700 font-medium">Economy Class Only*</td>
+                  <td class="p-2.5">Highest Class / Deluxe Cabin</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-xs bg-rose-50 text-rose-900 p-2.5 rounded border border-rose-200">
+            <strong>*Crucial 7th CPC Air Restriction on LTC:</strong> While Level 14 and above are entitled to Business Class on official tours, <strong>all employees without exception are restricted to Economy Class air travel under CCS (LTC) Rules</strong>.
+          </p>
+        </div>
+      </article>
+
+      <!-- Q3.2 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="entitlements">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">Q3.2 • Vande Bharat, Tejas & Dynamic Flexi-Fares</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              Are premier/high-speed trains (Vande Bharat, Tejas, Rajdhani, Shatabdi, Duronto) and dynamic/flexi-fares reimbursable under LTC?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> DoPT O.M. No. 31011/3/2016-Estt.(A-IV) dated September 19, 2017; Ministry of Railways Commercial Circulars.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Dynamic/Flexi-fares:</strong> Reimbursable on LTC for entitled classes in trains where flexi-fare systems are active (Rajdhani, Shatabdi, Duronto), provided the ticket is booked in the employee's entitled travel class.</li>
+            <li><strong>Vande Bharat & Tejas Express:</strong>
+              <ul class="list-disc pl-5 mt-1 space-y-1">
+                <li>Pay Levels 6 to 11 are entitled to <strong>AC Chair Car (CC)</strong>.</li>
+                <li>Pay Levels 12 and above are entitled to <strong>Executive Chair Car (EC)</strong>.</li>
+              </ul>
+            </li>
+            <li>If an employee eligible only for AC 3-Tier travels in Vande Bharat (which has only CC and EC), they are permitted travel in AC Chair Car, and the fare is fully reimbursable.</li>
+            <li><strong>Catering Charges:</strong> Mandatory catering charges billed alongside the railway ticket in Rajdhani, Shatabdi, Vande Bharat, and Duronto trains form part of the basic transportation cost and are reimbursable.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q3.3 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="entitlements">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">Q3.3 • Authorized Travel Agents & 3-Hour Slot Rule</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What are the strict rules regarding Authorized Travel Agents (ATAs), the 21-day guideline, and the mandatory 3-hour time-slot search?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Ministry of Finance, DoE O.M. No. 19024/03/2021-E.IV dated June 16, 2022; DoPT O.M. No. 31011/12/2022-Estt.A-IV dated August 29, 2022; DoPT O.M. No. 31011/11/2023-Pers.Policy A-IV dated October 20, 2023.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>The Three Authorized Travel Agents (ATAs):</strong> Air tickets on LTC must be purchased <strong>exclusively</strong> from:
+              <ul class="list-disc pl-5 mt-1 font-medium text-slate-800">
+                <li>M/s Balmer Lawrie & Company Limited (BLCL)</li>
+                <li>M/s Ashok Travels & Tours (ATT)</li>
+                <li>Indian Railway Catering and Tourism Corporation Ltd. (IRCTC)</li>
+              </ul>
+            </li>
+            <li><strong>Booking Direct via Airline Portals or Private Portals:</strong> Strictly prohibited. Any booking made directly from airline websites or third-party aggregators (MakeMyTrip, EaseMyTrip, Yatra, Cleartrip) results in immediate rejection of the entire airfare claim unless explicitly relaxed by DoPT under special verification procedures.</li>
+            <li><strong>Cheapest Fare in the 3-Hour Slot:</strong> The employee must search for flights in a <strong>3-hour time slot</strong> on the intended date of departure (e.g., 06:00–09:00, 09:00–12:00). The flight offering the <strong>Best Available Fare (cheapest)</strong> within that slot must be selected, with an allowable optimization margin within a <strong>10% price band</strong> for non-stop options. The employee MUST print/save the flight search results page showing fare comparisons and submit it with the LTC bill.</li>
+            <li><strong>The 21-Day Advance Booking Provision:</strong> Employees are advised to book tickets at least 21 days before departure. Bookings made within <strong>less than 72 hours</strong> of departure require a self-declared written justification countersigned by the Competent Authority.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q3.4 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="entitlements">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded border border-emerald-200">Q3.4 • Special Dispensation Scheme (NER, J&K, Ladakh, A&N)</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What are the parameters and latest extension status of the Special Dispensation Scheme for NER, J&K, Ladakh, and A&N?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> DoPT O.M. No. 31011/15/2022-Estt.A-IV dated September 9, 2026 (extending the scheme for two years through September 25, 2028).
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Conversion Provision:</strong> All eligible Central Government employees may convert <strong>one Home Town LTC</strong> in a 4-year block to visit North Eastern Region (NER), UT of Jammu & Kashmir, UT of Ladakh, or Andaman & Nicobar Islands (A&N).</li>
+            <li><strong>Air Travel Relaxation for Non-Entitled Employees (Level 5 and below):</strong> Permitted to fly Economy Class only on the designated hub-to-destination sector:
+              <ul class="list-disc pl-5 mt-1 space-y-1">
+                <li><strong>To NER:</strong> Between Kolkata/Guwahati and any place in NER.</li>
+                <li><strong>To J&K / Ladakh:</strong> Between Delhi/Amritsar and any place in J&K/Ladakh.</li>
+                <li><strong>To A&N:</strong> Between Kolkata/Chennai/Visakhapatnam and Port Blair.</li>
+              </ul>
+              The journey from employee Headquarters to the designated hub (e.g., HQ to Delhi or Kolkata) must be performed by their <strong>entitled train class</strong>.
+            </li>
+            <li><strong>Fresh Recruits Bonus:</strong> Fresh recruits are allowed an <strong>additional conversion</strong> of one of their three Home Town LTCs in a block to visit UT of J&K or UT of Ladakh.</li>
+            <li><strong>Home Town Restriction:</strong> An employee whose declared Home Town is situated in one of these four regions cannot avail conversion to visit the region where their own Home Town is located.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- SECTION 4: ADVANCES & LEAVE ENCASHMENT     -->
+      <!-- ========================================== -->
+
+      <!-- Q4.1 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="advances">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded border border-amber-200">Q4.1 • 90% Advance & 10-Day Ticket Deadline</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What are the conditions for granting an LTC Advance, the 90% cap, and ticket production timelines?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 14 and Rule 15, CCS (LTC) Rules, 1988.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Amount of Advance:</strong> Limited to <strong>90% of the estimated total outward and return fare</strong> for both the Government servant and entitled family members.</li>
+            <li><strong>Drawal Timelines:</strong> Advance can be drawn up to <strong>125 days</strong> (or prevailing Railway ARP window) before the proposed date of journey by rail, and <strong>30 days</strong> before departure for journeys by air/road/sea.</li>
+            <li><strong>The 10-Day Ticket Verification Deadline (Rule 14(4)):</strong> Once the advance is credited, the employee must purchase tickets and <strong>produce railway PNRs or air tickets to the Controlling Officer within 10 days of drawing the advance</strong>. Failure to produce proof within 10 days triggers immediate lump-sum recovery of the entire advance.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q4.2 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="advances">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded border border-amber-200">Q4.2 • Penal Interest Formula on Defaulted Advance</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What is the exact formula for recovering penal interest on unutilized or defaulted LTC advances?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 14, CCS (LTC) Rules, 1988; Rule 258 of General Financial Rules (GFR), 2017; DoPT O.M. No. 31011/11/2023-Pers.Policy A-IV.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>The Penal Rate:</strong> Charged at <strong>2% over the prevailing General Provident Fund (GPF) interest rate</strong> applicable during the period of default:
+              <div class="my-2 p-2.5 bg-slate-50 border border-slate-200 rounded text-center">
+                $$\text{Penal Interest Rate} = \text{Prevailing GPF Rate (\%)} + 2.0\%$$
+              </div>
+            </li>
+            <li><strong>Charge Period:</strong> Calculated from the <strong>exact date of disbursement of the advance from the Government treasury to the date of actual recovery/refund into the Government account</strong>.</li>
+            <li><strong>Triggers for Penal Interest:</strong> Unutilized advance retained beyond 10 days without buying tickets, failure to deposit ticket cancellation proceeds immediately, or failure to submit the adjustment bill within 1 month of completing the return journey.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q4.3 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="advances">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded border border-amber-200">Q4.3 • 10-Day Leave Encashment & 60-Day Cap</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What are the rules governing Earned Leave (EL) encashment alongside LTC, including the 10-day block, 60-day lifetime cap, and the mandatory 30-day balance limit?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 38-A of CCS (Leave) Rules, 1972; DoPT O.M. No. 14028/4/2009-Estt.(L) dated June 3, 2009.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Encashment Quantum:</strong> Up to <strong>10 days of Earned Leave (EL)</strong> at the time of availing LTC (either Home Town or All India), without any linkage to the actual number of days or nature of leave availed for the journey.</li>
+            <li><strong>The 60-Day Lifetime Ceiling:</strong> Total EL encashed during the entire service career under LTC cannot exceed <strong>60 days</strong> (which is independent of the 300-day superannuation EL encashment ceiling).</li>
+            <li><strong>The 30-Day Mandatory Residue Rule:</strong> After deducting the 10 days of encashment and the actual leave days sanctioned for the journey, a minimum balance of at least <strong>30 days of Earned Leave must remain in the employee's leave ledger</strong>.</li>
+            <li><strong>Encashment Formula:</strong>
+              <div class="my-2 p-2.5 bg-slate-50 border border-slate-200 rounded text-center">
+                $$\text{Encashment Amount} = \frac{\text{Basic Pay} + \text{Dearness Allowance (DA)}}{30} \times 10$$
+              </div>
+              <span class="text-xs text-slate-500">(HRA and Transport Allowance are strictly excluded).</span>
+            </li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- SECTION 5: TIMELINES & PENAL ACTIONS       -->
+      <!-- ========================================== -->
+
+      <!-- Q5.1 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="procedures">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded border border-rose-200">Q5.1 • 1-Month vs 3-Month Submission Deadlines</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What are the submission deadlines for LTC claims, and what constitutes a permanent financial forfeiture?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 14 and Rule 15, CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/3/2015-Estt.(A-IV) dated May 13, 2016.
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 my-2">
+            <div class="p-3 bg-rose-50/60 border border-rose-200 rounded-lg">
+              <div class="font-bold text-rose-900 text-xs uppercase mb-1">Case A: Advance WAS Drawn</div>
+              <p class="text-xs text-slate-700">Submit claim within <strong>1 MONTH</strong> of return journey completion. Failure leads to immediate lump-sum recovery of advance + Penal Interest (GPF + 2%).</p>
+            </div>
+            <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
+              <div class="font-bold text-slate-900 text-xs uppercase mb-1">Case B: Advance NOT Drawn</div>
+              <p class="text-xs text-slate-700">Submit claim within <strong>3 MONTHS</strong> of return journey completion. Failure results in automatic forfeiture unless condoned by HoD/Ministry.</p>
+            </div>
+          </div>
+          <p class="mt-2 text-xs text-slate-600">
+            <strong>Condonation Powers:</strong> With the concurrence of the Financial Adviser (FA), the Head of Department/Ministry can relax the limit up to <strong>3 months (where advance was drawn)</strong> and <strong>6 months (where no advance was drawn)</strong> if the employee faced circumstances beyond their control.
+          </p>
+        </div>
+      </article>
+
+      <!-- Q5.2 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="procedures">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded border border-rose-200">Q5.2 • Lost or Missing Boarding Passes</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What administrative and financial alternatives exist when boarding passes are lost or untraceable?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> DoPT O.M. No. 31011/3/2018-Estt.(A-IV) dated June 20, 2018; O.M. dated September 27, 2022.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li>Submission of original physical or digital boarding passes along with the LTC adjustment bill is mandatory to verify performance of air travel.</li>
+            <li><strong>Procedure upon Loss:</strong> The employee must obtain a formal <strong>Boarding Certificate / Passenger Manifest Verification Certificate</strong> issued by the concerned airline confirming that the passenger actually boarded and flew the specified flight on that date, accompanied by a self-declaration affidavit.</li>
+            <li><strong>Administrative Condonation:</strong> The Financial Adviser / Head of Department (HoD) is empowered to accept the alternative airline certificate in lieu of the missing boarding pass without referring the case to DoPT, provided tickets were booked through BLCL/ATT/IRCTC within the rules.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q5.3 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="procedures">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded border border-rose-200">Q5.3 • Suspension, Study Leave, CCL & EOL</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              Can an employee avail LTC while under Suspension, Study Leave, Child Care Leave (CCL), or Extra Ordinary Leave (EOL)?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 7, CCS (LTC) Rules, 1988; DoPT Compilation of Administrative Orders.
+          </div>
+          <ul class="list-disc pl-5 space-y-1.5">
+            <li><strong>Under Suspension:</strong> A suspended employee <strong>cannot avail LTC for themselves</strong> as they cannot be granted leave. However, their <strong>entitled family members are permitted to avail LTC</strong> independently during the suspension period.</li>
+            <li><strong>Study Leave:</strong> Fully admissible for both self and family. Reimbursement is restricted to the fare between the place of study and destination, or Headquarters and destination, whichever is less.</li>
+            <li><strong>Child Care Leave (CCL) & Maternity Leave:</strong> Fully admissible. LTC can be availed during any nature of sanctioned leave, including Casual Leave (CL), Special CL, Maternity Leave, Paternity Leave, and CCL.</li>
+            <li><strong>Extra Ordinary Leave (EOL):</strong> Admissible during sanctioned EOL without medical certificate, provided the continuous absence does not breach maximum leave limits.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Q5.4 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="procedures">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded border border-rose-200">Q5.4 • Rule 16 Penalties for Fraudulent Claims</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What are the exact disciplinary and statutory penal actions under Rule 16 for fraudulent LTC claims?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 16, CCS (LTC) Rules, 1988; CCS (CCA) Rules, 1965.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Suspension of Future Concessions (Rule 16(1)):</strong> If a Disciplinary Authority has reason to believe an employee has preferred a fraudulent claim, the employee shall not be allowed to avail the next <strong>two sets of LTC</strong> (one to Home Town and one to Any Place in India) pending completion of inquiry.</li>
+            <li><strong>Mandatory Debarment upon Conviction in Inquiry (Rule 16(2)):</strong> If found guilty of misuse or fraud in departmental proceedings, the employee shall be permanently debarred from availing those two sets of LTC, in addition to any major or minor penalty imposed under the CCS (CCA) Rules, 1965 (such as reduction in pay stage, withholding of increments, or dismissal).</li>
+            <li><strong>Complete Financial Recovery:</strong> Disallowance of the entire tainted bill and immediate recovery of any drawn advance or leave encashment with penal interest ($GPF + 2\%$).</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- ========================================== -->
+      <!-- SECTION 6: OPERATIONAL EDGE CASES          -->
+      <!-- ========================================== -->
+
+      <!-- Q6.1 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="operational">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded border border-indigo-200">Q6.1 • Private Cars, App Cabs & "Nil Fare" Encashment</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              How are road travel claims regulated when using private cars, self-driven vehicles, app-based cabs (Uber/Ola), or taxis?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 12 and Rule 13, CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/3/2009-Estt.(A) dated October 28, 2009; Clarified vide DoPT O.M. No. 31011/06/2023-Estt.A-IV dated March 29, 2023.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>General Prohibition on Private Vehicles/Taxis:</strong> Travel by private car, chartered vehicle, or hired taxi between places connected by a direct rail link is <strong>strictly non-reimbursable</strong> for the travel fare component.</li>
+            <li><strong>Places Not Connected by Rail:</strong> If the destination or part of the journey is not connected by rail, travel must be undertaken by public transport operated by the Central/State Government, local bodies, or a State Roadways Transport Corporation (SRTC). If performed by taxi/auto-rickshaw where public buses operate, reimbursement is restricted strictly to the <strong>entitled public bus fare</strong> or actuals, whichever is less.</li>
+            <li><strong>Disability Exemption:</strong> Use of an owned car or hired taxi for the entire LTC journey is permissible on grounds of severe disability of the Government servant or an eligible dependent family member, provided it is supported by a valid medical certificate and prior sanction is obtained from the Head of Department (HoD). Reimbursement is restricted to the <strong>entitled train fare via the shortest direct route</strong>.</li>
+            <li><strong>The "Nil Claim" & Leave Encashment Workaround (March 2023 OM):</strong> If an employee travels entirely by private car/taxi (where fare reimbursement is impermissible), they can submit a <strong>"Nil Fare Claim"</strong> accompanied by proof of visit (e.g., hotel bills, toll receipts, self-declaration). This formally debits the LTC block and <strong>validates the 10-day Earned Leave encashment</strong> without violating audit standards.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q6.2 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="operational">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded border border-indigo-200">Q6.2 • Circuitous Routes & Break Journeys</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              How are indirect routes, circular tours, and break journeys settled under the "Shortest Direct Route" rule?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 13, CCS (LTC) Rules, 1988; Supplementary Rule (SR) 30; DoPT O.M. No. 31011/18/2023-Estt.A-IV dated February 4, 2021.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Point-to-Point Direct Mandate:</strong> Reimbursement is allowed only for a journey performed on a point-to-point through-ticket over the <strong>shortest direct route</strong> between Headquarters and the declared destination.</li>
+            <li><strong>Circuitous / Split Journeys:</strong> An employee is permitted to take a circuitous route or make stopovers (e.g., $\text{Delhi} \rightarrow \text{Jaipur} \rightarrow \text{Goa}$ instead of $\text{Delhi} \rightarrow \text{Goa}$ direct), but financial reimbursement is <strong>capped at the entitled class fare of the shortest direct route</strong> between HQ and the final declared destination.</li>
+            <li><strong>Multi-Leg Tickets:</strong> If tickets are bought in pieces (broken journeys), the aggregate reimbursed amount cannot exceed the through-fare of the direct line. Any extra distance, layover expenses, or local conveyance incurred during intermediate halts is borne entirely by the employee.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q6.3 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="operational">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded border border-indigo-200">Q6.3 • Family Traveling in Separate Batches</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What happens when family members travel separately, at different times, or to different destinations in the same block?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 8(1) and Rule 9, CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/14/86-Estt.(A) dated May 8, 1987.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Independent Movement:</strong> Family members need not travel together with the Government servant. They may travel in different groups at different times during the same 2-year or 4-year block, and may visit completely different destinations during an All India LTC block.</li>
+            <li><strong>Family Traveling from Origin other than HQ:</strong> If family members reside away from the employee's Headquarters (e.g., dependent parents living in the ancestral home), they can travel from their place of residence to the declared destination and back. However, the reimbursement is strictly restricted to the <strong>fare from Headquarters to the destination via the shortest route</strong>, or the actual fare paid, whichever is lower.</li>
+            <li><strong>Separate Claims & Advances:</strong> Separate advances and adjustment claims can be processed for each distinct travel group, provided the respective deadlines (1 month with advance, 3 months without advance) are maintained from the date of completion of that specific group's return journey.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q6.4 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="operational">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded border border-indigo-200">Q6.4 • Combining LTC with Tour or Transfer</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              Can LTC be combined with an official tour, transfer, or training programme?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Ministry of Home Affairs / DoPT O.M. No. 31011/8/89-Estt.(A) dated May 8, 1990; Supplementary Rules.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>LTC in Combination with Official Tour:</strong> If an employee proceeds on an official tour and avails sanctioned leave immediately following the assignment to undertake LTC, travel from Headquarters to the tour station is regulated as <strong>Travelling Allowance (TA) on tour</strong>. Travel from the tour station to the LTC destination and back to Headquarters is regulated under <strong>LTC Rules</strong>, restricted to the fare from the LTC destination directly to HQ.</li>
+            <li><strong>LTC in Combination with Transfer:</strong> If an employee is transferred and avails LTC while in transit, the employee's family can perform the LTC journey from the old HQ to the new HQ via the declared LTC destination:
+              <div class="my-2 p-2.5 bg-slate-50 border border-slate-200 rounded text-center text-xs">
+                $$\text{Reimbursement} = \min\Big(\text{Actual Travel Cost},\; (\text{Transfer TA Entitlement} + \text{LTC Entitlement from Old HQ to LTC Destination and back})\Big)$$
+              </div>
+            </li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q6.5 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="operational">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded border border-indigo-200">Q6.5 • Leave Preparatory to Retirement (LPR) & Resignation</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              How is LTC regulated during Leave Preparatory to Retirement (LPR) or upon Resignation?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 7, CCS (LTC) Rules, 1988; MHA O.M. No. 31011/1/77-Ests.(A) dated October 1, 1977.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Leave Preparatory to Retirement (LPR):</strong> An employee on LPR can avail both Home Town and All India LTC, provided the <strong>entire journey (including the return journey) is completed before the date of superannuation / expiry of LPR</strong>. No reimbursement is admissible for any travel leg performed after midnight of the retirement date.</li>
+            <li><strong>Resignation:</strong> If an employee avails LTC while on leave and tenders their resignation without returning to active duty, the entire concession is invalidated. The full advance or reimbursed amount must be refunded immediately.</li>
+          </ol>
+        </div>
+      </article>
+
+      <!-- Q6.6 -->
+      <article class="faq-card bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden transition-all duration-200" data-cat="operational">
+        <button class="faq-toggle w-full px-5 py-4 text-left flex items-start justify-between gap-4 hover:bg-slate-50 transition">
+          <div class="space-y-1">
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded border border-indigo-200">Q6.6 • Unentitled Higher or Lower Class Travel</span>
+            <h2 class="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+              What are the consequences of booking an unentitled higher or lower class of accommodation?
+            </h2>
+          </div>
+          <i data-lucide="chevron-down" class="faq-chevron w-5 h-5 text-slate-400 shrink-0 mt-1 transition-transform duration-200"></i>
+        </button>
+        <div class="faq-answer hidden px-5 pb-5 pt-2 text-slate-700 text-sm leading-relaxed border-t border-slate-100">
+          <div class="mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono">
+            <strong>Rule / OM Reference:</strong> Rule 12(1) and Rule 13, Note 2, CCS (LTC) Rules, 1988; DoPT O.M. No. 31011/8/1998-Estt.(A) dated March 31, 1999.
+          </div>
+          <ol class="list-decimal pl-5 space-y-1.5">
+            <li><strong>Traveling in a Higher Class:</strong> If an employee travels in a higher class than entitled (e.g., a Level 5 employee traveling by AC 2-Tier or Air), reimbursement is strictly <strong>restricted to the fare of their entitled class</strong> (e.g., Sleeper Class train fare) by the shortest direct route, provided the ticket was booked via an authorized channel/ATA.</li>
+            <li><strong>Traveling in a Lower Class:</strong> If an employee travels in a lower class than entitled (e.g., a Level 11 employee traveling in AC 3-Tier instead of AC 2-Tier), reimbursement is restricted to the <strong>actual fare paid for the lower class</strong>. The employee cannot claim the difference as a savings bonus.</li>
+          </ol>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="piq-footer text-slate-400 text-xs py-6 mt-12 no-print">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-2">
+      <p>CCS (LTC) Rules, 1988 — Master Administrative Reference Compendium</p>
+      <p>Compiled for Drawing & Disbursing Officers (DDOs), Controlling Officers & Central Govt Employees</p>
+    </div>
+  </footer>
+
+  <!-- PostalIQ reader interactions: search, category filters, accordions, print and persistent theme -->
+  <script>
+    (function(){
+      const $=(s,root=document)=>root.querySelector(s);
+      const $$=(s,root=document)=>Array.from(root.querySelectorAll(s));
+      const categoryNames={all:'All Topics',blocks:'1. Blocks & Carry-Over',family:'2. Family & Dependency',entitlements:'3. Entitlements & ATAs',advances:'4. Advances & Encashment',procedures:'5. Penalties & Deadlines',operational:'6. Operational Edge Cases'};
+      function setTheme(dark){
+        document.documentElement.classList.toggle('dark',dark);
+        const moon=$('#ltc-theme-moon'),sun=$('#ltc-theme-sun'),label=$('#ltc-theme-label'),btn=$('#theme-toggle');
+        if(moon)moon.classList.toggle('hidden',dark);if(sun)sun.classList.toggle('hidden',!dark);
+        if(label)label.textContent=dark?'Light mode':'Dark mode';
+        if(btn){btn.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');btn.title=dark?'Switch to light mode':'Switch to dark mode';}
+        try{localStorage.setItem('postaliq_theme',dark?'dark':'light');}catch(e){}
+      }
+      window.toggleLtcTheme=function(){setTheme(!document.documentElement.classList.contains('dark'));};
+      document.addEventListener('DOMContentLoaded',function(){
+        if(window.lucide&&lucide.createIcons)lucide.createIcons();
+        let activeCategory='all';
+        const cards=$$('.faq-card'),search=$('#faq-search'),pills=$$('.filter-pill'),empty=$('#empty-state'),reset=$('#btn-reset-search');
+        const allCount=$('#count-all'),resultCount=$('#results-count');
+        const counts={};cards.forEach(card=>{const cat=card.dataset.cat;counts[cat]=(counts[cat]||0)+1;});
+        if(allCount)allCount.textContent=cards.length;
+        pills.forEach(p=>{const cat=p.dataset.cat;const span=p.querySelector('span');if(span)span.textContent=cat==='all'?cards.length:(counts[cat]||0);else if(cat!=='all'){const label=categoryNames[cat]||cat;p.textContent=label+' ('+(counts[cat]||0)+')';}});
+        function setOpen(card,open){const answer=$('.faq-answer',card),chevron=$('.faq-chevron',card),btn=$('.faq-toggle',card);if(!answer)return;answer.classList.toggle('hidden',!open);if(chevron)chevron.classList.toggle('rotate-180',open);if(btn)btn.setAttribute('aria-expanded',String(open));}
+        cards.forEach(card=>{const btn=$('.faq-toggle',card);if(btn){btn.setAttribute('aria-expanded','false');btn.setAttribute('type','button');btn.addEventListener('click',()=>setOpen(card,$('.faq-answer',card).classList.contains('hidden')));}});
+        function applyFilters(){const query=(search?.value||'').trim().toLocaleLowerCase();let visible=0;cards.forEach(card=>{const matchCat=activeCategory==='all'||card.dataset.cat===activeCategory;const matchText=!query||card.textContent.toLocaleLowerCase().includes(query);const show=matchCat&&matchText;card.classList.toggle('hidden',!show);if(show){visible++;if(query.length>0)setOpen(card,true);}});if(empty)empty.classList.toggle('hidden',visible!==0);if(resultCount)resultCount.textContent=visible+' of '+cards.length+' topics';}
+        pills.forEach(p=>p.addEventListener('click',()=>{activeCategory=p.dataset.cat||'all';pills.forEach(x=>{const active=x===p;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active));});applyFilters();}));
+        if(search)search.addEventListener('input',applyFilters);
+        $('#btn-expand-all')?.addEventListener('click',()=>cards.filter(c=>!c.classList.contains('hidden')).forEach(c=>setOpen(c,true)));
+        $('#btn-collapse-all')?.addEventListener('click',()=>cards.forEach(c=>setOpen(c,false)));
+        reset?.addEventListener('click',()=>{if(search)search.value='';const all=pills.find(p=>p.dataset.cat==='all');if(all)all.click();else applyFilters();});
+        try{setTheme(localStorage.getItem('postaliq_theme')==='dark');}catch(e){setTheme(false);}
+        applyFilters();
+      });
+    })();
+  </script>
+</body>
+</html>
