@@ -2683,10 +2683,50 @@
     function renderOrderContent(order, rawText) {
       const esc = escapeOrderHtml;
       const pages = Array.isArray(order.documentPages) ? order.documentPages : [];
-      const sourceImages = Array.isArray(order.sourcePageImages) ? order.sourcePageImages : [];
+      // Original scans can be stored under any of the three supported fields
+      // in orders.json. The previous renderer ignored order.sourceImages, so
+      // records using source_images incorrectly showed the "not attached" notice.
+      const sourcePageImages = Array.isArray(order.sourcePageImages) ? order.sourcePageImages : [];
+      const sourceImages = Array.isArray(order.sourceImages) ? order.sourceImages : [];
       const visualAssets = Array.isArray(order.visualAssets) ? order.visualAssets : [];
-      const fallbackImages = visualAssets.map(a => typeof a === 'string' ? a : a.src).filter(Boolean);
-      const originals = sourceImages.length ? sourceImages : fallbackImages;
+      const imageSource = value => {
+        if (typeof value === 'string') return value.trim();
+        if (!value || typeof value !== 'object') return '';
+        return String(value.src || value.path || value.url || value.file || value.href || value.image || '').trim();
+      };
+      // Prefer explicit page scans, then legacy source_images, then extracted
+      // visual assets. Keep order and remove duplicate paths.
+      let originals = [...sourcePageImages, ...sourceImages, ...visualAssets]
+        .map(imageSource)
+        .filter(Boolean)
+        .filter((src, i, all) => all.indexOf(src) === i)
+        .map(src => ({ src, fallbacks: [] }));
+
+      // Some orders.json records contain source page numbers but no image paths.
+      // In that case, try the repository's extracted-image naming convention:
+      // images/orders/<year>/<order-no-with-hyphen>/p<PAGE>-image<N>.<ext>.
+      // This is a fallback only; explicit paths above always take precedence.
+      if (!originals.length) {
+        const pageRange = String(order.sourcePages || '').match(/^(\d+)(?:-(\d+))?$/);
+        if (pageRange) {
+          const first = Number(pageRange[1]);
+          const last = Number(pageRange[2] || pageRange[1]);
+          const folderOrder = String(order.orderNo || '').replace(/\//g, '-');
+          if (order.year && folderOrder && Number.isFinite(first) && Number.isFinite(last) && last >= first && last - first < 100) {
+            for (let page = first; page <= last; page++) {
+              const candidates = [
+                `images/orders/${order.year}/${folderOrder}/p${page}-image1.png`,
+                `images/orders/${order.year}/${folderOrder}/p${page}-image1.jpeg`,
+                `images/orders/${order.year}/${folderOrder}/p${page}-image1.jpg`,
+                `images/orders/${order.year}/${folderOrder}/p${page}-image2.png`,
+                `images/orders/${order.year}/${folderOrder}/p${page}-image2.jpeg`,
+                `images/orders/${order.year}/${folderOrder}/p${page}-image2.jpg`
+              ];
+              originals.push({ src: candidates[0], fallbacks: candidates.slice(1) });
+            }
+          }
+        }
+      }
 
       let textHtml = '';
       if (!pages.length) {
@@ -2714,8 +2754,8 @@
       }
 
       const originalHtml = originals.length
-        ? `<div class="order-original-view" style="display:none">${originals.map((src,i)=>`<img class="order-original-page" src="${esc(src)}" alt="Original source page ${i+1}" loading="lazy">`).join('')}</div>`
-        : `<div class="order-original-view order-original-unavailable" style="display:none"><div class="p-5 rounded-xl border border-amber-300 bg-amber-50 text-amber-800 text-sm">Original source images are not attached to this order's data record.</div></div>`;
+        ? `<div class="order-original-view" style="display:none">${originals.map((entry,i)=>`<img class="order-original-page" src="${esc(entry.src)}"${entry.fallbacks.length ? ` data-fallbacks="${esc(JSON.stringify(entry.fallbacks))}"` : ''} alt="Original source page ${i+1}" loading="lazy">`).join('')}</div>`
+        : `<div class="order-original-view order-original-unavailable" style="display:none"><div class="p-5 rounded-xl border border-amber-300 bg-amber-50 text-amber-800 text-sm">No original source image paths or page references were found in this order's data record.</div></div>`;
 
       return `<div class="order-text-clean"><div class="order-structured-content">${textHtml}</div></div>${originalHtml}`;
     }
@@ -2734,6 +2774,17 @@
       const rawOrderText = order.fullText || order.substance || '—';
       document.getElementById('modal-order-substance').innerHTML = renderOrderContent(order, rawOrderText);
       document.getElementById('modal-order-substance').dataset.printMode = 'text';
+      // Try alternate filenames only when a generated fallback path fails.
+      document.querySelectorAll('#modal-order-substance .order-original-page[data-fallbacks]').forEach(img => {
+        img.addEventListener('error', function tryNextSourceImage() {
+          let fallbacks = [];
+          try { fallbacks = JSON.parse(img.getAttribute('data-fallbacks') || '[]'); } catch (e) {}
+          if (!fallbacks.length) { img.removeEventListener('error', tryNextSourceImage); return; }
+          const next = fallbacks.shift();
+          img.setAttribute('data-fallbacks', JSON.stringify(fallbacks));
+          img.src = next;
+        });
+      });
 
       // Source label is optional in the modal markup. Do not let a missing
       // optional element prevent the order detail window from opening.
