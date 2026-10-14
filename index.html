@@ -1523,7 +1523,7 @@
     function normalizeOrderRecord(raw, sourceYear, sourceFile, index) {
       const year = Number(raw.year || sourceYear || String(raw.order_number || '').slice(-4)) || 0;
       const orderNo = String(raw.order_no || raw.order_number || raw.orderNo || '').trim();
-      const ref = orderNo.includes('/') ? orderNo : `${orderNo}/${year}`;
+      const ref = (orderNo.includes('/') || /[A-Za-z]/.test(orderNo)) ? orderNo : `${orderNo}/${year}`;
       const text = String(raw.text || raw.substance || '');
       const subject = String(raw.subject || extractOrderSubject(text) || 'Department of Posts SB Order');
       const date = String(raw.date || '').trim();
