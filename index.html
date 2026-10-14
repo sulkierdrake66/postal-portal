@@ -114,7 +114,12 @@
     }
 
     /* Orders Register / centered document modal */
-    .order-detail-shell { font-size: 16px; width: min(76vw, 980px); height: 72vh; min-height: 480px; max-height: 760px; margin: auto; }
+    .order-detail-shell { font-size: 16px; width: min(76vw, 980px); height: 72vh; min-width: min(520px, 94vw); min-height: 420px; max-width: 98vw; max-height: 94vh; margin: auto; resize: both; overflow: auto; position: relative; }
+    .order-resize-hint { font-size: 10px; color: #94a3b8; white-space: nowrap; }
+    .order-window-btn { display:inline-flex; align-items:center; gap:6px; padding:7px 10px; border:1px solid #cbd5e1; border-radius:8px; color:#475569; background:#fff; font-size:11px; font-weight:800; white-space:nowrap; cursor:pointer; }
+    .order-window-btn:hover { background:#f1f5f9; }
+    .dark .order-window-btn { color:#e2e8f0; border-color:#475569; background:#1e293b; }
+    .dark .order-window-btn:hover { background:#334155; }
     .order-detail-scroll { scrollbar-width: thin; scrollbar-color: #94a3b8 transparent; text-align: left; }
     .order-detail-scroll::-webkit-scrollbar { width: 10px; }
     .order-detail-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -1124,7 +1129,8 @@
             <div class="font-mono font-black text-brand-red dark:text-red-400 text-xl sm:text-2xl leading-tight break-words" id="modal-order-ref">—</div>
             <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1" id="modal-order-date">—</div>
           </div>
-          <div class="flex items-center gap-2 flex-shrink-0">
+          <div class="flex items-center gap-2 flex-shrink-0 flex-wrap justify-end">
+            <button type="button" class="order-window-btn" onclick="resetOrderModalSize()" title="Restore the default order window size"><i data-lucide="panels-top-left" class="w-4 h-4"></i><span>Default view</span></button>
             <div class="order-text-size-group" aria-label="Text size controls">
               <span class="order-text-size-label">Text size</span>
               <button type="button" onclick="setOrderTextSize(-1)" class="order-text-size-btn" title="Decrease text size" aria-label="Decrease text size">A−</button>
@@ -1143,6 +1149,7 @@
           <section>
             <div class="order-section-label">Subject</div>
             <p class="order-subject" id="modal-order-subj">—</p>
+            <div id="modal-full-order-link" class="mt-3" style="display:none"></div>
           </section>
 
           <section>
@@ -1553,7 +1560,9 @@
         sourcePages: pageStart ? `${pageStart}${pageEnd && pageEnd !== pageStart ? '-' + pageEnd : ''}` : '',
         sourceImages: Array.isArray(raw.source_images || raw.sourceImages) ? (raw.source_images || raw.sourceImages) : [],
         visualAssets: Array.isArray(raw.visual_assets || raw.visualAssets) ? (raw.visual_assets || raw.visualAssets) : [],
-        sourcePageImages: Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : []
+        sourcePageImages: Array.isArray(raw.source_page_images || raw.sourcePageImages) ? (raw.source_page_images || raw.sourcePageImages) : [],
+        originalOnly: !!(raw.original_only || raw.originalOnly),
+        fullOrderUrl: String(raw.full_order_url || raw.fullOrderUrl || '')
       };
     }
 
@@ -2771,9 +2780,35 @@
       document.getElementById('modal-order-ref').innerText = order.orderNo;
       document.getElementById('modal-order-date').innerText = order.date ? 'Dated: ' + order.date : 'Undated';
       document.getElementById('modal-order-subj').innerText = order.subject || '—';
+      const fullOrderLink = document.getElementById('modal-full-order-link');
+      if (fullOrderLink) {
+        if (order.fullOrderUrl) {
+          fullOrderLink.style.display = 'block';
+          fullOrderLink.innerHTML = `<a href="${escapeOrderHtml(order.fullOrderUrl)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg bg-brand-red text-white px-4 py-2 text-sm font-bold shadow-sm hover:opacity-90"><i data-lucide="book-open" class="w-4 h-4"></i><span>View Full Order</span><i data-lucide="external-link" class="w-3.5 h-3.5"></i></a><p class="text-xs text-slate-500 mt-2">Opens the separate full pointwise reader in a new tab.</p>`;
+        } else { fullOrderLink.style.display = 'none'; fullOrderLink.innerHTML = ''; }
+      }
       const rawOrderText = order.fullText || order.substance || '—';
       document.getElementById('modal-order-substance').innerHTML = renderOrderContent(order, rawOrderText);
       document.getElementById('modal-order-substance').dataset.printMode = 'text';
+      if (order.originalOnly || (Number(order.year) >= 2015 && Number(order.year) <= 2019)) {
+        if (typeof window.ensurePostalIQOrderTabs === 'function') window.ensurePostalIQOrderTabs();
+        if (typeof window.setOrderViewMode === 'function') window.setOrderViewMode('original');
+        const textTab = document.getElementById('order-text-tab');
+        const originalTab = document.getElementById('order-original-tab');
+        if (textTab) textTab.style.display = 'none';
+        if (originalTab) originalTab.style.display = '';
+        const modeTabs = document.getElementById('order-mode-tabs');
+        if (modeTabs) modeTabs.style.display = 'flex';
+        document.getElementById('modal-order-substance').dataset.printMode = 'original';
+      } else {
+        const textTab = document.getElementById('order-text-tab');
+        const originalTab = document.getElementById('order-original-tab');
+        if (textTab) textTab.style.display = '';
+        if (originalTab) originalTab.style.display = '';
+        const modeTabs = document.getElementById('order-mode-tabs');
+        if (modeTabs) modeTabs.style.display = 'flex';
+        if (typeof window.setOrderViewMode === 'function') window.setOrderViewMode('text');
+      }
       // Try alternate filenames only when a generated fallback path fails.
       document.querySelectorAll('#modal-order-substance .order-original-page[data-fallbacks]').forEach(img => {
         img.addEventListener('error', function tryNextSourceImage() {
@@ -2801,6 +2836,8 @@
       rb.classList.toggle('hidden', !supersedes);
 
       resetOrderTextSize();
+      // Start each order in the comfortable default window size. Users can resize it freely.
+      resetOrderModalSize();
       document.getElementById('order-detail-scroll').scrollTop = 0;
       const modal = document.getElementById('order-detail-modal');
       modal.classList.remove('hidden');
@@ -2808,6 +2845,19 @@
       document.body.classList.add('overflow-hidden');
       lucide.createIcons();
     }
+    function resetOrderModalSize() {
+      const shell = document.querySelector('#order-detail-modal .order-detail-shell');
+      if (!shell) return;
+      shell.style.width = 'min(88vw, 1180px)';
+      shell.style.height = '84vh';
+      shell.style.maxWidth = '98vw';
+      shell.style.maxHeight = '94vh';
+      shell.style.minWidth = 'min(520px, 94vw)';
+      shell.style.minHeight = '420px';
+      const scroll = document.getElementById('order-detail-scroll');
+      if (scroll) scroll.scrollTop = 0;
+    }
+    window.resetOrderModalSize = resetOrderModalSize;
     function closeOrderDetailModal() {
       const modal = document.getElementById('order-detail-modal');
       modal.classList.add('hidden');
@@ -3208,6 +3258,7 @@
     bar.innerHTML='<button type="button" id="order-text-tab" class="order-mode-tab active" onclick="setOrderViewMode(\'text\')">Text</button><button type="button" id="order-original-tab" class="order-mode-tab" onclick="setOrderViewMode(\'original\')">Original Document</button><span style="flex:1"></span><button type="button" class="order-print-btn" onclick="printCurrentOrder()">🖨 Print</button>';
     scroll.parentNode.insertBefore(bar,scroll);
   }
+  window.ensurePostalIQOrderTabs=ensureTabs;
   window.setOrderViewMode=function(mode){
     const box=document.getElementById('modal-order-substance'); if(!box) return;
     const t=box.querySelector('.order-text-clean'), o=box.querySelector('.order-original-view');
