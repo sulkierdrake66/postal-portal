@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>CCS (Pension) Rules, 2021 (Updated with 2022–2026 Amendments) - Interactive Portal</title>
+  <style id="postaliq-design-language">
+    :root {
+      --pir-navy: #102b42;
+      --pir-navy-deep: #0c2235;
+      --pir-red: #d91f2b;
+      --pir-red-dark: #b71925;
+      --pir-gold: #f4bd4f;
+      --pir-paper: #f7f2e9;
+      --pir-card: #fffdf9;
+      --pir-card-header: #fffaf2;
+      --pir-line: #e6ded1;
+      --pir-muted: #647789;
+      --text-main: #203447;
+      --simp-bg: #edf8f2;
+      --simp-border: #159e68;
+      --simp-text: #155b45;
+      --simp-body: #064E3B;
+      --elab-bg: #f3f7fb;
+      --elab-border: #2478b9;
+      --elab-label: #245d8a;
+      --elab-body: #2c3e50;
+      --amd-bg: #fff4ed;
+      --amd-border: #ea580c;
+      --amd-text: #9a3412;
+      --note-bg: #fffbeb;
+      --note-border: #fde68a;
+      --note-text: #92400e;
+      --table-even: #faf6ef;
+      --toolbar-bg: rgba(247,242,233,.92);
+      --hero-grad: linear-gradient(110deg,#fff7e9 0%,#f8e9d4 65%,#ead5ba 100%);
+      --pill-bg: rgba(255,253,249,.82);
+      --pill-border: #e7d6b9;
+      --sidebar-width: 300px;
+    }
+
+    /* NIGHT MODE PALETTE */
+    [data-theme="dark"] {
+      --pir-paper: #0b1520;
+      --pir-card: #122130;
+      --pir-card-header: #16293b;
+      --pir-line: #243b53;
+      --pir-muted: #9fb3c8;
+      --text-main: #e6f0f8;
+      --simp-bg: rgba(16, 185, 129, 0.11);
+      --simp-border: #10b981;
+      --simp-text: #34d399;
+      --simp-body: #d1fae5;
+      --elab-bg: rgba(59, 130, 246, 0.11);
+      --elab-border: #3b82f6;
+      --elab-label: #60a5fa;
+      --elab-body: #dbeafe;
+      --amd-bg: rgba(234, 88, 12, 0.14);
+      --amd-border: #f97316;
+      --amd-text: #fdba74;
+      --note-bg: rgba(245, 158, 11, 0.14);
+      --note-border: #f59e0b;
+      --note-text: #fde68a;
+      --table-even: #16293b;
+      --toolbar-bg: rgba(11, 21, 32, 0.92);
+      --hero-grad: linear-gradient(115deg, #13283c 0%, #1a3650 65%, #234564 100%);
+      --pill-bg: rgba(18, 33, 48, 0.85);
+      --pill-border: #2c4a67;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--pir-paper);
+      color: var(--text-main);
+      line-height: 1.6;
+      letter-spacing: -.01em;
+      display: flex;
+      min-height: 100vh;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    /* LEFT SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(165deg, var(--pir-navy), var(--pir-navy-deep) 90%);
+      color: #F8FAFC;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 5px 0 22px rgba(16,43,66,.12);
+      padding-bottom: 14px;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      border-bottom: 1px solid rgba(255,255,255,.15);
+      padding: 20px 18px 18px;
+      position: relative;
+    }
+    .sidebar-header:before {
+      content: "P";
+      display: inline-grid;
+      place-items: center;
+      width: 40px; height: 40px;
+      margin-bottom: 10px;
+      border-radius: 11px;
+      background: var(--pir-red);
+      color: #ffe18b;
+      font: 700 26px/1 Georgia, serif;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+    }
+    .sidebar-header h1 {
+      font: 700 22px/1.15 Georgia, "Times New Roman", serif;
+      letter-spacing: -.4px;
+      color: #fff;
+    }
+    .sidebar-header p { color: #c7d6e1; font-size: .74rem; margin-top: 5px; }
+
+    /* SLIDER BOX */
+    .slider-box {
+      margin: 12px 12px 10px;
+      padding: 13px 15px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 13px;
+      background: rgba(255,255,255,.06);
+    }
+    .slider-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 7px;
+      font-size: 0.8rem;
+      color: #e5edf4;
+    }
+    .slider-current-badge {
+      background: var(--pir-gold);
+      color: #0F172A;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 0.76rem;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--pir-gold);
+      cursor: pointer;
+      height: 6px;
+      border-radius: 4px;
+    }
+    .slider-title-preview {
+      font-size: 0.78rem;
+      color: #bae6fd;
+      margin-top: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+    }
+
+    /* SIDEBAR SEARCH BOX */
+    .search-box { padding: 0 12px 10px; }
+    .search-box input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 10px;
+      background: rgba(255,255,255,.09);
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .search-box input::placeholder { color: #b8cad8; }
+    .search-box input:focus { border-color: var(--pir-gold); box-shadow: 0 0 0 3px rgba(244,189,79,.18); }
+
+    /* RULE DIRECTORY */
+    .rule-nav-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 4px 6px 20px;
+    }
+    .rule-nav-list::-webkit-scrollbar { width: 6px; }
+    .rule-nav-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,.22); border-radius: 3px; }
+    .nav-section-label {
+      color: #9eb4c5;
+      letter-spacing: .1em;
+      font-size: .66rem;
+      text-transform: uppercase;
+      margin: 12px 10px 5px;
+      font-weight: 700;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 10px;
+      margin: 2px 6px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      color: #e8f0f6;
+      text-decoration: none;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all .16s ease;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.09); transform: translateX(2px); }
+    .nav-item.active {
+      background: linear-gradient(110deg, var(--pir-red), #c91625);
+      border-color: rgba(255,104,114,.65);
+      box-shadow: 0 5px 14px rgba(0,0,0,.18);
+      color: #fff;
+      font-weight: 600;
+    }
+    .nav-badge {
+      background: rgba(255,255,255,.14);
+      color: #F8FAFC;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+      min-width: 48px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .nav-item.active .nav-badge { background: var(--pir-gold); color: #0F172A; }
+
+    /* MAIN CONTENT AREA */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-width: 0;
+      padding: 0 28px 50px;
+      max-width: 1320px;
+    }
+
+    /* STICKY TOP TOOLBAR */
+    .top-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      margin: 0 -28px 22px;
+      padding: 12px 28px;
+      background: var(--toolbar-bg);
+      border-bottom: 1px solid var(--pir-line);
+      backdrop-filter: blur(14px);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toolbar-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 240px;
+      max-width: 460px;
+    }
+    .toolbar-search-wrap input {
+      width: 100%;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--pir-line);
+      background: var(--pir-card);
+      color: var(--text-main);
+      font-size: 0.86rem;
+      outline: none;
+    }
+    .toolbar-search-wrap input:focus {
+      border-color: var(--pir-red);
+      box-shadow: 0 0 0 3px rgba(217,31,43,.12);
+    }
+
+    .view-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .view-btn, .theme-toggle-btn {
+      border: 1px solid var(--pir-line);
+      border-radius: 9px;
+      background: var(--pir-card);
+      color: var(--text-main);
+      padding: 7px 13px;
+      font-size: 0.81rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+    .view-btn:hover, .theme-toggle-btn:hover { border-color: var(--pir-gold); }
+    .view-btn.active {
+      background: var(--pir-navy);
+      color: #fff;
+      border-color: var(--pir-navy);
+    }
+    [data-theme="dark"] .view-btn.active {
+      background: var(--pir-red);
+      border-color: var(--pir-red);
+    }
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--pir-card-header);
+      font-weight: 700;
+    }
+
+    /* HERO BANNER */
+    .hero-banner {
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--pill-border);
+      border-radius: 18px;
+      background: var(--hero-grad);
+      box-shadow: 0 8px 24px rgba(16,43,66,.06);
+      color: var(--text-main);
+      padding: 24px 28px;
+      margin-bottom: 26px;
+    }
+    .hero-banner h2 {
+      font: 700 clamp(1.65rem,2.6vw,2.35rem)/1.12 Georgia, "Times New Roman", serif;
+      letter-spacing: -.03em;
+      margin-bottom: 8px;
+    }
+    .hero-banner p {
+      color: var(--pir-muted);
+      font-size: 0.92rem;
+      margin-bottom: 16px;
+    }
+    .key-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+      gap: 12px;
+    }
+    .highlight-pill {
+      border: 1px solid var(--pill-border);
+      border-radius: 14px;
+      background: var(--pill-bg);
+      padding: 11px 15px;
+      font-size: 0.81rem;
+    }
+    .highlight-pill strong {
+      color: var(--pir-red);
+      display: block;
+      font-size: 0.93rem;
+      margin-bottom: 2px;
+    }
+    [data-theme="dark"] .highlight-pill strong { color: var(--pir-gold); }
+
+    /* RULE CARDS */
+    .rule-card {
+      background: var(--pir-card);
+      border: 1px solid var(--pir-line);
+      border-radius: 15px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 15px rgba(16,43,66,.035);
+      overflow: hidden;
+      scroll-margin-top: 85px;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .rule-card:target, .rule-card.highlight-active {
+      border-color: var(--pir-red);
+      box-shadow: 0 0 0 3px rgba(217,31,43,.14), 0 8px 24px rgba(16,43,66,.08);
+    }
+    .rule-card-header {
+      background: var(--pir-card-header);
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--pir-line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .rule-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .rule-num-tag {
+      border-radius: 8px;
+      background: var(--pir-navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.84rem;
+      padding: 4px 11px;
+      white-space: nowrap;
+    }
+    .rule-num-tag.new-rule { background: var(--pir-red); }
+    .rule-num-tag.amd-tag { background: #ea580c; }
+    .rule-card-header h3 {
+      color: var(--text-main);
+      font-size: 1.08rem;
+      font-weight: 750;
+      letter-spacing: -.02em;
+    }
+    .cat-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(100,119,137,.14);
+      color: var(--pir-muted);
+      white-space: nowrap;
+    }
+
+    .rule-body {
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    /* CALLOUT BOXES */
+    .simplified-box, .elaborate-box, .amendment-box {
+      padding: 14px 18px;
+      border-radius: 12px;
+      border-left: 4px solid;
+    }
+    .simplified-box {
+      background: var(--simp-bg);
+      border-color: var(--simp-border);
+    }
+    .elaborate-box {
+      background: var(--elab-bg);
+      border-color: var(--elab-border);
+      font-size: 0.91rem;
+      color: var(--elab-body);
+    }
+    .amendment-box {
+      background: var(--amd-bg);
+      border-color: var(--amd-border);
+      color: var(--amd-text);
+      font-size: 0.9rem;
+    }
+    .box-label {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .simplified-box .box-label { color: var(--simp-text); }
+    .simplified-box p { color: var(--simp-body); font-size: 0.93rem; font-weight: 500; }
+    .elaborate-box .box-label { color: var(--elab-label); }
+    .amendment-box .box-label { color: var(--amd-border); }
+    .elaborate-box ul, .elaborate-box ol, .amendment-box ul { padding-left: 20px; margin-top: 6px; }
+    .elaborate-box li, .amendment-box li { margin-bottom: 6px; }
+    .elaborate-box h4 { margin: 12px 0 6px; color: var(--text-main); font-size: 0.95rem; }
+
+    /* TABLES */
+    table.rule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 0.85rem;
+      background: var(--pir-card);
+      border: 1px solid var(--pir-line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    table.rule-table th, table.rule-table td {
+      border: 1px solid var(--pir-line);
+      padding: 9px 12px;
+      text-align: left;
+      vertical-align: top;
+      color: var(--text-main);
+    }
+    table.rule-table th {
+      background: var(--pir-navy);
+      color: #fff;
+      font-weight: 600;
+    }
+    table.rule-table tr:nth-child(even) { background: var(--table-even); }
+
+    .note-callout {
+      background: var(--note-bg);
+      border: 1px solid var(--note-border);
+      color: var(--note-text);
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-top: 10px;
+      font-size: 0.85rem;
+    }
+
+    /* FAQ SECTION */
+    .section-divider {
+      margin: 40px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--pir-red);
+    }
+    .section-divider h2 {
+      font: 700 clamp(1.45rem,2.2vw,1.95rem)/1.2 Georgia, serif;
+      color: var(--text-main);
+    }
+    .faq-item {
+      border: 1px solid var(--pir-line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--pir-card);
+      margin-bottom: 10px;
+    }
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 14px 18px;
+      background: transparent;
+      border: none;
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .faq-question:hover { background: var(--pir-card-header); }
+    .faq-item.open .faq-question {
+      background: var(--pir-card-header);
+      color: var(--pir-red);
+    }
+    [data-theme="dark"] .faq-item.open .faq-question { color: var(--pir-gold); }
+    .faq-answer {
+      padding: 12px 18px 16px;
+      font-size: 0.89rem;
+      color: var(--pir-muted);
+      border-top: 1px solid var(--pir-line);
+      display: none;
+    }
+    .faq-item.open .faq-answer { display: block; }
+
+    /* VIEW MODES */
+    body.mode-simplified .elaborate-box { display: none; }
+    body.mode-elaborate .simplified-box { display: none; }
+
+    @media (max-width: 900px) {
+      .sidebar { width: 100%; height: auto; position: relative; }
+      body { flex-direction: column; }
+      .main-content { margin-left: 0; padding: 0 14px 25px; }
+      .top-toolbar { margin: 0 -14px 16px; padding: 12px 14px; }
+      .rule-nav-list { max-height: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>CCS Pension Rules</h1>
+      <p>2021 Rules + All Amendments (2022–2026) & ₹25L Gratuity</p>
+    </div>
+
+    <!-- Interactive Rule Number Slider -->
+    <div class="slider-box">
+      <div class="slider-label-row">
+        <span>⚡ Quick Rule Slider</span>
+        <span class="slider-current-badge" id="sliderBadge">Tracker</span>
+      </div>
+      <input type="range" id="ruleSlider" min="0" max="88" value="0" step="1">
+      <div class="slider-title-preview" id="sliderTitlePreview">2022–2026 Amendments Tracker</div>
+    </div>
+
+    <!-- Sidebar Search Box -->
+    <div class="search-box">
+      <input type="text" id="sidebarSearchInput" placeholder="🔍 Filter rules, 25 lakh, Form 6-A, Rule 8...">
+    </div>
+
+    <!-- Scrollable Rule Directory -->
+    <nav class="rule-nav-list" id="ruleNavList"></nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    
+    <!-- Top Sticky Bar with Search, View Mode & Night Mode Toggle -->
+    <div class="top-toolbar">
+      <div class="toolbar-search-wrap">
+        <input type="text" id="topSearchInput" placeholder="🔎 Quick Search across all 87 Rules, Amendments (2022–2026), ₹25L Gratuity & FAQs...">
+      </div>
+      <div class="view-controls">
+        <button class="view-btn active" onclick="setViewMode('both', this)">Both Views</button>
+        <button class="view-btn" onclick="setViewMode('simplified', this)">Simplified</button>
+        <button class="view-btn" onclick="setViewMode('elaborate', this)">Elaborate</button>
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleNightMode()">🌙 Night Mode</button>
+      </div>
+    </div>
+
+    <!-- Hero Summary Banner -->
+    <div class="hero-banner">
+      <h2>Central Civil Services (Pension) Rules, 2021 (Updated 2026 Edition)</h2>
+      <p>Complete statutory compendium incorporating Gazette Notification <strong>G.S.R. 868(E) (20.12.2021)</strong> and all subsequent amendments: <strong>2022 Amendment (Rule 8)</strong>, <strong>Jan 2024 Family Pension Reform (Rule 50)</strong>, <strong>May 2024 ₹25 Lakh Gratuity Enhancement (Rule 45)</strong>, <strong>July 2024 Single Form 6-A Amendment</strong>, <strong>May 2025 PSU Forfeiture Amendment (Rule 37)</strong>, and <strong>Sept 2026 OFB Amendment</strong>.</p>
+      <div class="key-highlights">
+        <div class="highlight-pill">
+          <strong>Max Gratuity: ₹25,00,000</strong>
+          Enhanced from ₹20L to ₹25L w.e.f. 01.01.2024 (DoPPW OM 30.05.2024)
+        </div>
+        <div class="highlight-pill">
+          <strong>Single Form 6-A (2024)</strong>
+          Replaces Forms 4, 6 & Format 9 at retirement via Bhavishya / e-HRMS
+        </div>
+        <div class="highlight-pill">
+          <strong>Pension & Family Pension</strong>
+          50% Pension (₹9k–₹1.25L) | 30% Ordinary / 50% Enhanced FP
+        </div>
+        <div class="highlight-pill">
+          <strong>2022–2026 Amendments</strong>
+          Rule 8 Secretary Power, Woman's Child Priority, Rule 37 PSU Forfeiture
+        </div>
+      </div>
+    </div>
+
+    <!-- RULES CONTAINER -->
+    <div id="rulesContainer"></div>
+
+    <!-- FAQ SECTION -->
+    <div class="section-divider" id="faqSection">
+      <h2>❓ Important Operational & Departmental Exam FAQs (28 Questions — Updated to 2026)</h2>
+    </div>
+    <div id="faqContainer"></div>
+
+  </main>
+
+  <script>
+    const rulesData = [
+      {
+        id: "amendments-tracker",
+        num: "Amendments (2022–26)",
+        title: "Master Register of Amendments & Executive Orders (2022 to 2026)",
+        category: "2022–2026 Amendments",
+        isNew: true,
+        isAmended: true,
+        simplified: "Quick summary of the 6 major amendments and statutory enhancements made to the CCS (Pension) Rules, 2021 between 2022 and 2026, including the increase of Maximum Gratuity from ₹20 Lakh to ₹25 Lakh w.e.f. 01.01.2024.",
+        amendmentNote: "All 6 amendments listed below have also been embedded directly inside the respective rules (Rules 8, 37, 45, 50, 53, 57–63, 80, and Forms).",
+        elaborate: `
+          <table class="rule-table">
+            <thead>
+              <tr>
+                <th>Date & Notification / OM No.</th>
+                <th>Title of Amendment / Order</th>
+                <th>Rules Amended</th>
+                <th>Key Statutory Modification</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>07.10.2022</strong><br>G.S.R. 770(E)</td>
+                <td><strong>CCS (Pension) Amendment Rules, 2022</strong></td>
+                <td><strong>Rule 8</strong></td>
+                <td>Previously, only the President could withhold/withdraw pension or gratuity under Rule 8 in all cases. Now, <strong>Presidential approval (and UPSC consultation) is required ONLY where the President is the Appointing Authority</strong>. For all other retirees, the <strong>Secretary of the Administrative Ministry/Department</strong> (or <strong>CAG</strong> for IA&AD) is competent to order withholding/withdrawal of pension/gratuity or sanction post-retirement proceedings.</td>
+              </tr>
+              <tr>
+                <td><strong>01.01.2024</strong><br>DoPPW OM No. 1/1(1)/2023-P&PW(E)</td>
+                <td><strong>Women Employees' Right to Nominate Child Ahead of Husband for Family Pension</strong></td>
+                <td><strong>Rule 50(8) & Rule 50(9)</strong></td>
+                <td>Allows a female Government servant or female pensioner who has filed for divorce (HM Act / Special Marriage Act) or filed a case under the <strong>Protection of Women from Domestic Violence (PWDV) Act, Dowry Prohibition Act, or IPC/BNS</strong> against her husband to request in writing that <strong>Family Pension be granted to her eligible child/children in precedence to her husband</strong> upon her death.</td>
+              </tr>
+              <tr>
+                <td><strong>30.05.2024</strong><br>DoPPW OM No. 28/03/2024-P&PW(B)/Gratuity/9559</td>
+                <td><strong>Enhancement of Maximum Limit of Retirement & Death Gratuity to ₹25 Lakh</strong></td>
+                <td><strong>Rule 45(1) Proviso</strong></td>
+                <td>Consequent upon Dearness Allowance reaching <strong>50% w.e.f. 01.01.2024</strong>, the maximum ceiling of <strong>Retirement Gratuity and Death Gratuity</strong> under the CCS (Pension) Rules, 2021 (and CCS Payment of Gratuity under NPS Rules, 2021) is increased by 25% from <strong>₹20,00,000 to ₹25,00,000 (Twenty-Five Lakh Rupees) w.e.f. 1st January, 2024</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>16.07.2024</strong><br>G.S.R. 410(E) (Effective 16.11.2024)</td>
+                <td><strong>CCS (Pension) Amendment Rules, 2024 (Introduction of Single Form 6-A)</strong></td>
+                <td><strong>Rules 50(15), 53, 57, 58, 59, 60, 62, 63, 80 & Forms 4, 6, 7</strong></td>
+                <td>
+                  • Replaced separate retirement submission of Form 6, Form 4, Format 9, Form A (Arrears nomination), Format 1, and CGHS/FMA options with a single consolidated <strong>Form 6-A</strong>.<br>
+                  • Amended Rule 53 to mandate processing via <strong>"online mode (Bhavishya / e-HRMS)"</strong>.<br>
+                  • Omitted Items 9 & 10 from the Form 7 Check-list.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>23.05.2025</strong><br>Gazette Notification (May 2025)</td>
+                <td><strong>CCS (Pension) Amendment Rules, 2025 (PSU Absorbee Misconduct Forfeiture)</strong></td>
+                <td><strong>Rule 37(29)(c)</strong></td>
+                <td>Reversed the earlier protection in Rule 37(29)(c): Now, <strong>dismissal or removal from service of a PSU</strong> of an absorbed employee for any subsequent misconduct <strong>SHALL lead to forfeiture of the retirement benefits for the service rendered under the Central Government also</strong> (bringing PSU absorbees in line with Rules 7, 8, 24, and 41).</td>
+              </tr>
+              <tr>
+                <td><strong>02.09.2026</strong><br>G.S.R. 775(E)</td>
+                <td><strong>CCS (Pension) Amendment Rules, 2026 (Erstwhile OFB Non-Production Units)</strong></td>
+                <td><strong>Rule 37(7) Proviso</strong></td>
+                <td>Inserted a proviso below Rule 37(7) providing that employees of non-production units (such as Schools and Hospitals) of the erstwhile <strong>Ordnance Factory Board (OFB)</strong> who do not opt for absorption in DPSUs shall continue on <strong>deemed deputation till retirement</strong> to the DPSUs on foreign service terms without deputation allowance.</td>
+              </tr>
+            </tbody>
+          </table>`
+      },
+      {
+        id: "rule-1",
+        num: "Rule 1",
+        title: "Short Title and Commencement",
+        category: "Ch I: Preliminary",
+        isNew: false,
+        simplified: "These rules are officially called the Central Civil Services (Pension) Rules, 2021, and came into force on the date of their publication in the Official Gazette (20th December, 2021).",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Called the <em>Central Civil Services (Pension) Rules, 2021</em>.</li>
+            <li><strong>Sub-rule (2):</strong> Came into force on the date of publication in the Official Gazette (<strong>20th December, 2021</strong> vide G.S.R. 868(E), F. No. 38/3/2017-P&PW(A)).</li>
+          </ul>`
+      },
+      {
+        id: "rule-2",
+        num: "Rule 2",
+        title: "Application & Cut-Off Date (31.12.2003)",
+        category: "Ch I: Preliminary",
+        isNew: true,
+        simplified: "Applies to Government servants appointed substantively to pensionable civil posts on or before 31.12.2003 (including Defence civilians). Also covers pre-2004 trainees, 1993 scheme temporary status casual labourers regularised after 2003, appointees under DoPPW one-time option OMs (e.g., OM dated 03.03.2023 for vacancies advertised/notified before 22.12.2003), and NPS employees who opted for OPS death/invalidation benefits under Rule 10 of CCS (Implementation of NPS) Rules, 2021.",
+        elaborate: `
+          <ul>
+            <li><strong>Core Applicability:</strong> Applies to Government servants appointed on or before <strong>31st December, 2003</strong> substantively to pensionable civil services/posts of the Union.</li>
+            <li><strong>Exclusions — Clauses (a) to (h):</strong> Excludes Railway servants, casual/daily-rated staff, contingency-paid staff, CPF optees, All India Services, locally recruited foreign mission staff, and contract staff.</li>
+            <li><strong>6 Statutory Explanations (Post-31.12.2003 Coverage):</strong>
+              <ol>
+                <li><strong>Induction Training on/before 31.12.2003:</strong> Regular appointment after 31.12.2003 preceded by mandatory induction training on/before 31.12.2003 with salary/stipend.</li>
+                <li><strong>Mobility from Non-Contributory Pension Bodies:</strong> Appointed on/before 31.12.2003 in a State Govt or Central/State Autonomous Body having an OPS-equivalent scheme and appointed after 31.12.2003 in Central Govt.</li>
+                <li><strong>Special/General Orders (e.g., DoPPW OM dated 03.03.2023):</strong> Employees appointed after 31.12.2003 against posts/vacancies advertised or notified for recruitment prior to <strong>22.12.2003</strong> who exercised the one-time option to be covered under CCS (Pension) Rules.</li>
+                <li><strong>Temporary Status Casual Labourers (1993 Scheme):</strong> Conferred temporary status on/before 31.12.2003 followed without interruption by regular appointment after 31.12.2003 (50% service counts under Rule 15).</li>
+                <li><strong>NPS Employees (Death / Invalidation):</strong> Covered for <strong>Invalid Pension (Rule 39)</strong> and <strong>Family Pension (Rule 50)</strong> if opted under Rule 10 of <em>CCS (Implementation of NPS) Rules, 2021</em>.</li>
+                <li><strong>Temporary Govt Servants (on/before 31.12.2003):</strong> Covered per <em>CCS (Temporary Service) Rules, 1965</em>.</li>
+              </ol>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-3",
+        num: "Rule 3",
+        title: "Definitions (Clauses a to z)",
+        category: "Ch I: Preliminary",
+        isNew: true,
+        simplified: "Defines 26 key terms from (a) Accounts Officer to (z) Treasury, formally introducing 'Bhavishya' (online pension system), 'e-PPO', and listing Post Offices and RBI-selected Banks as Pension Disbursing Authorities.",
+        elaborate: `
+          <ul>
+            <li><strong>(d) Bhavishya:</strong> Online system for sanction of retirement benefits and tracking of sanction and payment of pension.</li>
+            <li><strong>(o) Gratuity:</strong> Includes (i) Service Gratuity (Rule 44), (ii) Retirement or Death Gratuity [Rule 45(1)], and (iii) Residuary Gratuity [Rule 45(3)].</li>
+            <li><strong>(t) Pension:</strong> Includes gratuity (except when used in contradistinction to gratuity), but <em>does not include Dearness Relief</em>.</li>
+            <li><strong>(u) Pension Disbursing Authority (PDA):</strong> (i) RBI-selected Banks specified by CGA, (ii) <strong>Post Office</strong>, (iii) Treasury/Sub-Treasury, or (iv) Accounts Officer.</li>
+            <li><strong>(v) Pension Payment Order (PPO):</strong> Includes <strong>e-Pension Payment Order (e-PPO)</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-4",
+        num: "Rule 4",
+        title: "Transfer from Services/Posts to Which These Rules Do Not Apply",
+        category: "Ch I: Preliminary",
+        isNew: false,
+        simplified: "A Government servant permanently transferred to a pensionable post from a non-applicable post automatically comes under these rules, unless they opt in writing within 6 months to remain under their old pension rules. The option once exercised is final.",
+        elaborate: `
+          <ul>
+            <li><strong>Proviso (6-Month Option Window):</strong> May elect within <strong>6 months</strong> of the permanent transfer order (or within 6 months of return from leave, whichever is later) to remain governed by their previous pension rules. Option once exercised is <strong>final</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-5",
+        num: "Rule 5",
+        title: "Claims to Pension or Family Pension & Last Working Day",
+        category: "Ch II: General Conditions",
+        isNew: false,
+        simplified: "Pension claims are governed by the rules in force on the date of retirement, discharge, resignation, or death. The day of retirement or death is treated as a completed working day (unless the employee was on leave, absent, or under suspension immediately prior).",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Regulated by rules in force on the date of retirement/discharge/resignation/death.</li>
+            <li><strong>Sub-rule (2):</strong> Day of retirement/death is treated as the <strong>last completed working day</strong>, unless immediately prior the employee was on leave, absent, or under suspension (in which case that day forms part of such leave/absence/suspension).</li>
+          </ul>`
+      },
+      {
+        id: "rule-6",
+        num: "Rule 6",
+        title: "Limitations on Number of Pensions & Gratuity Cap across Autonomous/PSU Service",
+        category: "Ch II: General Conditions",
+        isNew: false,
+        simplified: "An employee cannot earn two pensions in the same service/post at the same time. Re-employed pensioners do not earn a second civil pension. If someone served in an Autonomous Body/PSU before joining Government (on/before 31.12.2003 with proper permission), they can draw separate Government pension/gratuity, but combined gratuity cannot exceed what would have been admissible had the entire service been under the Government.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1) & (2):</strong> No two pensions in the same service/post; no separate civil pension/gratuity for re-employment period (except under Rules 19/20).</li>
+            <li><strong>Provisos 1 & 2:</strong> Separate pension/gratuity is admissible for Central service after prior Autonomous Body/PSU service (joined on/before 31.12.2003 with proper permission), subject to the overall combined gratuity cap.</li>
+          </ul>`
+      },
+      {
+        id: "rule-7",
+        num: "Rule 7",
+        title: "Pension and Family Pension Subject to Future Good Conduct",
+        category: "Ch II: General Conditions",
+        isNew: true,
+        simplified: "Future good conduct is an implied condition for every pension and family pension. The Appointing Authority can withhold or withdraw pension (partially or fully, subject to the ₹9,000 minimum pension if partial) if the pensioner is convicted of a serious crime or guilty of grave misconduct. Retired Intelligence/Security organisation staff (2nd Schedule of RTI Act) cannot publish sensitive/domain material without prior clearance from the Head of Organisation (Undertaking in Format 1).",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Appointing Authority may withhold or withdraw pension/family pension (in full or part, permanently or temporarily) if convicted of a <strong>serious crime</strong> or found guilty of <strong>grave misconduct</strong> (partial cut cannot reduce below ₹9,000/month minimum pension).</li>
+            <li><strong>Sub-rule (3):</strong> For grave misconduct without criminal conviction, a show-cause notice granting <strong>15 days</strong> (extendable by another 15 days) is mandatory.</li>
+            <li><strong>Sub-rule (4):</strong> Mandatory <strong>Format 1 Undertaking</strong> for employees who worked in Intelligence/Security organisations listed in the Second Schedule to the RTI Act, 2005.</li>
+          </ul>`
+      },
+      {
+        id: "rule-8",
+        num: "Rule 8",
+        title: "Power to Withhold or Withdraw Pension (Amended in Oct 2022)",
+        category: "Ch II: General Conditions",
+        isNew: true,
+        isAmended: true,
+        simplified: "Governs withholding/withdrawal of pension or gratuity for grave misconduct or negligence during service in departmental or judicial proceedings. Under the Oct 2022 Amendment, Presidential approval (and UPSC consultation) is required ONLY where the President is the Appointing Authority; for all other employees, the Secretary of the Administrative Ministry/Department (or CAG) is competent! Minor penalty proceedings (Rule 16 of CCS CCA Rules) continued after retirement have NO effect on pension or gratuity.",
+        amendmentNote: "AMENDED vide CCS (Pension) Amendment Rules, 2022 [Notification No. G.S.R. 770(E) dated 07.10.2022 & DoPPW OM dated 20.10.2022]: Earlier, only the President had the power in all cases to withhold/withdraw pension or gratuity or sanction post-retirement departmental proceedings under Rule 8. Now: (1) Approval of the President (and UPSC consultation) is required ONLY for pensioners who retired from a post for which the President is the Appointing Authority; (2) For all other pensioners, the Secretary of the Administrative Ministry/Department is competent to order withholding/withdrawal of pension or gratuity and to accord sanction for post-retirement proceedings; (3) For IA&AD retirees (where an authority subordinate to the President is Appointing Authority), the Comptroller and Auditor-General of India (CAG) is the competent authority.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1) [As Amended on 07.10.2022]:</strong> Power to withhold pension/gratuity (in full or part) or withdraw pension (permanently or for a specified period) and order recovery of pecuniary loss vests in:
+              <ul>
+                <li><strong>The President (in consultation with UPSC):</strong> Where the pensioner retired from a post for which the President is the Appointing Authority.</li>
+                <li><strong>The Secretary of the Administrative Ministry/Department:</strong> Where the pensioner retired from a post for which an authority subordinate to the President is the Appointing Authority.</li>
+                <li><strong>The CAG of India:</strong> For retirees of the Indian Audit & Accounts Department (where an authority subordinate to the President is Appointing Authority).</li>
+              </ul>
+              <em>Minimum Pension Proviso:</em> Where part of pension is withheld/withdrawn, it shall not be reduced below <strong>₹9,000 per month</strong> (Rule 44).
+            </li>
+            <li><strong>Sub-rule (2)(b) — Rule 16 (Minor Penalty) Exemption:</strong> Departmental proceedings instituted under <strong>Rule 16 of CCS (CCA) Rules, 1965</strong> while in service and continued after retirement <strong>shall have NO effect on pension and gratuity</strong>.</li>
+            <li><strong>Sub-rule (2)(c) — Fresh Proceedings Instituted AFTER Retirement:</strong>
+              <ol type="i">
+                <li>Requires prior sanction of the President / Secretary / CAG (in <strong>Format 2</strong>);</li>
+                <li>Cannot be instituted for any event that took place <strong>more than 4 years before such institution</strong>; and</li>
+                <li>Conducted per Rule 14 major penalty procedure (Charge Memo in <strong>Format 3</strong>).</li>
+              </ol>
+            </li>
+            <li><strong>Sub-rules (3)–(5) — Provisional Pension & Withholding of Gratuity:</strong> 100% Provisional Pension is paid and Gratuity is withheld only if proceedings are actually <em>instituted</em> on/before retirement. Mere contemplation or pending investigation [Sub-rule 4(d)] cannot stop regular pension and gratuity.</li>
+            <li><strong>Sub-rule (6) — 1/3rd Cap on Pecuniary Loss Recovery:</strong> Where pension is not withheld/withdrawn but pecuniary loss recovery is ordered, recovery rate shall not ordinarily exceed <strong>one-third (1/3) of the pension admissible on retirement</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-9",
+        num: "Rule 9",
+        title: "Commercial Employment After Retirement (Group 'A' Officers — 1 Year Cooling-Off)",
+        category: "Ch II: General Conditions",
+        isNew: false,
+        simplified: "A retired Group 'A' officer must obtain prior Government sanction (by applying in Form 1) before accepting any commercial employment within 1 year of retirement. Taking commercial employment within 1 year without permission can lead to withholding of whole or part of pension.",
+        elaborate: `
+          <ul>
+            <li>Applies to retired <strong>Central Service Group 'A'</strong> officers for <strong>1 year</strong> after retirement (Application in <strong>Form 1</strong>; Ministry Checklist in <strong>Form 2</strong>; 30 days to represent against refusal/conditions).</li>
+          </ul>`
+      },
+      {
+        id: "rule-10",
+        num: "Rule 10",
+        title: "Employment After Retirement Under a Government Outside India",
+        category: "Ch II: General Conditions",
+        isNew: false,
+        simplified: "A retired Group 'A' officer must obtain prior permission from the Central Government before accepting employment under any foreign Government, failing which no pension is payable for the period of such employment.",
+        elaborate: `
+          <ul>
+            <li>Applies to retired <strong>Central Service Group 'A'</strong> officers (no time limit cutoff). Unauthorized employment under a foreign Government forfeits pension for the period of employment.</li>
+          </ul>`
+      },
+      {
+        id: "rule-11",
+        num: "Rule 11",
+        title: "Commencement of Qualifying Service (Minimum Age 18 Years)",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Qualifying service starts from the date the employee takes charge of their first post (substantive, officiating, or temporary, provided temporary/officiating service is followed without interruption by substantive appointment). Boy service rendered before age 18 does not count (except Military Service under Rule 20).",
+        elaborate: `
+          <ul>
+            <li>Commences from first appointment charge date. Service rendered before attaining <strong>18 years of age (Boy Service)</strong> does not count, except for Military Service under Rule 20.</li>
+          </ul>`
+      },
+      {
+        id: "rule-12",
+        num: "Rule 12",
+        title: "Conditions Subject to Which Service Qualifies",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Service qualifies only if the employee's duties and pay are regulated by the Government and paid from the Consolidated Fund of India or a Government-administered Local Fund.",
+        elaborate: `
+          <ul>
+            <li>Must be service under the Government paid from the <strong>Consolidated Fund of India</strong> or a Government-administered Local Fund having a non-contributory pension scheme.</li>
+          </ul>`
+      },
+      {
+        id: "rule-13",
+        num: "Rule 13",
+        title: "Counting of Service Rendered in State Governments",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Continuous pensionable service rendered in a State Government (appointed on/before 31.12.2003) before permanent transfer or technical resignation (with proper permission) to Central Government counts as qualifying service. Full pension liability is borne by the Central Government without proportionate recovery from the State.",
+        elaborate: `
+          <ul>
+            <li>Continuous State Govt pensionable service (appointed on/before 31.12.2003) counts upon permanent transfer or technical resignation with proper permission. Full pension/gratuity liability is borne by the <strong>Central Government</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-14",
+        num: "Rule 14",
+        title: "Counting of Service in Autonomous Bodies (Excludes PSUs & Banks)",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Service in a Central/State Autonomous Body (having a non-contributory pension scheme and appointed on/before 31.12.2003) counts in Central Government if joined with proper permission and the Autonomous Body discharges its pension liability in a lump sum. Service in PSUs, Nationalized Banks, and Financial Institutions does NOT count.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Autonomous Body discharges liability by paying lump-sum capitalised value of pension/gratuity.</li>
+            <li><strong>Sub-rule (3):</strong> Service rendered in a <strong>Public Sector Undertaking (PSU), nationalized bank, or financial institution</strong> before appointment in Central Government <strong>shall NOT count as qualifying service</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-15",
+        num: "Rule 15",
+        title: "Service Rendered in Temporary Status by Casual Labourers (50% Counts)",
+        category: "Ch III: Qualifying Service",
+        isNew: true,
+        simplified: "50% of the service rendered in 'Temporary Status' capacity (conferred on or before 31.12.2003 under the DoPT 1993 Scheme) counts as qualifying service upon subsequent regularisation in Government service.",
+        elaborate: `
+          <ul>
+            <li><strong>Fifty percent (50%)</strong> of service rendered in 'temporary status' capacity (conferred on/before 31.12.2003 under the 1993 DoPT Scheme) followed by regularisation counts as qualifying service.</li>
+          </ul>`
+      },
+      {
+        id: "rule-16",
+        num: "Rule 16",
+        title: "Counting of Service on Probation",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Service rendered on probation against a post qualifies for pension if it is followed by confirmation in the same or another post.",
+        elaborate: `
+          <ul>
+            <li>Service on probation against a post, if followed by confirmation in the same or another post, qualifies.</li>
+          </ul>`
+      },
+      {
+        id: "rule-17",
+        num: "Rule 17",
+        title: "Counting of Service as Apprentice (SAS Apprentice Exception)",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Service as an apprentice does NOT qualify for pension, except for Subordinate Accounts Service (SAS) apprentices in the Indian Audit & Accounts Department (IA&AD) or Defence Accounts Department (DAD).",
+        elaborate: `
+          <ul>
+            <li>Apprentice service does not qualify, except for <strong>SAS Apprentices</strong> in IA&AD or DAD.</li>
+          </ul>`
+      },
+      {
+        id: "rule-18",
+        num: "Rule 18",
+        title: "Counting of Service on Contract",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Initial contract service followed without interruption by regular appointment (on/before 31.12.2003) counts as qualifying service if the employee refunded the Government's CPF contribution/compensation with interest.",
+        elaborate: `
+          <ul>
+            <li>Qualifies if followed without interruption by appointment on/before 31.12.2003 and Government CPF contribution/compensation with interest was refunded.</li>
+          </ul>`
+      },
+      {
+        id: "rule-19",
+        num: "Rule 19",
+        title: "Counting of Pre-Retirement Civil Service (Re-Employed Govt Servants)",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "A civil pensioner who retired on Compensation or Invalid Pension/Gratuity and was re-employed on/before 31.12.2003 could count past civil service by ceasing to draw pension and refunding gratuity/commutation in up to 36 monthly instalments.",
+        elaborate: `
+          <ul>
+            <li>Allows counting of former civil service upon refunding gratuity/commuted value in up to <strong>36 monthly instalments</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-20",
+        num: "Rule 20",
+        title: "Counting of Military Service Rendered Before Civil Employment",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Ex-servicemen re-employed in civil posts on/before 31.12.2003 could opt to either retain military pension and earn a separate civil pension (with zero ceiling limitation between the two!) or refund military benefits in 36 instalments to combine service.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (5):</strong> Pension and gratuity for civil service rendered after military re-employment is <strong>not subject to any limitation</strong> with reference to military pension/gratuity.</li>
+          </ul>`
+      },
+      {
+        id: "rule-21",
+        num: "Rule 21",
+        title: "Counting of Periods Spent on Leave (EOL Rules)",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "All leave with leave salary and all Extraordinary Leave (EOL) granted on Medical Certificate automatically count as qualifying service. EOL without medical certificate counts only if granted due to (i) civil commotion or (ii) prosecuting higher scientific and technical studies. If a non-qualifying EOL entry is not made in the Service Book at least 6 months before superannuation, it automatically counts as qualifying service.",
+        elaborate: `
+          <ul>
+            <li><strong>Automatic Qualification:</strong> All paid leave + <strong>EOL on Medical Certificate</strong>.</li>
+            <li><strong>Proviso (EOL without MC):</strong> Counts if granted due to (i) <strong>civil commotion</strong> or (ii) prosecuting <strong>higher scientific and technical studies</strong>.</li>
+            <li><strong>Explanation:</strong> Any non-qualifying EOL entry must be recorded in the Service Book at grant or <strong>not later than 6 months before superannuation</strong>, failing which it automatically counts as qualifying service.</li>
+          </ul>`
+      },
+      {
+        id: "rule-22",
+        num: "Rule 22",
+        title: "Counting of Periods Spent on Pre-Appointment Training",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Mandatory departmental training prior to regular appointment to a Group 'C' post (where pay, stipend, or nominal allowance was drawn) counts as qualifying service, along with transit interruption up to permissible joining time.",
+        elaborate: `
+          <ul>
+            <li>Pre-appointment Group 'C' departmental training (with pay/stipend/nominal allowance) and permissible transit joining time count as qualifying service.</li>
+          </ul>`
+      },
+      {
+        id: "rule-23",
+        num: "Rule 23",
+        title: "Counting of Periods of Suspension",
+        category: "Ch III: Qualifying Service",
+        isNew: true,
+        simplified: "Suspension counts as qualifying service automatically if the employee is fully exonerated OR if only a minor penalty is imposed and the suspension is held to be wholly unjustified. In other cases, it does not count unless the competent authority expressly declares that it shall count.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Counts automatically on <strong>full exoneration</strong> OR when <strong>only a minor penalty is imposed</strong> and suspension is held wholly unjustified. Otherwise requires an express order recorded in the Service Book.</li>
+          </ul>`
+      },
+      {
+        id: "rule-24",
+        num: "Rule 24",
+        title: "Forfeiture of Service on Dismissal or Removal",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Dismissal or removal of a Government servant from a service or post entails complete forfeiture of past service.",
+        elaborate: `
+          <ul>
+            <li>Dismissal or removal entails forfeiture of past service (subject to discretionary Compassionate Allowance up to 2/3rd under Rule 41).</li>
+          </ul>`
+      },
+      {
+        id: "rule-25",
+        num: "Rule 25",
+        title: "Counting of Past Service on Reinstatement",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "An employee dismissed, removed, or compulsorily retired who is later reinstated on appeal or review regains their past qualifying service. The intervening break period counts only if specifically regularised as duty or qualifying leave.",
+        elaborate: `
+          <ul>
+            <li>Reinstatement restores past service; intervening period counts only if regularised as duty or qualifying leave.</li>
+          </ul>`
+      },
+      {
+        id: "rule-26",
+        num: "Rule 26",
+        title: "Forfeiture of Service on Resignation & Technical Resignation / Withdrawal",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Ordinary resignation forfeits all past service. However, a 'Technical Resignation' submitted with proper permission to take up another qualifying Government appointment does NOT forfeit past service. Also, the Appointing Authority may allow withdrawal of resignation in public interest if the employee was absent for not more than 90 days.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (2):</strong> Technical resignation with proper permission to join another qualifying Government post preserves past service.</li>
+            <li><strong>Sub-rule (5) & (6):</strong> Withdrawal of resignation in public interest requires that absence did not exceed <strong>90 days</strong> and post is available (never allowed if resigned to join a private firm or PSU).</li>
+          </ul>`
+      },
+      {
+        id: "rule-27",
+        num: "Rule 27",
+        title: "Effect of Interruption in Service",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Lists the exceptions where an interruption in service does not forfeit past service (authorised leave, suspension followed by reinstatement/death/retirement, public interest transfer, joining time) and allows the Appointing Authority to retrospectively commute unauthorized absence into EOL.",
+        elaborate: `
+          <ul>
+            <li>Appointing Authority may retrospectively commute periods of unauthorized absence into Extraordinary Leave (EOL) so past service is not forfeited.</li>
+          </ul>`
+      },
+      {
+        id: "rule-28",
+        num: "Rule 28",
+        title: "Condonation of Interruption in Service",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "Unless noted otherwise in the Service Book, an interruption between two spells of civil Government service is automatically condoned and pre-interruption service counts as qualifying service. However, this automatic condonation does NOT apply to interruptions caused by resignation, dismissal, removal, or participation in a strike.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1) & (2):</strong> Automatic condonation between two spells of civil service does <strong>NOT apply</strong> to interruptions caused by <strong>resignation, dismissal, removal, or participation in a strike</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-29",
+        num: "Rule 29",
+        title: "Deputation to United Nations and Other International Organizations",
+        category: "Ch III: Qualifying Service",
+        isNew: false,
+        simplified: "A Government servant deputed on foreign service to the UN, IMF, World Bank, ADB, or Commonwealth Secretariat has the option either to pay pension contributions and count the period for pension, or not pay contributions and exclude the period.",
+        elaborate: `
+          <ul>
+            <li>Employee may opt to pay pension contributions and count the foreign service, or not pay (and get refund of any paid contributions) and exclude the period.</li>
+          </ul>`
+      },
+      {
+        id: "rule-30",
+        num: "Rule 30",
+        title: "Periodic Verification of Qualifying Service (At 18 Years & 5 Years Before Retirement)",
+        category: "Ch III: Qualifying Service",
+        isNew: true,
+        simplified: "Mandatory verification of qualifying service by the Head of Office in consultation with the Accounts Officer must be done twice: (1) on completion of 18 years of service, and (2) when 5 years of service are left before superannuation. The certificate is issued to the employee in Format 4, and an annual compliance report must be submitted to the Secretary by 31st January every year.",
+        elaborate: `
+          <ul>
+            <li><strong>Two Milestones:</strong> On completing <strong>18 years of service</strong> and when left with <strong>5 years before superannuation</strong> (Certificate issued in <strong>Format 4</strong>).</li>
+            <li><strong>Annual Compliance Report:</strong> Submitted to the Secretary of the Ministry/Department by <strong>31st January</strong> each year.</li>
+          </ul>`
+      },
+      {
+        id: "rule-31",
+        num: "Rule 31",
+        title: "Emoluments (Basic Pay + NPA + Stagnation Increment)",
+        category: "Ch IV: Emoluments",
+        isNew: true,
+        simplified: "'Emoluments' means Basic Pay [under FR 9(21)(a)(i)] drawn immediately before retirement or death, plus Non-Practising Allowance (NPA) for medical officers and Stagnation Increments. Increments earned during leave (not withheld) and retrospective notional pay increases (Review DPC/exoneration/pay revision) also count. If an employee dies while serving a temporary pay-reduction penalty, notional pay ignoring the penalty is taken!",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Basic Pay + NPA + Stagnation Increment.</li>
+            <li><strong>Sub-rule (10):</strong> Retrospective notional pay fixation (pay scale revision / Review DPC / exoneration / court order) counts.</li>
+            <li><strong>Sub-rule (11) — Death During Temporary Penalty:</strong> If an employee dies during the currency of a temporary pay-reduction penalty, <strong>notional pay ignoring the penalty</strong> is taken as emoluments!</li>
+          </ul>`
+      },
+      {
+        id: "rule-32",
+        num: "Rule 32",
+        title: "Average Emoluments (Last 10 Months Calculation & 30-Day Month Formula)",
+        category: "Ch IV: Emoluments",
+        isNew: false,
+        simplified: "Average Emoluments is the average of the emoluments drawn during the last 10 months of service. Non-qualifying EOL or suspension during the last 10 months is disregarded, and an equal period immediately preceding the 10 months is included (reckoning fractional months as 30 days regardless of whether the month has 28, 29, 30, or 31 days).",
+        elaborate: `
+          <ul>
+            <li>Calculated over the <strong>last 10 months of service</strong>. Fractional months are always computed using a denominator of <strong>30 days</strong> ($x/30$), even for February.</li>
+          </ul>`
+      },
+      {
+        id: "rule-33",
+        num: "Rule 33",
+        title: "Superannuation Pension or Service Gratuity",
+        category: "Ch V: Classes of Pensions",
+        isNew: false,
+        simplified: "Granted under Rule 44 to a Government servant who retires on attaining the age of superannuation (or on expiry of any approved extension of service beyond superannuation).",
+        elaborate: `
+          <ul>
+            <li>Granted in accordance with Rule 44 on attaining the age of superannuation.</li>
+          </ul>`
+      },
+      {
+        id: "rule-34",
+        num: "Rule 34",
+        title: "Retiring Pension or Service Gratuity",
+        category: "Ch V: Classes of Pensions",
+        isNew: false,
+        simplified: "Granted to an employee who retires before superannuation either voluntarily (under Rule 43 or FR 56), under the Special Voluntary Retirement Scheme (SVRS) on being declared surplus, or prematurely retired by the Government (under Rule 42 or FR 56).",
+        elaborate: `
+          <ul>
+            <li>Covers voluntary retirement (Rule 43 / FR 56(k)), Surplus SVRS (DoPT OM 28.02.2002), and premature retirement by Government (Rule 42 / FR 56(j)).</li>
+          </ul>`
+      },
+      {
+        id: "rule-35",
+        num: "Rule 35",
+        title: "Pension on Absorption in or Under a State Government",
+        category: "Ch V: Classes of Pensions",
+        isNew: false,
+        simplified: "A Central Government servant permitted to be absorbed in a State Government is deemed to have retired from the date of absorption (relieving order in Format 5) and can either draw separate pro-rata Central retirement benefits or count their Central service in the State Government.",
+        elaborate: `
+          <ul>
+            <li>Relieving order issued in <strong>Format 5</strong>. Employee may opt to receive Central retirement benefits or count Central service in the State Government.</li>
+          </ul>`
+      },
+      {
+        id: "rule-36",
+        num: "Rule 36",
+        title: "Pension on Absorption in or Under a Corporation, Company or Body",
+        category: "Ch V: Classes of Pensions",
+        isNew: false,
+        simplified: "When absorbed in a PSU, Corporation, or Autonomous Body owned/controlled by Central/State Govt, the employee is deemed to have retired from the date of absorption, severs all lien with the Government, and receives retirement benefits for qualifying Central service.",
+        elaborate: `
+          <ul>
+            <li>Deemed retired from date of absorption (Relieving order in <strong>Format 5</strong>); no lien retained in Government.</li>
+          </ul>`
+      },
+      {
+        id: "rule-37",
+        num: "Rule 37",
+        title: "Pension on Conversion of a Govt Department into a PSU (Amended in May 2025 & Sept 2026)",
+        category: "Ch V: Classes of Pensions",
+        isNew: true,
+        isAmended: true,
+        simplified: "Covers en-masse transfer of staff when a Government Department is converted into a PSU (e.g., BSNL/MTNL/DPSUs). IMPORTANT 2025 AMENDMENT: Under the CCS (Pension) Amendment Rules, 2025 (notified 23.05.2025), if an absorbed PSU employee is subsequently dismissed or removed from the PSU for misconduct, their retirement benefits for past Central Government service can ALSO be forfeited! Also amended in Sept 2026 [G.S.R. 775(E)] for erstwhile OFB school/hospital staff.",
+        amendmentNote: "AMENDED TWICE: (1) CCS (Pension) Amendment Rules, 2025 (Notified 23.05.2025) amended Rule 37(29)(c): Previously, dismissal/removal from the PSU for subsequent misconduct did NOT forfeit Central Govt service benefits. Under the May 2025 amendment, dismissal or removal from service of the PSU after absorption for any subsequent misconduct SHALL lead to forfeiture of the retirement benefits for the service rendered under the Central Government also (harmonized with Rules 7, 8, 24 & 41). (2) CCS (Pension) Amendment Rules, 2026 [G.S.R. 775(E) dated 02.09.2026] inserted a proviso below Rule 37(7) allowing employees of non-production units (Schools/Hospitals) of erstwhile Ordnance Factory Board (OFB) who do not opt for absorption in DPSUs to continue on deemed deputation till superannuation.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rules (1)–(7):</strong> En-masse deemed deputation without deputation allowance; PSU frames rules within 5 years; 3 months to opt for absorption or reversion.
+              <ul>
+                <li><strong>2026 Proviso to Sub-rule (7) [G.S.R. 775(E) dated 02.09.2026]:</strong> Non-production unit staff (Schools/Hospitals) of erstwhile <strong>Ordnance Factory Board (OFB)</strong> not opting for absorption in DPSUs continue on deemed deputation till retirement.</li>
+              </ul>
+            </li>
+            <li><strong>Sub-rule (12)–(17):</strong> Option to draw Central benefits up to absorption OR combined-service pension from a Pension Fund Trust (with IDA Dearness Relief and 10-year combined VR eligibility).</li>
+            <li><strong>Sub-rule (29)(c) [As Amended on 23.05.2025]:</strong> The dismissal or removal from service of the PSU of any employee after absorption for any subsequent misconduct <strong>shall lead to forfeiture of the retirement benefits for the service rendered under the Government also</strong>, and in the event of dismissal/removal/retrenchment, the decision of the PSU is subject to review by the administratively concerned Ministry.</li>
+          </ul>`
+      },
+      {
+        id: "rule-38",
+        num: "Rule 38",
+        title: "Pension on Conversion of a Govt Department into a Central Autonomous Body",
+        category: "Ch V: Classes of Pensions",
+        isNew: false,
+        simplified: "Mirrors Rule 37 for conversion of a Government Department into a Central Autonomous Body, except that absorbed employees opting for combined-service pension receive Dearness Relief on the Central Dearness Allowance (CDA) pattern. Excludes Prasar Bharati transferees.",
+        elaborate: `
+          <ul>
+            <li>Combined-service optees receive Dearness Relief on the <strong>CDA pattern</strong>. Excludes Akashvani/Doordarshan staff transferred to Prasar Bharati.</li>
+          </ul>`
+      },
+      {
+        id: "rule-39",
+        num: "Rule 39",
+        title: "Invalid Pension (No 10-Year Minimum Service Requirement!)",
+        category: "Ch V: Classes of Pensions",
+        isNew: true,
+        simplified: "Granted when a Government servant retires due to permanent bodily or mental infirmity (Medical Certificate in Format 6). Protected first by Section 20 of the Rights of Persons with Disabilities Act, 2016. Even if the employee has LESS than 10 years of qualifying service, Invalid Pension is granted at 50% of emoluments or average emoluments (if medically examined and declared fit at appointment).",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (3):</strong> Medical Board required for Gazetted officers and Non-Gazetted staff with Basic Pay > <strong>₹54,000/month</strong> (Lady doctor mandatory for female employees).</li>
+            <li><strong>Sub-rule (8):</strong> Medical Certificate in <strong>Format 6</strong>; Invalid Pension sanctioned within <strong>45 days</strong>.</li>
+            <li><strong>Sub-rule (9) — No 10-Year QS Bar:</strong> Admissible at <strong>50% of emoluments or average emoluments</strong> even if qualifying service is less than 10 years!</li>
+          </ul>`
+      },
+      {
+        id: "rule-40",
+        num: "Rule 40",
+        title: "Compulsory Retirement Pension (Penalty under CCS CCA Rules — 2/3rd to Full)",
+        category: "Ch V: Classes of Pensions",
+        isNew: true,
+        simplified: "An employee compulsorily retired as a penalty may be granted pension and/or gratuity at a rate between two-thirds (2/3) and full superannuation pension/gratuity (never less than ₹9,000 minimum pension). If the quantum order is not issued simultaneously with the penalty order, 2/3rd provisional pension/gratuity must be sanctioned immediately and finalised within 3 months.",
+        elaborate: `
+          <ul>
+            <li>Quantum ranges between <strong>2/3rd and Full</strong> superannuation pension/gratuity (minimum ₹9,000/month). If not issued simultaneously with penalty order, 2/3rd provisional pension/gratuity is paid immediately and finalised within <strong>3 months</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-41",
+        num: "Rule 41",
+        title: "Compassionate Allowance (On Dismissal or Removal — Up to 2/3rd)",
+        category: "Ch V: Classes of Pensions",
+        isNew: true,
+        simplified: "Although dismissal or removal forfeits pension and gratuity, the competent authority may in deserving cases sanction a Compassionate Allowance not exceeding two-thirds (2/3) of pension or gratuity (or both), subject to the ₹9,000 minimum pension. Decision must be taken within 3 months of the dismissal/removal order.",
+        elaborate: `
+          <ul>
+            <li>Up to <strong>two-thirds (2/3)</strong> of pension or gratuity or both (minimum ₹9,000/month). Competent authority must decide within <strong>3 months</strong> of the dismissal/removal order.</li>
+          </ul>`
+      },
+      {
+        id: "rule-42",
+        num: "Rule 42",
+        title: "Premature Retirement by Government on Completion of 30 Years' Qualifying Service",
+        category: "Ch VI: Premature & Voluntary Retirement",
+        isNew: false,
+        simplified: "Corresponds to old Rule 48(1)(b): At any time after a Government servant completes 30 years of qualifying service, the Appointing Authority may require them to retire in the public interest by giving at least 3 months' written notice (or 3 months' pay and allowances in lieu of notice).",
+        elaborate: `
+          <ul>
+            <li>Requires <strong>30 years' qualifying service</strong> and <strong>3 months' written notice</strong> (or 3 months' pay and allowances in lieu), following the FR 56(j) procedure.</li>
+          </ul>`
+      },
+      {
+        id: "rule-43",
+        num: "Rule 43",
+        title: "Voluntary Retirement on Completion of 20 Years' Qualifying Service",
+        category: "Ch VI: Premature & Voluntary Retirement",
+        isNew: true,
+        simplified: "Corresponds to old Rule 48-A: After completing 20 exact years of qualifying service (the 3-month rounding-off rule does NOT apply here; 19 years 9 months is NOT eligible), an employee can retire voluntarily by giving at least 3 months' written notice. Deemed accepted if not refused before notice expiry. Withdrawal of notice must be requested at least 15 days before the intended retirement date.",
+        elaborate: `
+          <ul>
+            <li><strong>No Rounding Off:</strong> Must complete exact <strong>20 years</strong> (Rule 44(7) rounding does not apply).</li>
+            <li><strong>15-Day QS Certificate:</strong> Authority issues 20-year QS verification certificate within 15 days of request prior to notice.</li>
+            <li><strong>Withholding Permission:</strong> Only if under (i) Suspension, (ii) Charge sheet issued & disciplinary proceedings pending, or (iii) Judicial proceedings for grave misconduct pending.</li>
+          </ul>`
+      },
+      {
+        id: "rule-44",
+        num: "Rule 44",
+        title: "Amount of Pension, Service Gratuity & Additional Pension (80+ Years)",
+        category: "Ch VII: Regulation of Pension & Gratuity",
+        isNew: false,
+        simplified: "After 10 years of qualifying service (9 years 9 months rounds up to 10 years!), Pension is 50% of Emoluments or Average Emoluments, whichever is higher (Min ₹9,000/month, Max ₹1,25,000/month). For less than 10 years' service, Service Gratuity is paid at 1/2 month's emoluments (Basic + DA) for each completed 6-monthly period. From age 80 onwards, Additional Pension from 20% to 100% is payable from the 1st of the birth month.",
+        elaborate: `
+          <ul>
+            <li><strong>Pension Quantum:</strong> <strong>50%</strong> of Emoluments or Average Emoluments, whichever is more beneficial (Min: <strong>₹9,000/month</strong>; Max: <strong>₹1,25,000/month</strong>).</li>
+            <li><strong>Rounding Off (Sub-rules 7 & 8):</strong> Fraction of a year $\ge 3$ months = 1 completed six-monthly period. Thus, <strong>9 years 9 months = 10 years</strong> and qualifies for regular pension!</li>
+            <li><strong>Additional Pension Slabs (80+ Years — Payable from 1st of Birth Month):</strong>
+              <table class="rule-table">
+                <thead>
+                  <tr><th>Age Bracket</th><th>Additional Basic Pension / Compassionate Allowance</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>80 to less than 85 years</td><td><strong>20%</strong></td></tr>
+                  <tr><td>85 to less than 90 years</td><td><strong>30%</strong></td></tr>
+                  <tr><td>90 to less than 95 years</td><td><strong>40%</strong></td></tr>
+                  <tr><td>95 to less than 100 years</td><td><strong>50%</strong></td></tr>
+                  <tr><td>100 years or more</td><td><strong>100%</strong></td></tr>
+                </tbody>
+              </table>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-45",
+        num: "Rule 45",
+        title: "Retirement Gratuity, Death Gratuity & Residuary Gratuity (Max Enhanced to ₹25 Lakh!)",
+        category: "Ch VII: Regulation of Pension & Gratuity",
+        isNew: true,
+        isAmended: true,
+        simplified: "Retirement Gratuity (after 5 years' QS, or 4 years 9 months with rounding) is 1/4th of Emoluments (Basic + NPA + DA) for each completed 6-monthly period, up to a max of 16½ times emoluments. Death Gratuity requires NO minimum service and ranges from 2 times to 33 times emoluments (also payable in case of suicide). UPDATED CEILING: Effective 1st January, 2024 (DoPPW OM dated 30.05.2024), the maximum ceiling of Retirement Gratuity and Death Gratuity has been increased from ₹20 Lakh to ₹25,00,000 (₹25 Lakh)!",
+        amendmentNote: "ENHANCED TO ₹25 LAKH vide DoPPW OM No. 28/03/2024-P&PW(B)/Gratuity/9559 dated 30.05.2024: Consequent upon Dearness Allowance reaching 50% of Basic Pay w.e.f. 1st January, 2024, the maximum limit of Retirement Gratuity and Death Gratuity under Rule 45 of the CCS (Pension) Rules, 2021 (as well as under the CCS Payment of Gratuity under NPS Rules, 2021) stands increased by 25% from ₹20,00,000 (Twenty Lakh) to ₹25,00,000 (Twenty-Five Lakh Rupees) w.e.f. 01.01.2024.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1)(a) & (5) — Retirement Gratuity:</strong> Requires <strong>5 years' qualifying service</strong> (<strong>4 years 9 months</strong> rounds up to 5 years). Calculated at <strong>1/4th of emoluments (Basic + NPA + DA) for each completed 6-monthly period</strong>, up to a maximum of <strong>16½ times emoluments</strong> (at 66 six-monthly periods = 33 years).</li>
+            <li><strong>Sub-rule (1)(b) & (2) — Death Gratuity Slabs (Also applicable in case of Suicide):</strong>
+              <table class="rule-table">
+                <thead>
+                  <tr><th>Sl. No.</th><th>Length of Qualifying Service</th><th>Rate of Death Gratuity (Emoluments = Basic + DA)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>(i)</td><td>Less than 1 year</td><td><strong>2 times</strong> of emoluments</td></tr>
+                  <tr><td>(ii)</td><td>1 year or more but less than 5 years</td><td><strong>6 times</strong> of emoluments</td></tr>
+                  <tr><td>(iii)</td><td>5 years or more but less than 11 years</td><td><strong>12 times</strong> of emoluments</td></tr>
+                  <tr><td>(iv)</td><td>11 years or more but less than 20 years</td><td><strong>20 times</strong> of emoluments</td></tr>
+                  <tr><td>(v)</td><td>20 years or more</td><td><strong>1/2 of emoluments</strong> for every completed 6-monthly period, up to a max of <strong>33 times</strong> of emoluments</td></tr>
+                </tbody>
+              </table>
+            </li>
+            <li><strong>Enhanced Statutory Monetary Ceiling (w.e.f. 01.01.2024):</strong> Retirement Gratuity or Death Gratuity shall in no case exceed <strong>₹25,00,000 (Twenty-Five Lakh Rupees)</strong> [enhanced from ₹20 Lakh vide DoPPW OM dated 30.05.2024 when DA touched 50%].</li>
+            <li><strong>Sub-rule (3) — Residuary Gratuity:</strong> If a retiree dies <strong>within 5 years of retirement</strong> and total pension + gratuity + commutation received is less than <strong>12 times emoluments</strong>, the deficiency is paid as Residuary Gratuity (Form 13).</li>
+            <li><strong>Explanation — 11 Categories of 'Family' for Gratuity:</strong>
+              <ul>
+                <li><strong>Group 1 [Clauses (i)–(v)]:</strong> (i) Wife/wives (incl. judicially separated), (ii) Husband (incl. judicially separated), (iii) Sons (incl. step/adopted), (iv) Unmarried daughters, (v) Widowed/divorced daughters.</li>
+                <li><strong>Group 2 [Clauses (vi)–(xi)]:</strong> (vi) Father, (vii) Mother, (viii) Brothers <18 yrs or disabled brothers (no age limit), (ix) Unmarried/widowed/divorced sisters, (x) Married daughters, (xi) Children of a pre-deceased son.</li>
+              </ul>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-46",
+        num: "Rule 46",
+        title: "Nominations for Gratuity (Common Nomination Form 3)",
+        category: "Ch VII: Regulation of Pension & Gratuity",
+        isNew: false,
+        simplified: "Every Government servant must make a nomination in Common Nomination Form 3 (covering Gratuity, GPF, and CGEGIS) on initial appointment. Marriage by an unmarried employee does NOT automatically invalidate a prior nomination made in favour of a family member (e.g., parents) unless cancelled in writing.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (6):</strong> Nomination made by an unmarried Govt servant in favour of any family member (parents/siblings) <strong>does NOT become invalid on marriage</strong> unless cancelled by filing a fresh Form 3.</li>
+          </ul>`
+      },
+      {
+        id: "rule-47",
+        num: "Rule 47",
+        title: "Persons to Whom Gratuity is Payable (Equal Shares & Minor's Share)",
+        category: "Ch VII: Regulation of Pension & Gratuity",
+        isNew: false,
+        simplified: "If no valid nomination subsists, Gratuity is paid equally to Group 1 family members [Clauses (i)–(v)]; failing Group 1, equally to Group 2 family members [Clauses (vi)–(xi)]. In the absence of a natural guardian, up to 20% of a minor's share can be paid on an Indemnity Bond (Format 7) without a guardianship certificate.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (2):</strong> Share of a predeceased nominee (where no alternate was named) is distributed equally among all surviving eligible family members.</li>
+            <li><strong>Sub-rule (7):</strong> Up to <strong>20% of a minor's share</strong> is payable without guardianship certificate on an <strong>Indemnity Bond in Format 7</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-48",
+        num: "Rule 48",
+        title: "Debarring a Person Charged with Murder / Abetting Suicide from Receiving Gratuity",
+        category: "Ch VII: Regulation of Pension & Gratuity",
+        isNew: true,
+        simplified: "If a gratuity claimant is charged with murdering the Government servant or abetting their murder or suicide, their share is suspended until the criminal trial concludes, and forfeited upon conviction.",
+        elaborate: `
+          <ul>
+            <li>Includes charges of <strong>abetting death by suicide</strong>. Share is suspended during trial and paid to other eligible family members upon conviction.</li>
+          </ul>`
+      },
+      {
+        id: "rule-49",
+        num: "Rule 49",
+        title: "Lapse of Retirement Gratuity and Death Gratuity",
+        category: "Ch VII: Regulation of Pension & Gratuity",
+        isNew: false,
+        simplified: "If an employee dies leaving no family and no valid nomination, gratuity lapses to the Government—unless a claimant produces a Succession Certificate from a Court of Law.",
+        elaborate: `
+          <ul>
+            <li>Payable to the holder of a Court <strong>Succession Certificate</strong> even where no family or nomination exists.</li>
+          </ul>`
+      },
+      {
+        id: "rule-50",
+        num: "Rule 50",
+        title: "Family Pension (Amended in Jan 2024 & July 2024 — Child Priority Option for Women)",
+        category: "Ch VIII: Family Pension",
+        isNew: true,
+        isAmended: true,
+        simplified: "Governs Family Pension: Ordinary Rate is 30% of pay (Min ₹9,000, Max ₹75,000/month). Enhanced Rate is 50% of pay (Min ₹9,000, Max ₹1,25,000/month) for 10 years (death in service) or 7 years / up to age 67 (death after retirement). MAJOR 2024 REFORM (DoPPW OM dated 01.01.2024): A female Government servant or pensioner facing divorce proceedings or Domestic Violence / Dowry / IPC cases against her husband can now nominate her eligible child/children to receive Family Pension IN PRECEDENCE to her husband! Also updated in July 2024 [G.S.R. 410(E)] to require Form 6-A at retirement.",
+        amendmentNote: "AMENDED IN JAN 2024 & JULY 2024: (1) Vide DoPPW OM No. 1/1(1)/2023-P&PW(E) dated 01.01.2024, where a female Government servant/pensioner has divorce proceedings pending in a competent court, or has filed a case against her husband under the Protection of Women from Domestic Violence Act (PWDV Act), Dowry Prohibition Act, or Indian Penal Code (now Bharatiya Nyaya Sanhita), she may submit a written request to the Head of Office that upon her death, Family Pension be granted to her eligible child/children in precedence to her husband. (2) Vide G.S.R. 410(E) dated 16.07.2024, Rule 50(15)(e) was amended so that at the time of retirement, updated family details are submitted in the new consolidated Form 6-A.",
+        elaborate: `
+          <h4>1. Rates & Duration of Family Pension [Sub-rule (2)]</h4>
+          <table class="rule-table">
+            <thead>
+              <tr><th>Type of Family Pension</th><th>Rate (% of Pay)</th><th>Duration</th><th>Min & Max Limit</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ordinary Family Pension</strong></td>
+                <td><strong>30% of Pay</strong></td>
+                <td>After Enhanced period (for life / till eligible)</td>
+                <td>Min: <strong>₹9,000</strong> | Max: <strong>₹75,000</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Enhanced Family Pension (Death in Service)</strong></td>
+                <td><strong>50% of Pay</strong></td>
+                <td>For <strong>10 years</strong> from day following death</td>
+                <td>Min: <strong>₹9,000</strong> | Max: <strong>₹1,25,000</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Enhanced Family Pension (Death after Retirement)</strong></td>
+                <td><strong>50% of Pay</strong> (Capped at authorised retirement pension)</td>
+                <td>For <strong>7 years</strong> OR up to age <strong>67</strong> of deceased retiree, whichever is less</td>
+                <td>Min: <strong>₹9,000</strong> | Max: <strong>₹1,25,000</strong></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4>2. Jan 2024 Reform: Woman Employee's Option to Prioritise Children Over Husband</h4>
+          <ul>
+            <li>If a female employee/pensioner has pending divorce proceedings or has filed a case under the <strong>PWDV Act, Dowry Prohibition Act, or IPC/BNS</strong> against her husband and requests in writing to grant family pension to her children ahead of her husband:
+              <ul>
+                <li>If survived by a widower and no eligible child → Payable to the widower.</li>
+                <li>If survived by a widower with a <strong>minor child or mentally disabled child</strong> → Payable to the widower provided he is the guardian; if he ceases to be guardian, payable through the actual guardian; once the minor child attains majority and remains eligible, payable directly to the child.</li>
+                <li>If survived by a widower and a <strong>major eligible child</strong> → Payable directly to such child! Only after all eligible children cease to be eligible does family pension revert to the widower till his death/remarriage.</li>
+              </ul>
+            </li>
+          </ul>
+
+          <h4>3. Standard Priority Order & Dual Family Pension Limits [Sub-rules (6)–(13)]</h4>
+          <ul>
+            <li><strong>Order:</strong> (1) Widow/Widower → (2) Children <25 yrs → Disabled Children (for life; marriage doesn't disqualify) → Unmarried/Widowed/Divorced Daughters >25 yrs → (3) Dependent Parents (Mother then Father) → (4) Dependent Disabled Siblings.</li>
+            <li><strong>Two Family Pensions Limit (Both Parents Govt Servants):</strong> Max <strong>₹1,25,000/month</strong> (if either/both at Enhanced 50% rate) or Max <strong>₹75,000/month</strong> (if both at Ordinary 30% rate).</li>
+          </ul>`
+      },
+      {
+        id: "rule-51",
+        num: "Rule 51",
+        title: "Entitlements of Family of a Missing Government Servant, Pensioner or Family Pensioner",
+        category: "Ch VIII: Family Pension",
+        isNew: true,
+        simplified: "When an employee, pensioner, or family pensioner goes missing, Family Pension and Retirement Gratuity are paid after 6 months from the date of lodging the Police Report (FIR/General Diary + Untraced Police Report + Format 8 Indemnity Bond). The difference between Death Gratuity and Retirement Gratuity is paid after 7 years (or upon conclusive proof of death). Does not apply to persons disappearing while facing fraud/embezzlement/criminal investigation.",
+        elaborate: `
+          <ul>
+            <li><strong>6 Months:</strong> Waiting period from date of Police Report for disbursing Family Pension (with arrears) and Retirement Gratuity.</li>
+            <li><strong>7 Years:</strong> Waiting period from Police Report (unless death proved earlier) for paying the difference between <strong>Death Gratuity and Retirement Gratuity</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-52",
+        num: "Rule 52",
+        title: "Dearness Relief (DR) on Pension and Family Pension",
+        category: "Ch IX: Dearness Relief",
+        isNew: false,
+        simplified: "Employed Family Pensioners ALWAYS receive full Dearness Relief on family pension. Re-employed pensioners receive DR on pension only if they retired from a post below Group 'A', their re-employment pay was fixed at the minimum of the scale (below last pay), and their entire pension was ignored in pay fixation.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (4):</strong> Employed family pensioners draw full DR on family pension without restriction.</li>
+          </ul>`
+      },
+      {
+        id: "rule-53",
+        num: "Rule 53",
+        title: "Processing of Pension Cases in Online Mode — Bhavishya / e-HRMS (Amended July 2024)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: true,
+        isAmended: true,
+        simplified: "Mandates that unless exempted by the Government, all pension cases of retiring Central Government servants must be processed in 'online mode (Bhavishya / e-HRMS)'.",
+        amendmentNote: "AMENDED vide CCS (Pension) Amendment Rules, 2024 [G.S.R. 410(E) dated 16.07.2024]: Substituted 'Bhavishya' with 'online mode (Bhavishya/e-HRMS)' across Rule 53 to integrate e-HRMS with Bhavishya for single-window submission of Form 6-A.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rules (1) & (2) [As Amended on 16.07.2024]:</strong> Unless exempted, every pension case shall be processed through <strong>online mode (Bhavishya / e-HRMS)</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-54",
+        num: "Rule 54",
+        title: "Preparation of List of Government Servants Due for Retirement (15 Months Advance)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "By the 15th of every month, every Head of Department prepares a list of employees retiring within the next 15 months and sends it to the Accounts Officer before the end of that month. For non-superannuation retirements, HoO informs AO within 10 days.",
+        elaborate: `
+          <ul>
+            <li>List prepared by <strong>15th of every month</strong> (for next 15 months) and sent to AO by the <strong>last day of the month</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-55",
+        num: "Rule 55",
+        title: "Intimation to Directorate of Estates for 'No Demand Certificate' (1 Year Advance)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "At least 1 year before superannuation, HoO sends accommodation details of allottees to Directorate of Estates for a 'No Demand Certificate' (NDC). Non-allottees submit a self-declaration 1 year before retirement, and HoO issues the NDC directly.",
+        elaborate: `
+          <ul>
+            <li>Sent <strong>1 year before superannuation</strong>. For non-allottees, Head of Office issues the NDC directly based on employee declaration and office records.</li>
+          </ul>`
+      },
+      {
+        id: "rule-56",
+        num: "Rule 56",
+        title: "Preparatory Work for Processing of Pension Case (Starts 1 Year Before Retirement)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "Every Head of Office must begin preparatory work for processing a superannuation pension case 1 year before the date of superannuation.",
+        elaborate: `
+          <ul>
+            <li>Starts <strong>12 months before superannuation</strong> (or on LPR commencement date, whichever is earlier).</li>
+          </ul>`
+      },
+      {
+        id: "rule-57",
+        num: "Rule 57",
+        title: "Three Stages for Processing Superannuation Pension Case — Form 6-A (Amended July 2024)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: true,
+        isAmended: true,
+        simplified: "Divides the 1-year preparatory work into 3 stages: (a) First Stage (completed 8 months before retirement): Verify service (2-month deemed qualification for other offices; plain-paper declaration for unverified gaps). (b) Second Stage: Check emoluments ONLY for the 24 months preceding retirement. (c) Third Stage (8 months before retirement): Issue QS/Emoluments certificate and advise retiree to submit consolidated 'Form 6-A' not later than 6 months before retirement.",
+        amendmentNote: "AMENDED vide CCS (Pension) Amendment Rules, 2024 [G.S.R. 410(E) dated 16.07.2024]: Replaced separate submission of 'Form 4, Form 6, Format 9, Form A, and FMA/CGHS option' with the single integrated 'Form 6-A' in Rule 57(1)(c)(iii), Rule 57(2), and Rule 57(3).",
+        elaborate: `
+          <ul>
+            <li><strong>First Stage (8 months prior):</strong> Complete service verification.</li>
+            <li><strong>Second Stage (24-Month Check Cap):</strong> Head of Office verifies correctness of emoluments <strong>only for the 24 months preceding retirement</strong>, and not for any prior period.</li>
+            <li><strong>Third Stage & Sub-rule (2) [As Amended on 16.07.2024]:</strong> Not later than 8 months prior, HoO furnishes QS/Emoluments certificate and advises submission of <strong>Form 6-A</strong>. The retiring employee submits <strong>Form 6-A</strong> (online via Bhavishya/e-HRMS) not later than <strong>6 months prior to retirement</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-58",
+        num: "Rule 58",
+        title: "Submission of Form 6-A When Retiring for Reasons Other Than Superannuation (Amended July 2024)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        isAmended: true,
+        simplified: "An employee retiring for reasons other than superannuation submits the consolidated Form 6-A immediately after retirement is approved or becomes effective.",
+        amendmentNote: "AMENDED vide G.S.R. 410(E) dated 16.07.2024: Substituted 'Form 4, Form 6, Format 9, Form A...' with single 'Form 6-A'.",
+        elaborate: `
+          <ul>
+            <li>Consolidated <strong>Form 6-A</strong> is submitted immediately after approval/effectiveness of non-superannuation retirement.</li>
+          </ul>`
+      },
+      {
+        id: "rule-59",
+        num: "Rule 59",
+        title: "Completion of Pension Case in Form 7 (4 Months Before Superannuation — Amended July 2024)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        isAmended: true,
+        simplified: "The Head of Office completes Part I of Form 7 along with the check-list and calculation sheet not later than 4 months before superannuation (or within 2 months after submission of Form 6-A in other cases).",
+        amendmentNote: "AMENDED vide G.S.R. 410(E) dated 16.07.2024: Replaced 'Form 4 and Form 6' with 'Form 6-A'.",
+        elaborate: `
+          <ul>
+            <li>Completed not later than <strong>4 months before superannuation</strong> (or within <strong>2 months</strong> of receiving Form 6-A in non-superannuation cases).</li>
+          </ul>`
+      },
+      {
+        id: "rule-60",
+        num: "Rule 60",
+        title: "Forwarding of Pension Case to Accounts Officer (4 Months Before Superannuation — Amended July 2024)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        isAmended: true,
+        simplified: "The Head of Office forwards Form 6-A, Form 7, Format 10 covering letter, and Service Book to the Accounts Officer not later than 4 months before superannuation (or within 2 months of receiving Form 6-A in other cases).",
+        amendmentNote: "AMENDED vide G.S.R. 410(E) dated 16.07.2024: Replaced 'Form 4, Form 6 and Format 9' with 'Form 6-A'.",
+        elaborate: `
+          <ul>
+            <li>Forwarded to Accounts Officer not later than <strong>4 months before superannuation</strong> (or within <strong>2 months</strong> of Form 6-A submission in other cases).</li>
+          </ul>`
+      },
+      {
+        id: "rule-61",
+        num: "Rule 61",
+        title: "Intimation to Accounts Officer Regarding Subsequent Events or Dues",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "Any post-forwarding event or additional Government dues coming to notice after forwarding papers under Rule 60 must be promptly reported by the Head of Office to the Accounts Officer (reiterated by DoPPW OM dated 12.03.2025).",
+        elaborate: `
+          <ul>
+            <li>Prompt reporting of any subsequent event or additional Government dues to the Accounts Officer.</li>
+          </ul>`
+      },
+      {
+        id: "rule-62",
+        num: "Rule 62",
+        title: "Provisional Pension & Gratuity for Administrative Delays (Auto-Final After 6 Months)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        isAmended: true,
+        simplified: "If a PPO is delayed for reasons other than disciplinary proceedings, HoO sanctions 100% Provisional Pension and 100% Provisional Gratuity (withholding 10% of gratuity) within 10 days of retirement. If not finalised within 6 months of retirement or submission of Form 6-A, the Accounts Officer MUST treat the provisional pension/gratuity as final and issue the PPO immediately! Excess provisional gratuity paid is never recovered from the retiree.",
+        amendmentNote: "AMENDED vide G.S.R. 410(E) dated 16.07.2024: Substituted 'Form 4 and Form 6' with 'Form 6-A' in Rule 62(6)(a).",
+        elaborate: `
+          <ul>
+            <li><strong>Within 10 Days of Retirement:</strong> 100% Provisional Pension + 100% Provisional Gratuity (withholding 10%).</li>
+            <li><strong>6-Month Auto-Finalisation [Sub-rule (7)]:</strong> Treated as final and PPO issued immediately if not finalised within 6 months from retirement or Form 6-A submission.</li>
+          </ul>`
+      },
+      {
+        id: "rule-63",
+        num: "Rule 63",
+        title: "Authorisation of Pension & Gratuity by Accounts Officer (PPO 2 Months Before Retirement)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: true,
+        isAmended: true,
+        simplified: "Accounts Officer checks emoluments ONLY for the 24 months preceding retirement and issues the PPO not later than 2 months before superannuation (or within 45 days in other cases). Forwards PPO with Form 6-A to CPAO within 2 months, and CPAO issues Special Seal of Authority within 21 days. After Rule 8 disciplinary proceedings conclude, HoO sends Form 7-A within 30 days and AO issues final PPO within 30 days.",
+        amendmentNote: "AMENDED vide G.S.R. 410(E) dated 16.07.2024: Substituted 'Format 9' with 'Form 6-A' in Rule 63(4)(a) & (b).",
+        elaborate: `
+          <ul>
+            <li><strong>2 Months Before Superannuation:</strong> PPO issued by Accounts Officer (45 days in non-superannuation cases).</li>
+            <li><strong>24-Month Emolument Check Cap [Sub-rule (1)(c)]:</strong> AO checks emoluments only for the 24 months preceding retirement.</li>
+            <li><strong>30 + 30 Days Post-Inquiry [Sub-rule (5)]:</strong> Form 7-A sent within 30 days of final disciplinary/judicial order; AO authorises final pension within 30 days.</li>
+          </ul>`
+      },
+      {
+        id: "rule-64",
+        num: "Rule 64",
+        title: "Government Servants Retiring While on Deputation",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "If retiring while on deputation to another Central Govt Department, the borrowing Department processes pension. If on deputation to a State Govt or Foreign Service, the parent Central Department processes it.",
+        elaborate: `
+          <ul>
+            <li>Central Deputation → Borrowing Dept; State Deputation / Foreign Service → Parent Dept/Cadre.</li>
+          </ul>`
+      },
+      {
+        id: "rule-65",
+        num: "Rule 65",
+        title: "Interest on Delayed Payment of Gratuity, Pension and Family Pension (At GPF Rate)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: true,
+        simplified: "Covers delayed Pension, Family Pension, and Gratuity due to administrative lapses! Interest is payable at the GPF rate from the date following expiry of 3 months from retirement/death/exoneration/order. Sanctioned by the Secretary (or authorised Joint Secretary+) and paid within 2 months of sanction.",
+        elaborate: `
+          <ul>
+            <li><strong>GPF Rate Interest:</strong> Payable beyond <strong>3 months</strong> from retirement/death/exoneration/order; sanctioned by Secretary / Joint Secretary and disbursed within <strong>2 months</strong> of sanction.</li>
+          </ul>`
+      },
+      {
+        id: "rule-66",
+        num: "Rule 66",
+        title: "Revision of Pension After Authorisation (Protection Against Downward Revision)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "Subject to Rules 7 and 8, a pension or family pension once finally authorised cannot be revised to the disadvantage of the pensioner unless a clerical error is detected (requiring DoPPW concurrence if detected after 2 years, and Dept of Expenditure consultation for waiver of excess recovery).",
+        elaborate: `
+          <ul>
+            <li>Clerical error detected after <strong>2 years</strong> requires <strong>DoPPW concurrence</strong> to revise downward.</li>
+          </ul>`
+      },
+      {
+        id: "rule-67",
+        num: "Rule 67",
+        title: "Recovery and Adjustment of Government Dues From Retirement Gratuity",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "Only official 'Government dues' (accommodation licence fee/damages/utility arrears, HBA/conveyance advances, pay/leave salary overpayments, and TDS Income Tax) can be recovered from Retirement Gratuity.",
+        elaborate: `
+          <ul>
+            <li>Non-Government dues cannot be recovered from Retirement Gratuity.</li>
+          </ul>`
+      },
+      {
+        id: "rule-68",
+        num: "Rule 68",
+        title: "Adjustment and Recovery of Dues Pertaining to Government Accommodation",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: true,
+        simplified: "If licence fee is unassessed, 10% of gratuity is withheld. Directorate of Estates must issue the No Demand Certificate (NDC) within 14 days of application after quarter vacation, failing which the retiree gets GPF-rate interest on the withheld gratuity! Unpaid damages/utility dues can be recovered from Dearness Relief without the pensioner's consent.",
+        elaborate: `
+          <ul>
+            <li><strong>14-Day NDC Rule [Sub-rule (7)]:</strong> Failure by Directorate of Estates to issue NDC within 14 days of application after vacation entitles the retiree to <strong>GPF-rate interest</strong> on excess withheld gratuity.</li>
+          </ul>`
+      },
+      {
+        id: "rule-69",
+        num: "Rule 69",
+        title: "Assessment and Recovery of Dues Other Than Government Accommodation",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "Assessment of non-accommodation Government dues starts 1 year before superannuation and must be completed 8 months prior to superannuation (or within 30 days after retirement in other cases).",
+        elaborate: `
+          <ul>
+            <li>Completed <strong>8 months prior to superannuation</strong> (or within <strong>30 days</strong> after non-superannuation retirement).</li>
+          </ul>`
+      },
+      {
+        id: "rule-70",
+        num: "Rule 70",
+        title: "Date of Retirement to be Notified (Deemed Superannuation Without Order)",
+        category: "Ch X: Sanction & Authorisation of Pension",
+        isNew: false,
+        simplified: "Retirement notification/office order is issued within 1 week of retirement, but failure to issue it does NOT entitle the employee to continue in service beyond superannuation.",
+        elaborate: `
+          <ul>
+            <li>Deemed retired on superannuation date unless a specific service extension order was issued.</li>
+          </ul>`
+      },
+      {
+        id: "rule-71",
+        num: "Rule 71",
+        title: "Obtaining Claims for Family Pension & Death Gratuity (Death / Disappearance in Service)",
+        category: "Ch XI: Death or Missing in Service",
+        isNew: true,
+        simplified: "On receiving credible information of death in service (without waiting for a death certificate!), HoO sends Format 11 (for Form 9 gratuity claim) and Format 12 (for Form 10 family pension claim). Outstanding licence fee prior to death is waived off, and the family retains accommodation free of licence fee for the month of death plus 3 months thereafter!",
+        elaborate: `
+          <ul>
+            <li><strong>Licence Fee Waiver [Sub-rule (4)]:</strong> Pre-death licence fee arrears are waived off, and no licence fee is charged for the <strong>month of death + 3 months thereafter</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-72",
+        num: "Rule 72",
+        title: "Verification of Service and Emoluments on Death or Disappearance in Service (1 Month)",
+        category: "Ch XI: Death or Missing in Service",
+        isNew: false,
+        simplified: "HoO accepts unverified service from Service Book entries, checks emoluments for max 1 year prior to death/disappearance, and completes determination within 1 month.",
+        elaborate: `
+          <ul>
+            <li>Completed within <strong>1 month</strong> of death/disappearance intimation; emolument verification capped at <strong>1 year</strong> prior.</li>
+          </ul>`
+      },
+      {
+        id: "rule-73",
+        num: "Rule 73",
+        title: "Action Where Service Records of Deceased Employee Are Incomplete",
+        category: "Ch XI: Death or Missing in Service",
+        isNew: false,
+        simplified: "Family Pension is determined within 1 month regardless of incomplete Service Book, and provisional Death Gratuity is paid immediately based on verified spells.",
+        elaborate: `
+          <ul>
+            <li>Other offices must answer verification references within <strong>1 month</strong>, failing which service is deemed qualified.</li>
+          </ul>`
+      },
+      {
+        id: "rule-74",
+        num: "Rule 74",
+        title: "Forwarding Family Pension & Death Gratuity Case to Accounts Officer (Form 11 — Within 1 Month)",
+        category: "Ch XI: Death or Missing in Service",
+        isNew: false,
+        simplified: "Within 1 month of receiving claims, HoO sends Form 11 to the Accounts Officer (holding over at most 10% of gratuity for unassessed dues). Claims cannot be rejected merely because a family member's name was missing in Form 4.",
+        elaborate: `
+          <ul>
+            <li>Forwarded in <strong>Form 11 within 1 month</strong> of claim receipt.</li>
+          </ul>`
+      },
+      {
+        id: "rule-75",
+        num: "Rule 75",
+        title: "Sanction & Disbursement of Provisional Family Pension (Within 15 Days) and 100% Provisional Death Gratuity",
+        category: "Ch XI: Death or Missing in Service",
+        isNew: true,
+        simplified: "On death in service, HoO sanctions and draws Provisional Family Pension within 15 days of claim receipt (for 6 months) and draws 100% of assessed Death Gratuity immediately after forwarding Form 11 to the Accounts Officer.",
+        elaborate: `
+          <ul>
+            <li><strong>15 Days:</strong> Timeline for Head of Office to sanction Provisional Family Pension on death in service.</li>
+          </ul>`
+      },
+      {
+        id: "rule-76",
+        num: "Rule 76",
+        title: "Authorisation of Final Family Pension and Balance Gratuity by Accounts Officer (Within 1 Month)",
+        category: "Ch XI: Death or Missing in Service",
+        isNew: false,
+        simplified: "Accounts Officer issues Family Pension PPO and sends to CPAO within 1 month; CPAO issues Special Seal within 10 days; Bank/Post Office (PDA) starts payment within 15 days. Excess provisional death gratuity paid is never recovered from the family.",
+        elaborate: `
+          <ul>
+            <li><strong>1 Month (AO) → 10 Days (CPAO) → 15 Days (PDA)</strong> fast-track disbursement chain.</li>
+          </ul>`
+      },
+      {
+        id: "rule-77",
+        num: "Rule 77",
+        title: "Adjustment of Government Dues on Death or Disappearance in Service",
+        category: "Ch XI: Death or Missing in Service",
+        isNew: false,
+        simplified: "HoO writes to Directorate of Estates within 7 days and withholds 10% of death gratuity for 1 month pending reply (if no reply in 1 month, releases the 10%). Non-accommodation dues are assessed within 15 days.",
+        elaborate: `
+          <ul>
+            <li>10% withheld death gratuity is released if Directorate of Estates does not report dues within <strong>1 month</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-78",
+        num: "Rule 78",
+        title: "Family Pension & Death Gratuity When Employee Dies or Goes Missing on Deputation",
+        category: "Ch XI: Death or Missing in Service",
+        isNew: false,
+        simplified: "Central Deputation → Borrowing Department processes claim; State Deputation / Foreign Service → Parent Central Department processes claim.",
+        elaborate: `
+          <ul>
+            <li>Mirrors Rule 64 jurisdiction for death/disappearance while on deputation.</li>
+          </ul>`
+      },
+      {
+        id: "rule-79",
+        num: "Rule 79",
+        title: "Sanction of Family Pension & Residuary Gratuity on Death/Disappearance of a Pensioner",
+        category: "Ch XII: Death of Pensioner",
+        isNew: true,
+        simplified: "When a pensioner dies and their spouse or co-authorised family member is already named in the PPO, they submit Form 12 + death certificate directly to the Bank/Post Office (PDA), which starts family pension within 1 month! If not named in the PPO, they apply to HoO in Form 10, who sanctions family pension in Format 13 within 1 month.",
+        elaborate: `
+          <ul>
+            <li><strong>Form 12 (Direct to Bank/Post Office):</strong> For spouse or co-authorised member already in PPO (starts within 1 month).</li>
+            <li><strong>Form 10 (To Head of Office):</strong> For claimants not named in PPO (sanctioned in Format 13 within 1 month).</li>
+          </ul>`
+      },
+      {
+        id: "rule-80",
+        num: "Rule 80",
+        title: "Authorisation of Payment by Accounts Officer on Death of Pensioner (Amended July 2024)",
+        category: "Ch XII: Death of Pensioner",
+        isNew: false,
+        isAmended: true,
+        simplified: "AO authorises payment within 1 month of receiving Format 13 sanction; CPAO issues Special Seal within 10 days; PDA disburses within 15 days. If a retired employee died before submitting Form 6-A, the gratuity nominee can submit Form 6-A where no family pensioner exists.",
+        amendmentNote: "AMENDED vide G.S.R. 410(E) dated 16.07.2024: Substituted 'Form 6' with 'Form 6-A' in Rule 80(5).",
+        elaborate: `
+          <ul>
+            <li>Covers authorisation within <strong>1 month</strong> and post-retirement death before submission of <strong>Form 6-A</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-81",
+        num: "Rule 81",
+        title: "Date From Which Pension and Family Pension Become Payable",
+        category: "Ch XIII: Payment of Pensions",
+        isNew: false,
+        simplified: "Pension is payable from the date the employee ceases to be borne on the establishment. Family Pension is payable from the day following death/ineligibility. Both are payable for the full day on which the recipient dies.",
+        elaborate: `
+          <ul>
+            <li>Pension and Family Pension are payable for the <strong>entire day on which the recipient dies</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-82",
+        num: "Rule 82",
+        title: "Currency in Which Pension is Payable (Rupees in India Only)",
+        category: "Ch XIII: Payment of Pensions",
+        isNew: false,
+        simplified: "All pensions and gratuities under these rules are payable in Indian Rupees (INR) in India only.",
+        elaborate: `
+          <ul>
+            <li>Payable in <strong>rupees in India only</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-83",
+        num: "Rule 83",
+        title: "Manner of Payment of Gratuity and Monthly Pension (March Pension on 1st Working Day of April)",
+        category: "Ch XIII: Payment of Pensions",
+        isNew: false,
+        simplified: "Gratuity is paid in a lump sum. Monthly pension is paid on or after the last working day of the month—EXCEPT for March, which is payable on or after the 1st working day of April.",
+        elaborate: `
+          <ul>
+            <li>Monthly pension paid on/after last working day of the month, except <strong>March pension</strong> (paid on/after 1st working day of April).</li>
+          </ul>`
+      },
+      {
+        id: "rule-84",
+        num: "Rule 84",
+        title: "Application of Other Rules (Treasury, Commutation 1981 & Arrears Nomination 1983)",
+        category: "Ch XIII: Payment of Pensions",
+        isNew: false,
+        simplified: "Applies Central Govt Treasury Rules, CCS (Commutation of Pension) Rules, 1981 (restoration after 15 years), and Payment of Arrears of Pension (Nomination) Rules, 1983.",
+        elaborate: `
+          <ul>
+            <li>Links Treasury Rules, Commutation Rules 1981, and Arrears Nomination Rules 1983.</li>
+          </ul>`
+      },
+      {
+        id: "rule-85",
+        num: "Rule 85",
+        title: "Interpretation (DoPPW & DoPT)",
+        category: "Ch XIV: Miscellaneous & Forms",
+        isNew: false,
+        simplified: "Doubts on interpretation are referred to DoPPW or DoPT depending on the subject matter.",
+        elaborate: `
+          <ul>
+            <li>Referred to <strong>DoPPW</strong> or <strong>DoPT</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-86",
+        num: "Rule 86",
+        title: "Power to Relax",
+        category: "Ch XIV: Miscellaneous & Forms",
+        isNew: false,
+        simplified: "Any Ministry/Department may relax a rule to relieve undue hardship for recorded reasons, but ONLY with the prior concurrence of DoPPW or DoPT.",
+        elaborate: `
+          <ul>
+            <li>Requires prior concurrence of <strong>DoPPW or DoPT</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-87",
+        num: "Rule 87",
+        title: "Repeal and Saving (Supersedes CCS Pension Rules, 1972)",
+        category: "Ch XIV: Miscellaneous & Forms",
+        isNew: false,
+        simplified: "Repeals the CCS (Pension) Rules, 1972 while saving all existing nominations, family declarations, and actions taken under the 1972 rules.",
+        elaborate: `
+          <ul>
+            <li>Repeals the 1972 Rules and saves past nominations/actions.</li>
+          </ul>`
+      },
+      {
+        id: "forms-formats",
+        num: "Forms & Formats",
+        title: "Master Directory of Statutory Forms (Including New Form 6-A) & Formats (1 to 13)",
+        category: "Ch XIV: Miscellaneous & Forms",
+        isNew: true,
+        isAmended: true,
+        simplified: "Complete reference table of Forms 1 to 13 (updated with the July 2024 Single Pension Application Form 6-A) and Official Formats 1 to 13.",
+        amendmentNote: "UPDATED vide G.S.R. 410(E) dated 16.07.2024: Form 6 was replaced by the consolidated 'Form 6-A' (combining old Form 6, Form 4 at retirement, Format 9 Bank Undertaking, Form A Arrears Nomination, Format 1, and CGHS/FMA option). Items 9 and 10 of the Form 7 Check-list were omitted.",
+        elaborate: `
+          <table class="rule-table">
+            <thead>
+              <tr><th>Form / Format</th><th>Applicable Rule(s)</th><th>Title & Purpose (Updated per 2024 Amendment)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Form 1 & Form 2</strong></td><td>Rule 9(1), 9(5)</td><td>Application (Form 1) & Ministry Check-list (Form 2) for Group 'A' officers seeking commercial employment within 1 year of retirement.</td></tr>
+              <tr><td><strong>Form 3</strong></td><td>Rule 46</td><td><strong>Common Nomination Form</strong> for Gratuity, GPF, and CGEGIS.</td></tr>
+              <tr><td><strong>Form 4</strong></td><td>Rule 50(15)</td><td><strong>Details of Family</strong> submitted during service (at retirement, family details are now submitted inside <strong>Form 6-A</strong>).</td></tr>
+              <tr><td><strong>Form 5</strong></td><td>Rule 50(15)(f)</td><td>Intimation regarding <strong>marriage/remarriage or birth of a child after retirement</strong>.</td></tr>
+              <tr><td><strong>Form 6-A ★ NEW (2024)</strong></td><td>Rules 50(15), 57, 58, 59, 60, 62, 80</td><td><strong>Single Integrated Pension Application Form</strong> for retiring Central Govt employees (submitted 6 months prior via Bhavishya/e-HRMS; merges old Form 6, Form 4 at retirement, Format 9, Form A, Format 1, Commutation & Medical options).</td></tr>
+              <tr><td><strong>Form 7 & Form 7-A</strong></td><td>Rules 59, 60, 63, 80</td><td>Assessment of Pension/Family Pension & Gratuity (Form 7) and Assessment after conclusion of Rule 8 proceedings (Form 7-A).</td></tr>
+              <tr><td><strong>Form 8</strong></td><td>Rules 63(1), 79(2)</td><td>Application for <strong>co-authorisation</strong> of permanently disabled child, dependent parents, or disabled sibling in PPO.</td></tr>
+              <tr><td><strong>Form 9 & Form 10</strong></td><td>Rules 50, 71, 79</td><td>Claim for Death/Retirement Gratuity (Form 9) and Claim for Family Pension (Form 10).</td></tr>
+              <tr><td><strong>Form 11</strong></td><td>Rules 74(1), 76(1)</td><td>Assessment & Authorisation of Family Pension and Death Gratuity on death/disappearance in service.</td></tr>
+              <tr><td><strong>Form 12</strong></td><td>Rule 79(2)(a)</td><td>Direct application to <strong>Bank/Post Office (PDA)</strong> by spouse/co-authorised member to start Family Pension on death of pensioner.</td></tr>
+              <tr><td><strong>Form 13</strong></td><td>Rule 79(6)</td><td>Application for <strong>Residuary Gratuity</strong> (death within 5 years of retirement).</td></tr>
+              <tr><td><strong>Formats 1 to 13</strong></td><td>Rules 7, 8, 30, 35, 39, 47, 51, 60, 71, 79</td><td>Official Formats: Format 1 (Intelligence Undertaking), Format 2 & 3 (Rule 8 Post-retiral Sanction & Charge Memo), Format 4 (18/25-yr QS Certificate), Format 5 (Absorption Relieving Order), Format 6 (Invalidation MC), Format 7 & 8 (Indemnity Bonds), Format 9 (Bank Undertaking for Form 10/12), Format 10 (Forwarding Letter), Format 11 & 12 (Claim Invitation Letters), Format 13 (HoO Family Pension Sanction).</td></tr>
+            </tbody>
+          </table>`
+      }
+    ];
+
+    const faqsData = [
+      {
+        q: "1. Has the maximum limit of Retirement Gratuity and Death Gratuity increased from ₹20 Lakh to ₹25 Lakh?",
+        a: "Yes! Vide DoPPW OM No. 28/03/2024-P&PW(B)/Gratuity/9559 dated 30.05.2024, consequent upon Dearness Allowance reaching 50% of Basic Pay w.e.f. 1st January, 2024, the maximum ceiling of Retirement Gratuity and Death Gratuity under Rule 45 of the CCS (Pension) Rules, 2021 (and under the CCS Payment of Gratuity under NPS Rules, 2021) has been enhanced by 25% from ₹20,00,000 to ₹25,00,000 (Twenty-Five Lakh Rupees) effective from 01.01.2024."
+      },
+      {
+        q: "2. What is the October 2022 Amendment to Rule 8 regarding who can withhold or withdraw pension/gratuity?",
+        a: "Under the CCS (Pension) Amendment Rules, 2022 [G.S.R. 770(E) dated 07.10.2022], approval of the President (and UPSC consultation) is now required ONLY where the pensioner retired from a post for which the President is the Appointing Authority. For all other pensioners, the Secretary of the Administrative Ministry or Department (and the CAG of India for IA&AD retirees) is competent to order withholding/withdrawal of pension or gratuity and sanction post-retirement departmental proceedings under Rule 8."
+      },
+      {
+        q: "3. What is the new 'Form 6-A' introduced by the CCS (Pension) Amendment Rules, 2024?",
+        a: "Vide G.S.R. 410(E) dated 16.07.2024 (effective 16.11.2024), DoPPW replaced the multiple retirement forms (old Form 6, Form 4 at retirement, Format 9 Bank Undertaking, Form A Arrears Nomination, Format 1 Intelligence Undertaking, and CGHS/FMA options) with a Single Integrated Pension Application 'Form 6-A', submitted online via Bhavishya / e-HRMS 6 months prior to superannuation."
+      },
+      {
+        q: "4. Can a female Government servant or pensioner nominate her child ahead of her husband for Family Pension?",
+        a: "Yes! Per DoPPW OM dated 01.01.2024 (under Rule 50), if a female Government servant or female pensioner has divorce proceedings pending in a competent court, or has filed a case against her husband under the Protection of Women from Domestic Violence (PWDV) Act, Dowry Prohibition Act, or Indian Penal Code / Bharatiya Nyaya Sanhita, she may submit a written request to the Head of Office that upon her death, Family Pension be granted to her eligible child/children in precedence to her husband."
+      },
+      {
+        q: "5. What did the May 2025 Amendment change in Rule 37(29)(c) for employees absorbed in PSUs?",
+        a: "Under the CCS (Pension) Amendment Rules, 2025 (notified on 23.05.2025), Rule 37(29)(c) was amended so that dismissal or removal from service of a Public Sector Undertaking (PSU) of any absorbed employee for subsequent misconduct SHALL lead to forfeiture of the retirement benefits for the service rendered under the Central Government also (reversing the earlier protection and aligning PSU absorbees with Rules 7, 8, 24, and 41)."
+      },
+      {
+        q: "6. Do minor penalty proceedings under Rule 16 of CCS (CCA) Rules, 1965 continued after retirement affect Pension or Gratuity?",
+        a: "No! Under Rule 8(2)(b), departmental proceedings instituted under Rule 16 (Minor Penalty) of the CCS (CCA) Rules, 1965 while the Government servant was in service and continued after retirement shall have NO effect on the pension and gratuity of the pensioner."
+      },
+      {
+        q: "7. Can regular Pension or Gratuity be withheld at retirement if a vigilance investigation is pending or a charge sheet is merely contemplated?",
+        a: "No. Under Rule 8(4)(d), withholding of gratuity and grant of provisional pension applies ONLY where departmental or judicial proceedings have actually been instituted (charge sheet issued or employee placed under suspension, or Magistrate has taken cognizance) on or before the date of retirement."
+      },
+      {
+        q: "8. What are the 3 mandatory conditions for instituting fresh departmental proceedings after an employee retires?",
+        a: "Under Rule 8(2)(c): (1) Requires prior sanction of the President / Administrative Secretary / CAG in Format 2; (2) Cannot be instituted in respect of any event which took place more than 4 years before such institution; and (3) Must be conducted per Rule 14 major penalty procedure (Charge Memo in Format 3)."
+      },
+      {
+        q: "9. What is the maximum rate at which pecuniary loss can be recovered from monthly pension under Rule 8(6)?",
+        a: "Where the competent authority decides not to withhold or withdraw pension but orders recovery of pecuniary loss from pension, the recovery rate shall not ordinarily exceed one-third (1/3) of the pension admissible on the date of retirement."
+      },
+      {
+        q: "10. Does service rendered in a Public Sector Undertaking (PSU) or Nationalized Bank count as qualifying service on joining Central Government?",
+        a: "No. Rule 14(3) explicitly states that service rendered in a PSU, nationalized bank, or financial institution before appointment in Central Government shall NOT count as qualifying service."
+      },
+      {
+        q: "11. How is Extraordinary Leave (EOL) treated for qualifying service under Rule 21, and what is the 6-month Service Book entry rule?",
+        a: "All EOL on Medical Certificate counts automatically. EOL without MC counts only if allowed for (i) civil commotion or (ii) higher scientific/technical studies. For any other non-qualifying EOL, a definite entry must be made in the Service Book not later than 6 months before superannuation—if no such entry is made, the EOL automatically counts as qualifying service!"
+      },
+      {
+        q: "12. When does a period of suspension automatically count as qualifying service under Rule 23?",
+        a: "Under Rule 23(1), suspension counts automatically where the employee is either (1) fully exonerated, OR (2) only a minor penalty is imposed and the suspension is held to be wholly unjustified."
+      },
+      {
+        q: "13. At what intervals must periodic verification of qualifying service be carried out under Rule 30?",
+        a: "Twice: (1) on completion of 18 years of service, and (2) when left with 5 years of service before superannuation (certificate issued in Format 4). An annual compliance report goes to the Secretary by 31st January every year."
+      },
+      {
+        q: "14. What happens if an employee dies while serving a penalty that temporarily reduced their pay?",
+        a: "Under Rule 31(11) and Rule 32(6), if a Government servant dies during the currency of a temporary pay-reduction penalty, the notional pay on the date of death (and during the last 10 months) IGNORING the penalty is taken as emoluments."
+      },
+      {
+        q: "15. Is 10 years of qualifying service required to get Invalid Pension under Rule 39?",
+        a: "No! Under Rule 39(9), a Government servant retiring on Invalid Pension even before completing 10 years of qualifying service gets Invalid Pension at 50% of emoluments or average emoluments, provided they were declared medically fit at appointment."
+      },
+      {
+        q: "16. Can an employee with 19 years and 9 months of service take Voluntary Retirement under Rule 43 using the 3-month rounding-off rule?",
+        a: "No! While 9 years 9 months rounds up to 10 years for Superannuation Pension [Rule 44(8)] and 4 years 9 months rounds up to 5 years for Retirement Gratuity [Rule 45(5)], the 4th proviso to Rule 43(1) bars rounding off for determining 20-year eligibility under Rule 43."
+      },
+      {
+        q: "17. How is Additional Pension / Additional Family Pension calculated from age 80 onwards?",
+        a: "Under Rule 44(6) and Rule 50(3): 20% (80 to <85 yrs), 30% (85 to <90 yrs), 40% (90 to <95 yrs), 50% (95 to <100 yrs), and 100% (100+ yrs), payable from the 1st day of the calendar month in which the birthday falls."
+      },
+      {
+        q: "18. For how many years is Enhanced Family Pension (50% of pay) payable on death in service vs. death after retirement?",
+        a: "• Death in service [Rule 50(2)(a)(ii)]: 50% of pay for 10 years.\n• Death after retirement [Rule 50(2)(a)(iii)]: 50% of pay (capped at retirement pension) for 7 years OR up to the date the retiree would have turned 67, whichever is less."
+      },
+      {
+        q: "19. What is the maximum combined limit when a child is eligible for TWO Family Pensions on the death of both parents?",
+        a: "Under Rule 50(13): Max ₹1,25,000/month (if both or either pension is at the Enhanced 50% rate) and Max ₹75,000/month (if both are at the Ordinary 30% rate)."
+      },
+      {
+        q: "20. What are the waiting periods for Family Pension and Gratuity in the case of a Missing Employee (Rule 51)?",
+        a: "After lodging a Police Report and submitting an Untraced Report + Format 8 Indemnity Bond: (1) Family Pension and Retirement Gratuity are paid after 6 months from the Police Report date; (2) The difference between Death Gratuity and Retirement Gratuity is paid after 7 years (or upon conclusive proof of death)."
+      },
+      {
+        q: "21. How far back can the Head of Office and Accounts Officer check past emoluments at the time of retirement?",
+        a: "Under Rule 57(1)(b)(v) and Rule 63(1)(c), correctness of emoluments shall be verified ONLY for the 24 months (2 years) preceding the date of retirement, and NOT for any period prior to that date."
+      },
+      {
+        q: "22. What happens if Provisional Pension/Gratuity under Rule 62 is not finalised within 6 months, or if Provisional Gratuity was overpaid?",
+        a: "Under Rule 62(7), if not finalised within 6 months, the Accounts Officer MUST treat the provisional pension and gratuity as final and issue the PPO immediately. Under Rule 62(6)(c) and Rule 76(7), excess provisional gratuity disbursed is never recovered from the retiree/beneficiary."
+      },
+      {
+        q: "23. What relief is given regarding Government Accommodation Licence Fee when an employee dies while in service (Rules 71 & 77)?",
+        a: "All outstanding licence fee prior to death stands completely WAIVED OFF, and if the family retains the quarter, no licence fee is recovered for the month of death plus the first 3 months thereafter."
+      }
+    ];
+
+    const rulesContainer = document.getElementById('rulesContainer');
+    const ruleNavList = document.getElementById('ruleNavList');
+    const ruleSlider = document.getElementById('ruleSlider');
+    const sliderBadge = document.getElementById('sliderBadge');
+    const sliderTitlePreview = document.getElementById('sliderTitlePreview');
+    const sidebarSearchInput = document.getElementById('sidebarSearchInput');
+    const topSearchInput = document.getElementById('topSearchInput');
+    const faqContainer = document.getElementById('faqContainer');
+
+    function renderPortal(filterText = '') {
+      rulesContainer.innerHTML = '';
+      ruleNavList.innerHTML = '';
+      let currentCategory = '';
+      const query = filterText.toLowerCase().trim();
+
+      rulesData.forEach((item, index) => {
+        const searchableText = `${item.num} ${item.title} ${item.category} ${item.simplified} ${item.amendmentNote || ''} ${item.elaborate}`.toLowerCase();
+        const matches = !query || searchableText.includes(query);
+
+        if (item.category !== currentCategory) {
+          currentCategory = item.category;
+          const catHeader = document.createElement('div');
+          catHeader.className = 'nav-section-label';
+          catHeader.textContent = currentCategory;
+          ruleNavList.appendChild(catHeader);
+        }
+
+        const navLink = document.createElement('a');
+        navLink.className = 'nav-item';
+        navLink.id = `nav-${index}`;
+        const shortBadge = item.num
+          .replace('Rule ', 'R-')
+          .replace('Amendments (2022–26)', '2022-26')
+          .replace('Forms & Formats', 'Forms');
+        navLink.innerHTML = `
+          <span class="nav-badge">${shortBadge}</span>
+          <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.title}</span>
+        `;
+        navLink.onclick = () => jumpToRule(index);
+        if (!matches) navLink.style.display = 'none';
+        ruleNavList.appendChild(navLink);
+
+        if (matches) {
+          const card = document.createElement('section');
+          card.className = 'rule-card';
+          card.id = item.id;
+          card.dataset.index = index;
+          card.innerHTML = `
+            <div class="rule-card-header">
+              <div class="rule-title-group">
+                <span class="rule-num-tag ${item.isNew ? 'new-rule' : ''}">
+                  ${item.num}
+                </span>
+                ${item.isAmended ? '<span class="rule-num-tag amd-tag">⚡ AMENDED (2022–2026)</span>' : ''}
+                <h3>${item.title}</h3>
+              </div>
+              <span class="cat-tag">${item.category}</span>
+            </div>
+            <div class="rule-body">
+              <div class="simplified-box">
+                <div class="box-label">💡 Simplified Summary</div>
+                <p>${item.simplified}</p>
+              </div>
+              ${item.amendmentNote ? `
+              <div class="amendment-box">
+                <div class="box-label">🔔 Statutory Amendment / DoPPW Update (2022–2026)</div>
+                <p>${item.amendmentNote}</p>
+              </div>` : ''}
+              <div class="elaborate-box">
+                <div class="box-label">📘 Elaborate Statutory Provisions</div>
+                ${item.elaborate}
+              </div>
+            </div>
+          `;
+          rulesContainer.appendChild(card);
+        }
+      });
+
+      const faqNavHeader = document.createElement('div');
+      faqNavHeader.className = 'nav-section-label';
+      faqNavHeader.textContent = 'Exam & Quick Help';
+      ruleNavList.appendChild(faqNavHeader);
+
+      const faqNavLink = document.createElement('a');
+      faqNavLink.className = 'nav-item';
+      faqNavLink.innerHTML = `<span class="nav-badge">FAQs</span><span>Important FAQs (23)</span>`;
+      faqNavLink.onclick = () => {
+        document.getElementById('faqSection').scrollIntoView({ behavior: 'smooth' });
+      };
+      ruleNavList.appendChild(faqNavLink);
+    }
+
+    function renderFAQs(filterText = '') {
+      faqContainer.innerHTML = '';
+      const query = filterText.toLowerCase().trim();
+      faqsData.forEach((f, idx) => {
+        if (query && !(`${f.q} ${f.a}`.toLowerCase().includes(query))) return;
+        const item = document.createElement('div');
+        item.className = 'faq-item' + (idx < 4 || query ? ' open' : '');
+        item.innerHTML = `
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            <span>${f.q}</span>
+            <span>▾</span>
+          </button>
+          <div class="faq-answer">${f.a.replace(/\n/g, '<br>')}</div>
+        `;
+        faqContainer.appendChild(item);
+      });
+    }
+
+    function jumpToRule(index) {
+      const targetRule = rulesData[index];
+      if (!targetRule) return;
+
+      ruleSlider.value = index;
+      sliderBadge.textContent = targetRule.num.replace('Amendments (2022–26)', 'Amendments');
+      sliderTitlePreview.textContent = `${targetRule.num}: ${targetRule.title}`;
+
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      const activeNav = document.getElementById(`nav-${index}`);
+      if (activeNav) {
+        activeNav.classList.add('active');
+        activeNav.scrollIntoView({ block: 'nearest' });
+      }
+
+      const cardEl = document.getElementById(targetRule.id);
+      if (cardEl) {
+        document.querySelectorAll('.rule-card').forEach(c => c.classList.remove('highlight-active'));
+        cardEl.classList.add('highlight-active');
+        cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    ruleSlider.max = rulesData.length - 1;
+    ruleSlider.addEventListener('input', (e) => {
+      jumpToRule(parseInt(e.target.value, 10));
+    });
+
+    function syncSearch(val) {
+      if (sidebarSearchInput.value !== val) sidebarSearchInput.value = val;
+      if (topSearchInput.value !== val) topSearchInput.value = val;
+      renderPortal(val);
+      renderFAQs(val);
+    }
+
+    sidebarSearchInput.addEventListener('input', (e) => syncSearch(e.target.value));
+    topSearchInput.addEventListener('input', (e) => syncSearch(e.target.value));
+
+    function setViewMode(mode, btnEl) {
+      document.body.classList.remove('mode-simplified', 'mode-elaborate');
+      if (mode === 'simplified') document.body.classList.add('mode-simplified');
+      if (mode === 'elaborate') document.body.classList.add('mode-elaborate');
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+    }
+
+    function toggleNightMode() {
+      const htmlEl = document.documentElement;
+      const btn = document.getElementById('themeToggleBtn');
+      const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        htmlEl.setAttribute('data-theme', 'light');
+        btn.innerHTML = '🌙 Night Mode';
+      } else {
+        htmlEl.setAttribute('data-theme', 'dark');
+        btn.innerHTML = '☀️ Day Mode';
+      }
+    }
+
+    window.addEventListener('scroll', () => {
+      const cards = document.querySelectorAll('.rule-card');
+      let currentIdx = 0;
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top <= 140) {
+          currentIdx = parseInt(card.dataset.index, 10);
+        }
+      });
+      const r = rulesData[currentIdx];
+      if (r) {
+        ruleSlider.value = currentIdx;
+        sliderBadge.textContent = r.num.replace('Amendments (2022–26)', 'Amendments');
+        sliderTitlePreview.textContent = `${r.num}: ${r.title}`;
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        const activeNav = document.getElementById(`nav-${currentIdx}`);
+        if (activeNav) activeNav.classList.add('active');
+      }
+    });
+
+    renderPortal();
+    renderFAQs();
+  </script>
+</body>
+</html>

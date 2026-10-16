@@ -1172,11 +1172,11 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
             <h3 class="font-bold text-slate-900 dark:text-white border-b pb-2">Pay &amp; City Parameters</h3>
             <div>
               <label class="block mb-1 font-medium">Basic Pay (₹)</label>
-              <input type="number" id="sal-basic" value="35400" oninput="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold bg-slate-50 dark:bg-slate-900">
+              <input type="number" id="sal-basic" value="35400" oninput="runSalaryEngine();document.getElementById('cpc8-basic').value=this.value;runCpc8Engine();document.getElementById('sal-cell').value=PAY_MATRIX_7CPC[parseInt(document.getElementById('sal-level').value,10)]?.includes(parseInt(this.value,10))?this.value:'';" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold bg-slate-50 dark:bg-slate-900">
             </div>
             <div>
               <label class="block mb-1 font-medium">Pay Level</label>
-              <select id="sal-level" onchange="runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded bg-slate-50 dark:bg-slate-900">
+              <select id="sal-level" onchange="populateSalaryMatrixCells();runSalaryEngine()" class="w-full px-2.5 py-1.5 border rounded bg-slate-50 dark:bg-slate-900">
                 <option value="1">Level 1 (₹18,000 - ₹56,900)</option>
                 <option value="2">Level 2 (₹19,900 - ₹63,200)</option>
                 <option value="3">Level 3 (₹21,700 - ₹69,100)</option>
@@ -1187,6 +1187,13 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
                 <option value="8">Level 8 (₹47,600 - ₹1,51,100)</option>
                 <option value="9">Level 9 &amp; above (₹53,100+)</option>
               </select>
+            </div>
+            <div>
+              <label class="block mb-1 font-medium">Pay Matrix Cell (7th CPC)</label>
+              <select id="sal-cell" onchange="selectSalaryMatrixCell()" class="w-full px-2.5 py-1.5 border rounded bg-slate-50 dark:bg-slate-900">
+                <option value="">Select cell (or enter basic manually)</option>
+              </select>
+              <p class="text-[10px] text-slate-500 mt-1">Matrix cell selector uses the built-in Level 1–12 table. If your level is not listed, enter basic pay manually.</p>
             </div>
             <div>
               <label class="block mb-1 font-medium">City HRA Classification</label>
@@ -1351,12 +1358,18 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       <div id="module-cpc8" class="calc-module hidden space-y-4">
         <div class="bg-brand-card dark:bg-brand-darkCard p-5 rounded-xl border border-brand-border dark:border-brand-darkBorder space-y-4 text-xs">
           <div class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-900 rounded-lg text-rose-800 dark:text-rose-300"><span class="font-bold block flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> Speculative &amp; Illustrative What-If Tool</span><p class="text-[11px] mt-0.5">8th CPC constituted 3 Nov 2025 (Chairperson: Justice Ranjana Prakash Desai); report expected ~mid-2027. No official fitment factor or pay matrix exists yet.</p></div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            <div><label class="block mb-1 font-medium">Current 7th CPC Pay Level</label><select id="cpc8-level" onchange="syncCpc8FromMatrix()" class="w-full px-2.5 py-1.5 border rounded font-mono"><option value="1">Level 1</option><option value="2">Level 2</option><option value="3">Level 3</option><option value="4">Level 4</option><option value="5">Level 5</option><option value="6" selected>Level 6</option><option value="7">Level 7</option><option value="8">Level 8</option><option value="9">Level 9</option><option value="10">Level 10</option><option value="11">Level 11</option><option value="12">Level 12</option><option value="manual">Manual basic</option></select></div>
             <div><label class="block mb-1 font-medium">Current 7th CPC Basic Pay (₹)</label><input type="number" id="cpc8-basic" value="35400" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono font-bold"></div>
-            <div><label class="block mb-1 font-medium">Hypothetical Fitment Factor</label><input type="number" id="cpc8-factor" value="2.15" step="0.05" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono"></div>
-            <div><label class="block mb-1 font-medium">Illustrative Arrears Months</label><input type="number" id="cpc8-months" value="12" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono"></div>
+            <div><label class="block mb-1 font-medium">Hypothetical Fitment Factor</label><input type="number" id="cpc8-factor" value="2.15" min="1" max="4" step="0.05" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono"></div>
+            <div><label class="block mb-1 font-medium">Illustrative Arrears Months</label><input type="number" id="cpc8-months" value="12" min="0" max="120" oninput="runCpc8Engine()" class="w-full px-2.5 py-1.5 border rounded font-mono"></div>
           </div>
-          <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-2"><div class="flex justify-between"><span>Estimated Indicative Revised Basic:</span> <span class="font-mono font-bold text-base text-slate-900 dark:text-white" id="res-cpc8-new-basic">₹0</span></div><div class="flex justify-between"><span>Indicative Gross Back-Pay (Illustrative):</span> <span class="font-mono font-black text-lg text-brand-gold" id="res-cpc8-arrears">₹0</span></div></div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-1"><span class="text-slate-500 block">Conservative scenario (1.92×)</span><strong class="font-mono text-lg" id="res-cpc8-low">₹0</strong><span class="text-[10px] text-slate-500">Indicative revised basic</span></div>
+            <div class="p-3 bg-brand-gold/10 border border-brand-gold/30 rounded-xl space-y-1"><span class="text-slate-500 block">Selected factor scenario</span><strong class="font-mono text-lg" id="res-cpc8-new-basic">₹0</strong><span class="text-[10px] text-slate-500" id="res-cpc8-factor-label">At selected factor</span></div>
+            <div class="p-3 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-1"><span class="text-slate-500 block">Higher scenario (2.57×)</span><strong class="font-mono text-lg" id="res-cpc8-high">₹0</strong><span class="text-[10px] text-slate-500">Indicative revised basic</span></div>
+          </div>
+          <div class="p-4 bg-slate-50 dark:bg-slate-800 rounded-xl space-y-2"><div class="flex justify-between"><span>Increase over current basic (selected factor):</span> <span class="font-mono font-bold" id="res-cpc8-increase">₹0</span></div><div class="flex justify-between"><span>Illustrative basic-pay difference × months (not official arrears):</span> <span class="font-mono font-black text-lg text-brand-gold" id="res-cpc8-arrears">₹0</span></div><p class="text-[10px] text-slate-500">This is a simplified basic-pay-only illustration. It does not calculate official arrears, DA merger, allowances, deductions, tax, or a not-yet-published 8th CPC matrix.</p></div>
         </div>
       </div>
 
@@ -2554,6 +2567,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       document.getElementById('lbl-pen-dr').innerText = `Dearness Relief (DR @ ${p.da_percentage}%):`;
       document.getElementById('lbl-gds-da').innerText = `Dearness Allowance on TRCA (@ ${p.da_percentage}%):`;
 
+      populateSalaryMatrixCells();
       runSalaryEngine();
       runArrearsEngine();
       runFixationEngine();
@@ -2591,6 +2605,38 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
             : "px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 whitespace-nowrap font-medium";
         }
       });
+    }
+
+    function populateSalaryMatrixCells() {
+      const levelEl = document.getElementById('sal-level');
+      const cellEl = document.getElementById('sal-cell');
+      if (!levelEl || !cellEl) return;
+      const level = parseInt(levelEl.value, 10) || 6;
+      const cells = PAY_MATRIX_7CPC[level] || [];
+      const current = parseInt(document.getElementById('sal-basic').value, 10);
+      cellEl.innerHTML = '<option value="">Select cell (or enter basic manually)</option>' + cells.map((v, i) => `<option value="${v}">Cell ${i + 1} — ₹${v.toLocaleString('en-IN')}</option>`).join('');
+      if (cells.includes(current)) cellEl.value = String(current);
+    }
+
+    function selectSalaryMatrixCell() {
+      const cell = document.getElementById('sal-cell');
+      if (cell && cell.value) {
+        document.getElementById('sal-basic').value = cell.value;
+        document.getElementById('cpc8-basic').value = cell.value;
+        document.getElementById('cpc8-level').value = document.getElementById('sal-level').value;
+        runSalaryEngine();
+        runCpc8Engine();
+      }
+    }
+
+    function syncCpc8FromMatrix() {
+      const level = document.getElementById('cpc8-level').value;
+      if (level !== 'manual') {
+        const cells = PAY_MATRIX_7CPC[parseInt(level, 10)] || [];
+        const current = parseInt(document.getElementById('cpc8-basic').value, 10);
+        if (!cells.includes(current) && cells.length) document.getElementById('cpc8-basic').value = cells[0];
+      }
+      runCpc8Engine();
     }
 
     function runSalaryEngine() {
@@ -2931,13 +2977,18 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
     }
 
     function runCpc8Engine() {
-      const basic = parseFloat(document.getElementById('cpc8-basic').value) || 0;
-      const factor = parseFloat(document.getElementById('cpc8-factor').value) || 2.15;
-      const months = parseFloat(document.getElementById('cpc8-months').value) || 0;
+      const basic = Math.max(0, parseFloat(document.getElementById('cpc8-basic').value) || 0);
+      const factor = Math.min(4, Math.max(1, parseFloat(document.getElementById('cpc8-factor').value) || 2.15));
+      const months = Math.min(120, Math.max(0, parseInt(document.getElementById('cpc8-months').value, 10) || 0));
       const newBasic = Math.round(basic * factor);
       const diff = Math.max(0, newBasic - basic);
-      document.getElementById('res-cpc8-new-basic').innerText = '₹' + newBasic.toLocaleString('en-IN');
-      document.getElementById('res-cpc8-arrears').innerText = '₹' + (diff * months).toLocaleString('en-IN');
+      const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
+      document.getElementById('res-cpc8-low').innerText = fmt(basic * 1.92);
+      document.getElementById('res-cpc8-high').innerText = fmt(basic * 2.57);
+      document.getElementById('res-cpc8-new-basic').innerText = fmt(newBasic);
+      document.getElementById('res-cpc8-factor-label').innerText = `At ${factor.toFixed(2)}× (user-adjustable)`;
+      document.getElementById('res-cpc8-increase').innerText = fmt(diff);
+      document.getElementById('res-cpc8-arrears').innerText = fmt(diff * months);
     }
 
     /* 2. RENDER ORDERS TABLE */
@@ -3432,7 +3483,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       {name:'Postal Manual Volume V', file:'manuals/Postal_Manual_V.html', type:'Postal Manual'},
       {name:'Postal Manual Volume VII', file:'manuals/Postal_Manual_Volume_VII.html', type:'Postal Manual'},
       {name:'LTC Rules FAQ', file:'manuals/LTC_Rules_FAQ.html', type:'Rules / FAQ'},
-      {name:'GDS (Conduct & Engagement) Rules, 2020', file:'manuals/GDS_Conduct_Engagement_Rules_2020.html', type:'Conduct Rules / Service Rules'}
+      {name:'CCS (Pension) Rules, 2021 — Updated through 2026', file:'manuals/CCS_Pension_Rules_2021_Updated_2026.html', type:'Central Government Pension Rules / Interactive Reader'}
     ];
 
     let ASK_INDEX = [];
@@ -3752,7 +3803,8 @@ const MANUALS=[
 {name:"Financial Handbook — Volume II",file:"manuals/Financial_Handbook_Volume_II.html",type:"Financial Handbook"},
 {name:"Postal Manual Volume V",file:"manuals/Postal_Manual_V.html",type:"Postal Manual"},
 {name:"Postal Manual Volume VII",file:"manuals/Postal_Manual_Volume_VII.html",type:"Postal Manual"},
-{name:"LTC Rules FAQ",file:"manuals/LTC_Rules_FAQ.html",type:"Rules / FAQ"},{name:"GDS (Conduct & Engagement) Rules, 2020",file:"manuals/GDS_Conduct_Engagement_Rules_2020.html",type:"Conduct Rules / Service Rules"}];
+{name:"LTC Rules FAQ",file:"manuals/LTC_Rules_FAQ.html",type:"Rules / FAQ"},
+{name:"CCS (Pension) Rules, 2021 — Updated through 2026",file:"manuals/CCS_Pension_Rules_2021_Updated_2026.html",type:"Central Government Pension Rules / Interactive Reader"}];
 window.renderManuals=function(query){const list=document.getElementById('manuals-list');if(!list)return;const q=String(query||'').trim().toLowerCase();const a=MANUALS.filter(m=>!q||(m.name+' '+m.type).toLowerCase().includes(q));list.innerHTML=a.length?a.map(m=>'<div class="manual-card"><div class="min-w-0"><div class="manual-card-title">'+escapeOrderHtml(m.name)+'</div><div class="manual-card-type">'+escapeOrderHtml(m.type)+'</div></div><a class="manual-open" href="'+escapeOrderHtml(m.file)+'" target="_blank" rel="noopener">Open</a></div>').join(''):'<div class="col-span-full p-8 text-center text-sm text-slate-500 bg-brand-card dark:bg-brand-darkCard rounded-xl border border-brand-border dark:border-brand-darkBorder">No manual or guide found.</div>';if(window.lucide)lucide.createIcons();};
 window.findManuals=function(){const i=document.getElementById('manual-search-input');renderManuals(i?i.value:'');};
 window.switchOrdersSub=function(mode){const sb=document.getElementById('orders-sub-sb'),mg=document.getElementById('orders-sub-manuals'),a=document.getElementById('orders-subbtn-sb'),b=document.getElementById('orders-subbtn-manuals');if(!sb||!mg)return;const m=mode==='manuals';sb.classList.toggle('hidden',m);mg.classList.toggle('hidden',!m);a.className=m?'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold':'px-3 py-1.5 rounded-lg bg-brand-red text-white text-xs font-bold';b.className=!m?'px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold':'px-3 py-1.5 rounded-lg bg-brand-red text-white text-xs font-bold';if(m)renderManuals();};
