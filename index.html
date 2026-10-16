@@ -188,18 +188,200 @@
 .dark .ask-kind{background:#0f172a;color:#94a3b8}.dark .ask-match.direct{background:#052e16;color:#86efac}.dark .ask-match.support{background:#172554;color:#93c5fd}.dark .ask-match.related{background:#451a03;color:#fcd34d}
 .ask-loading{font-size:12px;color:#64748b;background:#f8fafc}.dark .ask-loading{background:#0f172a;color:#94a3b8}
 </style>
+
+<style id="pi-redesign-css">
+:root{--pir-navy:#102b42;--pir-red:#d91f2b;--pir-paper:#f7f2e9}
+body.pi-redesign{display:block!important;background:var(--pir-paper)!important;min-height:100vh}
+.pi-redesign-sidebar{position:fixed;z-index:100;left:0;top:0;bottom:0;width:286px;overflow:auto;padding:17px 10px 18px;background:linear-gradient(165deg,#102b42,#0c2235 90%);color:#fff;display:flex;flex-direction:column;gap:18px;box-shadow:5px 0 22px #102b4210}
+.pi-redesign-brand{display:flex;align-items:center;gap:12px;padding:0 7px 15px;border-bottom:1px solid #ffffff24;cursor:pointer}
+.pi-redesign-mark{width:54px;height:54px;flex:0 0 54px;border-radius:15px;background:#d91f2b;display:grid;place-items:center;color:#ffe18b;font:900 35px/1 Georgia,serif;box-shadow:inset 0 0 0 1px #ffffff30}
+.pi-redesign-brand-name{font:700 29px/1 Georgia,serif;letter-spacing:-.7px}.pi-redesign-brand-sub{font-size:12px;color:#d4e0e9;margin-top:5px}
+.pi-redesign-nav{display:flex;flex-direction:column;gap:7px}
+.pi-redesign-link{width:100%;display:flex;align-items:center;gap:12px;min-height:66px;padding:9px 10px;border:1px solid #ffffff12;border-radius:13px;background:#ffffff08;color:#eef5fa;text-decoration:none;text-align:left;cursor:pointer;transition:background .18s,transform .18s}
+.pi-redesign-link:hover{background:#ffffff18;transform:translateX(2px)}
+.pi-redesign-link.active{background:linear-gradient(110deg,#e32430,#c91625);border-color:#ff6872;box-shadow:0 5px 14px #0002}
+.pi-redesign-icon{flex:0 0 44px;width:44px;height:44px;border-radius:11px;background:#2478b9;display:grid;place-items:center;font-size:23px;color:#fff}
+.pi-redesign-link:nth-child(2) .pi-redesign-icon{background:#079b68}.pi-redesign-link:nth-child(3) .pi-redesign-icon{background:#099cc5}.pi-redesign-link:nth-child(4) .pi-redesign-icon{background:#159e68}.pi-redesign-link:nth-child(5) .pi-redesign-icon{background:#7c43c4}.pi-redesign-link:nth-child(6) .pi-redesign-icon{background:#ee8b00}.pi-redesign-link:nth-child(7) .pi-redesign-icon{background:#c92b36}.pi-redesign-link:nth-child(8) .pi-redesign-icon{background:#e6a400}
+.pi-redesign-link>span:nth-child(2){min-width:0;flex:1}.pi-redesign-link b{display:block;font-size:14px;font-weight:750}.pi-redesign-link small{display:block;font-size:11px;color:#d1dfeb;margin-top:3px;white-space:normal}.pi-redesign-link i{font-style:normal;font-size:23px;color:#b8cad8}
+.pi-redesign-sidebar-foot{margin-top:auto;border-top:1px solid #ffffff24;padding:14px 10px 0;color:#b8cad8;font-size:12px;line-height:1.7}
+.pi-redesign-scrim{display:none}
+body.pi-redesign>header{margin-left:286px;width:calc(100% - 286px);position:sticky;top:0;z-index:90;background:#102b42!important;border-color:#ffffff20!important;color:#fff!important}
+body.pi-redesign>header>div{max-width:none!important;padding-left:24px!important;padding-right:24px!important}
+body.pi-redesign>header nav{display:none!important}
+body.pi-redesign>header .font-bold.text-xl{color:#fff!important}
+body.pi-redesign>header .text-slate-500,body.pi-redesign>header .text-slate-400{color:#d1dfeb!important}
+body.pi-redesign>header>div>div:first-child>div:first-child>div{display:none!important}
+body.pi-redesign>header>div>div:first-child>div:first-child:after{content:"Knowledge · Tools · Guidance";font-size:11px;color:#d1dfeb}
+body.pi-redesign>header>div>div:first-child>div:first-child span:first-child{font:700 25px Georgia,serif!important;letter-spacing:-.5px}
+body.pi-redesign>header button[onclick="toggleTheme()"]{color:#fff!important}
+body.pi-redesign>header button[onclick="printCurrentPage()"]{background:#ffffff12!important;color:#fff!important;border-color:#ffffff35!important}
+body.pi-redesign>.no-print.lg\\:hidden{display:none!important}
+body.pi-redesign>main{margin-left:286px!important;width:calc(100% - 286px)!important;max-width:none!important;padding:20px 24px 32px!important}
+body.pi-redesign>footer{margin-left:286px!important;width:calc(100% - 286px)!important}
+body.pi-redesign #view-dashboard>div:first-child{background:linear-gradient(100deg,#fff7e9 0%,#f8e9d4 65%,#ead5ba 100%)!important;border:0!important;min-height:245px;display:flex;align-items:center}
+body.pi-redesign #view-dashboard>div:first-child h1{font-size:clamp(42px,4.5vw,64px)!important}
+body.pi-redesign .pi-tool{border-radius:16px!important;box-shadow:0 5px 18px #1028400b!important}
+body.pi-redesign .pi-tool:hover{transform:translateY(-3px)!important}
+body.pi-redesign.dark{background:#0c1924!important}
+body.pi-redesign.dark #view-dashboard>div:first-child{background:linear-gradient(100deg,#233746,#39404a)!important}
+body.pi-redesign.dark #view-dashboard>div:first-child h1,body.pi-redesign.dark #view-dashboard>div:first-child p{color:#f0f4f7!important}
+@media(max-width:900px){
+ .pi-redesign-sidebar{transform:translateX(-105%);transition:transform .22s ease;width:min(300px,86vw)}
+ .pi-redesign-sidebar.open{transform:translateX(0)}
+ .pi-redesign-scrim.show{display:block;position:fixed;inset:0;background:#08182788;z-index:95}
+ body.pi-redesign>header{margin-left:0;width:100%}
+ body.pi-redesign>header>div{padding-left:12px!important;padding-right:12px!important}
+ body.pi-redesign>main{margin-left:0!important;width:100%!important;padding:14px 12px 24px!important}
+ body.pi-redesign>footer{margin-left:0!important;width:100%!important}
+ body.pi-redesign>.no-print.lg\\:hidden{display:none!important}
+ .pi-redesign-mobile-menu{display:inline-flex!important}
+}
+.pi-redesign-mobile-menu{display:none;align-items:center;justify-content:center;border:1px solid #ffffff35;border-radius:10px;width:40px;height:40px;color:white;font-size:21px;background:#ffffff10;flex:0 0 40px}
+@media print{.pi-redesign-sidebar,.pi-redesign-scrim,.pi-redesign-mobile-menu{display:none!important}body.pi-redesign>header,body.pi-redesign>main,body.pi-redesign>footer{margin-left:0!important;width:100%!important}}
+</style>
+
+
+<style id="pi-demo-home-style">
+body.pi-redesign #view-dashboard.pi-demo-home:not(.hidden){display:block!important;min-width:0;color:#102840}
+/* Respect the tab controller: inactive views must never remain visible. */
+body.pi-redesign .tab-view.hidden{display:none!important;}
+body.pi-redesign .tab-view:not(.hidden){display:block;}
+#view-dashboard.pi-demo-home .pih-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.7fr);gap:28px;align-items:center;margin:-20px -24px 24px;padding:38px 38px 32px;min-height:300px;background:linear-gradient(105deg,#fff7e9 0%,#f8e9d4 65%,#ead5ba 100%);border-bottom:1px solid #c7ab8750}
+#view-dashboard.pi-demo-home .pih-hero:after{content:"";position:absolute;right:-55px;top:-135px;width:43%;height:470px;border-radius:50%;background:radial-gradient(ellipse at 50% 55%,#d5b58d88 0 20%,#e7d0b266 42%,transparent 70%);pointer-events:none}
+#view-dashboard.pi-demo-home .pih-hero-content{position:relative;z-index:1;max-width:680px}
+#view-dashboard.pi-demo-home .pih-eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;color:#a21d27}
+#view-dashboard.pi-demo-home .pih-hero h1{font:700 clamp(42px,4.6vw,64px)/1.02 Georgia,serif;letter-spacing:-1.5px;margin:9px 0 12px;color:#102b42}
+#view-dashboard.pi-demo-home .pih-hero h1 span{white-space:nowrap}#view-dashboard.pi-demo-home .pih-hero h1 em{font-style:normal;color:#c51d2a}
+#view-dashboard.pi-demo-home .pih-hero p{font-size:16px;line-height:1.6;max-width:600px;color:#344e63}
+#view-dashboard.pi-demo-home .pih-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}#view-dashboard.pi-demo-home .pih-tags span{padding:5px 10px;border:1px solid #c6a98755;background:#ffffff8a;border-radius:30px;color:#354f65;font-size:12px}
+#view-dashboard.pi-demo-home .pih-hero-actions{position:relative;z-index:1;display:flex;flex-direction:column;gap:9px}
+#view-dashboard.pi-demo-home .pih-hero-actions button,#view-dashboard.pi-demo-home .pih-hero-actions a{position:relative;display:grid;grid-template-columns:43px 1fr 18px;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;text-decoration:none;padding:12px 13px;background:#ffffffc9;border:1px solid #c9b49a80;border-radius:13px;color:#102840;box-shadow:0 4px 14px #6b4a2410;transition:.18s}
+#view-dashboard.pi-demo-home .pih-hero-actions button:hover,#view-dashboard.pi-demo-home .pih-hero-actions a:hover{transform:translateY(-2px);background:#fff}
+#view-dashboard.pi-demo-home .pih-hero-actions>*>span{grid-row:1/3;display:grid;place-items:center;width:42px;height:42px;border-radius:11px;background:#d91f2b;color:white;font-size:22px}
+#view-dashboard.pi-demo-home .pih-hero-actions b{font-size:13px}#view-dashboard.pi-demo-home .pih-hero-actions small{font-size:11px;color:#5c6d7a;margin-top:2px}#view-dashboard.pi-demo-home .pih-hero-actions i{grid-column:3;grid-row:1/3;font-style:normal;font-size:22px;color:#c51d2a}
+#view-dashboard.pi-demo-home .pih-section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 3px 13px}#view-dashboard.pi-demo-home .pih-section-head h2{font-size:20px;font-weight:800;letter-spacing:-.4px}#view-dashboard.pi-demo-home .pih-section-head p{font-size:13px;color:#657587;margin-top:3px}#view-dashboard.pi-demo-home .pih-section-head>span{font-size:10px;letter-spacing:1.2px;color:#8a98a5;font-weight:800}
+#view-dashboard.pi-demo-home .pih-features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#view-dashboard.pi-demo-home .pih-feature{position:relative;display:block;text-align:left;min-width:0;min-height:164px;padding:16px;background:#fff;border:1px solid #10284018;border-radius:16px;box-shadow:0 5px 18px #1028400b;color:#102840;text-decoration:none;transition:transform .18s,box-shadow .18s}
+#view-dashboard.pi-demo-home .pih-feature:hover{transform:translateY(-3px);box-shadow:0 10px 24px #10284018}
+#view-dashboard.pi-demo-home .pih-icon{display:grid;place-items:center;width:49px;height:49px;border-radius:14px;font-size:25px;font-weight:700}
+#view-dashboard.pi-demo-home .pih-red{background:#ffe2e2;color:#bd1c29}#view-dashboard.pi-demo-home .pih-blue{background:#dcedff;color:#1764a4}#view-dashboard.pi-demo-home .pih-green{background:#dff6e1;color:#21814b}#view-dashboard.pi-demo-home .pih-purple{background:#eee0ff;color:#7535b6}#view-dashboard.pi-demo-home .pih-orange{background:#ffead9;color:#d5680a}#view-dashboard.pi-demo-home .pih-teal{background:#d8f5f2;color:#137c78}#view-dashboard.pi-demo-home .pih-gold{background:#fff0c9;color:#a56c00}#view-dashboard.pi-demo-home .pih-pink{background:#ffdeec;color:#b92761}
+#view-dashboard.pi-demo-home .pih-arrow{position:absolute;right:16px;top:22px;font-size:24px;color:#d31f2c}#view-dashboard.pi-demo-home .pih-feature h3{font-size:15px;font-weight:800;margin:11px 0 5px}#view-dashboard.pi-demo-home .pih-feature p{font-size:12px;line-height:1.5;color:#647487}
+#view-dashboard.pi-demo-home .pih-lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}#view-dashboard.pi-demo-home .pih-panel{min-width:0;background:#fff;border:1px solid #10284018;border-radius:16px;padding:17px;box-shadow:0 5px 18px #1028400b}#view-dashboard.pi-demo-home .pih-panel-head{display:flex;justify-content:space-between;gap:10px;align-items:start;margin-bottom:13px}#view-dashboard.pi-demo-home .pih-panel-head h2{font-size:16px;font-weight:800}#view-dashboard.pi-demo-home .pih-panel-head p{font-size:12px;color:#657587;margin-top:3px}#view-dashboard.pi-demo-home .pih-panel-head>span{font-size:10px;letter-spacing:1px;color:#8996a2;font-weight:800}
+#view-dashboard.pi-demo-home .pih-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}#view-dashboard.pi-demo-home .pih-stats>div{padding:12px 9px;background:#f5f7f9;border-radius:10px;display:flex;flex-direction:column;gap:5px}#view-dashboard.pi-demo-home .pih-stats strong{font:700 24px Georgia,serif;color:#bd1c29}#view-dashboard.pi-demo-home .pih-stats span{font-size:11px;color:#52677d}
+#view-dashboard.pi-demo-home .pih-quick{display:grid;grid-template-columns:1fr 1fr;gap:8px}#view-dashboard.pi-demo-home .pih-quick button{display:flex;align-items:center;gap:8px;min-width:0;padding:11px;border:1px solid #10284016;background:#fff;border-radius:10px;text-align:left;font-size:12px;color:#102840}#view-dashboard.pi-demo-home .pih-quick button span{font-size:18px;color:#c51d2a}#view-dashboard.pi-demo-home .pih-quick button b{margin-left:auto;color:#c51d2a}
+html.dark #view-dashboard.pi-demo-home{color:#eaf2f8}html.dark #view-dashboard.pi-demo-home .pih-hero{background:linear-gradient(105deg,#233746,#39404a);border-color:#ffffff15}html.dark #view-dashboard.pi-demo-home .pih-hero h1,html.dark #view-dashboard.pi-demo-home .pih-hero p{color:#f0f4f7}html.dark #view-dashboard.pi-demo-home .pih-tags span{background:#ffffff12;color:#eaf2f8;border-color:#ffffff1c}html.dark #view-dashboard.pi-demo-home .pih-feature,html.dark #view-dashboard.pi-demo-home .pih-panel{background:#132838;color:#eaf2f8;border-color:#ffffff16}html.dark #view-dashboard.pi-demo-home .pih-feature p,html.dark #view-dashboard.pi-demo-home .pih-panel-head p,html.dark #view-dashboard.pi-demo-home .pih-stats span{color:#b2c4d1}html.dark #view-dashboard.pi-demo-home .pih-stats>div,html.dark #view-dashboard.pi-demo-home .pih-quick button{background:#142b3c;color:#eaf2f8;border-color:#ffffff18}
+@media(max-width:1250px){#view-dashboard.pi-demo-home .pih-features{grid-template-columns:repeat(2,minmax(0,1fr))}#view-dashboard.pi-demo-home .pih-hero{grid-template-columns:1fr minmax(250px,.75fr)}}
+@media(max-width:900px){#view-dashboard.pi-demo-home .pih-hero{margin:-20px -16px 20px;padding:28px 22px;grid-template-columns:1fr;gap:20px}#view-dashboard.pi-demo-home .pih-hero h1{font-size:47px}#view-dashboard.pi-demo-home .pih-hero-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}#view-dashboard.pi-demo-home .pih-hero-actions button,#view-dashboard.pi-demo-home .pih-hero-actions a{grid-template-columns:1fr;padding:10px;gap:5px}#view-dashboard.pi-demo-home .pih-hero-actions>*>span{grid-row:auto;width:34px;height:34px}#view-dashboard.pi-demo-home .pih-hero-actions i{display:none}#view-dashboard.pi-demo-home .pih-hero-actions small{display:none}#view-dashboard.pi-demo-home .pih-lower-grid{grid-template-columns:1fr}}
+@media(max-width:560px){#view-dashboard.pi-demo-home .pih-features{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#view-dashboard.pi-demo-home .pih-feature{padding:13px;min-height:160px}#view-dashboard.pi-demo-home .pih-section-head>span{display:none}#view-dashboard.pi-demo-home .pih-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#view-dashboard.pi-demo-home .pih-quick{grid-template-columns:1fr}#view-dashboard.pi-demo-home .pih-hero-actions{grid-template-columns:1fr}#view-dashboard.pi-demo-home .pih-hero-actions button,#view-dashboard.pi-demo-home .pih-hero-actions a{grid-template-columns:36px 1fr;padding:9px}#view-dashboard.pi-demo-home .pih-hero-actions>*>span{grid-row:1/3}#view-dashboard.pi-demo-home .pih-hero-actions small{display:block}#view-dashboard.pi-demo-home .pih-hero-actions i{display:block;grid-column:3;grid-row:1/3}}
+</style>
+
+
+<style id="pi-seamless-design-system">
+/* Shared PostalIQ design language across every application view */
+body.pi-redesign{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#102840;background:#f7f2e9;}
+body.pi-redesign>main{min-height:calc(100vh - 76px);}
+body.pi-redesign .tab-view{animation:piViewEnter .24s ease both;}
+@keyframes piViewEnter{from{opacity:.55;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+/* Consistent page rhythm and typography */
+body.pi-redesign .tab-view h1{letter-spacing:-.035em;}
+body.pi-redesign .tab-view h2{letter-spacing:-.025em;}
+body.pi-redesign .tab-view h1,body.pi-redesign .tab-view h2,body.pi-redesign .tab-view h3{scroll-margin-top:100px;}
+body.pi-redesign .tab-view .bg-brand-card,
+body.pi-redesign .tab-view [class*="bg-white"],
+body.pi-redesign .tab-view [class*="dark:bg-slate-900"],
+body.pi-redesign .tab-view [class*="dark:bg-gray-900"]{border-radius:16px;}
+/* Main panels and content cards share the soft paper / white card treatment */
+body.pi-redesign .tab-view .bg-brand-card,
+body.pi-redesign .tab-view [class*="bg-brand-card"],
+body.pi-redesign .tab-view .ask-result-card,
+body.pi-redesign .tab-view .calc-module,
+body.pi-redesign .tab-view .office-card,
+body.pi-redesign .tab-view .form-card,
+body.pi-redesign .tab-view .manual-card{background:#fff;border:1px solid rgba(16,40,64,.10);border-radius:16px;box-shadow:0 5px 18px rgba(16,40,64,.055);}
+/* Feature surfaces and buttons */
+body.pi-redesign .tab-view button:not(.pi-redesign-link):not(.pi-redesign-mobile-menu):not([class*="bg-transparent"]):not([class*="border-transparent"]){transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease;}
+body.pi-redesign .tab-view button:not(:disabled):hover{filter:brightness(.985);}
+body.pi-redesign .tab-view input:not([type="checkbox"]):not([type="radio"]),
+body.pi-redesign .tab-view select,
+body.pi-redesign .tab-view textarea{border-radius:10px;}
+body.pi-redesign .tab-view input:focus,
+body.pi-redesign .tab-view select:focus,
+body.pi-redesign .tab-view textarea:focus{outline:0;box-shadow:0 0 0 3px rgba(36,120,185,.16);border-color:#5a9bc7!important;}
+/* Tabs / filters: consistent pill navigation */
+body.pi-redesign .tab-view [role="tablist"]{display:flex;flex-wrap:wrap;gap:7px;}
+body.pi-redesign .tab-view [role="tab"]{border-radius:999px;}
+/* Tables remain readable while matching the same card language */
+body.pi-redesign .tab-view table{border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;}
+body.pi-redesign .tab-view table thead th{background:#edf2f6;color:#294257;font-weight:750;}
+body.pi-redesign .tab-view table th,body.pi-redesign .tab-view table td{border-color:rgba(16,40,64,.10);}
+/* Shared links and small accent elements */
+body.pi-redesign .tab-view a:not(.pi-redesign-link){text-underline-offset:3px;}
+body.pi-redesign .tab-view a.text-brand-red,body.pi-redesign .tab-view .text-brand-red{color:#c51d2a!important;}
+body.pi-redesign .tab-view .rounded-xl,body.pi-redesign .tab-view .rounded-2xl{border-radius:16px;}
+/* Sidebar and header remain the same shell as the demo on all routes/views */
+.pi-redesign-sidebar{scrollbar-width:thin;scrollbar-color:#456176 #102b42;}
+.pi-redesign-link:focus-visible,.pi-redesign-mobile-menu:focus-visible{outline:3px solid #f3c76a;outline-offset:2px;}
+body.pi-redesign>header{box-shadow:0 4px 16px rgba(16,43,66,.13);}
+/* Full dark theme, applied to every app section rather than only the homepage */
+html.dark body.pi-redesign{background:#0c1924!important;color:#eaf2f8!important;}
+html.dark body.pi-redesign>main{color:#eaf2f8!important;}
+html.dark body.pi-redesign .tab-view .bg-brand-card,
+html.dark body.pi-redesign .tab-view [class*="bg-brand-card"],
+html.dark body.pi-redesign .tab-view .ask-result-card,
+html.dark body.pi-redesign .tab-view .calc-module,
+html.dark body.pi-redesign .tab-view .office-card,
+html.dark body.pi-redesign .tab-view .form-card,
+html.dark body.pi-redesign .tab-view .manual-card,
+html.dark body.pi-redesign .tab-view [class*="bg-white"],
+html.dark body.pi-redesign .tab-view [class*="dark:bg-slate-900"],
+html.dark body.pi-redesign .tab-view [class*="dark:bg-gray-900"]{background:#132838!important;color:#eaf2f8!important;border-color:#ffffff18!important;box-shadow:0 5px 18px rgba(0,0,0,.15)!important;}
+html.dark body.pi-redesign .tab-view table thead th{background:#20394a!important;color:#eaf2f8!important;}
+html.dark body.pi-redesign .tab-view table th,html.dark body.pi-redesign .tab-view table td{border-color:#ffffff18!important;}
+html.dark body.pi-redesign .tab-view input:not([type="checkbox"]):not([type="radio"]),
+html.dark body.pi-redesign .tab-view select,
+html.dark body.pi-redesign .tab-view textarea{background:#0f2230!important;color:#eaf2f8!important;border-color:#3b5364!important;}
+html.dark body.pi-redesign .tab-view input::placeholder,html.dark body.pi-redesign .tab-view textarea::placeholder{color:#91a7b8!important;}
+html.dark body.pi-redesign .tab-view .text-slate-900,html.dark body.pi-redesign .tab-view .text-gray-900,html.dark body.pi-redesign .tab-view .text-slate-800{color:#edf4f8!important;}
+html.dark body.pi-redesign .tab-view .text-slate-600,html.dark body.pi-redesign .tab-view .text-slate-500,html.dark body.pi-redesign .tab-view .text-gray-600,html.dark body.pi-redesign .tab-view .text-gray-500{color:#b1c4d1!important;}
+html.dark body.pi-redesign .tab-view [class*="bg-slate-50"],html.dark body.pi-redesign .tab-view [class*="bg-gray-50"],html.dark body.pi-redesign .tab-view [class*="bg-slate-100"]{background:#1a3040!important;}
+html.dark body.pi-redesign .tab-view [class*="border-slate-200"],html.dark body.pi-redesign .tab-view [class*="border-gray-200"]{border-color:#ffffff18!important;}
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature,html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-panel{background:#132838!important;color:#eaf2f8!important;}
+/* Screen sizes */
+@media(max-width:900px){body.pi-redesign>main{padding:14px 16px 24px!important;}body.pi-redesign .tab-view{scroll-margin-top:80px;}}
+@media(max-width:560px){body.pi-redesign>main{padding:12px 10px 20px!important;}body.pi-redesign .tab-view .bg-brand-card,body.pi-redesign .tab-view [class*="bg-brand-card"]{border-radius:13px;}}
+@media(prefers-reduced-motion:reduce){body.pi-redesign .tab-view{animation:none!important}body.pi-redesign *{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+
 </head>
-<body class="bg-brand-surface dark:bg-brand-darkSurface text-slate-800 dark:text-slate-100 flex flex-col min-h-full font-sans antialiased transition-colors duration-200">
+<body class="pi-redesign bg-brand-surface dark:bg-brand-darkSurface text-slate-800 dark:text-slate-100 flex flex-col min-h-full font-sans antialiased transition-colors duration-200">
+
+
+<!-- PostalIQ redesigned left navigation: keeps the existing app views and JS intact -->
+<div class="pi-redesign-scrim" id="pi-redesign-scrim" onclick="piToggleSidebar(false)"></div>
+<aside class="pi-redesign-sidebar no-print" id="pi-redesign-sidebar" aria-label="PostalIQ main navigation">
+  <div class="pi-redesign-brand" onclick="navigateTab('dashboard')" role="button" tabindex="0">
+    <div class="pi-redesign-mark">P.</div><div><div class="pi-redesign-brand-name">PostalIQ</div><div class="pi-redesign-brand-sub">Knowledge · Tools · Guidance</div></div>
+  </div>
+  <nav class="pi-redesign-nav">
+    <button class="pi-redesign-link active" data-view="dashboard" onclick="piNavigate('dashboard')"><span class="pi-redesign-icon">⌂</span><span><b>Home</b><small>Dashboard &amp; Overview</small></span><i>›</i></button>
+    <button class="pi-redesign-link" data-view="ask" onclick="piNavigate('ask')"><span class="pi-redesign-icon">✧</span><span><b>Ask PostalIQ</b><small>AI Assistant &amp; Sources</small></span><i>›</i></button>
+    <button class="pi-redesign-link" data-view="orders" onclick="piNavigate('orders')"><span class="pi-redesign-icon">▤</span><span><b>Orders &amp; Manuals</b><small>Orders, Circulars, Guides</small></span><i>›</i></button>
+    <button class="pi-redesign-link" data-view="posb" onclick="piNavigate('posb')"><span class="pi-redesign-icon">₹</span><span><b>POSB &amp; PLI</b><small>Savings &amp; Insurance Tools</small></span><i>›</i></button>
+    <button class="pi-redesign-link" data-view="calculators" onclick="piNavigate('calculators')"><span class="pi-redesign-icon">▦</span><span><b>Other Calculators</b><small>Salary &amp; Service Tools</small></span><i>›</i></button>
+    <button class="pi-redesign-link" data-view="forms" onclick="piNavigate('forms')"><span class="pi-redesign-icon">▧</span><span><b>Forms &amp; Applications</b><small>Downloads &amp; Samples</small></span><i>›</i></button>
+    <button class="pi-redesign-link" data-view="offices" onclick="piNavigate('offices')"><span class="pi-redesign-icon">◎</span><span><b>PIN &amp; Offices</b><small>PIN Codes &amp; Directory</small></span><i>›</i></button>
+    <a class="pi-redesign-link" href="manuals/LTC_Rules_FAQ.html" target="_blank" rel="noopener"><span class="pi-redesign-icon">▣</span><span><b>LTC Rules FAQ</b><small>Rules &amp; Practical Guidance</small></span><i>↗</i></a>
+  </nav>
+  <div class="pi-redesign-sidebar-foot">An independent knowledge &amp; tools portal<br>Built for faster postal work.</div>
+</aside>
 
   <!-- TOP APP BAR -->
   <header class="no-print bg-brand-card dark:bg-brand-darkCard border-b border-brand-border dark:border-brand-darkBorder sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <button class="pi-redesign-mobile-menu" onclick="piToggleSidebar(true)" aria-label="Open navigation">☰</button>
       <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTab('dashboard')">
         <div class="w-10 h-10 rounded-xl bg-brand-red flex items-center justify-center shadow-md relative overflow-hidden flex-shrink-0">
-          <svg class="w-6 h-6" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M22 24h26c11 0 20 9 20 20s-9 20-20 20H36v18H22V24zm14 26h12c3.3 0 6-2.7 6-6s-2.7-6-6-6H36v12z" fill="#F59E0B"/>
-            <circle cx="76" cy="74" r="9" fill="#F59E0B"/>
-          </svg>
+          <span style="font:900 24px Georgia,serif;color:#ffe18b">P.</span>
           <div class="absolute bottom-0 inset-x-0 h-1 bg-brand-gold"></div>
         </div>
         <div>
@@ -273,80 +455,40 @@
     <!-- ============================================================= -->
     <!-- VIEW 1: DASHBOARD                                              -->
     <!-- ============================================================= -->
-    <div id="view-dashboard" class="tab-view space-y-6 pi-home">
-  <section class="pi-hero">
-    <div class="pi-hero-copy">
-      <div class="pi-kicker"><span></span> PostalIQ Central Reference Desk</div>
-      <h1>Find the rule.<br><em>Calculate the result.</em><br>Open the source.</h1>
-      <p>One working desk for India Post and POSB operations — Ask Rules, current rates, SB Orders, manuals, forms, PIN / offices, POSB &amp; PLI tools and payment calculators.</p>
-      <div class="pi-actions">
-        <button onclick="navigateTab('ask')" class="pi-btn pi-btn-red"><i data-lucide="sparkles"></i>Ask PostalIQ</button>
-        <button onclick="navigateTab('posb')" class="pi-btn pi-btn-light"><i data-lucide="badge-percent"></i>Open POSB &amp; PLI</button>
-        <button onclick="navigateTab('orders')" class="pi-btn pi-btn-ghost"><i data-lucide="file-text"></i>Orders &amp; Manuals</button>
-      </div>
-      <a class="pi-feature-tile" href="manuals/LTC_Rules_FAQ.html" target="_blank" rel="noopener" aria-label="Open LTC Rules FAQ">
-        <span class="pi-feature-icon" aria-hidden="true">✈</span>
-        <span class="pi-feature-copy"><span class="pi-feature-eyebrow">NEW QUICK REFERENCE</span><strong>LTC Rules FAQ</strong><small>CCS (LTC) Rules, 1988 · blocks, family eligibility, travel, claims and advances</small></span>
-        <span class="pi-feature-arrow" aria-hidden="true">↗</span>
-      </a>
-    </div>
-    <div class="pi-ask-card">
-      <div class="pi-stamp-edge"><div class="pi-ask-inner">
-        <span class="pi-ask-label">ASK POSTALIQ</span>
-        <h2>What do you need to know?</h2>
-        <p>Ask naturally about a scheme, rule, order, rate, claim, withdrawal or procedure.</p>
-        <div class="pi-searchbox">
-          <input id="pi-home-question" placeholder="e.g. What is the current MIS interest rate?" autocomplete="off">
-          <button onclick="document.getElementById('ask-input').value=document.getElementById('pi-home-question').value;navigateTab('ask');setTimeout(()=>document.getElementById('ask-input')?.focus(),80)">Ask</button>
+    <div id="view-dashboard" class="tab-view pi-demo-home">
+      <section class="pih-hero">
+        <div class="pih-hero-content">
+          <div class="pih-eyebrow">YOUR POSTAL WORK COMPANION</div>
+          <h1>Welcome to<br><span>Postal<em>IQ</em></span></h1>
+          <p>Your complete reference hub for India Post — find rules, search orders, use calculators and open practical guides from one place.</p>
+          <div class="pih-tags"><span>Postal Orders</span><span>Operational Calculators</span><span>Manuals</span><span>Forms</span><span>Guides</span></div>
         </div>
-        <div class="pi-chips">
-          <button onclick="document.getElementById('ask-input').value='current POSB interest rates';navigateTab('ask')">Interest rates</button>
-          <button onclick="document.getElementById('ask-input').value='premature RD closure';navigateTab('ask')">RD closure</button>
-          <button onclick="document.getElementById('ask-input').value='nominee claim after death';navigateTab('ask')">Nominee claim</button>
+        <div class="pih-hero-actions">
+          <button onclick="navigateTab('ask')"><span>✦</span><b>Ask PostalIQ</b><small>Find an answer from rules and orders</small><i>→</i></button>
+          <button onclick="navigateTab('orders')"><span>▤</span><b>Orders &amp; Manuals</b><small>Search the reference library</small><i>→</i></button>
+          <a href="manuals/LTC_Rules_FAQ.html" target="_blank" rel="noopener"><span>✈</span><b>LTC Rules FAQ</b><small>Quick reference to LTC rules</small><i>↗</i></a>
         </div>
-      </div></div>
+      </section>
+      <div class="pih-section-head"><div><h2>Explore PostalIQ</h2><p>Everything you need, one click away.</p></div><span>KNOWLEDGE · TOOLS · GUIDANCE</span></div>
+      <section class="pih-features">
+        <button class="pih-feature" onclick="navigateTab('orders')"><div class="pih-icon pih-red">▤</div><span class="pih-arrow">›</span><h3>Postal Orders</h3><p>Search and read official SB orders, circulars and original documents.</p></button>
+        <button class="pih-feature" onclick="navigateTab('posb')"><div class="pih-icon pih-blue">₹</div><span class="pih-arrow">›</span><h3>POSB &amp; PLI</h3><p>Interest rates, maturity tools, ledgers and policy calculators.</p></button>
+        <button class="pih-feature" onclick="navigateTab('calculators')"><div class="pih-icon pih-green">＋</div><span class="pih-arrow">›</span><h3>Other Calculators</h3><p>Pay, pension, arrears, leave, gratuity and service calculations.</p></button>
+        <button class="pih-feature" onclick="navigateTab('forms')"><div class="pih-icon pih-purple">▣</div><span class="pih-arrow">›</span><h3>Forms &amp; Applications</h3><p>Browse useful forms and application samples.</p></button>
+        <button class="pih-feature" onclick="navigateTab('offices')"><div class="pih-icon pih-orange">⌖</div><span class="pih-arrow">›</span><h3>PIN &amp; Offices</h3><p>Search PIN codes and post-office information.</p></button>
+        <button class="pih-feature" onclick="navigateTab('ask')"><div class="pih-icon pih-teal">✦</div><span class="pih-arrow">›</span><h3>Ask PostalIQ</h3><p>Ask natural-language questions about rules and procedures.</p></button>
+        <a class="pih-feature" href="manuals/LTC_Rules_FAQ.html" target="_blank" rel="noopener"><div class="pih-icon pih-gold">✈</div><span class="pih-arrow">↗</span><h3>LTC Rules FAQ</h3><p>Eligibility, blocks, family, travel, claims and advances.</p></a>
+        <button class="pih-feature" onclick="navigateTab('orders')"><div class="pih-icon pih-pink">▥</div><span class="pih-arrow">›</span><h3>Manuals &amp; Guides</h3><p>Handbooks, rulebooks and practical reference material.</p></button>
+      </section>
+      <section class="pih-lower-grid">
+        <div class="pih-panel"><div class="pih-panel-head"><div><h2>PostalIQ at a glance</h2><p>Live counts from the loaded reference catalogues.</p></div><span>OVERVIEW</span></div>
+          <div class="pih-stats"><div><strong id="dash-count-orders">0</strong><span>Orders loaded</span></div><div><strong id="dash-count-posb">14</strong><span>POSB &amp; PLI plans</span></div><div><strong id="dash-count-forms">0</strong><span>Forms catalogued</span></div><div><strong id="dash-count-offices">0</strong><span>PIN codes indexed</span></div></div>
+        </div>
+        <div class="pih-panel"><div class="pih-panel-head"><div><h2>Quick access</h2><p>Jump straight into a working section.</p></div></div>
+          <div class="pih-quick"><button onclick="navigateTab('orders')"><span>▤</span> SB Orders <b>→</b></button><button onclick="navigateTab('posb')"><span>₹</span> POSB &amp; PLI tools <b>→</b></button><button onclick="navigateTab('forms')"><span>▣</span> Forms catalogue <b>→</b></button><button onclick="navigateTab('offices')"><span>⌖</span> PIN / Offices <b>→</b></button></div>
+        </div>
+      </section>
     </div>
-  </section>
-
-  <section class="pi-section">
-    <div class="pi-section-head"><div><h2>Everything you reach for</h2><p>All seven working areas are available directly from the home desk.</p></div></div>
-    <div class="pi-tools-grid">
-      <button onclick="navigateTab('ask')" class="pi-tool"><span class="pi-icon">✦</span><strong>Ask Rules</strong><small>Natural-language rule and order search with source references.</small><b>Ask now →</b></button>
-      <button onclick="navigateTab('orders')" class="pi-tool"><span class="pi-icon">▤</span><strong>Orders &amp; Manuals</strong><small>SB Orders by year plus manuals and guides.</small><b>Open library →</b></button>
-      <button onclick="navigateTab('posb')" class="pi-tool"><span class="pi-icon">₹</span><strong>POSB &amp; PLI</strong><small>Rates, ledgers, maturity engines and PLI/RPLI tools.</small><b>Open suite →</b></button>
-      <button onclick="navigateTab('forms')" class="pi-tool"><span class="pi-icon">▣</span><strong>Forms</strong><small>Browse the forms catalogue and open the relevant document.</small><b>Find a form →</b></button>
-      <button onclick="navigateTab('offices')" class="pi-tool"><span class="pi-icon">⌖</span><strong>PIN / Offices</strong><small>Search PIN codes and locate post-office information.</small><b>Search offices →</b></button>
-      <button onclick="navigateTab('calculators')" class="pi-tool"><span class="pi-icon">＋</span><strong>Payment Calculators</strong><small>Salary, pension, arrears, NPS, HBA, tax and service calculations.</small><b>Open calculators →</b></button>
-    </div>
-  </section>
-
-  <section class="pi-section pi-two-col">
-    <div class="pi-panel">
-      <div class="pi-panel-head"><div><span class="pi-mini-label">CURRENT REFERENCE</span><h3>POSB interest rates</h3><p>Active quarter reference already built into PostalIQ.</p></div><button onclick="navigateTab('posb')">View full rate table →</button></div>
-      <div class="pi-rate-grid">
-        <div><span>SB</span><b>4.0%</b></div><div><span>1-Yr TD</span><b>6.9%</b></div><div><span>2-Yr TD</span><b>7.0%</b></div><div><span>3-Yr TD</span><b>7.1%</b></div><div><span>5-Yr TD</span><b>7.5%</b></div><div><span>5-Yr RD</span><b>6.7%</b></div><div><span>SCSS</span><b>8.2%</b></div><div><span>MIS</span><b>7.4%</b></div><div><span>NSC</span><b>7.7%</b></div><div><span>KVP</span><b>7.5%</b></div>
-      </div>
-      <div class="pi-rate-note">Q2 FY 2026–27 · Active reference shown in the POSB suite.</div>
-    </div>
-    <div class="pi-panel">
-      <div class="pi-panel-head"><div><span class="pi-mini-label">REFERENCE LIBRARY</span><h3>Orders, manuals &amp; records</h3><p>Open the source instead of relying on a summary.</p></div></div>
-      <div class="pi-records">
-        <button onclick="navigateTab('orders')"><span class="pi-record-tag">SB</span><div><strong>SB Orders</strong><small>Year-wise order register and original document viewer.</small></div><b>→</b></button>
-        <button onclick="navigateTab('orders')"><span class="pi-record-tag">PDF</span><div><strong>Manuals &amp; Guides</strong><small>GFR, POSB Manuals, Postal Manuals and Financial Handbook.</small></div><b>→</b></button>
-        <button onclick="navigateTab('forms')"><span class="pi-record-tag">FORM</span><div><strong>Forms catalogue</strong><small>Quick access to the available forms collection.</small></div><b>→</b></button>
-      </div>
-    </div>
-  </section>
-
-  <section class="pi-section">
-    <div class="pi-stats">
-      <div><span>Orders loaded</span><strong id="dash-count-orders">0</strong><small>SB Order dataset</small></div>
-      <div><span>POSB &amp; PLI plans</span><strong id="dash-count-posb">14</strong><small>Scheme and policy masters</small></div>
-      <div><span>Forms catalogued</span><strong id="dash-count-forms">0</strong><small>Forms data source</small></div>
-      <div><span>PIN codes indexed</span><strong id="dash-count-offices">0</strong><small>Post-office directory</small></div>
-    </div>
-  </section>
-</div>
 
 <!-- VIEW 2: ASK -->
     <div id="view-ask" class="tab-view hidden space-y-6">
@@ -3198,6 +3340,19 @@
     }
 
     /* 7. NAVIGATION & APP LIFECYCLE */
+
+    function piToggleSidebar(open) {
+      document.getElementById('pi-redesign-sidebar')?.classList.toggle('open', !!open);
+      document.getElementById('pi-redesign-scrim')?.classList.toggle('show', !!open);
+    }
+    function piNavigate(tabId) {
+      navigateTab(tabId);
+      document.querySelectorAll('.pi-redesign-link[data-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.view === tabId));
+      piToggleSidebar(false);
+      // A tab is a separate page view, not an in-page anchor or scroll target.
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
     function navigateTab(tabId) {
       document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
       const target = document.getElementById('view-' + tabId);
@@ -3211,6 +3366,7 @@
             : "px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center space-x-1.5";
         }
       });
+      document.querySelectorAll('.pi-redesign-link[data-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.view === tabId));
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -3294,7 +3450,20 @@
         const alt=img.getAttribute('alt')||('Original source page '+(i+1));
         return '<img class="source-page" src="'+escapeOrderHtml(src)+'" alt="'+escapeOrderHtml(alt)+'">';
       }).join('');
-      w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+' - Original Document</title><base href="'+document.baseURI+'"><style>@page{size:A4 portrait;margin:0}*{box-sizing:border-box}html,body{margin:0!important;padding:0!important;background:#fff!important}body{font-size:0;line-height:0}.source-page{display:block;width:100%;height:auto;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid}.source-page:last-child{break-after:auto;page-break-after:auto}</style></head><body>'+imageHtml+'</body></html>');
+      w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+' - Original Document</title><base href="'+document.baseURI+'"><style>@page{size:A4 portrait;margin:0}*{box-sizing:border-box}html,body{margin:0!important;padding:0!important;background:#fff!important}body{font-size:0;line-height:0}.source-page{display:block;width:100%;height:auto;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid}.source-page:last-child{break-after:auto;page-break-after:auto}</style></head><body>'+imageHtml+'
+<script id="pi-navigation-accessibility">
+document.addEventListener('DOMContentLoaded', function(){
+  const brand=document.querySelector('.pi-redesign-brand');
+  if(brand){brand.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();piNavigate('dashboard');}});}
+  document.querySelectorAll('.pi-redesign-link[data-view]').forEach(function(link){
+    link.addEventListener('click',function(){
+      document.querySelectorAll('.pi-redesign-link[data-view]').forEach(function(item){item.classList.toggle('active',item===link);});
+    });
+  });
+});
+</script>
+
+</body></html>');
     }else{
       w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>@page{margin:12mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#111;background:#fff;margin:0;font-size:11pt;line-height:1.55}h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.text,.order-text-clean{font-family:Georgia,serif;font-size:12pt;line-height:1.6;white-space:pre-wrap;text-align:left}.order-structured-content{font-size:11pt}.order-source-note{padding:10px;background:#fff8dc;border:1px solid #e5c45b;margin:0 0 16px}.order-structured-content table{width:100%;border-collapse:collapse}.order-structured-content th,.order-structured-content td{border:1px solid #888;padding:5px;vertical-align:top}.order-structured-content{break-before:auto;page-break-before:auto}</style></head><body><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2>'+content+'</body></html>');
     }
