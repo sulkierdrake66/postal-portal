@@ -343,13 +343,128 @@ html.dark body.pi-redesign .tab-view textarea{background:#0f2230!important;color
 html.dark body.pi-redesign .tab-view input::placeholder,html.dark body.pi-redesign .tab-view textarea::placeholder{color:#91a7b8!important;}
 html.dark body.pi-redesign .tab-view .text-slate-900,html.dark body.pi-redesign .tab-view .text-gray-900,html.dark body.pi-redesign .tab-view .text-slate-800{color:#edf4f8!important;}
 html.dark body.pi-redesign .tab-view .text-slate-600,html.dark body.pi-redesign .tab-view .text-slate-500,html.dark body.pi-redesign .tab-view .text-gray-600,html.dark body.pi-redesign .tab-view .text-gray-500{color:#b1c4d1!important;}
+/* Contrast repair: cover muted and inherited utility colors used throughout legacy modules */
+html.dark body.pi-redesign .tab-view .text-slate-400,html.dark body.pi-redesign .tab-view .text-gray-400,html.dark body.pi-redesign .tab-view .text-zinc-400{color:#a9bdcb!important;}
+html.dark body.pi-redesign .tab-view .text-slate-700,html.dark body.pi-redesign .tab-view .text-gray-700,html.dark body.pi-redesign .tab-view .text-zinc-700{color:#d7e4ec!important;}
+html.dark body.pi-redesign .tab-view .text-black,html.dark body.pi-redesign .tab-view .text-gray-800,html.dark body.pi-redesign .tab-view .text-zinc-800{color:#edf4f8!important;}
+html.dark body.pi-redesign .tab-view label,html.dark body.pi-redesign .tab-view legend,html.dark body.pi-redesign .tab-view summary{color:#dce8ef;}
+html.dark body.pi-redesign .tab-view small,html.dark body.pi-redesign .tab-view figcaption{color:#b1c4d1;}
+html.dark body.pi-redesign .tab-view .text-brand-gold{color:#f3cf7c!important;}
+html.dark body.pi-redesign .tab-view .text-emerald-700,html.dark body.pi-redesign .tab-view .text-emerald-800{color:#78dfb1!important;}
+html.dark body.pi-redesign .tab-view .text-rose-700,html.dark body.pi-redesign .tab-view .text-rose-800{color:#ff9da5!important;}
+html.dark body.pi-redesign .tab-view .text-blue-700,html.dark body.pi-redesign .tab-view .text-indigo-700{color:#9bc9ff!important;}
+html.dark body.pi-redesign .tab-view .text-amber-700,html.dark body.pi-redesign .tab-view .text-orange-700{color:#f6cc7b!important;}
+html.dark body.pi-redesign .tab-view button:not([class*="bg-brand-red"]):not([class*="bg-red-"]):not([class*="bg-emerald-"]):not([class*="bg-blue-"]):not([class*="bg-amber-"]){color:inherit;}
+html.dark body.pi-redesign .tab-view a:not([class*="text-brand-red"]):not([class*="text-red-"]){color:#9bc9ff;}
+html.dark body.pi-redesign .tab-view .bg-emerald-100{background:#153b32!important;color:#a6f0cd!important;}
+html.dark body.pi-redesign .tab-view .bg-rose-100,html.dark body.pi-redesign .tab-view .bg-red-100{background:#44252c!important;color:#ffc1c6!important;}
 html.dark body.pi-redesign .tab-view [class*="bg-slate-50"],html.dark body.pi-redesign .tab-view [class*="bg-gray-50"],html.dark body.pi-redesign .tab-view [class*="bg-slate-100"]{background:#1a3040!important;}
 html.dark body.pi-redesign .tab-view [class*="border-slate-200"],html.dark body.pi-redesign .tab-view [class*="border-gray-200"]{border-color:#ffffff18!important;}
 html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature,html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-panel{background:#132838!important;color:#eaf2f8!important;}
+/* Homepage-only dark-mode contrast correction: keep dark-mode text readable without affecting tab tools. */
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-section-head h2,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-panel-head h2,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature h3,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button span,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button b { color:#eaf2f8!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-section-head p,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-section-head>span,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature p,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-panel-head p,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-stats span { color:#b8c9d5!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-stats strong { color:#ff929a!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions button,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions a { background:#183244!important;border-color:#ffffff20!important;color:#edf5fa!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions b { color:#edf5fa!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions small { color:#b8c9d5!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions button:hover,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions a:hover { background:#214155!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button span,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button b { color:#ff929a!important; }
+/* Compact live rates ribbon replaces decorative hero tags without lengthening Home */
+#view-dashboard.pi-demo-home .pih-rate-strip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px;max-width:690px;padding:9px 10px;border:1px solid #c6a98770;border-radius:13px;background:#ffffff9c;position:relative;z-index:2}
+#view-dashboard.pi-demo-home .pih-rate-strip-label{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:1px;font-weight:850;color:#637587;margin-right:2px}
+#view-dashboard.pi-demo-home .pih-rate-live-dot{width:6px;height:6px;border-radius:50%;background:#159968;box-shadow:0 0 0 3px #15996820}
+#view-dashboard.pi-demo-home .pih-rate-mini{display:flex;align-items:baseline;gap:5px;padding:4px 7px;border-radius:7px;background:#f4f6f7;color:#102b42;white-space:nowrap}
+#view-dashboard.pi-demo-home .pih-rate-mini span{font-size:10px;color:#607386;font-weight:800}
+#view-dashboard.pi-demo-home .pih-rate-mini strong{font:700 14px Georgia,serif;color:#bd1c29}
+#view-dashboard.pi-demo-home .pih-rate-all{margin-left:auto;border:0;border-radius:8px;padding:6px 9px;background:#102b42;color:#fff;font-size:11px;font-weight:800;white-space:nowrap}
+#view-dashboard.pi-demo-home .pih-rate-all span{margin-left:4px;color:#f3c76a}
+html.dark #view-dashboard.pi-demo-home .pih-rate-strip{background:#102433;border-color:#ffffff20}
+html.dark #view-dashboard.pi-demo-home .pih-rate-strip-label{color:#b2c4d1}
+html.dark #view-dashboard.pi-demo-home .pih-rate-mini{background:#1a3445;color:#eaf2f8}
+html.dark #view-dashboard.pi-demo-home .pih-rate-mini span{color:#b2c4d1}
+html.dark #view-dashboard.pi-demo-home .pih-rate-mini strong{color:#ff929a}
+html.dark #view-dashboard.pi-demo-home .pih-rate-all{background:#f0c66d;color:#172a38}
+html.dark #view-dashboard.pi-demo-home .pih-rate-all span{color:#172a38}
+@media(max-width:560px){#view-dashboard.pi-demo-home .pih-rate-strip{gap:6px;padding:8px}#view-dashboard.pi-demo-home .pih-rate-strip-label{width:100%;margin-bottom:1px}#view-dashboard.pi-demo-home .pih-rate-mini{flex:1;justify-content:center}#view-dashboard.pi-demo-home .pih-rate-all{margin-left:0;flex:1}}
 /* Screen sizes */
 @media(max-width:900px){body.pi-redesign>main{padding:14px 16px 24px!important;}body.pi-redesign .tab-view{scroll-margin-top:80px;}}
 @media(max-width:560px){body.pi-redesign>main{padding:12px 10px 20px!important;}body.pi-redesign .tab-view .bg-brand-card,body.pi-redesign .tab-view [class*="bg-brand-card"]{border-radius:13px;}}
 @media(prefers-reduced-motion:reduce){body.pi-redesign .tab-view{animation:none!important}body.pi-redesign *{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+/* Dark-mode accessibility sweep: normalize legacy text utilities and inline dark colors across ALL app views and overlays. */
+html.dark body.pi-redesign,
+html.dark body.pi-redesign .tab-view,
+html.dark body.pi-redesign .tab-view p,
+html.dark body.pi-redesign .tab-view li,
+html.dark body.pi-redesign .tab-view td,
+html.dark body.pi-redesign .tab-view th,
+html.dark body.pi-redesign .tab-view span,
+html.dark body.pi-redesign .tab-view div,
+html.dark body.pi-redesign .tab-view strong,
+html.dark body.pi-redesign .tab-view em,
+html.dark body.pi-redesign .tab-view b,
+html.dark body.pi-redesign .tab-view label,
+html.dark body.pi-redesign .tab-view legend,
+html.dark body.pi-redesign .tab-view summary,
+html.dark body.pi-redesign .tab-view .form-label,
+html.dark body.pi-redesign .tab-view .help-text,
+html.dark body.pi-redesign .tab-view .description,
+html.dark body.pi-redesign .tab-view .muted { color: #e3edf4; }
+html.dark body.pi-redesign .tab-view [class~="text-slate-950"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-900"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-800"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-700"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-950"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-900"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-800"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-700"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-950"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-900"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-800"],
+html.dark body.pi-redesign .tab-view [class~="text-neutral-900"],
+html.dark body.pi-redesign .tab-view [class~="text-neutral-800"],
+html.dark body.pi-redesign .tab-view [class~="text-black"] { color:#edf5fa!important; }
+html.dark body.pi-redesign .tab-view [class~="text-slate-600"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-500"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-400"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-600"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-500"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-400"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-600"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-500"],
+html.dark body.pi-redesign .tab-view [class~="text-neutral-600"],
+html.dark body.pi-redesign .tab-view [class~="text-neutral-500"] { color:#bdceda!important; }
+/* Inline styles in older calculator modules often hard-code near-black text. */
+html.dark body.pi-redesign .tab-view [style*="color:#000"],
+html.dark body.pi-redesign .tab-view [style*="color: #000"],
+html.dark body.pi-redesign .tab-view [style*="color:black"],
+html.dark body.pi-redesign .tab-view [style*="color: black"],
+html.dark body.pi-redesign .tab-view [style*="color:#111"],
+html.dark body.pi-redesign .tab-view [style*="color: #111"],
+html.dark body.pi-redesign .tab-view [style*="color:#222"],
+html.dark body.pi-redesign .tab-view [style*="color: #222"],
+html.dark body.pi-redesign .tab-view [style*="color:#333"],
+html.dark body.pi-redesign .tab-view [style*="color: #333"] { color:#edf5fa!important; }
+/* Preserve readable semantic/status colors on dark backgrounds. */
+html.dark body.pi-redesign .tab-view [class*="text-green-"],html.dark body.pi-redesign .tab-view [class*="text-emerald-"]{color:#8ee5b8!important;}
+html.dark body.pi-redesign .tab-view [class*="text-red-"],html.dark body.pi-redesign .tab-view [class*="text-rose-"]{color:#ffabb2!important;}
+html.dark body.pi-redesign .tab-view [class*="text-blue-"],html.dark body.pi-redesign .tab-view [class*="text-indigo-"]{color:#a8d0ff!important;}
+html.dark body.pi-redesign .tab-view [class*="text-amber-"],html.dark body.pi-redesign .tab-view [class*="text-orange-"]{color:#f7d28b!important;}
+html.dark body.pi-redesign .tab-view [class*="bg-white"],html.dark body.pi-redesign .tab-view [class*="bg-gray-50"],html.dark body.pi-redesign .tab-view [class*="bg-slate-50"],html.dark body.pi-redesign .tab-view [class*="bg-zinc-50"]{color:#edf5fa!important;}
+html.dark body.pi-redesign .tab-view input,html.dark body.pi-redesign .tab-view select,html.dark body.pi-redesign .tab-view textarea{color:#edf5fa!important;}
+html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-redesign .tab-view input[type="radio"]{accent-color:#f87171;}
 </style>
 
 </head>
@@ -461,7 +576,14 @@ html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature,html.dark b
           <div class="pih-eyebrow">YOUR POSTAL WORK COMPANION</div>
           <h1>Welcome to<br><span>Postal<em>IQ</em></span></h1>
           <p>Your complete reference hub for India Post — find rules, search orders, use calculators and open practical guides from one place.</p>
-          <div class="pih-tags"><span>Postal Orders</span><span>Operational Calculators</span><span>Manuals</span><span>Forms</span><span>Guides</span></div>
+          <div class="pih-rate-strip" id="pih-rate-strip" aria-label="Current small savings interest rates">
+            <div class="pih-rate-strip-label"><span class="pih-rate-live-dot"></span><span>RATES AT A GLANCE</span></div>
+            <div class="pih-rate-mini"><span>SB</span><strong id="home-rate-sb">4.0%</strong></div>
+            <div class="pih-rate-mini"><span>PPF</span><strong id="home-rate-ppf">7.1%</strong></div>
+            <div class="pih-rate-mini"><span>RD</span><strong id="home-rate-rd">6.7%</strong></div>
+            <div class="pih-rate-mini"><span>MIS</span><strong id="home-rate-mis">7.4%</strong></div>
+            <button type="button" class="pih-rate-all" onclick="navigateTab('posb');switchPosbSub('rates-hub')">All rates <span aria-hidden="true">→</span></button>
+          </div>
         </div>
         <div class="pih-hero-actions">
           <button onclick="navigateTab('ask')"><span>✦</span><b>Ask PostalIQ</b><small>Find an answer from rules and orders</small><i>→</i></button>
@@ -1593,6 +1715,8 @@ html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature,html.dark b
 
     let DATA_ORDERS = [];
     let DATA_POSB = [...POSB_MASTER_SCHEMES];
+    // Populate homepage rate chips immediately, then refresh after live data loads.
+    document.addEventListener('DOMContentLoaded', renderHomeRateStrip);
     let DATA_FORMS = [...VERIFIED_FORMS_FALLBACK];
     let DATA_PINCODES_GROUPED = [];
     let officeSearchTimeout = null;
@@ -1749,7 +1873,23 @@ html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature,html.dark b
 
         DATA_ORDERS = orders;
         populateOrderYearFilter();
-        DATA_POSB = (posb && posb.length > 0) ? posb : POSB_MASTER_SCHEMES;
+        // Merge required SB and PPF entries from the built-in source. Some deployed
+        // posb-rates.json copies are partial; never let them hide these two key schemes.
+        const posbRows = (Array.isArray(posb) && posb.length) ? [...posb] : [...POSB_MASTER_SCHEMES];
+        const hasScheme = (row, kind) => {
+          const name = String(row && row.scheme || '').toLowerCase();
+          if (kind === 'sb') return /post office savings account|\bsb\b|savings account/.test(name);
+          if (kind === 'ppf') return /public provident fund|\bppf\b/.test(name);
+          return false;
+        };
+        ['sb', 'ppf'].forEach(kind => {
+          if (!posbRows.some(row => hasScheme(row, kind))) {
+            const fallbackRow = POSB_MASTER_SCHEMES.find(row => hasScheme(row, kind));
+            if (fallbackRow) posbRows.push(fallbackRow);
+          }
+        });
+        DATA_POSB = posbRows;
+        renderHomeRateStrip();
         DATA_FORMS = (forms && forms.length > 0) ? forms : VERIFIED_FORMS_FALLBACK;
         DATA_PINCODES_GROUPED = buildGroupedPincodeData(rawPins);
         if (cfg && cfg.current_parameters) RATES_CONFIG = cfg;
@@ -1764,6 +1904,25 @@ html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature,html.dark b
         initCalculatorSuite();
         initPpfSsyModule();
       }
+    }
+
+    function renderHomeRateStrip() {
+      const rows = Array.isArray(DATA_POSB) && DATA_POSB.length ? DATA_POSB : POSB_MASTER_SCHEMES;
+      const findRate = (kind) => {
+        const patterns = {
+          sb: /post office savings account|\bsb\b|savings account/,
+          ppf: /public provident fund|\bppf\b/,
+          rd: /recurring deposit|\brd\b/,
+          mis: /monthly income scheme|\bmis\b/
+        };
+        const row = rows.find(item => patterns[kind].test(String(item && item.scheme || '').toLowerCase()))
+          || POSB_MASTER_SCHEMES.find(item => patterns[kind].test(String(item.scheme || '').toLowerCase()));
+        return row && row.rate ? row.rate : '—';
+      };
+      [['sb','home-rate-sb'],['ppf','home-rate-ppf'],['rd','home-rate-rd'],['mis','home-rate-mis']].forEach(([kind,id]) => {
+        const node = document.getElementById(id);
+        if (node) node.textContent = findRate(kind);
+      });
     }
 
     function updateDashboardCounters() {
