@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>GDS (Conduct & Engagement) Rules, 2020 - Interactive Portal</title>
+  <style>
+    :root {
+      --ip-red: #B91C1C;
+      --ip-red-dark: #881313;
+      --ip-gold: #F59E0B;
+      --ip-gold-light: #FEF3C7;
+      --bg-main: #F8FAFC;
+      --bg-card: #FFFFFF;
+      --text-main: #1E293B;
+      --text-muted: #64748B;
+      --border-color: #E2E8F0;
+      --simp-bg: #ECFDF5;
+      --simp-border: #10B981;
+      --simp-text: #065F46;
+      --elab-bg: #F8FAFC;
+      --elab-border: #3B82F6;
+      --sidebar-width: 330px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* LEFT SIDEBAR & SLIDER */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: #0F172A;
+      color: #F8FAFC;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 3px solid var(--ip-gold);
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      background: linear-gradient(135deg, var(--ip-red), var(--ip-red-dark));
+      padding: 18px 20px;
+      border-bottom: 2px solid var(--ip-gold);
+    }
+
+    .sidebar-header h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-header p {
+      font-size: 0.78rem;
+      color: var(--ip-gold-light);
+      margin-top: 4px;
+    }
+
+    /* Interactive Range Slider Box */
+    .slider-box {
+      padding: 16px 20px;
+      background: #1E293B;
+      border-bottom: 1px solid #334155;
+    }
+
+    .slider-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.82rem;
+      color: #CBD5E1;
+    }
+
+    .slider-current-badge {
+      background: var(--ip-gold);
+      color: #0F172A;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--ip-gold);
+      cursor: pointer;
+      height: 6px;
+      border-radius: 4px;
+    }
+
+    .slider-title-preview {
+      font-size: 0.8rem;
+      color: #38BDF8;
+      margin-top: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+    }
+
+    /* Search Box */
+    .search-box {
+      padding: 12px 16px;
+      background: #0F172A;
+      border-bottom: 1px solid #334155;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 6px;
+      border: 1px solid #475569;
+      background: #1E293B;
+      color: #FFF;
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: var(--ip-gold);
+    }
+
+    /* Rule Navigation List */
+    .rule-nav-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 10px 24px 10px;
+    }
+
+    .rule-nav-list::-webkit-scrollbar {
+      width: 6px;
+    }
+    .rule-nav-list::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 3px;
+    }
+
+    .nav-section-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #94A3B8;
+      margin: 12px 8px 6px;
+      font-weight: 700;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      color: #E2E8F0;
+      text-decoration: none;
+      font-size: 0.84rem;
+      margin-bottom: 3px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .nav-item:hover {
+      background: #1E293B;
+      color: var(--ip-gold);
+    }
+
+    .nav-item.active {
+      background: var(--ip-red);
+      color: #FFF;
+      font-weight: 600;
+    }
+
+    .nav-badge {
+      background: #334155;
+      color: #F8FAFC;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      min-width: 48px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .nav-item.active .nav-badge {
+      background: var(--ip-gold);
+      color: #0F172A;
+    }
+
+    /* MAIN CONTENT AREA */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      padding: 0 36px 60px 36px;
+      max-width: 1250px;
+    }
+
+    /* Sticky Top Toolbar */
+    .top-toolbar {
+      position: sticky;
+      top: 0;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .om-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .om-meta strong {
+      color: var(--ip-red);
+    }
+
+    .view-controls {
+      display: flex;
+      gap: 8px;
+      background: #E2E8F0;
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .view-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .view-btn.active {
+      background: var(--ip-red);
+      color: #FFF;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    /* Banner Card */
+    .hero-banner {
+      background: linear-gradient(135deg, #991B1B 0%, #7F1D1D 100%);
+      color: #FFF;
+      padding: 24px 28px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+      border-left: 6px solid var(--ip-gold);
+      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.15);
+    }
+
+    .hero-banner h2 {
+      font-size: 1.5rem;
+      margin-bottom: 8px;
+    }
+
+    .hero-banner p {
+      font-size: 0.92rem;
+      color: #FEE2E2;
+      margin-bottom: 14px;
+    }
+
+    .key-highlights {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .highlight-pill {
+      background: rgba(255,255,255,0.12);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .highlight-pill strong {
+      color: var(--ip-gold);
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    /* Rule Cards */
+    .rule-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      overflow: hidden;
+      scroll-margin-top: 85px;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .rule-card:target, .rule-card.highlight-active {
+      border: 2px solid var(--ip-red);
+      box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.12);
+    }
+
+    .rule-card-header {
+      background: #F1F5F9;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .rule-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .rule-num-tag {
+      background: var(--ip-red);
+      color: #FFF;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 4px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .rule-num-tag.new-rule {
+      background: #0D9488;
+    }
+
+    .rule-card-header h3 {
+      font-size: 1.12rem;
+      color: #0F172A;
+    }
+
+    .cat-tag {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: #E2E8F0;
+      color: #475569;
+      white-space: nowrap;
+    }
+
+    .rule-body {
+      padding: 20px 22px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    /* Simplified Box */
+    .simplified-box {
+      background: var(--simp-bg);
+      border-left: 4px solid var(--simp-border);
+      padding: 14px 18px;
+      border-radius: 6px;
+    }
+
+    .box-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .simplified-box .box-label {
+      color: var(--simp-text);
+    }
+
+    .simplified-box p, .simplified-box ul {
+      color: #064E3B;
+      font-size: 0.94rem;
+      font-weight: 500;
+    }
+
+    /* Elaborate Box */
+    .elaborate-box {
+      background: var(--elab-bg);
+      border-left: 4px solid var(--elab-border);
+      padding: 16px 20px;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      color: #334155;
+    }
+
+    .elaborate-box .box-label {
+      color: #1D4ED8;
+    }
+
+    .elaborate-box ul, .elaborate-box ol {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+
+    .elaborate-box li {
+      margin-bottom: 6px;
+    }
+
+    .elaborate-box h4 {
+      margin: 12px 0 6px 0;
+      color: #0F172A;
+      font-size: 0.95rem;
+    }
+
+    /* Tables inside Rules */
+    table.rule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.86rem;
+      background: #FFF;
+    }
+
+    table.rule-table th, table.rule-table td {
+      border: 1px solid #CBD5E1;
+      padding: 9px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    table.rule-table th {
+      background: #1E293B;
+      color: #FFF;
+      font-weight: 600;
+    }
+
+    table.rule-table tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+
+    .note-callout {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      color: #92400E;
+      padding: 10px 14px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-size: 0.86rem;
+    }
+
+    /* FAQ Section */
+    .section-divider {
+      margin: 44px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--ip-red);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-divider h2 {
+      font-size: 1.45rem;
+      color: #0F172A;
+    }
+
+    .faq-item {
+      background: #FFF;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 15px 20px;
+      background: #FFF;
+      border: none;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: #0F172A;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.15s;
+    }
+
+    .faq-question:hover {
+      background: #F8FAFC;
+    }
+
+    .faq-answer {
+      padding: 0 20px 16px 20px;
+      font-size: 0.9rem;
+      color: #475569;
+      border-top: 1px solid #F1F5F9;
+      display: none;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+      padding-top: 12px;
+    }
+
+    .faq-item.open .faq-question {
+      color: var(--ip-red);
+      background: #FEF2F2;
+    }
+
+    /* View Mode Toggles */
+    body.mode-simplified .elaborate-box {
+      display: none;
+    }
+    body.mode-elaborate .simplified-box {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+      body {
+        flex-direction: column;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 16px;
+      }
+      .rule-nav-list {
+        max-height: 240px;
+      }
+    }
+  </style>
+
+  <style id="postaliq-design-language">
+    :root {
+      --pir-navy: #102b42;
+      --pir-navy-deep: #0c2235;
+      --pir-red: #d91f2b;
+      --pir-red-dark: #b71925;
+      --pir-gold: #f4bd4f;
+      --pir-paper: #f7f2e9;
+      --pir-card: #fffdf9;
+      --pir-line: #e6ded1;
+      --pir-muted: #647789;
+      --ip-red: var(--pir-red);
+      --ip-red-dark: var(--pir-red-dark);
+      --ip-gold: var(--pir-gold);
+      --ip-gold-light: #fff0c8;
+      --bg-main: var(--pir-paper);
+      --bg-card: var(--pir-card);
+      --text-main: #203447;
+      --text-muted: var(--pir-muted);
+      --border-color: var(--pir-line);
+      --simp-bg: #edf8f2;
+      --simp-border: #159e68;
+      --simp-text: #155b45;
+      --elab-bg: #f3f7fb;
+      --elab-border: #2478b9;
+      --sidebar-width: 286px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--pir-paper);
+      color: #203447;
+      letter-spacing: -.01em;
+    }
+    .sidebar {
+      width: var(--sidebar-width);
+      background: linear-gradient(165deg, var(--pir-navy), var(--pir-navy-deep) 90%);
+      border-right: 0;
+      box-shadow: 5px 0 22px rgba(16,43,66,.08);
+      padding-bottom: 14px;
+    }
+    .sidebar-header {
+      background: transparent;
+      border-bottom: 1px solid rgba(255,255,255,.15);
+      padding: 22px 19px 20px;
+      position: relative;
+    }
+    .sidebar-header:before {
+      content: "P";
+      display: inline-grid;
+      place-items: center;
+      width: 42px; height: 42px;
+      margin-bottom: 13px;
+      border-radius: 12px;
+      background: var(--pir-red);
+      color: #ffe18b;
+      font: 700 29px/1 Georgia, serif;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+    }
+    .sidebar-header h1 {
+      font: 700 24px/1.12 Georgia, "Times New Roman", serif;
+      letter-spacing: -.55px;
+      gap: 8px;
+    }
+    .sidebar-header p { color: #c7d6e1; font-size: .75rem; margin-top: 7px; }
+    .slider-box {
+      margin: 14px 12px 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 13px;
+      background: rgba(255,255,255,.055);
+      box-shadow: none;
+    }
+    .slider-label-row, .slider-title-preview { color: #e5edf4; }
+    .search-box { padding: 0 12px 12px; }
+    .search-box input {
+      border: 1px solid rgba(255,255,255,.17);
+      border-radius: 11px;
+      background: rgba(255,255,255,.09);
+      color: #fff;
+      outline: none;
+    }
+    .search-box input::placeholder { color: #b8cad8; }
+    .search-box input:focus { border-color: var(--pir-gold); box-shadow: 0 0 0 3px rgba(244,189,79,.14); }
+    .nav-section-label { color: #9eb4c5; letter-spacing: .11em; font-size: .67rem; }
+    .nav-item {
+      margin: 3px 9px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      color: #e8f0f6;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    .nav-item:hover { background: rgba(255,255,255,.09); transform: translateX(2px); }
+    .nav-item.active {
+      background: linear-gradient(110deg, var(--pir-red), #c91625);
+      border-color: rgba(255,104,114,.65);
+      box-shadow: 0 5px 14px rgba(0,0,0,.14);
+      color: #fff;
+    }
+    .nav-badge { border-radius: 999px; }
+    .main-content { margin-left: var(--sidebar-width); min-width: 0; padding: 0 25px 35px; }
+    .top-toolbar {
+      position: sticky; top: 0; z-index: 80;
+      margin: 0 -25px 22px;
+      padding: 13px 25px;
+      background: rgba(247,242,233,.92);
+      border-bottom: 1px solid rgba(16,43,66,.12);
+      backdrop-filter: blur(14px);
+    }
+    .om-meta { color: #50677a; }
+    .om-meta strong { color: var(--pir-navy); }
+    .view-btn {
+      border: 1px solid #d8dfdf;
+      border-radius: 9px;
+      background: #fffdf9;
+      color: #496073;
+      transition: all .18s ease;
+    }
+    .view-btn:hover { border-color: #9aafbd; }
+    .view-btn.active { background: var(--pir-navy); color: #fff; border-color: var(--pir-navy); box-shadow: 0 3px 10px rgba(16,43,66,.12); }
+    .hero-banner {
+      overflow: hidden;
+      position: relative;
+      border: 1px solid #ead9bd;
+      border-radius: 18px;
+      background: linear-gradient(110deg,#fff7e9 0%,#f8e9d4 65%,#ead5ba 100%);
+      box-shadow: 0 8px 24px rgba(16,43,66,.055);
+      color: var(--pir-navy);
+    }
+    .hero-banner:after {
+      content: ""; position: absolute; right: -42px; top: -74px;
+      width: 210px; height: 210px; border-radius: 50%;
+      border: 1px solid rgba(217,31,43,.13);
+      box-shadow: 0 0 0 22px rgba(217,31,43,.035), 0 0 0 45px rgba(217,31,43,.025);
+      pointer-events: none;
+    }
+    .hero-banner h2 { font: 700 clamp(1.8rem,3vw,2.65rem)/1.1 Georgia, "Times New Roman", serif; letter-spacing: -.035em; color: var(--pir-navy); }
+    .hero-banner p { color: #50677a; }
+    .highlight-pill { border: 1px solid #e7d6b9; border-radius: 999px; background: rgba(255,253,249,.78); color: #41596b; }
+    .highlight-pill strong { color: var(--pir-red); }
+    .rule-card {
+      background: var(--pir-card);
+      border: 1px solid var(--pir-line);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(16,43,66,.035);
+      overflow: hidden;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+    .rule-card:target, .rule-card.highlight-active { border-color: #d91f2b80; box-shadow: 0 0 0 3px rgba(217,31,43,.07), 0 8px 24px rgba(16,43,66,.06); }
+    .rule-card-header { background: #fffaf2; border-bottom: 1px solid #eee4d5; }
+    .rule-num-tag { border-radius: 8px; background: var(--pir-navy); color: #fff; }
+    .rule-num-tag.new-rule { background: var(--pir-red); }
+    .rule-card-header h3 { color: var(--pir-navy); font-weight: 750; letter-spacing: -.02em; }
+    .cat-tag { border-radius: 999px; font-weight: 700; }
+    .simplified-box, .elaborate-box { border-radius: 12px; }
+    .simplified-box { background: var(--simp-bg); border-color: #a8d9c0; }
+    .simplified-box .box-label { color: var(--simp-text); }
+    .elaborate-box { background: var(--elab-bg); border-color: #c7d8e8; }
+    .elaborate-box .box-label { color: #245d8a; }
+    table.rule-table { border-color: var(--pir-line); border-radius: 10px; overflow: hidden; }
+    table.rule-table th { background: var(--pir-navy); color: #fff; }
+    table.rule-table tr:nth-child(even) { background: #faf6ef; }
+    .note-callout { border-radius: 11px; }
+    .section-divider h2 { font: 700 clamp(1.55rem,2.4vw,2.1rem)/1.2 Georgia, serif; color: var(--pir-navy); letter-spacing: -.025em; }
+    .faq-item { border: 1px solid var(--pir-line); border-radius: 12px; overflow: hidden; background: var(--pir-card); margin-bottom: 9px; }
+    .faq-question { color: var(--pir-navy); }
+    .faq-question:hover { background: #fff7e9; }
+    .faq-item.open .faq-question { background: #fff7e9; color: var(--pir-red); }
+    .faq-answer { border-top: 1px solid #eee4d5; }
+    @media (max-width: 900px) {
+      .sidebar { width: min(300px,86vw); box-shadow: 8px 0 28px rgba(0,0,0,.2); }
+      .main-content { margin-left: 0; padding: 0 14px 25px; }
+      .top-toolbar { margin: 0 -14px 16px; padding: 12px 14px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *:before, *:after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
+    @media print {
+      body { background: #fff !important; color: #172b3a; }
+      .main-content { margin-left: 0 !important; padding: 0 !important; }
+      .sidebar { display: none !important; }
+      .top-toolbar { position: static; margin: 0 0 12px; padding: 8px 0; background: #fff; backdrop-filter: none; }
+      .hero-banner, .rule-card, .faq-item { box-shadow: none !important; }
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- LEFT SIDEBAR WITH RULE SLIDER & DIRECTORY -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>📮 India Post GDS Rules</h1>
+      <p>Conduct & Engagement Rules, 2020 (OM No. 17-30/2019-GDS)</p>
+    </div>
+
+    <!-- Interactive Rule Number Slider -->
+    <div class="slider-box">
+      <div class="slider-label-row">
+        <span>⚡ Quick Rule Slider</span>
+        <span class="slider-current-badge" id="sliderBadge">Rule 1</span>
+      </div>
+      <input type="range" id="ruleSlider" min="0" max="44" value="0" step="1">
+      <div class="slider-title-preview" id="sliderTitlePreview">1. Short Title and Commencement</div>
+    </div>
+
+    <!-- Live Filter Search -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="🔍 Search rules, TRCA, leave, put off, fraud...">
+    </div>
+
+    <!-- Scrollable Rule Directory -->
+    <nav class="rule-nav-list" id="ruleNavList">
+      <!-- Dynamically populated by JS -->
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    
+    <!-- Top Sticky Bar -->
+    <div class="top-toolbar">
+      <div class="om-meta">
+        Circulated vide Dak Bhawan OM <strong>No. 17-30/2019-GDS</strong> dated <strong>14th February, 2020</strong> (Superseding 2011 Rules)
+      </div>
+      <div class="view-controls">
+        <button class="view-btn active" onclick="setViewMode('both', this)">Both Views</button>
+        <button class="view-btn" onclick="setViewMode('simplified', this)">Simplified Only</button>
+        <button class="view-btn" onclick="setViewMode('elaborate', this)">Elaborate Only</button>
+      </div>
+    </div>
+
+    <!-- Hero Summary Banner -->
+    <div class="hero-banner">
+      <h2>Gramin Dak Sevaks (Conduct and Engagement) Rules, 2020</h2>
+      <p>Complete interactive reference covering all 31 Statutory Rules, Newly Inserted Sub-Rules (3-B, 3-C, 7-A, 7-B, 10-A to 10-G, 21-A, 21-B, 29-A), Schedule of Authorities, Appendices I–III, and Exam/Operational FAQs.</p>
+      <div class="key-highlights">
+        <div class="highlight-pill">
+          <strong>3 Categories Only</strong>
+          BPM, ABPM & Dak Sevak (Rationalised from 5 categories)
+        </div>
+        <div class="highlight-pill">
+          <strong>Working Hours & Age</strong>
+          Max 5 Hours/day | Entry: 18–40 yrs | Discharge: 65 yrs
+        </div>
+        <div class="highlight-pill">
+          <strong>Leave Entitlements</strong>
+          20 Days Paid Leave/yr + 5 Days Emergency + 180 Days Maternity
+        </div>
+        <div class="highlight-pill">
+          <strong>Put Off Duty Ex-Gratia</strong>
+          25% TRCA + DA (Revisable ±50% after 90 days)
+        </div>
+      </div>
+    </div>
+
+    <!-- RULES CONTAINER -->
+    <div id="rulesContainer"></div>
+
+    <!-- FAQ SECTION -->
+    <div class="section-divider" id="faqSection">
+      <h2>❓ Important Operational & Departmental Exam FAQs (30 Questions)</h2>
+    </div>
+    <div id="faqContainer"></div>
+
+  </main>
+
+  <script>
+    const rulesData = [
+      {
+        id: "rule-1",
+        num: "Rule 1",
+        title: "Short Title and Commencement",
+        category: "Preliminary",
+        isNew: false,
+        simplified: "These rules are officially named the 'Department of Posts, Gramin Dak Sevaks (Conduct & Engagement) Rules, 2020' and took effect immediately on the date of their circulation (14.02.2020), replacing the 2011 rules.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Called the <em>Department of Posts, Gramin Dak Sevaks (Conduct & Engagement) Rules, 2020</em>.</li>
+            <li><strong>Sub-rule (2):</strong> Came into force on and from the date of circulation (issued on <strong>14th February, 2020</strong> vide OM No. 17-30/2019-GDS).</li>
+            <li><strong>Supersession Clause:</strong> Supersedes the <em>GDS (Conduct & Engagement) Rules, 2011</em>, except with respect to actions done or omitted to be done before such supersession.</li>
+            <li><strong>Terminology Change:</strong> Throughout the rules, the old words <em>'Recruiting Authority'</em>, <em>'Recruitment'</em>, and <em>'Service'</em> have been replaced with <strong>'Engaging Authority'</strong> and <strong>'Engagement'</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-2",
+        num: "Rule 2",
+        title: "Application",
+        category: "Preliminary",
+        isNew: false,
+        simplified: "These rules apply to all Gramin Dak Sevaks (GDS) working under the Department of Posts, Ministry of Communications, Government of India, including wasting cadre categories.",
+        elaborate: `
+          <ul>
+            <li>Applies to all Gramin Dak Sevaks of the Department of Posts, Ministry of Communications, Government of India.</li>
+            <li>Per Para 2(xiii) of the covering OM, these rules are also applicable to all existing categories of GDS, including those declared as a <strong>wasting cadre</strong> (such as Mail Messengers/Stamp Vendors), for as long as they remain in engagement.</li>
+          </ul>`
+      },
+      {
+        id: "rule-3",
+        num: "Rule 3",
+        title: "Definitions & Rationalised Categories",
+        category: "Preliminary",
+        isNew: false,
+        simplified: "Defines key authorities and rationalizes the earlier 5 categories of GDS into 3 core designations: Branch Postmaster (BPM), Assistant Branch Postmaster (ABPM), and Dak Sevak.",
+        elaborate: `
+          <ul>
+            <li><strong>(a) Engaging Authority:</strong> Authority empowered to engage GDS on the basis of GDS (C&E) Rules, 2020.</li>
+            <li><strong>(b) ASP / Inspector Posts:</strong> Assistant Superintendent or Sub-Divisional Inspector in charge of a Postal or RMS Sub-Division.</li>
+            <li><strong>(c) Government:</strong> Central Government.</li>
+            <li><strong>(d) Gramin Dak Sevak (Rationalised into 3 Categories vide OMs dated 25.06.2018 & 22.07.2019):</strong>
+              <ol>
+                <li><strong>Branch Postmaster (BPM):</strong> In charge of a Branch Post Office.</li>
+                <li><strong>Assistant Branch Postmaster (ABPM):</strong> All GDS other than BPMs working in <em>Branch Post Offices</em> (Note 1).</li>
+                <li><strong>Dak Sevak:</strong> All GDS other than BPMs working in <em>Departmental Post Offices / RMS Offices / other offices</em> (Note 2).</li>
+              </ol>
+            </li>
+            <li><strong>(e) Head of a Circle:</strong> Includes Chief Postmaster-General (CPMG).</li>
+            <li><strong>(f) Head of a Division:</strong> Senior Superintendent (SSPOs) or Superintendent (SPOs) of a Postal or RMS Division.</li>
+            <li><strong>(g) Head of a Region:</strong> Postmaster-General (PMG Region).</li>
+            <li><strong>(h) Members of the Family:</strong> Includes wife/dependent husband, child, step-child, and any blood/marriage relative wholly dependent on the Sevak (including widow and dependent daughter-in-law), <em>excluding</em> legally separated spouses or non-dependent children.</li>
+            <li><strong>(i) Record Officer (RMS):</strong> Sub Record Officer (SRO) or Head Record Officer (HRO).</li>
+            <li><strong>(j) Sevak:</strong> A person working as a Gramin Dak Sevak.</li>
+            <li><strong>(k) Postmaster:</strong> Gazetted Postmaster, HSG or LSG Postmaster in a norm-based Post Office (in his own office), <em>excluding</em> a Postmaster in charge of an A, B & C class Sub Post Office.</li>
+          </ul>
+          <div class="note-callout"><strong>Note I (Deemed Engagement):</strong> Persons holding posts of Extra-Departmental Agents (under 1964 rules) or GDS (under 2001 or 2011 rules) on a regular basis are deemed to have been engaged under these 2020 rules.</div>`
+      },
+      {
+        id: "rule-3A",
+        num: "Rule 3-A",
+        title: "Terms and Conditions of Engagement",
+        category: "Engagement & Eligibility",
+        isNew: false,
+        simplified: "Sets the core employment conditions: max 5 hours duty/day, retirement at age 65, outside regular Civil Service, mandatory supplementary income, mandatory local residence within 1 month of selection, and BPM post office accommodation.",
+        elaborate: `
+          <ol type="i">
+            <li><strong>Maximum Duty Hours:</strong> A Sevak shall not be required to perform duty beyond a maximum period of <strong>5 hours in a day</strong>.</li>
+            <li><strong>Upper Age of Retention:</strong> A Sevak shall not be retained beyond <strong>65 years of age</strong>.</li>
+            <li><strong>Other Sources of Income:</strong> Must give an undertaking that he/she has other sources of income besides Government allowances for adequate means of livelihood for self and family.</li>
+            <li><strong>Transferability:</strong> Can be transferred from one post/unit to another post/unit in <strong>public interest / administrative / vigilance ground</strong>.</li>
+            <li><strong>Outside Civil Service:</strong> A Sevak shall be outside the Civil Service of the Union.</li>
+            <li><strong>No Parity Claim:</strong> Shall not claim to be at par with Central Government employees.</li>
+            <li><strong>Mandatory Residence Condition:</strong> Residence in the post village / delivery jurisdiction of the Post Office within <strong>one month after selection but before engagement</strong> is mandatory.
+              <ul>
+                <li><strong>For GDS BPM:</strong> Must reside in the <em>place of duty (BO village)</em>.</li>
+                <li><strong>For ABPM / Dak Sevak:</strong> Must reside within the <em>delivery jurisdiction of the Post Office</em>.</li>
+                <li><strong>Penalty for Violation:</strong> Failure to reside after engagement is treated as violative of conditions of engagement and liable for disciplinary action under <strong>Rule 10</strong> requiring <strong>removal or dismissal</strong>.</li>
+              </ul>
+            </li>
+            <li><strong>Accommodation for BO:</strong> Branch Post Office shall be located in suitable accommodation provided by the GDS BPM, unless accommodation is provided by Central/State Govt, Local Govt, or Village Panchayat.</li>
+            <li><strong>Combination of Duties:</strong> Combination of duties of a Sevak is permissible.</li>
+          </ol>`
+      },
+      {
+        id: "rule-3B",
+        num: "Rule 3-B",
+        title: "Eligibility Criteria, TRCA Slabs & Job Profile",
+        category: "Engagement & Eligibility",
+        isNew: true,
+        simplified: "Newly inserted comprehensive rule detailing GDS recruitment criteria: Age 18–40 years (with relaxations), 10th Pass (with Maths, English & Local Language), 60-day Computer Certificate, knowledge of cycling/two-wheeler, security deposit, TRCA pay slabs (₹10,000 to ₹14,500), and duties of BPM, ABPM, and Dak Sevak.",
+        elaborate: `
+          <h4>I. Age Limit (as on date of vacancy notification): Minimum 18 years, Maximum 40 years</h4>
+          <table class="rule-table">
+            <thead>
+              <tr><th>Sl. No.</th><th>Category</th><th>Permissible Upper Age Relaxation</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Scheduled Caste / Scheduled Tribe (SC/ST)</td><td>5 years</td></tr>
+              <tr><td>2</td><td>Other Backward Classes (OBC)</td><td>3 years</td></tr>
+              <tr><td>3</td><td>Economically Weaker Sections (EWS)</td><td>No age relaxation (Gets 10% quota reservation)</td></tr>
+              <tr><td>4</td><td>Persons with Disabilities (PwD)</td><td>10 years</td></tr>
+              <tr><td>5</td><td>PwD + OBC</td><td>13 years</td></tr>
+              <tr><td>6</td><td>PwD + SC/ST</td><td>15 years</td></tr>
+            </tbody>
+          </table>
+          <div class="note-callout"><strong>Note on PwD:</strong> Relaxation is <em>not</em> applicable to "Blind" benchmark disability (Low Vision candidates are identified instead). Maximum age of any applicant on the crucial date shall not exceed <strong>56 years</strong>.</div>
+          
+          <h4>II. Educational & Technical Qualifications</h4>
+          <ul>
+            <li><strong>10th Standard Pass:</strong> Secondary School Examination pass certificate of 10th standard with passing marks in <strong>Mathematics and English</strong> (compulsory or elective) from a recognized Board.</li>
+            <li><strong>Compulsory Local Language:</strong> Studied the local language at least up to <strong>10th standard</strong> (compulsory or elective).</li>
+            <li><strong>Basic Computer Training:</strong> Certificate of at least <strong>60 days duration</strong> from a recognized institute. <em>Relaxable</em> if the candidate studied Computer as a subject in Matriculation (10th), Class XII, or higher education.</li>
+          </ul>
+
+          <h4>III to IX. Other Pre-Engagement Conditions</h4>
+          <ul>
+            <li><strong>Residence & BO Accommodation (III):</strong> Comply within 1 month after selection but before engagement.</li>
+            <li><strong>Knowledge of Cycling (IV):</strong> Pre-requisite for all posts. Riding a <strong>scooter or motorcycle</strong> is accepted as knowledge of cycling (candidate submits a declaration).</li>
+            <li><strong>Adequate Means of Livelihood (V):</strong> Not a pre-requisite at the time of applying, but must be complied with within <strong>30 days after selection and before engagement</strong>, and maintained till discharge.</li>
+            <li><strong>Security (VI) & Reservations (VIII-IX):</strong> Must furnish security as prescribed and submit valid SC/ST/OBC/PwD/EWS certificates.</li>
+            <li><strong>Application Fee Exemption (XI):</strong> Male UR/OBC/EWS candidates pay prescribed fee. <strong>Exempted:</strong> All Female candidates, all SC/ST candidates, and all PwD candidates.</li>
+          </ul>
+
+          <h4>X. Minimum Time Related Continuity Allowance (TRCA) Slabs</h4>
+          <table class="rule-table">
+            <thead>
+              <tr><th>Sl. No.</th><th>Category</th><th>Minimum TRCA for 4 Hours (Level 1)</th><th>Minimum TRCA for 5 Hours (Level 2)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td><strong>BPM</strong></td><td>Rs. 12,000/-</td><td>Rs. 14,500/-</td></tr>
+              <tr><td>2</td><td><strong>ABPM / Dak Sevaks</strong></td><td>Rs. 10,000/-</td><td>Rs. 12,000/-</td></tr>
+            </tbody>
+          </table>
+          <p><em>Note:</em> For GDS engaged on or after <strong>01.07.2018</strong>, initial fixation of TRCA is done at the first stage of <strong>Level 1</strong> of the respective category.</p>
+
+          <h4>XII. Job Profiles</h4>
+          <ul>
+            <li><strong>Branch Postmaster (BPM):</strong> Team leader of BO; manages BO & IPPB counter operations via handheld device/smartphone; record maintenance; marketing, melas, business procurement; combined duties of ABPM when ordered.</li>
+            <li><strong>Assistant Branch Postmaster (ABPM):</strong> Sale of stamps/stationery, mail conveyance and delivery, doorstep IPPB transactions, assisting BPM in counter duties, marketing/melas, and combined duty of BPM when ordered.</li>
+            <li><strong>Dak Sevak:</strong> Works in Departmental Post Offices/RMS; stamp sales, mail conveyance/delivery, IPPB work, assisting Postmaster/SPM, marketing and assigned duties.</li>
+            <li><strong>IPPB Note:</strong> Work performed for IPPB is <strong>not included</strong> in TRCA calculation as it is remunerated on an <strong>incentive basis</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-3C",
+        num: "Rule 3-C",
+        title: "Voluntary Discharge Schemes",
+        category: "Engagement & Eligibility",
+        isNew: true,
+        simplified: "All categories of GDS can opt for Voluntary Discharge after completing 20 years of engagement or on medical grounds.",
+        elaborate: `
+          <ul>
+            <li>Newly inserted Rule 3-C incorporates two types of Voluntary Discharge Schemes for all categories of GDS:
+              <ol>
+                <li>On completion of <strong>20 years of engagement period</strong>; OR</li>
+                <li>On <strong>medical grounds</strong>, as per instructions issued from time to time by the Department.</li>
+              </ol>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-4",
+        num: "Rule 4",
+        title: "Engaging Authority & Suo-Motu Review of Engagement",
+        category: "Authorities & Powers",
+        isNew: false,
+        simplified: "Specifies who can hire a GDS (per the Schedule) and empowers higher authorities to inspect engagement records, cancel irregular selections, or direct termination/removal after giving a hearing.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> The Engaging Authority for each category of Sevak is listed in the Schedule annexed under Rule 31.</li>
+            <li><strong>Sub-rule (2):</strong> If any doubt arises as to who is the appropriate Authority, the matter shall be referred to the <strong>Director General (Posts)</strong>, whose decision is final.</li>
+            <li><strong>Sub-rule (3) — Superior Authority's Power to Call Records:</strong> Any authority superior to the Engaging Authority may, at any time (on its own motion or otherwise), call for engagement records if the Engaging Authority appears to have:
+              <ul>
+                <li>(a) Exercised jurisdiction not vested in it by law/rules; or</li>
+                <li>(b) Failed to exercise jurisdiction so vested; or</li>
+                <li>(c) Acted illegally or with material irregularity.</li>
+              </ul>
+              After giving an <strong>opportunity of being heard</strong>, the superior authority may direct the Engaging Authority to act under <strong>Rule 8</strong> (termination) or initiate removal under <strong>Rule 10</strong>, including cancellation/rectification of the engagement process.
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-5",
+        num: "Rule 5",
+        title: "Powers of the Engaging Authority",
+        category: "Authorities & Powers",
+        isNew: false,
+        simplified: "Penalties under Rule 9 can be imposed by the scheduled Engaging/Disciplinary Authority or another authority specially empowered by the CPMG/PMG, provided that authority is never lower in rank than the original Engaging Authority.",
+        elaborate: `
+          <ul>
+            <li>The powers of the Engaging Authority in awarding penalties specified in Rule 9 may be exercised by:
+              <ol>
+                <li>An authority shown in the Schedule annexed to these rules; OR</li>
+                <li>Any other authority empowered by a <strong>special order of the Head of the Circle (CPMG) or Head of the Region (PMG)</strong> under circumstances recorded in writing.</li>
+              </ol>
+            </li>
+            <li><strong>Statutory Safeguard (Proviso):</strong> In no case shall the authority so appointed be <strong>lower in rank</strong> than the authority who originally engaged the Gramin Dak Sevak.</li>
+          </ul>`
+      },
+      {
+        id: "rule-6",
+        num: "Rule 6",
+        title: "Pension / GDS Gratuity / Severance Amount",
+        category: "Pay, Leave & Benefits",
+        isNew: false,
+        simplified: "GDS are not entitled to regular government pension, but they are eligible for GDS Gratuity, Severance Amount, or Service Discharge Benefit Scheme (SDBS).",
+        elaborate: `
+          <ul>
+            <li>Gramin Dak Sevaks shall <strong>not be entitled to any pension</strong>.</li>
+            <li>However, they shall be entitled to <strong>GDS Gratuity, Severance Amount, or SDBS (Service Discharge Benefit Scheme)</strong> as may be decided by the Government from time to time.</li>
+          </ul>`
+      },
+      {
+        id: "rule-7",
+        num: "Rule 7",
+        title: "Paid Leave (20 Days/Year) & Overstayal",
+        category: "Pay, Leave & Benefits",
+        isNew: false,
+        simplified: "GDS get 20 days of paid leave per year (10 days per half-year) without accumulation. Overstaying leave without exceptional justification leads to removal from engagement under Rule 10.",
+        elaborate: `
+          <ul>
+            <li><strong>Entitlement:</strong> Granted paid leave at the rate of <strong>20 days in a year (10 days for every half year) without accumulation</strong>.</li>
+            <li><strong>Consequence of Unauthorized Absence / Overstayal (Provisos a & b):</strong> Where a Sevak:
+              <ul>
+                <li>(a) Fails to resume duty on expiry of the maximum period of leave admissible and granted; OR</li>
+                <li>(b) Is granted leave for less than the maximum admissible period, but remains absent for a period which (together with leave granted) exceeds the maximum limit up to which leave could have been granted;</li>
+              </ul>
+              He/she shall, unless the Government decides otherwise due to exceptional circumstances, be <strong>removed from engagement after following the procedure laid down in Rule 10</strong>.
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-7A",
+        num: "Rule 7-A",
+        title: "Emergency Leave",
+        category: "Pay, Leave & Benefits",
+        isNew: true,
+        simplified: "GDS are entitled to a maximum of 5 days of Emergency Leave in a calendar year.",
+        elaborate: `
+          <ul>
+            <li>Newly inserted Rule 7-A: Gramin Dak Sevaks shall be entitled to <strong>'Emergency' leave for a maximum of 5 days in a calendar year</strong>, or as may be prescribed by the Government from time to time.</li>
+          </ul>`
+      },
+      {
+        id: "rule-7B",
+        num: "Rule 7-B",
+        title: "Maternity Leave for Female GDS",
+        category: "Pay, Leave & Benefits",
+        isNew: true,
+        simplified: "Female GDS with fewer than two surviving children are eligible for 180 days of Maternity Leave.",
+        elaborate: `
+          <ul>
+            <li>Newly inserted Rule 7-B: A female Gramin Dak Sevak with <strong>less than two surviving children</strong> may be granted Maternity Leave by an authority competent to grant leave for a period of <strong>180 days</strong> from the date of its commencement, as per Department instructions.</li>
+          </ul>`
+      },
+      {
+        id: "rule-8",
+        num: "Rule 8",
+        title: "Termination of Engagement (Within 3 Years)",
+        category: "Termination & Penalties",
+        isNew: false,
+        simplified: "If a GDS has completed 3 years or less of continuous engagement, either the GDS or the Engaging Authority can terminate the engagement with 1 month's written notice (or 1 month's Basic TRCA + DA in lieu of notice). No gratuity or severance is paid upon Rule 8 termination.",
+        elaborate: `
+          <ul>
+            <li><strong>Applicability (Sub-rule 1):</strong> Applies to a Sevak who has <strong>not already rendered more than three years' continuous engagement</strong> from the date of engagement.</li>
+            <li><strong>Who Can Terminate:</strong> By notice in writing given either by the Sevak to the Engaging Authority, OR by the Engaging Authority / superior authority / empowered authority to the Sevak.</li>
+            <li><strong>Notice Period & Payment in Lieu (Sub-rule 2):</strong>
+              <ul>
+                <li>Notice period is <strong>one month</strong>.</li>
+                <li>Engagement may be terminated <strong>forthwith (immediately)</strong>, in which case the Sevak is entitled to claim a sum equivalent to <strong>Basic TRCA + Dearness Allowance (DA)</strong> for the 1-month notice period (or for the period by which notice falls short of one month) at the rate drawn immediately before termination.</li>
+              </ul>
+            </li>
+            <li><strong>Note 1 (Immediate Termination):</strong> For immediate effect, the order must mention that one month's TRCA + DA is being remitted to the Sevak in lieu of one month's notice <strong>through Money Order</strong>.</li>
+            <li><strong>Note 2 (No Terminal Benefits):</strong> When engagement is terminated under Rule 8, the GDS is <strong>not eligible for GDS Gratuity and Severance amount etc.</strong></li>
+          </ul>`
+      },
+      {
+        id: "rule-9",
+        num: "Rule 9",
+        title: "Nature of Penalties (Minor & Major)",
+        category: "Termination & Penalties",
+        isNew: false,
+        simplified: "Lists the 9 official penalties that can be imposed on a GDS: 5 Minor Penalties (i to v) and 4 Major Penalties (vi to ix).",
+        elaborate: `
+          <h4>Minor Penalties — Clauses (i) to (v)</h4>
+          <ol type="i">
+            <li><strong>Censure;</strong></li>
+            <li><strong>Debarring from LDCE Exams:</strong> Debarring a Sevak from appearing in the recruitment examination for <strong>MTS and/or Postman and/or Mail Guard</strong> and/or from being considered for recruitment as <strong>Postal Assistants / Sorting Assistants</strong> for a period <strong>not exceeding 3 years</strong>;</li>
+            <li><strong>Debarring from Seniority Selection:</strong> Debarring a Sevak from being considered for recruitment to <strong>MTS on the basis of selection-cum-seniority</strong> for a period <strong>not exceeding 3 years</strong>;</li>
+            <li><strong>Recovery from TRCA:</strong> Recovery from TRCA of the whole or part of any pecuniary loss caused to the Government by negligence or breach of orders (<em>Note: Can be imposed fully without any restriction</em>);</li>
+            <li><strong>Withholding of Annual TRCA Increase:</strong> Withholding of annual increase in TRCA <strong>without cumulative effect</strong> for a period <strong>not exceeding 3 years</strong>.</li>
+          </ol>
+
+          <h4>Major Penalties — Clauses (vi) to (ix)</h4>
+          <ol type="i" start="6">
+            <li><strong>Reduction to a Lower Stage in TRCA Slab:</strong> For a specified period <strong>exceeding 3 years</strong> (not a permanent measure), with explicit direction on whether the Sevak will earn annual increases during the reduction period and whether it will postpone future TRCA increases on expiry;</li>
+            <li><strong>Compulsory Discharge from Engagement:</strong> With monetary benefits (i.e. SDBS etc.) and <strong>GDS Gratuity proportionate to engagement period</strong> rendered, per OM dated 27.06.2018;</li>
+            <li><strong>Removal from Engagement:</strong> Which shall <em>not</em> be a disqualification for future engagement;</li>
+            <li><strong>Dismissal from Engagement:</strong> Which shall ordinarily be a <strong>disqualification for future engagement</strong>.</li>
+          </ol>`
+      },
+      {
+        id: "rule-10A",
+        num: "Rule 10-A",
+        title: "Procedure for Imposing Minor Penalty",
+        category: "Disciplinary Proceedings",
+        isNew: true,
+        simplified: "Before imposing any minor penalty (Clauses i to v of Rule 9), the GDS must be informed in writing of the allegations and given a chance to submit a written representation (within 10 days as per Appendix-I), which the authority must consider.",
+        elaborate: `
+          <ul>
+            <li>No order imposing any minor penalty specified in <strong>Clauses (i) to (v) of Rule 9</strong> shall be passed except after:
+              <ol type="a">
+                <li>The Sevak is informed in writing of the proposal to take action against him/her and of the allegations, and given an opportunity to make any representation he/she may wish to make (Standard Form in <strong>Appendix-I</strong> grants 10 days); and</li>
+                <li>Such representation, if any, is taken into consideration by the Engaging/Disciplinary Authority.</li>
+              </ol>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-10B",
+        num: "Rule 10-B",
+        title: "Procedure for Imposing Major Penalty",
+        category: "Disciplinary Proceedings",
+        isNew: true,
+        simplified: "Major penalties (Clauses vi to ix of Rule 9) cannot be imposed without conducting a formal inquiry where the GDS is given a written charge sheet (Appendix-III) and a reasonable opportunity of being heard, and the penalty must be based on evidence adduced during that inquiry.",
+        elaborate: `
+          <ul>
+            <li>No order imposing any major penalty specified in <strong>Clauses (vi) to (ix) of Rule 9</strong> shall be passed except after:
+              <ol type="a">
+                <li>Informing the Sevak in writing of the proposed action and allegations, and giving an opportunity to represent;</li>
+                <li>Taking the representation into consideration;</li>
+                <li><strong>Mandatory Formal Inquiry (Proviso 1):</strong> A major penalty shall <em>not</em> be imposed except after a formal inquiry in which the Sevak has been informed of the charges and given a reasonable opportunity of being heard in respect of those charges;</li>
+                <li><strong>Evidence-Based Penalty (Proviso 2):</strong> Any major penalty imposed after inquiry must be based on the evidence adduced during the inquiry.</li>
+              </ol>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-10C",
+        num: "Rule 10-C",
+        title: "Record of Disciplinary Proceedings",
+        category: "Disciplinary Proceedings",
+        isNew: true,
+        simplified: "Lists the 7 mandatory documents that must be maintained in the official record of a GDS disciplinary case.",
+        elaborate: `
+          <p>The official record of proceedings under Rule 10 shall include all 7 items:</p>
+          <ol type="i">
+            <li>A copy of the intimation to the Sevak of the proposal to take action;</li>
+            <li>A copy of the statement of allegations, along with a list of supporting evidence communicated to him/her;</li>
+            <li>His/her representation, if any;</li>
+            <li>The records of the inquiry proceedings along with the Inquiry Report of the Engaging Authority or Inquiry Officer (where a formal inquiry is necessary);</li>
+            <li>The representation, if any, of the Sevak on the Inquiry Officer's report;</li>
+            <li>Findings of the Engaging/Disciplinary Authority in respect of the allegations;</li>
+            <li>The final order imposing the penalty.</li>
+          </ol>`
+      },
+      {
+        id: "rule-10D",
+        num: "Rule 10-D",
+        title: "Requirement of Inquiry When GDS Accepts Charges",
+        category: "Disciplinary Proceedings",
+        isNew: true,
+        simplified: "If a GDS unconditionally accepts the charges in a major penalty case, no further formal inquiry is needed. However, if the acceptance is conditional or qualified, an inquiry must still be conducted to give the GDS full opportunity to defend.",
+        elaborate: `
+          <ul>
+            <li>The purpose of holding an inquiry in major penalty cases is primarily to give the GDS adequate opportunity to defend himself/herself.</li>
+            <li>If the charge is accepted by the GDS <strong>unconditionally</strong>, there is obviously <strong>no need for an inquiry</strong> for imposing a major penalty.</li>
+            <li>If acceptance is conditional or disputed, the inquiry must proceed.</li>
+          </ul>`
+      },
+      {
+        id: "rule-10E",
+        num: "Rule 10-E",
+        title: "Discretion to Hold Inquiry in Minor Penalty Cases",
+        category: "Disciplinary Proceedings",
+        isNew: true,
+        simplified: "Normally, no formal inquiry is needed for minor penalties. However, if the GDS requests document inspection or witness cross-examination, the Disciplinary Authority must carefully consider the request and record written reasons if refusing an inquiry (cannot reject summarily).",
+        elaborate: `
+          <ul>
+            <li>Normally, there is no need to conduct a formal oral inquiry for imposing a minor penalty.</li>
+            <li>However, if the delinquent GDS requests an oral inquiry, inspection of documents, or cross-examination of prosecution witnesses, the Disciplinary/Engaging Authority must <strong>apply its mind closely</strong> to all facts and circumstances.</li>
+            <li>The authority <strong>cannot reject the request summarily</strong> solely on the ground that an inquiry is not mandatory.</li>
+            <li>If the authority concludes an inquiry is unnecessary, it must pass a <strong>speaking order in writing indicating its reasons</strong>; failure to do so may be construed as a denial of natural justice. (If inquiry is ordered, <strong>Appendix-II</strong> charge sheet format is used).</li>
+          </ul>`
+      },
+      {
+        id: "rule-10F",
+        num: "Rule 10-F",
+        title: "Continuing Disciplinary Proceedings After Discharge at Age 65",
+        category: "Disciplinary Proceedings",
+        isNew: true,
+        simplified: "If Rule 10 proceedings were already started while the GDS was in service, they continue automatically after the GDS turns 65. The Disciplinary Authority submits its findings to the President, who decides on recovering losses from Gratuity/Severance/Security/Insurance. No appeal lies against the President's order.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1) — Deemed Continuation:</strong> Departmental proceedings instituted while a Sevak was in engagement shall, after discharge on attaining <strong>65 years of age</strong>, be deemed to continue and shall be concluded by the same authority. The Disciplinary Authority's function is only to reach a finding on the charges and submit a report to the <strong>President</strong>. Final decision is taken by the President (like review petitions), and <strong>no appeal lies against such decision</strong>.</li>
+            <li><strong>Sub-rule (2) — Recovery from Terminal Benefits:</strong> The President reserves the right of withholding <strong>Group Insurance amount, Security amount, and post-engagement benefits like ex-gratia gratuity / GDS Gratuity and Severance Amount</strong> by ordering recovery if the Sevak is found guilty of grave misconduct or negligence.</li>
+            <li><strong>Sub-rule (3) — Date of Institution:</strong> Proceedings are deemed instituted on the date the <strong>statement of charge is issued</strong>, or if placed on Put Off Duty earlier, on the <strong>date of Put Off Duty</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-10G",
+        num: "Rule 10-G",
+        title: "Initiating Fresh Disciplinary Proceedings After Discharge",
+        category: "Disciplinary Proceedings",
+        isNew: true,
+        simplified: "If disciplinary proceedings were NOT started before the GDS retired at 65 (and terminal benefits were withheld for proposed proceedings), fresh proceedings after discharge require the President's sanction and cannot be instituted for events older than 4 years.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule 1(a):</strong> Where a GDS is discharged at 65 and terminal benefits are withheld because Rule 10 proceedings were proposed, proceedings can be instituted after discharge, concluded, and submitted to the President for final decision (with no appeal).</li>
+            <li><strong>Sub-rule 1(b) — 3 Mandatory Pre-Conditions for Post-Discharge Institution:</strong>
+              <ol type="i">
+                <li>Shall <strong>not be instituted save with the sanction of the President</strong>;</li>
+                <li>Shall <strong>not be in respect of any event which took place more than 4 years before such institution</strong>; and</li>
+                <li>Shall be conducted by such authority and at such place as the President may direct, following major penalty (dismissal) inquiry procedure.</li>
+              </ol>
+            </li>
+            <li><strong>Sub-rule 1(c):</strong> President reserves the right to withhold/recover from Security amount, GDS Gratuity, and Severance Amount for grave misconduct or negligence.</li>
+            <li><strong>Sub-rule 2 — Deemed Institution Dates:</strong>
+              <ul>
+                <li><em>Departmental:</em> Date charge sheet is issued or date of Put Off Duty (whichever is earlier).</li>
+                <li><em>Criminal Proceedings:</em> Date complaint/police report is made of which the Magistrate takes cognizance.</li>
+                <li><em>Civil Proceedings:</em> Date the plaint is presented in court.</li>
+              </ul>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-11",
+        num: "Rule 11",
+        title: "Exceptions Where Rule 10 Inquiry Procedure Shall Not Apply",
+        category: "Disciplinary Proceedings",
+        isNew: false,
+        simplified: " parallels Article 311(2) of the Constitution: A formal Rule 10 inquiry can be bypassed in 3 cases: (1) Criminal conviction, (2) Impracticability of holding an inquiry (reasons recorded in writing), or (3) Interest of the security of the State (satisfaction of the President).",
+        elaborate: `
+          <p>The provisions of Rule 10 do not apply in three specific circumstances:</p>
+          <ol type="i">
+            <li><strong>Criminal Conviction:</strong> Where any penalty is imposed on a Sevak on the ground of conduct which has led to his/her <strong>conviction on a criminal charge</strong>; OR</li>
+            <li><strong>Not Reasonably Practicable:</strong> Where the authority empowered to dismiss or remove a Sevak is satisfied that for some reason, <strong>to be recorded by that authority in writing</strong>, it is not reasonably practicable to hold such enquiry; OR</li>
+            <li><strong>Security of the State:</strong> Where the <strong>President</strong> is satisfied that in the interest of the security of the State it is not expedient to follow the procedure prescribed in Rule 10.</li>
+          </ol>
+          <p>In these cases, the Engaging Authority may consider the circumstances and make such orders thereon as it deems fit.</p>`
+      },
+      {
+        id: "rule-12",
+        num: "Rule 12",
+        title: "Put Off Duty (Suspension Equivalent & Ex-Gratia Payment)",
+        category: "Put Off Duty",
+        isNew: false,
+        simplified: "A GDS can be placed on 'Put Off Duty' during pending/contemplated disciplinary proceedings or criminal investigation. IPO/ASPO can put off duty in fraud/embezzlement cases, which must be confirmed by the Engaging Authority within 15 days. Ex-gratia allowance is 25% of TRCA + DA, revisable after 90 days. If a major penalty case ends in a minor penalty, full TRCA is paid for the Put Off period.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1) — Grounds for Put Off Duty:</strong> Engaging Authority (or superior/empowered authority) may put a Sevak off duty:
+              <ul>
+                <li>(a) Where a disciplinary proceeding is contemplated or pending; OR</li>
+                <li>(b) Where a criminal offence is under investigation, inquiry, or trial.</li>
+              </ul>
+              <strong>Fraud/Embezzlement Proviso:</strong> In cases involving fraud or embezzlement, the <strong>IPO or ASPO of the Sub-Division</strong> may put any Sevak off duty under immediate intimation to the Engaging Authority.
+            </li>
+            <li><strong>Sub-rule (2) — 15-Day Confirmation Rule:</strong> Where the IPO/ASPO is <em>not</em> the Engaging Authority, their Put Off Duty order <strong>ceases to be effective on the expiry of 15 days</strong> from the date of the order, unless earlier confirmed or cancelled by the Engaging Authority or superior authority.</li>
+            <li><strong>Sub-rule (3) — Ex-Gratia Compensation (25% TRCA + DA):</strong>
+              <ul>
+                <li>Initial 90 days: <strong>25% of TRCA + admissible DA</strong> per month.</li>
+                <li><strong>Review after 90 Days:</strong>
+                  <ul>
+                    <li>(i) <strong>Increase up to 50% of initial compensation</strong> (i.e., up to 37.5% of TRCA) if prolonged for reasons <em>not</em> directly attributable to the Sevak (recorded in writing).</li>
+                    <li>(ii) <strong>Decrease up to 50% of initial compensation</strong> (i.e., down to 12.5% of TRCA) if prolonged due to reasons directly attributable to the Sevak (recorded in writing).</li>
+                  </ul>
+                </li>
+                <li><strong>Note 2 (No Non-Employment Certificate Required):</strong> Payment of ex-gratia is <em>not</em> subject to furnishing a certificate that the Sevak is not engaged in any other employment/business.</li>
+                <li><strong>Proviso 1 (Absconding GDS):</strong> A Sevak who absconds or remains unauthorizedly absent and is subsequently put off duty gets <strong>NO ex-gratia payment</strong>.</li>
+                <li><strong>Proviso 2 (Major Penalty Ending in Minor Penalty — 2020 Amendment):</strong> If departmental proceedings initiated for a <strong>Major Penalty finally end with the imposition of a Minor Penalty</strong>, the Sevak placed under put off duty must be paid <strong>FULL TRCA and allowances</strong> for the Put Off Duty period (adjusted against ex-gratia already paid).</li>
+              </ul>
+            </li>
+            <li><strong>Sub-rules (4) & (5) — Deemed Put Off Duty:</strong> Applies when dismissal/removal is set aside in departmental appeal/review or by a Court of Law (on technical grounds) and further inquiry is ordered from the date of original dismissal/removal.</li>
+          </ul>`
+      },
+      {
+        id: "rule-13",
+        num: "Rule 13",
+        title: "Appeal (Right to Appeal & Appellate Authority)",
+        category: "Appeals, Revision & Review",
+        isNew: false,
+        simplified: "A GDS can appeal against a Put Off Duty order or any Rule 9 penalty order to the authority immediately superior to the authority that passed the order.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> A Sevak may appeal against an order putting him/her off duty to the authority to which the authority passing the order is <strong>immediately subordinate</strong>.</li>
+            <li><strong>Sub-rule (2):</strong> A Sevak may appeal against an order imposing any of the penalties specified in <strong>Rule 9</strong> to the authority to which the authority imposing the penalty is <strong>immediately subordinate</strong> (see Schedule under Rule 31).</li>
+          </ul>`
+      },
+      {
+        id: "rule-14",
+        num: "Rule 14",
+        title: "Period of Limitation for Appeal (3 Months)",
+        category: "Appeals, Revision & Review",
+        isNew: false,
+        simplified: "An appeal must be submitted within 3 months of receiving the order. Delayed appeals can be entertained if the Appellate Authority is satisfied there was sufficient cause.",
+        elaborate: `
+          <ul>
+            <li>No appeal shall be entertained unless submitted within a period of <strong>three months</strong> from the date on which the appellant receives a copy of the order appealed against.</li>
+            <li><strong>Proviso:</strong> The Appellate Authority may entertain the appeal after expiry of 3 months if satisfied that the appellant had <strong>sufficient cause</strong> for not submitting the appeal in time.</li>
+          </ul>`
+      },
+      {
+        id: "rule-15",
+        num: "Rule 15",
+        title: "Form and Contents of Appeal",
+        category: "Appeals, Revision & Review",
+        isNew: false,
+        simplified: "Appeals must be filed individually in the GDS's own name, addressed to the Appellate Authority, complete in itself, and free of disrespectful language.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Every Sevak submitting an appeal shall do so <strong>separately and in his/her own name</strong>.</li>
+            <li><strong>Sub-rule (2):</strong> Must be addressed to the proper Appellate Authority under Rule 13, contain all material statements and arguments relied upon, contain <strong>no disrespectful or improper language</strong>, and be complete in itself.</li>
+          </ul>`
+      },
+      {
+        id: "rule-16",
+        num: "Rule 16",
+        title: "Submission and Withholding of Appeal",
+        category: "Appeals, Revision & Review",
+        isNew: false,
+        simplified: "Appeals are submitted through the authority that passed the order. That authority can withhold an appeal if it violates Rule 15 (returned with 1 month to fix), is time-barred without explanation, or repeats an already decided appeal. A quarterly statement of withheld appeals goes to the Appellate Authority.",
+        elaborate: `
+          <ul>
+            <li>Every appeal is submitted to the <strong>authority which made the order appealed against</strong>.</li>
+            <li>That authority may <strong>withhold the appeal</strong> on 3 grounds:
+              <ol type="i">
+                <li>Does not comply with <strong>Rule 15</strong> (<em>Proviso:</em> Must be returned to appellant, and if resubmitted within <strong>1 month</strong> after compliance, it cannot be withheld); OR</li>
+                <li>Not submitted within the <strong>3-month limit (Rule 14)</strong> and no cause is shown for delay; OR</li>
+                <li>It is a repetition of an appeal already decided and no new facts/circumstances are adduced.</li>
+              </ol>
+            </li>
+            <li><strong>Mandatory Intimation & Quarterly Return:</strong>
+              <ul>
+                <li>(1) When an appeal is withheld, the appellant must be informed of the fact and reasons.</li>
+                <li>(2) At the <strong>commencement of each quarter</strong>, a list of appeals withheld during the previous quarter with reasons must be furnished to the Appellate Authority.</li>
+              </ul>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-17",
+        num: "Rule 17",
+        title: "Transmission of Appeal",
+        category: "Appeals, Revision & Review",
+        isNew: false,
+        simplified: "Any appeal not withheld under Rule 16 must be forwarded without delay to the Appellate Authority along with parawise comments and case records.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> The authority which made the order shall, without avoidable delay, transmit to the Appellate Authority every appeal not withheld under Rule 16, together with its comments and relevant records.</li>
+            <li><strong>Sub-rule (2):</strong> The Appellate Authority may direct transmission of any withheld appeal, which must then be sent with comments and records.</li>
+          </ul>`
+      },
+      {
+        id: "rule-18",
+        num: "Rule 18",
+        title: "Consideration of Appeal",
+        category: "Appeals, Revision & Review",
+        isNew: false,
+        simplified: "The Appellate Authority checks procedure, findings, and quantum of penalty, and can set aside, reduce, confirm, enhance the penalty, or remit the case. Enhancing a penalty requires giving the GDS an opportunity to represent.",
+        elaborate: `
+          <ul>
+            <li>The Appellate Authority shall consider:
+              <ul>
+                <li>(a) Whether the procedure specified in these rules has been complied with;</li>
+                <li>(b) Whether the findings are justified; and</li>
+                <li>(c) Whether the penalty imposed is excessive, adequate, or inadequate.</li>
+              </ul>
+            </li>
+            <li>And pass orders:
+              <ul>
+                <li>(i) Setting aside, reducing, confirming, or enhancing the penalty; OR</li>
+                <li>(ii) Remitting the case to the disciplinary or other authority with directions.</li>
+              </ul>
+            </li>
+            <li><strong>Proviso (Enhancement Safeguard):</strong> No order imposing an <strong>enhanced penalty</strong> shall be passed unless the appellant is given an opportunity of making a representation against such enhanced penalty.</li>
+          </ul>`
+      },
+      {
+        id: "rule-19",
+        num: "Rule 19",
+        title: "Revision (By CPMG / PMG / Immediate Superior)",
+        category: "Appeals, Revision & Review",
+        isNew: false,
+        simplified: "Regional PMG, CPMG, or immediate superior authority can call for disciplinary records to confirm, modify, or set aside an order. Other authorities cannot reopen a case after 6 months (CPMG/PMG/Govt have no 6-month bar), and no revision can be done before the 3-month appeal window expires. Only one revision is allowed.",
+        elaborate: `
+          <ul>
+            <li><strong>Who Can Exercise Revisionary Powers (Sub-rule 1):</strong>
+              <ol type="i">
+                <li><strong>Regional PMG</strong> (for GDS in regions headed by PMG) and <strong>Head of Circle (CPMG)</strong> in rest of the cases;</li>
+                <li>Any authority immediately superior to the authority passing the order;</li>
+                <li>Any other authority specified by the Government by general or special order.</li>
+              </ol>
+            </li>
+            <li><strong>Time Limits (Proviso 1):</strong>
+              <ul>
+                <li>Cannot be reopened <strong>before the expiry of the 3-month appeal period</strong> under Rule 14.</li>
+                <li>Cannot be reopened <strong>after the expiry of 6 months</strong> from the date of the order to be revised, <em>except</em> by the Government, Head of Circle (CPMG), or PMG (Region).</li>
+              </ul>
+            </li>
+            <li><strong>Enhancement / Inquiry Safeguard (Proviso 2):</strong> Reasonable opportunity of representation must be given before imposing/enhancing any penalty. If proposing penalties under Clauses (v) or (vi) of Rule 9, a formal Rule 10 inquiry must be held if not already held.</li>
+            <li><strong>Sub-rule (2) — Bar on Second Revision:</strong> No application to revise an order made on a revision application shall be entertained.</li>
+          </ul>`
+      },
+      {
+        id: "rule-20",
+        num: "Rule 20",
+        title: "Review (By the President / Plenary Board)",
+        category: "Appeals, Revision & Review",
+        isNew: false,
+        simplified: "The President (exercised by a Plenary Board of Member (P) and Member (O)) can review any order within 2 years if new material or evidence surfaces that was previously unavailable and changes the nature of the case.",
+        elaborate: `
+          <ul>
+            <li><strong>Grounds for Review:</strong> The President may review an order passed under these rules when any <strong>new material or evidence</strong> which could not be produced or was not available at the time of passing the order, and which has the effect of <strong>changing the nature of the case</strong>, comes to notice.</li>
+            <li><strong>Time Limit (Proviso 2):</strong> Review petition may be preferred within <strong>two years</strong>.</li>
+            <li><strong>Delegated Authority (Proviso 3):</strong> Powers of the President under Rule 20 are exercised by a <strong>Plenary Board comprising Member (P) and Member (O)</strong> (or other delegated authorities).</li>
+            <li><strong>Safeguard (Proviso 1):</strong> Imposing/enhancing a penalty requires an opportunity to represent and a formal Rule 10 inquiry (for major penalties) if not held earlier.</li>
+          </ul>`
+      },
+      {
+        id: "rule-21",
+        num: "Rule 21",
+        title: "General Conduct (Integrity & Devotion to Duty)",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "Every GDS must at all times maintain absolute integrity, maintain devotion to duty, and do nothing unbecoming of a Sevak.",
+        elaborate: `
+          <p>Every Sevak shall at all times:</p>
+          <ol type="i">
+            <li>Maintain <strong>absolute integrity</strong>;</li>
+            <li>Maintain <strong>devotion to duty</strong>; and</li>
+            <li>Do nothing which is <strong>unbecoming of a Sevak</strong>.</li>
+          </ol>`
+      },
+      {
+        id: "rule-21A",
+        num: "Rule 21-A",
+        title: "Promptness and Courtesy",
+        category: "Conduct Rules",
+        isNew: true,
+        simplified: "No GDS shall act discourteously in official duties or adopt dilatory (delaying) tactics in dealing with the public or disposing of assigned work.",
+        elaborate: `
+          <p>Newly inserted Rule 21-A stipulates that no Sevak shall:</p>
+          <ol type="i">
+            <li>In the performance of his/her official duties, act in a <strong>discourteous manner</strong>;</li>
+            <li>In his/her official dealing with the public or otherwise adopt <strong>dilatory tactics</strong> or willfully cause delay in disposal of the work assigned to him/her.</li>
+          </ol>`
+      },
+      {
+        id: "rule-21B",
+        num: "Rule 21-B",
+        title: "Prohibition of Sexual Harassment of Working Women",
+        category: "Conduct Rules",
+        isNew: true,
+        simplified: "Strictly prohibits any act of sexual harassment of women at any workplace and requires every Sevak in charge of a workplace to take preventive steps.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> No GDS shall indulge in any act of sexual harassment of any woman at any workplace.</li>
+            <li><strong>Sub-rule (2):</strong> Every Sevak in charge of a workplace shall take appropriate steps to prevent sexual harassment.</li>
+            <li><strong>Explanation 1(a) — Definition of Sexual Harassment:</strong> Includes physical contact and advances, demand/request for sexual favours, sexually coloured remarks, showing pornography, or any other unwelcome physical, verbal, or non-verbal conduct of a sexual nature.</li>
+            <li><strong>Explanation 1(b) — Aggravating Circumstances:</strong> Implied/explicit promise of preferential treatment or threat of detrimental treatment in engagement, threat to present/future engagement status, creating a hostile work environment, or humiliating treatment affecting health or safety.</li>
+            <li><strong>Explanation 1(c) — Workplace Definition:</strong> Covers any Govt department/office/branch, hospitals, sports venues, any place visited during the course of engagement (including employer-provided transport), and a dwelling place or house.</li>
+          </ul>`
+      },
+      {
+        id: "rule-22",
+        num: "Rule 22",
+        title: "Taking Part in Politics and Elections",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "GDS are barred from joining political parties, participating in political movements, or campaigning in elections (including displaying electoral symbols on their person, vehicle, or home). They may vote privately and perform official election duty.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> No Sevak shall be a member of, or associated with, any political party/organization or take part in, subscribe in aid of, or assist any political movement or activity.</li>
+            <li><strong>Sub-rule (2):</strong> Duty of every Sevak to endeavor to prevent family members from taking part in subversive political activities; if unable to prevent, must report to the Government.</li>
+            <li><strong>Sub-rule (3):</strong> Government's decision on whether a party/activity is political is final.</li>
+            <li><strong>Sub-rule (4):</strong> No Sevak shall canvass, interfere with, or use influence in any election to a legislative or local authority.
+              <ul>
+                <li><em>Permitted:</em> Exercising right to vote (without indicating how they vote) and assisting in official election conduct duty.</li>
+                <li><em>Explanation:</em> Displaying any <strong>electoral symbol on person, vehicle, or residence</strong> amounts to using influence in an election.</li>
+              </ul>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-23",
+        num: "Rule 23",
+        title: "Strikes & Treatment of Strike Period",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "GDS are strictly prohibited from striking. Participating in a strike results in loss of TRCA/DA/Bonus, cannot be regularized with leave, causes a break in engagement (if incitement/violence/sabotage is involved), and disqualifies the strike period from counting toward Gratuity, Severance, MTS Seniority, and LDCE eligibility.",
+        elaborate: `
+          <p>No Sevak shall resort to or abet any form of strike, coercion, or physical duress. The 2020 rules explicitly detail <strong>8 consequences of participating in a strike</strong>:</p>
+          <ol type="i">
+            <li><strong>TRCA Deduction & Break in Engagement:</strong> Results in deduction of TRCA for absence, plus break in engagement on account of incitement, violence, and sabotage, alongside disciplinary action.</li>
+            <li><strong>No Allowances:</strong> Absent GDS shall not draw TRCA, DA, Bonus, Paid Leave TRCA, etc.</li>
+            <li><strong>No Leave Regularization:</strong> Strike period shall <em>not</em> be adjusted or regularized by grant of any kind of leave.</li>
+            <li><strong>Break in Engagement Order:</strong> If ordered by the competent authority after a <strong>show cause notice</strong> (for incitement, violence, sabotage), the strike period results in a break in engagement.</li>
+            <li><strong>Excluded from Terminal Benefits:</strong> Does <em>not</em> qualify toward engagement period for GDS Gratuity or Severance Amount.</li>
+            <li><strong>Excluded from MTS Seniority:</strong> Does <em>not</em> qualify toward engagement period for absorption against MTS posts on seniority basis.</li>
+            <li><strong>Excluded from LDCE Eligibility:</strong> Does <em>not</em> qualify toward engagement period required to appear in LDCE for PA/SA/Postman/Mail Guard/MTS.</li>
+            <li><strong>Without Prejudice to Disciplinary Action:</strong> Actions (i) to (vii) may be taken without prejudice to disciplinary proceedings under Rule 10.</li>
+          </ol>`
+      },
+      {
+        id: "rule-24",
+        num: "Rule 24",
+        title: "Criticism of Government",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "GDS cannot make public statements, press communications, or broadcasts (in their own name or anonymously) that criticize Central/State Government policy or embarrass relations between governments.",
+        elaborate: `
+          <p>No Sevak shall, in any radio broadcast, published document (in own name, anonymously, or pseudonymously), communication to the Press, or public utterance, make any statement of fact or opinion which:</p>
+          <ol type="i">
+            <li>Has the effect of adverse criticism of any current or recent policy or action of the Central Government or a State Government; OR</li>
+            <li>Is capable of embarrassing relations between the Central Government and any State Government; OR</li>
+            <li>Is capable of embarrassing relations between the Central Government and any foreign State.</li>
+          </ol>
+          <p><em>Proviso:</em> Does not apply to statements made in official capacity in the due performance of assigned duties.</p>`
+      },
+      {
+        id: "rule-25",
+        num: "Rule 25",
+        title: "Evidence Before Committee or Any Other Authority",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "GDS need prior Government sanction to give evidence before any committee or inquiry, except for inquiries appointed by the Government/Parliament/State Legislature, judicial inquiries, or departmental inquiries.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1):</strong> Prior sanction of the Government is required before giving evidence in connection with any inquiry conducted by any person, committee, or authority.</li>
+            <li><strong>Sub-rule (2):</strong> Even where sanction is granted, the Sevak shall not criticize Central or State Government policy/actions.</li>
+            <li><strong>Sub-rule (3) — Exemptions (No Sanction Needed):</strong>
+              <ul>
+                <li>(a) Evidence before an authority appointed by the Government, Parliament, or a State Legislature;</li>
+                <li>(b) Evidence in any <strong>judicial inquiry</strong>;</li>
+                <li>(c) Evidence in any <strong>departmental inquiry</strong> ordered by authorities subordinate to the Government.</li>
+              </ul>
+            </li>
+          </ul>`
+      },
+      {
+        id: "rule-26",
+        num: "Rule 26",
+        title: "Unauthorized Communication of Information",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "GDS must not share official documents or information with unauthorized persons. Quoting from confidential file notes or circulars to which a GDS does not have authorized access (even inside an official representation) is a violation of this rule.",
+        elaborate: `
+          <ul>
+            <li>No Sevak shall, except in accordance with general/special orders or in good faith performance of duties, communicate directly or indirectly any official document or information to any unauthorized person or Sevak.</li>
+            <li><strong>Explanation:</strong> Quoting by a Sevak (even in a representation to the Engaging Authority, Head of Office/Department, or President) from any letter, circular, OM, or <strong>notes in any file</strong> to which he/she is not authorized to have access or keep in personal custody amounts to unauthorized communication of information.</li>
+          </ul>`
+      },
+      {
+        id: "rule-27",
+        num: "Rule 27",
+        title: "Insolvency and Habitual Indebtedness",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "GDS must manage their personal finances to avoid habitual debt or insolvency, and must immediately report any legal proceedings filed against them for debt recovery or insolvency.",
+        elaborate: `
+          <ul>
+            <li>A Sevak shall manage private affairs so as to avoid <strong>habitual indebtedness or insolvency</strong>.</li>
+            <li>If any legal proceeding is instituted against the Sevak for recovery of any debt or for adjudging him/her as an insolvent, the Sevak must <strong>forthwith report the full facts</strong> of the legal proceedings to the Government.</li>
+          </ul>`
+      },
+      {
+        id: "rule-28",
+        num: "Rule 28",
+        title: "Vindication of Acts and Character of Sevak",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "GDS cannot approach a Court or the Press to defend an official act against criticism/defamation without prior Government sanction. They can defend their private character without prior sanction, but must submit a report to the Engaging Authority afterward.",
+        elaborate: `
+          <ul>
+            <li><strong>Sub-rule (1) — Official Acts:</strong> Prior sanction of the Government is mandatory before taking recourse to any Court or the Press for vindicating any <strong>official act</strong> subjected to adverse criticism or defamatory attack.</li>
+            <li><strong>Sub-rule (2) — Private Character:</strong> A Sevak is not prohibited from vindicating his/her <strong>private character</strong> or acts done in a private capacity, provided the Sevak <strong>submits a report to the Engaging Authority</strong> regarding such action taken.</li>
+          </ul>`
+      },
+      {
+        id: "rule-29",
+        num: "Rule 29",
+        title: "Canvassing of Non-Official or Other Outside Influence",
+        category: "Conduct Rules",
+        isNew: false,
+        simplified: "GDS must never bring political or outside influence upon superior officers to advance their service interests (transfers, promotions, disciplinary relief, etc.).",
+        elaborate: `
+          <ul>
+            <li>No Sevak shall bring or attempt to bring any <strong>political or other outside influence</strong> to bear upon any superior authority to further his/her interests in respect of matters pertaining to his/her engagement under the Government.</li>
+            <li><em>Note in Appendices II & III:</em> If any representation is received on a GDS's behalf from another person during disciplinary proceedings, it is presumed to be made at the GDS's instance and invites action under Rule 29.</li>
+          </ul>`
+      },
+      {
+        id: "rule-29A",
+        num: "Rule 29-A",
+        title: "Prohibition on Business Detrimental to Post Office / IPPB",
+        category: "Conduct Rules",
+        isNew: true,
+        simplified: "Even though GDS have supplementary means of livelihood, they cannot work with any outside agency or business that competes with or harms the business interests of India Post or IPPB (e.g., private courier, competing insurance/banking agents).",
+        elaborate: `
+          <ul>
+            <li>The GDS will <strong>not engage in any activity with any outside agency</strong> which would be detrimental to the business or interest of the <strong>Post Office / India Post Payments Bank (IPPB)</strong>.</li>
+          </ul>`
+      },
+      {
+        id: "rule-30",
+        num: "Rule 30",
+        title: "Interpretation",
+        category: "Miscellaneous & Schedule",
+        isNew: false,
+        simplified: "If any question arises regarding the interpretation of these rules, it shall be referred to the Central Government, whose decision is final. This power cannot be delegated.",
+        elaborate: `
+          <ul>
+            <li>If any question arises relating to the interpretation of these rules, it shall be referred to the <strong>Government</strong> whose decision thereon shall be final.</li>
+          </ul>`
+      },
+      {
+        id: "rule-31",
+        num: "Rule 31",
+        title: "Delegation of Powers & Schedule of Authorities",
+        category: "Miscellaneous & Schedule",
+        isNew: false,
+        simplified: "Allows the Government to delegate powers under these rules (except Rules 30 and 31) and provides the master Schedule of Engaging, Disciplinary, and Appellate Authorities for BPM, ABPM, and Dak Sevaks.",
+        elaborate: `
+          <p>The Government may by general or special order delegate any power exercisable under these rules (<strong>except powers under Rule 30 and Rule 31</strong>).</p>
+          <h4>Schedule of Engaging, Disciplinary & Appellate Authorities (Rule 31)</h4>
+          <table class="rule-table">
+            <thead>
+              <tr>
+                <th>Sl.</th>
+                <th>Category of GDS</th>
+                <th>Engaging Authority</th>
+                <th>Disciplinary Authority & Competent Penalties</th>
+                <th>Appellate Authority</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><strong>GDS Branch Postmaster (BPM)</strong></td>
+                <td>Deputy Suptd. of Post Offices (in Divisions headed by DPS/PMG) if available; otherwise <strong>Head of the Division (SSPOs/SPOs)</strong>.</td>
+                <td>
+                  • <strong>Dy. SPOs / Head of Division (SSPOs/SPOs):</strong> <em>All Penalties (i to ix)</em><br>
+                  • <strong>ASP / Inspector Posts (Sub-Division):</strong> <em>Minor Penalties only — Clauses (i) to (v)</em>
+                </td>
+                <td>
+                  • <strong>CPMG / PMG / DPS</strong> (when order passed by Head of Division)<br>
+                  • <strong>Dy. SPOs / Head of Division</strong> (when minor penalty imposed by ASP/IP)
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td><strong>GDS Assistant Branch Postmaster (ABPM) & Dak Sevaks (Postal)</strong></td>
+                <td>
+                  • <strong>In HOs / MDGs / HSG & LSG Norm-based SOs (except A, B, C class):</strong> Senior PM / Dy. Chief PM / Dy. Director / Asst. Director / Postmaster / Sub Postmaster in their own offices.<br>
+                  • <strong>In all other offices:</strong> Inspector of Post Offices (IPO) / Assistant Superintendent of Post Offices (ASPO).
+                </td>
+                <td>
+                  • <strong>Sr. PM / Dy. CPM / Dy. Director / Asst. Director / HSG & LSG PM/SPM (in own office):</strong> <em>Minor Penalties only — Clauses (i) to (v)</em><br>
+                  • <strong>IPO / ASPO (in all other offices):</strong> <em>All Penalties (i to ix)</em>
+                </td>
+                <td><strong>Head of the Division</strong> (including Director Postal Services / Postmaster General).</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td><strong>Railway Mail Service (RMS) Dak Sevak</strong></td>
+                <td>Inspector / Assistant Superintendent RMS, Head Record Officer (HRO) / Sub Record Officer (SRO) in HSG/LSG (in own office).</td>
+                <td>
+                  • <strong>Inspector / ASP RMS:</strong> <em>All Penalties</em><br>
+                  • <strong>HRO / SRO in HSG/LSG (in own office):</strong> <em>Minor Penalties (i) to (v)</em>
+                </td>
+                <td><strong>Head of the Division</strong> (SSRM / SRM / DPS / PMG).</td>
+              </tr>
+            </tbody>
+          </table>`
+      },
+      {
+        id: "appendices",
+        num: "Appendices I–III",
+        title: "Standard Charge Sheet Formats (Rule 10-A, 10-E & 10-B)",
+        category: "Miscellaneous & Schedule",
+        isNew: true,
+        simplified: "Provides the 3 official standard Memorandum templates for issuing charge sheets to GDS: Appendix-I (Minor Penalty under Rule 10-A without inquiry), Appendix-II (Minor Penalty under Rule 10-A/10-E when inquiry is ordered), and Appendix-III (Major Penalty under Rule 10-B with mandatory inquiry). All grant 10 days to submit a written defence.",
+        elaborate: `
+          <table class="rule-table">
+            <thead>
+              <tr>
+                <th>Appendix</th>
+                <th>Applicable Rule</th>
+                <th>Purpose</th>
+                <th>Key Procedural Features</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Appendix - I</strong></td>
+                <td>Rule 10-A</td>
+                <td>Standard Charge Sheet for <strong>Minor Penalties</strong> (No formal inquiry)</td>
+                <td>Encloses Statement of Imputation of misconduct/misbehavior; grants <strong>10 days</strong> to submit representation, failing which ex-parte orders may be passed.</td>
+              </tr>
+              <tr>
+                <td><strong>Appendix - II</strong></td>
+                <td>Rule 10-A read with Rule 10-E</td>
+                <td>Initiation of <strong>Minor Penalty Proceedings WITH Inquiry</strong></td>
+                <td>Issued when Disciplinary Authority decides to hold an oral inquiry; contains <strong>Annexures I to IV</strong> (Articles of Charge, Imputations, List of Documents, List of Witnesses); grants <strong>10 days</strong> for written defence; includes <strong>Rule 29 warning</strong> against outside influence.</td>
+              </tr>
+              <tr>
+                <td><strong>Appendix - III</strong></td>
+                <td>Rule 10-B</td>
+                <td>Standard Charge Sheet for <strong>Major Penalties</strong> (Mandatory Inquiry)</td>
+                <td>Contains <strong>Annexures I to IV</strong>; grants <strong>10 days</strong> to submit written defence and state whether GDS desires to be heard in person; inquiry held only for charges not admitted; includes <strong>Rule 29 warning</strong>.</td>
+              </tr>
+            </tbody>
+          </table>`
+      }
+    ];
+
+    const faqsData = [
+      {
+        q: "1. What are the 3 rationalised categories of GDS under Rule 3(d) of the 2020 Rules?",
+        a: "The earlier 5 categories have been rationalised into 3 categories: (1) Branch Postmaster (BPM), (2) Assistant Branch Postmaster (ABPM — all GDS other than BPM working in a Branch Post Office), and (3) Dak Sevak (all GDS other than BPM working in Departmental Post Offices, RMS Offices, or other offices)."
+      },
+      {
+        q: "2. What are the minimum and maximum working hours for a GDS in a day?",
+        a: "Under Rule 3-A(i) and Rule 3-B(X), a GDS is engaged for a minimum of 4 hours (Level 1) and a maximum of 5 hours (Level 2) in a day."
+      },
+      {
+        q: "3. At what age does a GDS get discharged from engagement?",
+        a: "Under Rule 3-A(ii), a Gramin Dak Sevak shall not be retained beyond 65 years of age."
+      },
+      {
+        q: "4. What is the entry age limit and maximum age cap for PwD candidates?",
+        a: "Under Rule 3-B(I), the general entry age is 18 to 40 years as on the date of notification. Relaxations are: SC/ST (+5 yrs), OBC (+3 yrs), PwD (+10 yrs), PwD+OBC (+13 yrs), and PwD+SC/ST (+15 yrs). EWS has no age relaxation (though eligible for 10% quota). Across all categories, the maximum age on the crucial date shall not exceed 56 years."
+      },
+      {
+        q: "5. Are candidates with 'Blind' benchmark disability eligible for PwD relaxation in GDS engagement?",
+        a: "No. Per Note 2 below Rule 3-B(I), the age relaxation and identification are not applicable to candidates with benchmark disability 'Blind'; in their place, candidates with 'Low Vision' have been identified."
+      },
+      {
+        q: "6. When is the 60-day Basic Computer Training Certificate waived?",
+        a: "Under Rule 3-B(II)(iii), a separate 60-day computer certificate is relaxed (not insisted upon) if the candidate has studied Computer as a subject in Matriculation (10th), Class XII, or any higher educational level."
+      },
+      {
+        q: "7. Within how many days must a newly selected GDS satisfy the Residence and Livelihood conditions?",
+        a: "Under Rule 3-A(vii) and Rule 3-B(V), both the mandatory residence condition (in the BO village for BPM, or within delivery jurisdiction for ABPM/Dak Sevak) and the adequate means of livelihood undertaking must be complied with within 1 month (30 days) after selection but before engagement."
+      },
+      {
+        q: "8. What happens if a GDS fails to reside in the post village/delivery jurisdiction after engagement?",
+        a: "Under Rule 3-A(vii), failure to reside in the place of duty (for BPM) or within delivery jurisdiction (for ABPM/Dak Sevak) after engagement is treated as a violation of engagement conditions and makes the GDS liable for disciplinary action under Rule 10 requiring Removal or Dismissal."
+      },
+      {
+        q: "9. What are the Minimum TRCA slabs for BPM, ABPM, and Dak Sevaks?",
+        a: "For BPM: Rs. 12,000/- (4 hours, Level 1) and Rs. 14,500/- (5 hours, Level 2). For ABPM and Dak Sevak: Rs. 10,000/- (4 hours, Level 1) and Rs. 12,000/- (5 hours, Level 2). All GDS engaged on or after 01.07.2018 are initially fixed at the first stage of Level 1."
+      },
+      {
+        q: "10. Is India Post Payments Bank (IPPB) workload counted for TRCA calculation?",
+        a: "No. Under Rule 3-B(XII), IPPB work performed by BPM, ABPM, or Dak Sevak is not included in the calculation of TRCA because it is compensated on an incentive basis."
+      },
+      {
+        q: "11. When can a GDS opt for the Voluntary Discharge Scheme (Rule 3-C)?",
+        a: "A GDS can avail of the Voluntary Discharge Scheme either after completing 20 years of engagement or on medical grounds."
+      },
+      {
+        q: "12. How many days of Paid Leave, Emergency Leave, and Maternity Leave are admissible to GDS?",
+        a: "Under Rules 7, 7-A, and 7-B: (1) Paid Leave: 20 days per year (10 days per half-year, non-cumulative); (2) Emergency Leave: Maximum 5 days in a calendar year; (3) Maternity Leave: 180 days for female GDS with fewer than two surviving children."
+      },
+      {
+        q: "13. Under what condition can a GDS be terminated without a formal Rule 10 inquiry under Rule 8?",
+        a: "Under Rule 8, if a GDS has NOT rendered more than 3 years of continuous engagement, their engagement can be terminated by giving 1 month's written notice (or immediate termination by remitting 1 month's Basic TRCA + DA via Money Order). A GDS terminated under Rule 8 is NOT eligible for Gratuity or Severance amount."
+      },
+      {
+        q: "14. Can an Inspector of Post Offices (IPO) or ASPO impose a minor penalty on a GDS BPM?",
+        a: "Yes! Under the revised Schedule (Rule 31), while the Engaging Authority for a BPM (Head of Division / Dy. SPOs) can impose all penalties, the ASPO / Inspector Posts of the Sub-Division is empowered as a Disciplinary Authority to impose Minor Penalties (Clauses i to v of Rule 9) on a GDS BPM."
+      },
+      {
+        q: "15. Is there any ceiling on the recovery of pecuniary loss from a GDS's TRCA under Rule 9(iv)?",
+        a: "No. As per the Note below Rule 9, the penalty of recovery under Rule 9(iv) for pecuniary loss caused to the Government by negligence or breach of orders can be imposed fully without any restriction."
+      },
+      {
+        q: "16. What is the difference between Compulsory Discharge [Rule 9(vii)], Removal [Rule 9(viii)], and Dismissal [Rule 9(ix)]?",
+        a: "(1) Compulsory Discharge [Rule 9(vii)] allows the GDS to receive monetary benefits (SDBS and proportionate GDS Gratuity). (2) Removal [Rule 9(viii)] forfeits terminal benefits but is NOT a disqualification for future engagement. (3) Dismissal [Rule 9(ix)] forfeits benefits and is ordinarily a disqualification for future engagement."
+      },
+      {
+        q: "17. Can an IPO/ASPO place a GDS BPM under 'Put Off Duty'?",
+        a: "Under the proviso to Rule 12(1), in cases involving fraud or embezzlement, the IPO or ASPO can put any GDS (including a BPM) off duty under immediate intimation to the Engaging Authority. However, under Rule 12(2), if the IPO/ASPO is not the Engaging Authority, the order ceases to be effective after 15 days unless confirmed by the Engaging Authority."
+      },
+      {
+        q: "18. How is Ex-Gratia compensation calculated during Put Off Duty, and how is it revised after 90 days?",
+        a: "Under Rule 12(3), a GDS on Put Off Duty receives 25% of TRCA + admissible DA per month for the first 90 days. After 90 days, the authority can increase it by up to 50% of the initial compensation (i.e., up to 37.5% of TRCA) if the delay is not the GDS's fault, or reduce it by up to 50% (i.e., down to 12.5% of TRCA) if the delay is attributable to the GDS."
+      },
+      {
+        q: "19. Does a GDS on Put Off Duty need to submit a non-employment certificate to draw Ex-Gratia?",
+        a: "No. Under Note 2 to Rule 12(3), payment of ex-gratia compensation for the put off duty period is NOT subject to furnishing a certificate that the Sevak is not engaged in any other employment, business, profession, or vocation."
+      },
+      {
+        q: "20. What happens to the Put Off Duty period if a Major Penalty charge sheet (Rule 10-B) ends only in a Minor Penalty?",
+        a: "Under the second proviso to Rule 12(3), if departmental proceedings initiated for a major penalty finally end with the imposition of a minor penalty, the GDS must be paid FULL TRCA and allowances for the entire period of Put Off Duty (after adjusting ex-gratia already paid)."
+      },
+      {
+        q: "21. Can disciplinary proceedings be instituted AFTER a GDS is discharged at age 65?",
+        a: "Under Rule 10-G, if terminal benefits were withheld for proposed proceedings, fresh proceedings after discharge at 65 can be instituted ONLY with the sanction of the President, and CANNOT be instituted for any event that took place more than 4 years before such institution."
+      },
+      {
+        q: "22. What is the time limit for filing an Appeal (Rule 14), Revision (Rule 19), and Presidential Review (Rule 20)?",
+        a: "• Appeal (Rule 14): Within 3 months of receiving the order.\n• Revision (Rule 19): After the 3-month appeal period expires, and within 6 months of the order for subordinate revisionary authorities (no 6-month limit for CPMG, PMG, or Government).\n• Review by President/Plenary Board (Rule 20): Within 2 years based on new evidence."
+      },
+      {
+        q: "23. What are the consequences if a GDS participates in a Strike (Rule 23)?",
+        a: "Under Rule 23, the strike period results in: (1) No TRCA, DA, Bonus, or Paid Leave TRCA, (2) Cannot be regularized by any leave, (3) Break in engagement (after show cause notice for incitement/violence/sabotage), and (4) The strike period will NOT count toward Gratuity/Severance, MTS seniority absorption, or eligibility service for LDCE exams (PA/SA/Postman/Mail Guard/MTS)."
+      }
+    ];
+
+    const rulesContainer = document.getElementById('rulesContainer');
+    const ruleNavList = document.getElementById('ruleNavList');
+    const ruleSlider = document.getElementById('ruleSlider');
+    const sliderBadge = document.getElementById('sliderBadge');
+    const sliderTitlePreview = document.getElementById('sliderTitlePreview');
+    const searchInput = document.getElementById('searchInput');
+    const faqContainer = document.getElementById('faqContainer');
+
+    // Render Rules and Navigation
+    function renderPortal(filterText = '') {
+      rulesContainer.innerHTML = '';
+      ruleNavList.innerHTML = '';
+      let currentCategory = '';
+      const query = filterText.toLowerCase().trim();
+
+      rulesData.forEach((item, index) => {
+        const searchableText = `${item.num} ${item.title} ${item.simplified} ${item.elaborate}`.toLowerCase();
+        const matches = !query || searchableText.includes(query);
+
+        // Sidebar Category Header
+        if (item.category !== currentCategory) {
+          currentCategory = item.category;
+          const catHeader = document.createElement('div');
+          catHeader.className = 'nav-section-label';
+          catHeader.textContent = currentCategory;
+          ruleNavList.appendChild(catHeader);
+        }
+
+        // Sidebar Nav Link
+        const navLink = document.createElement('a');
+        navLink.className = 'nav-item';
+        navLink.id = `nav-${index}`;
+        navLink.innerHTML = `
+          <span class="nav-badge">${item.num.replace('Rule ', 'R-')}</span>
+          <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.title}</span>
+        `;
+        navLink.onclick = () => jumpToRule(index);
+        if (!matches) navLink.style.display = 'none';
+        ruleNavList.appendChild(navLink);
+
+        // Main Rule Card
+        if (matches) {
+          const card = document.createElement('section');
+          card.className = 'rule-card';
+          card.id = item.id;
+          card.dataset.index = index;
+          card.innerHTML = `
+            <div class="rule-card-header">
+              <div class="rule-title-group">
+                <span class="rule-num-tag ${item.isNew ? 'new-rule' : ''}">
+                  ${item.num} ${item.isNew ? '★ NEW' : ''}
+                </span>
+                <h3>${item.title}</h3>
+              </div>
+              <span class="cat-tag">${item.category}</span>
+            </div>
+            <div class="rule-body">
+              <div class="simplified-box">
+                <div class="box-label">💡 Simplified Summary</div>
+                <p>${item.simplified}</p>
+              </div>
+              <div class="elaborate-box">
+                <div class="box-label">📘 Elaborate Statutory Provisions</div>
+                ${item.elaborate}
+              </div>
+            </div>
+          `;
+          rulesContainer.appendChild(card);
+        }
+      });
+
+      // Add FAQ link to Sidebar
+      const faqNavHeader = document.createElement('div');
+      faqNavHeader.className = 'nav-section-label';
+      faqNavHeader.textContent = 'Exam & Quick Help';
+      ruleNavList.appendChild(faqNavHeader);
+
+      const faqNavLink = document.createElement('a');
+      faqNavLink.className = 'nav-item';
+      faqNavLink.innerHTML = `<span class="nav-badge">FAQs</span><span>Important FAQs (23)</span>`;
+      faqNavLink.onclick = () => {
+        document.getElementById('faqSection').scrollIntoView({ behavior: 'smooth' });
+      };
+      ruleNavList.appendChild(faqNavLink);
+    }
+
+    // Render FAQs
+    function renderFAQs() {
+      faqContainer.innerHTML = '';
+      faqsData.forEach((f, idx) => {
+        const item = document.createElement('div');
+        item.className = 'faq-item' + (idx < 3 ? ' open' : '');
+        item.innerHTML = `
+          <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+            <span>${f.q}</span>
+            <span>▾</span>
+          </button>
+          <div class="faq-answer">${f.a.replace(/\n/g, '<br>')}</div>
+        `;
+        faqContainer.appendChild(item);
+      });
+    }
+
+    // Jump to Rule via Slider or Sidebar Click
+    function jumpToRule(index) {
+      const targetRule = rulesData[index];
+      if (!targetRule) return;
+
+      ruleSlider.value = index;
+      sliderBadge.textContent = targetRule.num;
+      sliderTitlePreview.textContent = `${targetRule.num}: ${targetRule.title}`;
+
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      const activeNav = document.getElementById(`nav-${index}`);
+      if (activeNav) {
+        activeNav.classList.add('active');
+        activeNav.scrollIntoView({ block: 'nearest' });
+      }
+
+      const cardEl = document.getElementById(targetRule.id);
+      if (cardEl) {
+        document.querySelectorAll('.rule-card').forEach(c => c.classList.remove('highlight-active'));
+        cardEl.classList.add('highlight-active');
+        cardEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Slider Input Event
+    ruleSlider.max = rulesData.length - 1;
+    ruleSlider.addEventListener('input', (e) => {
+      const idx = parseInt(e.target.value, 10);
+      jumpToRule(idx);
+    });
+
+    // Search Filter Event
+    searchInput.addEventListener('input', (e) => {
+      renderPortal(e.target.value);
+    });
+
+    // View Mode Switcher (Both / Simplified / Elaborate)
+    function setViewMode(mode, btnEl) {
+      document.body.classList.remove('mode-simplified', 'mode-elaborate');
+      if (mode === 'simplified') document.body.classList.add('mode-simplified');
+      if (mode === 'elaborate') document.body.classList.add('mode-elaborate');
+
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
+    }
+
+    // Update Slider & Active Nav on Window Scroll
+    window.addEventListener('scroll', () => {
+      const cards = document.querySelectorAll('.rule-card');
+      let currentIdx = 0;
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top <= 140) {
+          currentIdx = parseInt(card.dataset.index, 10);
+        }
+      });
+      const r = rulesData[currentIdx];
+      if (r) {
+        ruleSlider.value = currentIdx;
+        sliderBadge.textContent = r.num;
+        sliderTitlePreview.textContent = `${r.num}: ${r.title}`;
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        const activeNav = document.getElementById(`nav-${currentIdx}`);
+        if (activeNav) activeNav.classList.add('active');
+      }
+    });
+
+    // Initialize Portal
+    renderPortal();
+    renderFAQs();
+  </script>
+</body>
+</html>
