@@ -1898,6 +1898,30 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
             }
           }
         });
+        // The deployed data/posb-rates.json can be a partial copy (e.g. only SB and
+        // PPF), which hid every other scheme from the Rates Hub and tables. Add any
+        // built-in scheme the live file does not contain; live rows always win.
+        const normScheme = v => String(v || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+        const schemeAcronym = v => { const m = String(v || '').match(/\(([^)]+)\)\s*$/); return m ? normScheme(m[1]) : ''; };
+        const sameScheme = (a, b) => {
+          const na = normScheme(a), nb = normScheme(b);
+          if (!na || !nb) return false;
+          if (na === nb) return true;
+          const aa = schemeAcronym(a), ab = schemeAcronym(b);
+          return !!(aa && ab && aa === ab);
+        };
+        POSB_MASTER_SCHEMES.forEach(master => {
+          const idx = posbRows.findIndex(row => sameScheme(row && (row.scheme || row.name), master.scheme));
+          if (idx < 0) { posbRows.push(master); return; }
+          const existing = posbRows[idx] || {};
+          const usable = existing.rate ?? existing.interestRate ?? existing.interest_rate ?? existing.currentRate ?? existing.current_rate;
+          if (usable === undefined || usable === null || String(usable).trim() === '') {
+            posbRows[idx] = { ...master, ...existing, rate: master.rate };
+          }
+        });
+        // Keep the familiar master order; unknown extra rows go last.
+        const masterOrder = row => { const i = POSB_MASTER_SCHEMES.findIndex(m => sameScheme(row && (row.scheme || row.name), m.scheme)); return i < 0 ? 999 : i; };
+        posbRows.sort((a, b) => masterOrder(a) - masterOrder(b));
         DATA_POSB = posbRows;
         renderHomeRateStrip();
         DATA_FORMS = (forms && forms.length > 0) ? forms : VERIFIED_FORMS_FALLBACK;
