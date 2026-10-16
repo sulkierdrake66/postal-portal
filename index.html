@@ -3070,19 +3070,28 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
               const folderVariants = [...new Set([folderOrder, folderOrder.replace(/-/g, '_'), folderOrder.replace(/-/g, ''), String(order.orderNo || '').replace(/\//g, '_'), String(order.orderNo || '').replace(/\//g, '')])];
               const candidates = [];
               const extensions = ['png','jpg','jpeg','webp'];
+              // In the deployed repository, scans may be directly inside the
+              // year folder (images/orders/<year>/), not only inside an
+              // order-number subfolder. Try those paths first.
+              extensions.forEach(ext => {
+                candidates.push(`images/orders/${order.year}/p${page}-image1.${ext}`);
+                candidates.push(`images/orders/${order.year}/p${page}-image.${ext}`);
+                candidates.push(`images/orders/${order.year}/page-${page}.${ext}`);
+                candidates.push(`images/orders/${order.year}/page${page}.${ext}`);
+                candidates.push(`images/orders/${order.year}/page_${page}.${ext}`);
+                candidates.push(`images/orders/${order.year}/${page}.${ext}`);
+              });
               folderVariants.forEach(folder => extensions.forEach(ext => {
                 candidates.push(`images/orders/${order.year}/${folder}/p${page}-image1.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folder}/p${page}-image.${ext}`);
                 candidates.push(`images/orders/${order.year}/${folder}/page-${page}.${ext}`);
                 candidates.push(`images/orders/${order.year}/${folder}/page${page}.${ext}`);
                 candidates.push(`images/orders/${order.year}/${folder}/${page}.${ext}`);
                 candidates.push(`images/orders/${order.year}/${folder}/page_${page}.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folder}/p${page}-image2.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folder}/page-${page}-image.${ext}`);
               }));
-              extensions.forEach(ext => {
-                candidates.push(`images/orders/${order.year}/${folderOrder}/p${page}-image2.${ext}`);
-                candidates.push(`images/orders/${order.year}/${folderOrder}/p${page}-image.${ext}`);
-                candidates.push(`images/orders/${order.year}/${folderOrder}/page-${page}-image.${ext}`);
-              });
-              originals.push({ src: candidates[0], fallbacks: candidates.slice(1) });
+              originals.push({ src: candidates[0], fallbacks: [...new Set(candidates.slice(1))] });
             }
           }
         }
@@ -3160,18 +3169,33 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
         if (modeTabs) modeTabs.style.display = 'flex';
         if (typeof window.setOrderViewMode === 'function') window.setOrderViewMode('text');
       }
-      // Resolve repository-relative images consistently and try alternate filenames on failure.
+      // Resolve image paths from the site root reliably (including GitHub
+      // Pages project sites), then try the remaining filename candidates.
       document.querySelectorAll('#modal-order-substance .order-original-page').forEach(img => {
         const rawSrc = img.getAttribute('src') || '';
+        const toImageUrl = value => {
+          const path = String(value || '').replace(/\\/g, '/').trim();
+          if (/^(?:https?:|data:|blob:)/i.test(path)) return path;
+          const clean = path.replace(/^\.\//, '').replace(/^\/+/, '');
+          // Keep the repository/project prefix when the page is hosted below
+          // a path such as /postal-portal/, while avoiding duplicated prefixes.
+          const base = new URL('.', window.location.href);
+          return new URL(clean, base).href;
+        };
         img.addEventListener('error', function tryNextSourceImage() {
           let fallbacks = [];
           try { fallbacks = JSON.parse(img.getAttribute('data-fallbacks') || '[]'); } catch (e) {}
-          if (!fallbacks.length) { img.classList.add('order-image-missing'); img.alt = 'Original source image could not be loaded: ' + (img.alt || 'source page'); img.removeEventListener('error', tryNextSourceImage); return; }
+          if (!fallbacks.length) {
+            img.classList.add('order-image-missing');
+            img.alt = 'Original source image could not be loaded: ' + (img.alt || 'source page');
+            img.removeEventListener('error', tryNextSourceImage);
+            return;
+          }
           const next = fallbacks.shift();
           img.setAttribute('data-fallbacks', JSON.stringify(fallbacks));
-          img.src = new URL(String(next).replace(/^\.\//, ''), document.baseURI).href;
+          img.src = toImageUrl(next);
         });
-        if (rawSrc && !/^(?:https?:|data:|blob:|\/)/i.test(rawSrc)) img.src = new URL(rawSrc.replace(/^\.\//, ''), document.baseURI).href;
+        if (rawSrc) img.src = toImageUrl(rawSrc);
       });
 
       // Source label is optional in the modal markup. Do not let a missing
