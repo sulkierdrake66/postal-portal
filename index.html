@@ -1461,7 +1461,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
     </div>
   </footer>
 
-  <!-- SCRIPT ENGINE -->
+  <!-- SCRIPT ENGINE | rate fallback hardening v2 -->
   <script>
     /* ========================================================================= */
     /* 0. STATUTORY POSB & RATES KNOWLEDGE REPOSITORY                            */
@@ -1883,9 +1883,19 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
           return false;
         };
         ['sb', 'ppf'].forEach(kind => {
-          if (!posbRows.some(row => hasScheme(row, kind))) {
-            const fallbackRow = POSB_MASTER_SCHEMES.find(row => hasScheme(row, kind));
+          const fallbackRow = POSB_MASTER_SCHEMES.find(row => hasScheme(row, kind));
+          const existingIndex = posbRows.findIndex(row => hasScheme(row, kind));
+          if (existingIndex < 0) {
             if (fallbackRow) posbRows.push(fallbackRow);
+          } else {
+            const existing = posbRows[existingIndex] || {};
+            const usableRate = existing.rate ?? existing.interestRate ?? existing.interest_rate ?? existing.currentRate ?? existing.current_rate;
+            // A partial live JSON row must not blank out the known built-in SB/PPF rate.
+            if ((usableRate === undefined || usableRate === null || String(usableRate).trim() === '') && fallbackRow) {
+              posbRows[existingIndex] = { ...fallbackRow, ...existing, rate: fallbackRow.rate };
+            } else if (!existing.rate && usableRate) {
+              posbRows[existingIndex] = { ...existing, rate: String(usableRate).trim() };
+            }
           }
         });
         DATA_POSB = posbRows;
@@ -1915,9 +1925,11 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
           rd: /recurring deposit|\brd\b/,
           mis: /monthly income scheme|\bmis\b/
         };
-        const row = rows.find(item => patterns[kind].test(String(item && item.scheme || '').toLowerCase()))
-          || POSB_MASTER_SCHEMES.find(item => patterns[kind].test(String(item.scheme || '').toLowerCase()));
-        return row && row.rate ? row.rate : '—';
+        const row = rows.find(item => patterns[kind].test(String(item && (item.scheme || item.name || item.title || item.account || '')).toLowerCase()));
+        const liveRate = row && (row.rate ?? row.interestRate ?? row.interest_rate ?? row.currentRate ?? row.current_rate);
+        if (liveRate !== undefined && liveRate !== null && String(liveRate).trim() !== '') return String(liveRate).trim();
+        const fallback = POSB_MASTER_SCHEMES.find(item => patterns[kind].test(String(item.scheme || '').toLowerCase()));
+        return fallback && fallback.rate ? fallback.rate : '—';
       };
       [['sb','home-rate-sb'],['ppf','home-rate-ppf'],['rd','home-rate-rd'],['mis','home-rate-mis']].forEach(([kind,id]) => {
         const node = document.getElementById(id);
@@ -3007,15 +3019,41 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       const imageSource = value => {
         if (typeof value === 'string') return value.trim();
         if (!value || typeof value !== 'object') return '';
-        return String(value.src || value.path || value.url || value.file || value.href || value.image || '').trim();
+        return String(value.src || value.path || value.url || value.file || value.href || value.image || value.image_path || value.imagePath || value.file_path || value.filePath || value.relative_path || value.relativePath || value.webp || '').trim();
       };
       // Prefer explicit page scans, then legacy source_images, then extracted
       // visual assets. Keep order and remove duplicate paths.
+      const normalizeImagePath = value => {
+        let src = String(value || '').trim().replace(/\\/g, '/');
+        if (!src) return '';
+        if (/^(?:https?:|data:|blob:)/i.test(src)) return src;
+        src = src.replace(/^\.\//, '').replace(/^\/+/, '').replace(/^(?:\.\.\/)+/, '');
+        src = src.replace(/^.*?\/(?:images\/orders\/)/i, 'images/orders/');
+        src = src.replace(/^.*?\/(?:visual_assets\/)/i, 'visual_assets/');
+        return src;
+      };
       let originals = [...sourcePageImages, ...sourceImages, ...visualAssets]
-        .map(imageSource)
-        .filter(Boolean)
+        .map(imageSource).map(normalizeImagePath).filter(Boolean)
         .filter((src, i, all) => all.indexOf(src) === i)
-        .map(src => ({ src, fallbacks: [] }));
+        .map(src => {
+          const fallback = [];
+          if (!/^(?:https?:|data:|blob:)/i.test(src)) {
+            const clean = src.replace(/[?#].*$/, '');
+            const extMatch = clean.match(/\.(png|jpe?g|webp)$/i);
+            const stem = extMatch ? clean.slice(0, -extMatch[0].length) : clean;
+            ['png','jpg','jpeg','webp'].forEach(ext => fallback.push(stem + '.' + ext));
+            // Also tolerate common naming variations used by older extracted scans.
+            const pageMatch = clean.match(/(?:p|page[-_]?)(\d+)(?:-image\d*)?\.(?:png|jpe?g|webp)$/i);
+            if (pageMatch) {
+              const page = pageMatch[1];
+              const dir = clean.slice(0, clean.lastIndexOf('/') + 1);
+              ['png','jpg','jpeg','webp'].forEach(ext => {
+                fallback.push(`${dir}p${page}-image1.${ext}`, `${dir}page-${page}.${ext}`, `${dir}page${page}.${ext}`, `${dir}${page}.${ext}`);
+              });
+            }
+          }
+          return { src, fallbacks: [...new Set(fallback.filter(candidate => candidate !== src))] };
+        });
 
       // Some orders.json records contain source page numbers but no image paths.
       // In that case, try the repository's extracted-image naming convention:
@@ -3029,14 +3067,21 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
           const folderOrder = String(order.orderNo || '').replace(/\//g, '-');
           if (order.year && folderOrder && Number.isFinite(first) && Number.isFinite(last) && last >= first && last - first < 100) {
             for (let page = first; page <= last; page++) {
-              const candidates = [
-                `images/orders/${order.year}/${folderOrder}/p${page}-image1.png`,
-                `images/orders/${order.year}/${folderOrder}/p${page}-image1.jpeg`,
-                `images/orders/${order.year}/${folderOrder}/p${page}-image1.jpg`,
-                `images/orders/${order.year}/${folderOrder}/p${page}-image2.png`,
-                `images/orders/${order.year}/${folderOrder}/p${page}-image2.jpeg`,
-                `images/orders/${order.year}/${folderOrder}/p${page}-image2.jpg`
-              ];
+              const folderVariants = [...new Set([folderOrder, folderOrder.replace(/-/g, '_'), folderOrder.replace(/-/g, ''), String(order.orderNo || '').replace(/\//g, '_'), String(order.orderNo || '').replace(/\//g, '')])];
+              const candidates = [];
+              const extensions = ['png','jpg','jpeg','webp'];
+              folderVariants.forEach(folder => extensions.forEach(ext => {
+                candidates.push(`images/orders/${order.year}/${folder}/p${page}-image1.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folder}/page-${page}.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folder}/page${page}.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folder}/${page}.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folder}/page_${page}.${ext}`);
+              }));
+              extensions.forEach(ext => {
+                candidates.push(`images/orders/${order.year}/${folderOrder}/p${page}-image2.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folderOrder}/p${page}-image.${ext}`);
+                candidates.push(`images/orders/${order.year}/${folderOrder}/page-${page}-image.${ext}`);
+              });
               originals.push({ src: candidates[0], fallbacks: candidates.slice(1) });
             }
           }
@@ -3096,7 +3141,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       const rawOrderText = order.fullText || order.substance || '—';
       document.getElementById('modal-order-substance').innerHTML = renderOrderContent(order, rawOrderText);
       document.getElementById('modal-order-substance').dataset.printMode = 'text';
-      if (order.originalOnly || (Number(order.year) >= 2015 && Number(order.year) <= 2019)) {
+      if (order.originalOnly || (Number(order.year) > 0 && Number(order.year) < 2020)) {
         if (typeof window.ensurePostalIQOrderTabs === 'function') window.ensurePostalIQOrderTabs();
         if (typeof window.setOrderViewMode === 'function') window.setOrderViewMode('original');
         const textTab = document.getElementById('order-text-tab');
@@ -3115,16 +3160,18 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
         if (modeTabs) modeTabs.style.display = 'flex';
         if (typeof window.setOrderViewMode === 'function') window.setOrderViewMode('text');
       }
-      // Try alternate filenames only when a generated fallback path fails.
-      document.querySelectorAll('#modal-order-substance .order-original-page[data-fallbacks]').forEach(img => {
+      // Resolve repository-relative images consistently and try alternate filenames on failure.
+      document.querySelectorAll('#modal-order-substance .order-original-page').forEach(img => {
+        const rawSrc = img.getAttribute('src') || '';
         img.addEventListener('error', function tryNextSourceImage() {
           let fallbacks = [];
           try { fallbacks = JSON.parse(img.getAttribute('data-fallbacks') || '[]'); } catch (e) {}
-          if (!fallbacks.length) { img.removeEventListener('error', tryNextSourceImage); return; }
+          if (!fallbacks.length) { img.classList.add('order-image-missing'); img.alt = 'Original source image could not be loaded: ' + (img.alt || 'source page'); img.removeEventListener('error', tryNextSourceImage); return; }
           const next = fallbacks.shift();
           img.setAttribute('data-fallbacks', JSON.stringify(fallbacks));
-          img.src = next;
+          img.src = new URL(String(next).replace(/^\.\//, ''), document.baseURI).href;
         });
+        if (rawSrc && !/^(?:https?:|data:|blob:|\/)/i.test(rawSrc)) img.src = new URL(rawSrc.replace(/^\.\//, ''), document.baseURI).href;
       });
 
       // Source label is optional in the modal markup. Do not let a missing
@@ -3186,11 +3233,17 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       if (!tbody) return;
       tbody.innerHTML = '';
       DATA_POSB.forEach(s => {
+        const schemeName = String(s && (s.scheme || s.name || s.title) || '');
+        const canonical = POSB_MASTER_SCHEMES.find(item => item.scheme.toLowerCase() === schemeName.toLowerCase());
+        const rateValue = s && (s.rate ?? s.interestRate ?? s.interest_rate ?? s.currentRate ?? s.current_rate);
+        const displayRate = (rateValue !== undefined && rateValue !== null && String(rateValue).trim() !== '')
+          ? String(rateValue).trim()
+          : (canonical && canonical.rate ? canonical.rate : '—');
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800";
         tr.innerHTML = `
           <td class="p-3 font-bold">${s.scheme}</td>
-          <td class="p-3 font-mono font-black text-brand-red dark:text-red-400">${s.rate}</td>
+          <td class="p-3 font-mono font-black text-brand-red dark:text-red-400">${displayRate}</td>
           <td class="p-3 text-slate-500">${s.compounding}</td>
           <td class="p-3 font-mono">${s.tenure}</td>
           <td class="p-3 text-[11px] text-slate-500">${s.taxNotes}</td>
@@ -3562,7 +3615,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
 .order-mode-tab,.order-print-btn{border:1px solid #cbd5e1;background:#fff;border-radius:.55rem;padding:.45rem .8rem;font-size:.75rem;font-weight:800;cursor:pointer;color:#334155}
 .order-mode-tab.active{background:#8f1111;color:#fff;border-color:#8f1111}
 .order-original-view{display:none}
-.order-original-page{display:block;width:100%;height:auto;margin:0 auto 1rem;border:1px solid #dbe1e8;border-radius:.5rem}
+.order-original-page{display:block;width:100%;height:auto;margin:0 auto 1rem;border:1px solid #dbe1e8;border-radius:.5rem}.order-original-page.order-image-missing{min-height:80px;object-fit:contain;background:#fff7ed;border:1px dashed #d97706;padding:1rem;color:#9a3412}
 .order-text-clean{max-width:850px;margin:0 auto;text-align:left;font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.75;white-space:pre-wrap}
 .order-source-note{padding:.75rem 1rem;border:1px solid #f2cf66;background:#fffbeb;border-radius:.65rem;font-size:.8rem;line-height:1.5;margin-bottom:1rem}
 @media print{#postal-print-frame{display:none!important}}
