@@ -3686,20 +3686,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
         const alt=img.getAttribute('alt')||('Original source page '+(i+1));
         return '<img class="source-page" src="'+escapeOrderHtml(src)+'" alt="'+escapeOrderHtml(alt)+'">';
       }).join('');
-      w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+' - Original Document</title><base href="'+document.baseURI+'"><style>@page{size:A4 portrait;margin:0}*{box-sizing:border-box}html,body{margin:0!important;padding:0!important;background:#fff!important}body{font-size:0;line-height:0}.source-page{display:block;width:100%;height:auto;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid}.source-page:last-child{break-after:auto;page-break-after:auto}</style></head><body>'+imageHtml+'
-<script id="pi-navigation-accessibility">
-document.addEventListener('DOMContentLoaded', function(){
-  const brand=document.querySelector('.pi-redesign-brand');
-  if(brand){brand.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();piNavigate('dashboard');}});}
-  document.querySelectorAll('.pi-redesign-link[data-view]').forEach(function(link){
-    link.addEventListener('click',function(){
-      document.querySelectorAll('.pi-redesign-link[data-view]').forEach(function(item){item.classList.toggle('active',item===link);});
-    });
-  });
-});
-</script>
-
-</body></html>');
+      w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+' - Original Document</title><base href="'+document.baseURI+'"><style>@page{size:A4 portrait;margin:0}*{box-sizing:border-box}html,body{margin:0!important;padding:0!important;background:#fff!important}body{font-size:0;line-height:0}.source-page{display:block;width:100%;height:auto;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid}.source-page:last-child{break-after:auto;page-break-after:auto}</style></head><body>'+imageHtml+'</body></html>');
     }else{
       w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>PostalIQ - '+safeTitle+'</title><base href="'+document.baseURI+'"><style>@page{margin:12mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#111;background:#fff;margin:0;font-size:11pt;line-height:1.55}h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;font-weight:500;margin:0 0 18px;color:#555}.text,.order-text-clean{font-family:Georgia,serif;font-size:12pt;line-height:1.6;white-space:pre-wrap;text-align:left}.order-structured-content{font-size:11pt}.order-source-note{padding:10px;background:#fff8dc;border:1px solid #e5c45b;margin:0 0 16px}.order-structured-content table{width:100%;border-collapse:collapse}.order-structured-content th,.order-structured-content td{border:1px solid #888;padding:5px;vertical-align:top}.order-structured-content{break-before:auto;page-break-before:auto}</style></head><body><h1>'+safeTitle+'</h1><h2>'+escapeOrderHtml(date)+'<br>'+escapeOrderHtml(subj)+'</h2>'+content+'</body></html>');
     }
@@ -3716,6 +3703,18 @@ document.addEventListener('DOMContentLoaded', function(){
     ensureTabs();
   },500));
 })();
+</script>
+
+<script id="pi-navigation-accessibility">
+document.addEventListener('DOMContentLoaded', function(){
+  const brand=document.querySelector('.pi-redesign-brand');
+  if(brand){brand.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();piNavigate('dashboard');}});}
+  document.querySelectorAll('.pi-redesign-link[data-view]').forEach(function(link){
+    link.addEventListener('click',function(){
+      document.querySelectorAll('.pi-redesign-link[data-view]').forEach(function(item){item.classList.toggle('active',item===link);});
+    });
+  });
+});
 </script>
 
 <script>
