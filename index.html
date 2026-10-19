@@ -487,6 +487,8 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
     <button class="pi-redesign-link" data-view="offices" onclick="piNavigate('offices')"><span class="pi-redesign-icon">◎</span><span><b>PIN &amp; Offices</b><small>PIN Codes &amp; Directory</small></span><i>›</i></button>
     <a class="pi-redesign-link" href="manuals/LTC_Rules_FAQ.html" target="_blank" rel="noopener"><span class="pi-redesign-icon">▣</span><span><b>LTC Rules FAQ</b><small>Rules &amp; Practical Guidance</small></span><i>↗</i></a>
     <div class="pi-redesign-nav-heading" aria-hidden="true" style="padding:18px 14px 7px;color:#91a8b8;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;">Tools</div>
+    <a class="pi-redesign-link" href="POSB_Scheme_Explorer.html"><span class="pi-redesign-icon">₹%</span><span><b>Smart Interest Calculator</b><small>Scheme returns &amp; comparisons</small></span><i>↗</i></a>
+    <button class="pi-redesign-link" data-view="calculators" onclick="piNavigate('calculators')"><span class="pi-redesign-icon">▦</span><span><b>Tools</b><small>Employee calculators &amp; utilities</small></span><i>›</i></button>
     <a class="pi-redesign-link" href="pdf-tools.html" target="_blank" rel="noopener"><span class="pi-redesign-icon">▤</span><span><b>PDF Tools</b><small>Merge, split, OCR &amp; convert</small></span><i>↗</i></a>
   </nav>
   <div class="pi-redesign-sidebar-foot">An independent knowledge &amp; tools portal<br>Built for faster postal work.</div>
@@ -597,6 +599,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       <section class="pih-features">
         <button class="pih-feature" onclick="navigateTab('orders')"><div class="pih-icon pih-red">▤</div><span class="pih-arrow">›</span><h3>Postal Orders</h3><p>Search and read official SB orders, circulars and original documents.</p></button>
         <button class="pih-feature" onclick="navigateTab('posb')"><div class="pih-icon pih-blue">₹</div><span class="pih-arrow">›</span><h3>POSB &amp; PLI</h3><p>Interest rates, maturity tools, ledgers and policy calculators.</p></button>
+        <a class="pih-feature" href="POSB_Scheme_Explorer.html"><div class="pih-icon pih-gold">₹%</div><span class="pih-arrow">↗</span><h3>Smart Interest Calculator</h3><p>Compare Post Office schemes, after-tax returns, bank deposits and savings goals.</p></a>
         <button class="pih-feature" onclick="navigateTab('calculators')"><div class="pih-icon pih-green">＋</div><span class="pih-arrow">›</span><h3>Employee Calculators</h3><p>Pay, pension, arrears, leave, gratuity and service calculations.</p></button>
         <button class="pih-feature" onclick="navigateTab('forms')"><div class="pih-icon pih-purple">▣</div><span class="pih-arrow">›</span><h3>Forms &amp; Applications</h3><p>Browse useful forms and application samples.</p></button>
         <button class="pih-feature" onclick="navigateTab('offices')"><div class="pih-icon pih-orange">⌖</div><span class="pih-arrow">›</span><h3>PIN &amp; Offices</h3><p>Search PIN codes and post-office information.</p></button>
@@ -3667,6 +3670,12 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       // A tab is a separate page view, not an in-page anchor or scroll target.
       window.scrollTo({ top: 0, behavior: 'auto' });
     }
+
+    // Deep links from standalone tools open the matching PostalIQ section.
+    window.addEventListener('DOMContentLoaded', () => {
+      const view = new URLSearchParams(window.location.search).get('view');
+      if (['dashboard','ask','orders','posb','calculators','forms','offices'].includes(view)) piNavigate(view);
+    });
 
     function navigateTab(tabId) {
       document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));

@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+
+
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light dark" name="color-scheme"/>
+<title>PostalIQ | POSB Scheme Explorer &amp; Rate Comparator</title>
+<script>try{if(localStorage.getItem('postaliq_theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
+<style>
+:root{--paper:#f7f2e9;--navy:#102b42;--red:#d91f2b;--red2:#a9151f;--card:#fff;--ink:#102840;--mut:#647487;--line:rgba(16,40,64,.12);--field:#fff;--soft:#fbf7ef;--green:#17805a;--amber:#fff4d6;--amberink:#7a5200;--shadow:0 14px 30px -22px rgba(16,40,64,.45)}
+html.dark{--paper:#0b1a27;--card:#132838;--ink:#eaf2f8;--mut:#b2c4d1;--line:rgba(255,255,255,.14);--field:#0f2231;--soft:#0f2231;--green:#4ad1a0;--amber:#3a3114;--amberink:#f3d27a;--shadow:0 14px 30px -22px #000;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}h1,h2,h3,p{margin:0}a{color:var(--red)}html.dark a{color:#9bc9ff}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.top{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 24px;background:linear-gradient(110deg,#102b42,#15354f);color:#fff}
+.logo{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;min-width:0}
+.mark{position:relative;overflow:hidden;flex:none;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#ef3340,#b3121e);color:#ffe18b;font:900 25px/1 Georgia,serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 10px 22px -8px rgba(217,31,43,.7)}
+.mark:after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:#f59e0b}
+.nm{font:700 24px/1 Georgia,serif;letter-spacing:-.6px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.chipm{font:700 10px ui-monospace,Menlo,Consolas,monospace;background:#ffffff1a;border:1px solid #ffffff2a;border-radius:7px;padding:3px 7px;color:#e4edf6}
+.sub{display:block;margin-top:4px;font-size:11.5px;color:#c4d3ef}
+.acts{display:flex;gap:8px;align-items:center}
+.hb{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:12px;border:1px solid #ffffff26;background:#ffffff12;color:#fff;font-weight:650;font-size:13px;text-decoration:none;transition:background-color .2s,transform .2s}
+.hb:hover{background:#ffffff24;transform:translateY(-1px)}html.dark a.hb{color:#fff}
+.hero{position:relative;overflow:hidden;background:linear-gradient(105deg,#fff7e9 0%,#f8e9d4 65%,#ead5ba 100%);border-bottom:1px solid #c7ab8750}
+html.dark .hero{background:linear-gradient(105deg,#233746,#39404a);border-color:#ffffff15}
+.hero:after{content:"";position:absolute;right:-55px;top:-135px;width:43%;height:470px;border-radius:50%;background:radial-gradient(ellipse at 50% 55%,#d5b58d88 0 20%,#e7d0b266 42%,transparent 70%);pointer-events:none}
+html.dark .hero:after{opacity:.15}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.7fr);gap:28px;align-items:center;padding-top:34px;padding-bottom:30px}
+.eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;color:#a21d27}html.dark .eyebrow{color:#ff9aa2}
+.hero h1{font:700 clamp(34px,4.4vw,58px)/1.04 Georgia,serif;letter-spacing:-1.5px;margin:9px 0 12px;color:#102b42}
+.hero h1 em{font-style:normal;color:#c51d2a}html.dark .hero h1{color:#f0f4f7}html.dark .hero h1 em{color:#ff6b76}
+.hero p{font-size:16px;line-height:1.6;max-width:620px;color:#344e63}html.dark .hero p{color:#f0f4f7}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tags span{font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;background:#ffffffb0;border:1px solid #c9b49a80;color:#102840}
+html.dark .tags span{background:#ffffff12;color:#eaf2f8;border-color:#ffffff1c}
+.notes{display:flex;flex-direction:column;gap:9px}
+.note{display:grid;grid-template-columns:42px 1fr;column-gap:12px;align-items:center;padding:12px 14px;background:#ffffffc9;border:1px solid #c9b49a80;border-radius:13px;color:#102840}
+html.dark .note{background:#132838cc;border-color:#ffffff16;color:#eaf2f8}
+.note>span{grid-row:1/3;display:grid;place-items:center;width:42px;height:42px;border-radius:11px;background:var(--red);color:#fff;font-size:20px}
+.note b{font-size:13.5px}.note small{font-size:11.5px;line-height:1.45;color:#5c6d7a}html.dark .note small{color:#b8cad8}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin:18px 0 12px}
+.banner{flex:1;min-width:240px;padding:9px 14px;border-radius:12px;font-size:12.5px;font-weight:650;background:rgba(23,128,90,.12);color:var(--green);border:1px solid rgba(23,128,90,.3)}
+.banner.warn{background:var(--amber);color:var(--amberink);border-color:rgba(185,127,0,.4)}
+.slab{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--mut)}
+.slab select{width:auto;min-width:210px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+.tab{border:0;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:650;color:#294257;background:rgba(16,40,64,.06);box-shadow:inset 0 0 0 1px rgba(16,40,64,.08);transition:transform .25s,background-color .2s}
+html.dark .tab{color:#dbe7f0;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.tab:hover{transform:translateY(-1px)}
+.tab.on{color:#fff;background-image:linear-gradient(135deg,#ef3340,#b3121e);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 6px 12px -8px rgba(217,31,43,.7)}
+.view{display:none}.view.on{display:block}
+.grid{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px;align-items:start}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:20px}
+.ph{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:14px}
+.ph h2{font-size:19px;font-weight:800;letter-spacing:-.3px}.ph p,.mut{font-size:12.5px;color:var(--mut)}
+.ph>span{font-size:10px;letter-spacing:1.2px;color:var(--mut);font-weight:800}
+.f{margin-bottom:12px}.f label{display:block;font-size:11px;letter-spacing:.4px;font-weight:800;color:var(--mut);margin-bottom:5px;text-transform:uppercase}
+input,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--field);outline:none}
+input:focus,select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(217,31,43,.15)}input:disabled{opacity:.6}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chk{display:flex;gap:9px;align-items:center;font-size:13px;font-weight:650;margin:4px 0 12px}.chk input{width:auto}
+.btn{border:1px solid var(--line);border-radius:12px;padding:9px 14px;background:var(--card);font-weight:700;font-size:13px;transition:transform .2s}
+.btn:hover{transform:translateY(-1px)}.btn.p{background-image:linear-gradient(135deg,#ef3340,#b3121e);border-color:transparent;color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.warn-box{padding:11px 13px;border-radius:12px;background:var(--amber);color:var(--amberink);font-size:12.5px;margin-top:10px;border:1px solid rgba(185,127,0,.35)}
+.info{padding:12px 14px;border-radius:12px;background:var(--soft);border:1px solid var(--line);font-size:12.5px;color:var(--mut);margin-top:12px}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:12.5px;margin-top:12px}.facts b{color:var(--mut);font-weight:700}
+.mets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.m{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card);min-width:0}
+.m.hi{background:linear-gradient(145deg,#12324c,#0c2235);color:#fff;border-color:transparent}
+.m .l{font-size:10px;letter-spacing:.9px;text-transform:uppercase;font-weight:800;color:var(--mut)}.m.hi .l{color:#b8cad8}
+.m .v{font:800 clamp(17px,2.2vw,25px)/1.2 Inter,system-ui,sans-serif;letter-spacing:-.6px;margin-top:3px}
+.m .h{font-size:11px;color:var(--mut);margin-top:2px}.m.hi .h{color:#b8cad8}
+svg{width:100%;height:auto;display:block}.gl{stroke:var(--line);stroke-width:1}.ax{font-size:10px;fill:var(--mut)}.b1{fill:#2b5d86}.b2{fill:var(--red)}
+html.dark .b1{fill:#6fa8d8}
+.leg{display:flex;gap:16px;font-size:12px;color:var(--mut);margin-top:6px}.leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+details{margin-top:14px}summary{cursor:pointer;font-weight:700;font-size:13px}
+.tw{overflow-x:auto;margin-top:10px;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
+th{text-align:left;font-size:10.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--mut);background:var(--soft);padding:10px 12px;white-space:nowrap}
+td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}tr.best td{background:rgba(23,128,90,.09)}
+.g{color:var(--green);font-weight:800}.r{color:var(--red);font-weight:800}html.dark .r{color:#ff8a92}
+.pill{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:999px;background:rgba(16,40,64,.07);margin-left:6px}
+html.dark .pill{background:rgba(255,255,255,.1)}
+.yb{height:7px;border-radius:5px;background:var(--line);margin-top:6px;overflow:hidden}.yb i{display:block;height:100%;background:linear-gradient(90deg,#17805a,#4ad1a0)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px}
+.chips button{border:0;border-radius:999px;padding:7px 13px;font-size:12px;font-weight:700;background:rgba(16,40,64,.06);color:var(--ink)}
+html.dark .chips button{background:rgba(255,255,255,.08)}.chips button.on{background-image:linear-gradient(135deg,#ef3340,#b3121e);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:14px}
+.foot{margin:34px 0 40px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-size:12px;color:var(--mut)}
+ul{margin:6px 0 0;padding-left:20px}li{margin:3px 0}
+@media(max-width:940px){.hero .wrap,.grid{grid-template-columns:1fr}.mets{grid-template-columns:1fr 1fr}.top{padding:10px 14px}.wrap{padding:0 14px}.sub,.hb span.t{display:none}}
+@media(max-width:520px){.two{grid-template-columns:1fr}.nm{font-size:20px}}
+@media print{.top,.tabs,.bar,.acts,.btn,.row,.hero .notes,.chips{display:none!important}body{background:#fff;color:#000}.view{display:block!important;page-break-inside:avoid}#v-rates,#v-sources,#v-banks,#v-compare{display:none!important}.panel{box-shadow:none}.hero{background:none}}
+</style>
+<style id="pi-redesign-css">
+:root{--pir-navy:#102b42;--pir-red:#d91f2b;--pir-paper:#f7f2e9}
+body.pi-redesign{display:block!important;background:var(--pir-paper)!important;min-height:100vh}
+.pi-redesign-sidebar{position:fixed;z-index:100;left:0;top:0;bottom:0;width:286px;overflow:auto;padding:17px 10px 18px;background:linear-gradient(165deg,#102b42,#0c2235 90%);color:#fff;display:flex;flex-direction:column;gap:18px;box-shadow:5px 0 22px #102b4210}
+.pi-redesign-brand{display:flex;align-items:center;gap:12px;padding:0 7px 15px;border-bottom:1px solid #ffffff24;cursor:pointer}
+.pi-redesign-mark{width:54px;height:54px;flex:0 0 54px;border-radius:15px;background:#d91f2b;display:grid;place-items:center;color:#ffe18b;font:900 35px/1 Georgia,serif;box-shadow:inset 0 0 0 1px #ffffff30}
+.pi-redesign-brand-name{font:700 29px/1 Georgia,serif;letter-spacing:-.7px}.pi-redesign-brand-sub{font-size:12px;color:#d4e0e9;margin-top:5px}
+.pi-redesign-nav{display:flex;flex-direction:column;gap:7px}
+.pi-redesign-link{width:100%;display:flex;align-items:center;gap:12px;min-height:66px;padding:9px 10px;border:1px solid #ffffff12;border-radius:13px;background:#ffffff08;color:#eef5fa;text-decoration:none;text-align:left;cursor:pointer;transition:background .18s,transform .18s}
+.pi-redesign-link:hover{background:#ffffff18;transform:translateX(2px)}
+.pi-redesign-link.active{background:linear-gradient(110deg,#e32430,#c91625);border-color:#ff6872;box-shadow:0 5px 14px #0002}
+.pi-redesign-icon{flex:0 0 44px;width:44px;height:44px;border-radius:11px;background:#2478b9;display:grid;place-items:center;font-size:23px;color:#fff}
+.pi-redesign-link:nth-child(2) .pi-redesign-icon{background:#079b68}.pi-redesign-link:nth-child(3) .pi-redesign-icon{background:#099cc5}.pi-redesign-link:nth-child(4) .pi-redesign-icon{background:#159e68}.pi-redesign-link:nth-child(5) .pi-redesign-icon{background:#7c43c4}.pi-redesign-link:nth-child(6) .pi-redesign-icon{background:#ee8b00}.pi-redesign-link:nth-child(7) .pi-redesign-icon{background:#c92b36}.pi-redesign-link:nth-child(8) .pi-redesign-icon{background:#e6a400}
+.pi-redesign-link>span:nth-child(2){min-width:0;flex:1}.pi-redesign-link b{display:block;font-size:14px;font-weight:750}.pi-redesign-link small{display:block;font-size:11px;color:#d1dfeb;margin-top:3px;white-space:normal}.pi-redesign-link i{font-style:normal;font-size:23px;color:#b8cad8}
+.pi-redesign-sidebar-foot{margin-top:auto;border-top:1px solid #ffffff24;padding:14px 10px 0;color:#b8cad8;font-size:12px;line-height:1.7}
+.pi-redesign-scrim{display:none}
+body.pi-redesign>header{margin-left:286px;width:calc(100% - 286px);position:sticky;top:0;z-index:90;background:#102b42!important;border-color:#ffffff20!important;color:#fff!important}
+body.pi-redesign>header>div{max-width:none!important;padding-left:24px!important;padding-right:24px!important}
+body.pi-redesign>header nav{display:none!important}
+body.pi-redesign>header .font-bold.text-xl{color:#fff!important}
+body.pi-redesign>header .text-slate-500,body.pi-redesign>header .text-slate-400{color:#d1dfeb!important}
+body.pi-redesign>header>div>div:first-child>div:first-child>div{display:none!important}
+body.pi-redesign>header>div>div:first-child>div:first-child:after{content:"Knowledge · Tools · Guidance";font-size:11px;color:#d1dfeb}
+body.pi-redesign>header>div>div:first-child>div:first-child span:first-child{font:700 25px Georgia,serif!important;letter-spacing:-.5px}
+body.pi-redesign>header button[onclick="toggleTheme()"]{color:#fff!important}
+body.pi-redesign>header button[onclick="printCurrentPage()"]{background:#ffffff12!important;color:#fff!important;border-color:#ffffff35!important}
+body.pi-redesign>.no-print.lg\\:hidden{display:none!important}
+body.pi-redesign>main{margin-left:286px!important;width:calc(100% - 286px)!important;max-width:none!important;padding:20px 24px 32px!important}
+body.pi-redesign>footer{margin-left:286px!important;width:calc(100% - 286px)!important}
+body.pi-redesign #view-dashboard>div:first-child{background:linear-gradient(100deg,#fff7e9 0%,#f8e9d4 65%,#ead5ba 100%)!important;border:0!important;min-height:245px;display:flex;align-items:center}
+body.pi-redesign #view-dashboard>div:first-child h1{font-size:clamp(42px,4.5vw,64px)!important}
+body.pi-redesign .pi-tool{border-radius:16px!important;box-shadow:0 5px 18px #1028400b!important}
+body.pi-redesign .pi-tool:hover{transform:translateY(-3px)!important}
+body.pi-redesign.dark{background:#0c1924!important}
+body.pi-redesign.dark #view-dashboard>div:first-child{background:linear-gradient(100deg,#233746,#39404a)!important}
+body.pi-redesign.dark #view-dashboard>div:first-child h1,body.pi-redesign.dark #view-dashboard>div:first-child p{color:#f0f4f7!important}
+@media(max-width:900px){
+ .pi-redesign-sidebar{transform:translateX(-105%);transition:transform .22s ease;width:min(300px,86vw)}
+ .pi-redesign-sidebar.open{transform:translateX(0)}
+ .pi-redesign-scrim.show{display:block;position:fixed;inset:0;background:#08182788;z-index:95}
+ body.pi-redesign>header{margin-left:0;width:100%}
+ body.pi-redesign>header>div{padding-left:12px!important;padding-right:12px!important}
+ body.pi-redesign>main{margin-left:0!important;width:100%!important;padding:14px 12px 24px!important}
+ body.pi-redesign>footer{margin-left:0!important;width:100%!important}
+ body.pi-redesign>.no-print.lg\\:hidden{display:none!important}
+ .pi-redesign-mobile-menu{display:inline-flex!important}
+}
+.pi-redesign-mobile-menu{display:none;align-items:center;justify-content:center;border:1px solid #ffffff35;border-radius:10px;width:40px;height:40px;color:white;font-size:21px;background:#ffffff10;flex:0 0 40px}
+@media print{.pi-redesign-sidebar,.pi-redesign-scrim,.pi-redesign-mobile-menu{display:none!important}body.pi-redesign>header,body.pi-redesign>main,body.pi-redesign>footer{margin-left:0!important;width:100%!important}}
+</style>
+<style id="pi-sidebar-final-match">
+.pi-redesign-sidebar{background:radial-gradient(120% 55% at 0% 0%,rgba(56,189,248,.16),transparent 58%),radial-gradient(90% 40% at 100% 100%,rgba(217,31,43,.14),transparent 60%),linear-gradient(165deg,#102b42,#0c2235 90%)}
+.pi-redesign-mark{background:linear-gradient(145deg,var(--pdl-red1,#ef3340),var(--pdl-red2,#b3121e));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.18),0 10px 22px -8px rgba(217,31,43,.7)}
+.pi-redesign-brand{transition:opacity .2s}.pi-redesign-brand:hover{opacity:.92}
+.pi-redesign-mobile-menu{border-radius:13px}
+</style>
+<style id="pi-explorer-shell-layout">
+body{margin-left:286px!important;width:calc(100% - 286px)!important}body>.top{margin-left:0!important;width:100%;padding-left:24px}body>.hero,body>main,body>.foot{width:100%}.pi-explorer-menu{display:none;background:#ffffff18;border:1px solid #ffffff38;color:white;border-radius:13px;padding:8px 11px;font-size:18px;cursor:pointer;align-items:center;justify-content:center}
+@media(max-width:900px){.pi-redesign-sidebar{transform:translateX(-105%);transition:transform .22s ease;width:min(300px,86vw)}.pi-redesign-sidebar.open{transform:translateX(0)}.pi-redesign-scrim.show{display:block;position:fixed;inset:0;background:#08182788;z-index:95}body{margin-left:0!important;width:100%!important}.pi-explorer-menu{display:inline-flex}.top{padding-left:14px!important;padding-right:14px!important}.nm{font-size:20px}.logo{gap:8px}.acts .hb .t{display:none}}
+@media(prefers-reduced-motion:reduce){.pi-redesign-link{transition:none}}
+</style>
+<style id="pi-demo-home-style">
+body.pi-redesign #view-dashboard.pi-demo-home:not(.hidden){display:block!important;min-width:0;color:#102840}
+/* Respect the tab controller: inactive views must never remain visible. */
+body.pi-redesign .tab-view.hidden{display:none!important;}
+body.pi-redesign .tab-view:not(.hidden){display:block;}
+#view-dashboard.pi-demo-home .pih-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.7fr);gap:28px;align-items:center;margin:-20px -24px 24px;padding:38px 38px 32px;min-height:300px;background:linear-gradient(105deg,#fff7e9 0%,#f8e9d4 65%,#ead5ba 100%);border-bottom:1px solid #c7ab8750}
+#view-dashboard.pi-demo-home .pih-hero:after{content:"";position:absolute;right:-55px;top:-135px;width:43%;height:470px;border-radius:50%;background:radial-gradient(ellipse at 50% 55%,#d5b58d88 0 20%,#e7d0b266 42%,transparent 70%);pointer-events:none}
+#view-dashboard.pi-demo-home .pih-hero-content{position:relative;z-index:1;max-width:680px}
+#view-dashboard.pi-demo-home .pih-eyebrow{font-size:11px;letter-spacing:1.5px;font-weight:800;color:#a21d27}
+#view-dashboard.pi-demo-home .pih-hero h1{font:700 clamp(42px,4.6vw,64px)/1.02 Georgia,serif;letter-spacing:-1.5px;margin:9px 0 12px;color:#102b42}
+#view-dashboard.pi-demo-home .pih-hero h1 span{white-space:nowrap}#view-dashboard.pi-demo-home .pih-hero h1 em{font-style:normal;color:#c51d2a}
+#view-dashboard.pi-demo-home .pih-hero p{font-size:16px;line-height:1.6;max-width:600px;color:#344e63}
+#view-dashboard.pi-demo-home .pih-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}#view-dashboard.pi-demo-home .pih-tags span{padding:5px 10px;border:1px solid #c6a98755;background:#ffffff8a;border-radius:30px;color:#354f65;font-size:12px}
+#view-dashboard.pi-demo-home .pih-hero-actions{position:relative;z-index:1;display:flex;flex-direction:column;gap:9px}
+#view-dashboard.pi-demo-home .pih-hero-actions button,#view-dashboard.pi-demo-home .pih-hero-actions a{position:relative;display:grid;grid-template-columns:43px 1fr 18px;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;text-decoration:none;padding:12px 13px;background:#ffffffc9;border:1px solid #c9b49a80;border-radius:13px;color:#102840;box-shadow:0 4px 14px #6b4a2410;transition:.18s}
+#view-dashboard.pi-demo-home .pih-hero-actions button:hover,#view-dashboard.pi-demo-home .pih-hero-actions a:hover{transform:translateY(-2px);background:#fff}
+#view-dashboard.pi-demo-home .pih-hero-actions>*>span{grid-row:1/3;display:grid;place-items:center;width:42px;height:42px;border-radius:11px;background:#d91f2b;color:white;font-size:22px}
+#view-dashboard.pi-demo-home .pih-hero-actions b{font-size:13px}#view-dashboard.pi-demo-home .pih-hero-actions small{font-size:11px;color:#5c6d7a;margin-top:2px}#view-dashboard.pi-demo-home .pih-hero-actions i{grid-column:3;grid-row:1/3;font-style:normal;font-size:22px;color:#c51d2a}
+#view-dashboard.pi-demo-home .pih-section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:0 3px 13px}#view-dashboard.pi-demo-home .pih-section-head h2{font-size:20px;font-weight:800;letter-spacing:-.4px}#view-dashboard.pi-demo-home .pih-section-head p{font-size:13px;color:#657587;margin-top:3px}#view-dashboard.pi-demo-home .pih-section-head>span{font-size:10px;letter-spacing:1.2px;color:#8a98a5;font-weight:800}
+#view-dashboard.pi-demo-home .pih-features{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+#view-dashboard.pi-demo-home .pih-feature{position:relative;display:block;text-align:left;min-width:0;min-height:164px;padding:16px;background:#fff;border:1px solid #10284018;border-radius:16px;box-shadow:0 5px 18px #1028400b;color:#102840;text-decoration:none;transition:transform .18s,box-shadow .18s}
+#view-dashboard.pi-demo-home .pih-feature:hover{transform:translateY(-3px);box-shadow:0 10px 24px #10284018}
+#view-dashboard.pi-demo-home .pih-icon{display:grid;place-items:center;width:49px;height:49px;border-radius:14px;font-size:25px;font-weight:700}
+#view-dashboard.pi-demo-home .pih-red{background:#ffe2e2;color:#bd1c29}#view-dashboard.pi-demo-home .pih-blue{background:#dcedff;color:#1764a4}#view-dashboard.pi-demo-home .pih-green{background:#dff6e1;color:#21814b}#view-dashboard.pi-demo-home .pih-purple{background:#eee0ff;color:#7535b6}#view-dashboard.pi-demo-home .pih-orange{background:#ffead9;color:#d5680a}#view-dashboard.pi-demo-home .pih-teal{background:#d8f5f2;color:#137c78}#view-dashboard.pi-demo-home .pih-gold{background:#fff0c9;color:#a56c00}#view-dashboard.pi-demo-home .pih-pink{background:#ffdeec;color:#b92761}
+#view-dashboard.pi-demo-home .pih-arrow{position:absolute;right:16px;top:22px;font-size:24px;color:#d31f2c}#view-dashboard.pi-demo-home .pih-feature h3{font-size:15px;font-weight:800;margin:11px 0 5px}#view-dashboard.pi-demo-home .pih-feature p{font-size:12px;line-height:1.5;color:#647487}
+#view-dashboard.pi-demo-home .pih-lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}#view-dashboard.pi-demo-home .pih-panel{min-width:0;background:#fff;border:1px solid #10284018;border-radius:16px;padding:17px;box-shadow:0 5px 18px #1028400b}#view-dashboard.pi-demo-home .pih-panel-head{display:flex;justify-content:space-between;gap:10px;align-items:start;margin-bottom:13px}#view-dashboard.pi-demo-home .pih-panel-head h2{font-size:16px;font-weight:800}#view-dashboard.pi-demo-home .pih-panel-head p{font-size:12px;color:#657587;margin-top:3px}#view-dashboard.pi-demo-home .pih-panel-head>span{font-size:10px;letter-spacing:1px;color:#8996a2;font-weight:800}
+#view-dashboard.pi-demo-home .pih-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}#view-dashboard.pi-demo-home .pih-stats>div{padding:12px 9px;background:#f5f7f9;border-radius:10px;display:flex;flex-direction:column;gap:5px}#view-dashboard.pi-demo-home .pih-stats strong{font:700 24px Georgia,serif;color:#bd1c29}#view-dashboard.pi-demo-home .pih-stats span{font-size:11px;color:#52677d}
+#view-dashboard.pi-demo-home .pih-quick{display:grid;grid-template-columns:1fr 1fr;gap:8px}#view-dashboard.pi-demo-home .pih-quick button{display:flex;align-items:center;gap:8px;min-width:0;padding:11px;border:1px solid #10284016;background:#fff;border-radius:10px;text-align:left;font-size:12px;color:#102840}#view-dashboard.pi-demo-home .pih-quick button span{font-size:18px;color:#c51d2a}#view-dashboard.pi-demo-home .pih-quick button b{margin-left:auto;color:#c51d2a}
+html.dark #view-dashboard.pi-demo-home{color:#eaf2f8}html.dark #view-dashboard.pi-demo-home .pih-hero{background:linear-gradient(105deg,#233746,#39404a);border-color:#ffffff15}html.dark #view-dashboard.pi-demo-home .pih-hero h1,html.dark #view-dashboard.pi-demo-home .pih-hero p{color:#f0f4f7}html.dark #view-dashboard.pi-demo-home .pih-tags span{background:#ffffff12;color:#eaf2f8;border-color:#ffffff1c}html.dark #view-dashboard.pi-demo-home .pih-feature,html.dark #view-dashboard.pi-demo-home .pih-panel{background:#132838;color:#eaf2f8;border-color:#ffffff16}html.dark #view-dashboard.pi-demo-home .pih-feature p,html.dark #view-dashboard.pi-demo-home .pih-panel-head p,html.dark #view-dashboard.pi-demo-home .pih-stats span{color:#b2c4d1}html.dark #view-dashboard.pi-demo-home .pih-stats>div,html.dark #view-dashboard.pi-demo-home .pih-quick button{background:#142b3c;color:#eaf2f8;border-color:#ffffff18}
+@media(max-width:1250px){#view-dashboard.pi-demo-home .pih-features{grid-template-columns:repeat(2,minmax(0,1fr))}#view-dashboard.pi-demo-home .pih-hero{grid-template-columns:1fr minmax(250px,.75fr)}}
+@media(max-width:900px){#view-dashboard.pi-demo-home .pih-hero{margin:-20px -16px 20px;padding:28px 22px;grid-template-columns:1fr;gap:20px}#view-dashboard.pi-demo-home .pih-hero h1{font-size:47px}#view-dashboard.pi-demo-home .pih-hero-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}#view-dashboard.pi-demo-home .pih-hero-actions button,#view-dashboard.pi-demo-home .pih-hero-actions a{grid-template-columns:1fr;padding:10px;gap:5px}#view-dashboard.pi-demo-home .pih-hero-actions>*>span{grid-row:auto;width:34px;height:34px}#view-dashboard.pi-demo-home .pih-hero-actions i{display:none}#view-dashboard.pi-demo-home .pih-hero-actions small{display:none}#view-dashboard.pi-demo-home .pih-lower-grid{grid-template-columns:1fr}}
+@media(max-width:560px){#view-dashboard.pi-demo-home .pih-features{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#view-dashboard.pi-demo-home .pih-feature{padding:13px;min-height:160px}#view-dashboard.pi-demo-home .pih-section-head>span{display:none}#view-dashboard.pi-demo-home .pih-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#view-dashboard.pi-demo-home .pih-quick{grid-template-columns:1fr}#view-dashboard.pi-demo-home .pih-hero-actions{grid-template-columns:1fr}#view-dashboard.pi-demo-home .pih-hero-actions button,#view-dashboard.pi-demo-home .pih-hero-actions a{grid-template-columns:36px 1fr;padding:9px}#view-dashboard.pi-demo-home .pih-hero-actions>*>span{grid-row:1/3}#view-dashboard.pi-demo-home .pih-hero-actions small{display:block}#view-dashboard.pi-demo-home .pih-hero-actions i{display:block;grid-column:3;grid-row:1/3}}
+</style><style id="pi-seamless-design-system">
+/* Shared PostalIQ design language across every application view */
+body.pi-redesign{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#102840;background:#f7f2e9;}
+body.pi-redesign>main{min-height:calc(100vh - 76px);}
+body.pi-redesign .tab-view{animation:piViewEnter .24s ease both;}
+@keyframes piViewEnter{from{opacity:.55;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+/* Consistent page rhythm and typography */
+body.pi-redesign .tab-view h1{letter-spacing:-.035em;}
+body.pi-redesign .tab-view h2{letter-spacing:-.025em;}
+body.pi-redesign .tab-view h1,body.pi-redesign .tab-view h2,body.pi-redesign .tab-view h3{scroll-margin-top:100px;}
+body.pi-redesign .tab-view .bg-brand-card,
+body.pi-redesign .tab-view [class*="bg-white"],
+body.pi-redesign .tab-view [class*="dark:bg-slate-900"],
+body.pi-redesign .tab-view [class*="dark:bg-gray-900"]{border-radius:16px;}
+/* Main panels and content cards share the soft paper / white card treatment */
+body.pi-redesign .tab-view .bg-brand-card,
+body.pi-redesign .tab-view [class*="bg-brand-card"],
+body.pi-redesign .tab-view .ask-result-card,
+body.pi-redesign .tab-view .calc-module,
+body.pi-redesign .tab-view .office-card,
+body.pi-redesign .tab-view .form-card,
+body.pi-redesign .tab-view .manual-card{background:#fff;border:1px solid rgba(16,40,64,.10);border-radius:16px;box-shadow:0 5px 18px rgba(16,40,64,.055);}
+/* Feature surfaces and buttons */
+body.pi-redesign .tab-view button:not(.pi-redesign-link):not(.pi-redesign-mobile-menu):not([class*="bg-transparent"]):not([class*="border-transparent"]){transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease;}
+body.pi-redesign .tab-view button:not(:disabled):hover{filter:brightness(.985);}
+body.pi-redesign .tab-view input:not([type="checkbox"]):not([type="radio"]),
+body.pi-redesign .tab-view select,
+body.pi-redesign .tab-view textarea{border-radius:10px;}
+body.pi-redesign .tab-view input:focus,
+body.pi-redesign .tab-view select:focus,
+body.pi-redesign .tab-view textarea:focus{outline:0;box-shadow:0 0 0 3px rgba(36,120,185,.16);border-color:#5a9bc7!important;}
+/* Tabs / filters: consistent pill navigation */
+body.pi-redesign .tab-view [role="tablist"]{display:flex;flex-wrap:wrap;gap:7px;}
+body.pi-redesign .tab-view [role="tab"]{border-radius:999px;}
+/* Tables remain readable while matching the same card language */
+body.pi-redesign .tab-view table{border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:12px;}
+body.pi-redesign .tab-view table thead th{background:#edf2f6;color:#294257;font-weight:750;}
+body.pi-redesign .tab-view table th,body.pi-redesign .tab-view table td{border-color:rgba(16,40,64,.10);}
+/* Shared links and small accent elements */
+body.pi-redesign .tab-view a:not(.pi-redesign-link){text-underline-offset:3px;}
+body.pi-redesign .tab-view a.text-brand-red,body.pi-redesign .tab-view .text-brand-red{color:#c51d2a!important;}
+body.pi-redesign .tab-view .rounded-xl,body.pi-redesign .tab-view .rounded-2xl{border-radius:16px;}
+/* Sidebar and header remain the same shell as the demo on all routes/views */
+.pi-redesign-sidebar{scrollbar-width:thin;scrollbar-color:#456176 #102b42;}
+.pi-redesign-link:focus-visible,.pi-redesign-mobile-menu:focus-visible{outline:3px solid #f3c76a;outline-offset:2px;}
+body.pi-redesign>header{box-shadow:0 4px 16px rgba(16,43,66,.13);}
+/* Full dark theme, applied to every app section rather than only the homepage */
+html.dark body.pi-redesign{background:#0c1924!important;color:#eaf2f8!important;}
+html.dark body.pi-redesign>main{color:#eaf2f8!important;}
+html.dark body.pi-redesign .tab-view .bg-brand-card,
+html.dark body.pi-redesign .tab-view [class*="bg-brand-card"],
+html.dark body.pi-redesign .tab-view .ask-result-card,
+html.dark body.pi-redesign .tab-view .calc-module,
+html.dark body.pi-redesign .tab-view .office-card,
+html.dark body.pi-redesign .tab-view .form-card,
+html.dark body.pi-redesign .tab-view .manual-card,
+html.dark body.pi-redesign .tab-view [class*="bg-white"],
+html.dark body.pi-redesign .tab-view [class*="dark:bg-slate-900"],
+html.dark body.pi-redesign .tab-view [class*="dark:bg-gray-900"]{background:#132838!important;color:#eaf2f8!important;border-color:#ffffff18!important;box-shadow:0 5px 18px rgba(0,0,0,.15)!important;}
+html.dark body.pi-redesign .tab-view table thead th{background:#20394a!important;color:#eaf2f8!important;}
+html.dark body.pi-redesign .tab-view table th,html.dark body.pi-redesign .tab-view table td{border-color:#ffffff18!important;}
+html.dark body.pi-redesign .tab-view input:not([type="checkbox"]):not([type="radio"]),
+html.dark body.pi-redesign .tab-view select,
+html.dark body.pi-redesign .tab-view textarea{background:#0f2230!important;color:#eaf2f8!important;border-color:#3b5364!important;}
+html.dark body.pi-redesign .tab-view input::placeholder,html.dark body.pi-redesign .tab-view textarea::placeholder{color:#91a7b8!important;}
+html.dark body.pi-redesign .tab-view .text-slate-900,html.dark body.pi-redesign .tab-view .text-gray-900,html.dark body.pi-redesign .tab-view .text-slate-800{color:#edf4f8!important;}
+html.dark body.pi-redesign .tab-view .text-slate-600,html.dark body.pi-redesign .tab-view .text-slate-500,html.dark body.pi-redesign .tab-view .text-gray-600,html.dark body.pi-redesign .tab-view .text-gray-500{color:#b1c4d1!important;}
+/* Contrast repair: cover muted and inherited utility colors used throughout legacy modules */
+html.dark body.pi-redesign .tab-view .text-slate-400,html.dark body.pi-redesign .tab-view .text-gray-400,html.dark body.pi-redesign .tab-view .text-zinc-400{color:#a9bdcb!important;}
+html.dark body.pi-redesign .tab-view .text-slate-700,html.dark body.pi-redesign .tab-view .text-gray-700,html.dark body.pi-redesign .tab-view .text-zinc-700{color:#d7e4ec!important;}
+html.dark body.pi-redesign .tab-view .text-black,html.dark body.pi-redesign .tab-view .text-gray-800,html.dark body.pi-redesign .tab-view .text-zinc-800{color:#edf4f8!important;}
+html.dark body.pi-redesign .tab-view label,html.dark body.pi-redesign .tab-view legend,html.dark body.pi-redesign .tab-view summary{color:#dce8ef;}
+html.dark body.pi-redesign .tab-view small,html.dark body.pi-redesign .tab-view figcaption{color:#b1c4d1;}
+html.dark body.pi-redesign .tab-view .text-brand-gold{color:#f3cf7c!important;}
+html.dark body.pi-redesign .tab-view .text-emerald-700,html.dark body.pi-redesign .tab-view .text-emerald-800{color:#78dfb1!important;}
+html.dark body.pi-redesign .tab-view .text-rose-700,html.dark body.pi-redesign .tab-view .text-rose-800{color:#ff9da5!important;}
+html.dark body.pi-redesign .tab-view .text-blue-700,html.dark body.pi-redesign .tab-view .text-indigo-700{color:#9bc9ff!important;}
+html.dark body.pi-redesign .tab-view .text-amber-700,html.dark body.pi-redesign .tab-view .text-orange-700{color:#f6cc7b!important;}
+html.dark body.pi-redesign .tab-view button:not([class*="bg-brand-red"]):not([class*="bg-red-"]):not([class*="bg-emerald-"]):not([class*="bg-blue-"]):not([class*="bg-amber-"]){color:inherit;}
+html.dark body.pi-redesign .tab-view a:not([class*="text-brand-red"]):not([class*="text-red-"]){color:#9bc9ff;}
+html.dark body.pi-redesign .tab-view .bg-emerald-100{background:#153b32!important;color:#a6f0cd!important;}
+html.dark body.pi-redesign .tab-view .bg-rose-100,html.dark body.pi-redesign .tab-view .bg-red-100{background:#44252c!important;color:#ffc1c6!important;}
+html.dark body.pi-redesign .tab-view [class*="bg-slate-50"],html.dark body.pi-redesign .tab-view [class*="bg-gray-50"],html.dark body.pi-redesign .tab-view [class*="bg-slate-100"]{background:#1a3040!important;}
+html.dark body.pi-redesign .tab-view [class*="border-slate-200"],html.dark body.pi-redesign .tab-view [class*="border-gray-200"]{border-color:#ffffff18!important;}
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature,html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-panel{background:#132838!important;color:#eaf2f8!important;}
+/* Homepage-only dark-mode contrast correction: keep dark-mode text readable without affecting tab tools. */
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-section-head h2,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-panel-head h2,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature h3,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button span,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button b { color:#eaf2f8!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-section-head p,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-section-head>span,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-feature p,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-panel-head p,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-stats span { color:#b8c9d5!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-stats strong { color:#ff929a!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions button,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions a { background:#183244!important;border-color:#ffffff20!important;color:#edf5fa!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions b { color:#edf5fa!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions small { color:#b8c9d5!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions button:hover,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions a:hover { background:#214155!important; }
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button span,
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button b { color:#ff929a!important; }
+/* Compact live rates ribbon replaces decorative hero tags without lengthening Home */
+#view-dashboard.pi-demo-home .pih-rate-strip{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px;max-width:690px;padding:9px 10px;border:1px solid #c6a98770;border-radius:13px;background:#ffffff9c;position:relative;z-index:2}
+#view-dashboard.pi-demo-home .pih-rate-strip-label{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:1px;font-weight:850;color:#637587;margin-right:2px}
+#view-dashboard.pi-demo-home .pih-rate-live-dot{width:6px;height:6px;border-radius:50%;background:#159968;box-shadow:0 0 0 3px #15996820}
+#view-dashboard.pi-demo-home .pih-rate-mini{display:flex;align-items:baseline;gap:5px;padding:4px 7px;border-radius:7px;background:#f4f6f7;color:#102b42;white-space:nowrap}
+#view-dashboard.pi-demo-home .pih-rate-mini span{font-size:10px;color:#607386;font-weight:800}
+#view-dashboard.pi-demo-home .pih-rate-mini strong{font:700 14px Georgia,serif;color:#bd1c29}
+#view-dashboard.pi-demo-home .pih-rate-all{margin-left:auto;border:0;border-radius:8px;padding:6px 9px;background:#102b42;color:#fff;font-size:11px;font-weight:800;white-space:nowrap}
+#view-dashboard.pi-demo-home .pih-rate-all span{margin-left:4px;color:#f3c76a}
+html.dark #view-dashboard.pi-demo-home .pih-rate-strip{background:#102433;border-color:#ffffff20}
+html.dark #view-dashboard.pi-demo-home .pih-rate-strip-label{color:#b2c4d1}
+html.dark #view-dashboard.pi-demo-home .pih-rate-mini{background:#1a3445;color:#eaf2f8}
+html.dark #view-dashboard.pi-demo-home .pih-rate-mini span{color:#b2c4d1}
+html.dark #view-dashboard.pi-demo-home .pih-rate-mini strong{color:#ff929a}
+html.dark #view-dashboard.pi-demo-home .pih-rate-all{background:#f0c66d;color:#172a38}
+html.dark #view-dashboard.pi-demo-home .pih-rate-all span{color:#172a38}
+@media(max-width:560px){#view-dashboard.pi-demo-home .pih-rate-strip{gap:6px;padding:8px}#view-dashboard.pi-demo-home .pih-rate-strip-label{width:100%;margin-bottom:1px}#view-dashboard.pi-demo-home .pih-rate-mini{flex:1;justify-content:center}#view-dashboard.pi-demo-home .pih-rate-all{margin-left:0;flex:1}}
+/* Screen sizes */
+@media(max-width:900px){body.pi-redesign>main{padding:14px 16px 24px!important;}body.pi-redesign .tab-view{scroll-margin-top:80px;}}
+@media(max-width:560px){body.pi-redesign>main{padding:12px 10px 20px!important;}body.pi-redesign .tab-view .bg-brand-card,body.pi-redesign .tab-view [class*="bg-brand-card"]{border-radius:13px;}}
+@media(prefers-reduced-motion:reduce){body.pi-redesign .tab-view{animation:none!important}body.pi-redesign *{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+/* Dark-mode accessibility sweep: normalize legacy text utilities and inline dark colors across ALL app views and overlays. */
+html.dark body.pi-redesign,
+html.dark body.pi-redesign .tab-view,
+html.dark body.pi-redesign .tab-view p,
+html.dark body.pi-redesign .tab-view li,
+html.dark body.pi-redesign .tab-view td,
+html.dark body.pi-redesign .tab-view th,
+html.dark body.pi-redesign .tab-view span,
+html.dark body.pi-redesign .tab-view div,
+html.dark body.pi-redesign .tab-view strong,
+html.dark body.pi-redesign .tab-view em,
+html.dark body.pi-redesign .tab-view b,
+html.dark body.pi-redesign .tab-view label,
+html.dark body.pi-redesign .tab-view legend,
+html.dark body.pi-redesign .tab-view summary,
+html.dark body.pi-redesign .tab-view .form-label,
+html.dark body.pi-redesign .tab-view .help-text,
+html.dark body.pi-redesign .tab-view .description,
+html.dark body.pi-redesign .tab-view .muted { color: #e3edf4; }
+html.dark body.pi-redesign .tab-view [class~="text-slate-950"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-900"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-800"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-700"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-950"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-900"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-800"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-700"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-950"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-900"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-800"],
+html.dark body.pi-redesign .tab-view [class~="text-neutral-900"],
+html.dark body.pi-redesign .tab-view [class~="text-neutral-800"],
+html.dark body.pi-redesign .tab-view [class~="text-black"] { color:#edf5fa!important; }
+html.dark body.pi-redesign .tab-view [class~="text-slate-600"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-500"],
+html.dark body.pi-redesign .tab-view [class~="text-slate-400"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-600"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-500"],
+html.dark body.pi-redesign .tab-view [class~="text-gray-400"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-600"],
+html.dark body.pi-redesign .tab-view [class~="text-zinc-500"],
+html.dark body.pi-redesign .tab-view [class~="text-neutral-600"],
+html.dark body.pi-redesign .tab-view [class~="text-neutral-500"] { color:#bdceda!important; }
+/* Inline styles in older calculator modules often hard-code near-black text. */
+html.dark body.pi-redesign .tab-view [style*="color:#000"],
+html.dark body.pi-redesign .tab-view [style*="color: #000"],
+html.dark body.pi-redesign .tab-view [style*="color:black"],
+html.dark body.pi-redesign .tab-view [style*="color: black"],
+html.dark body.pi-redesign .tab-view [style*="color:#111"],
+html.dark body.pi-redesign .tab-view [style*="color: #111"],
+html.dark body.pi-redesign .tab-view [style*="color:#222"],
+html.dark body.pi-redesign .tab-view [style*="color: #222"],
+html.dark body.pi-redesign .tab-view [style*="color:#333"],
+html.dark body.pi-redesign .tab-view [style*="color: #333"] { color:#edf5fa!important; }
+/* Preserve readable semantic/status colors on dark backgrounds. */
+html.dark body.pi-redesign .tab-view [class*="text-green-"],html.dark body.pi-redesign .tab-view [class*="text-emerald-"]{color:#8ee5b8!important;}
+html.dark body.pi-redesign .tab-view [class*="text-red-"],html.dark body.pi-redesign .tab-view [class*="text-rose-"]{color:#ffabb2!important;}
+html.dark body.pi-redesign .tab-view [class*="text-blue-"],html.dark body.pi-redesign .tab-view [class*="text-indigo-"]{color:#a8d0ff!important;}
+html.dark body.pi-redesign .tab-view [class*="text-amber-"],html.dark body.pi-redesign .tab-view [class*="text-orange-"]{color:#f7d28b!important;}
+html.dark body.pi-redesign .tab-view [class*="bg-white"],html.dark body.pi-redesign .tab-view [class*="bg-gray-50"],html.dark body.pi-redesign .tab-view [class*="bg-slate-50"],html.dark body.pi-redesign .tab-view [class*="bg-zinc-50"]{color:#edf5fa!important;}
+html.dark body.pi-redesign .tab-view input,html.dark body.pi-redesign .tab-view select,html.dark body.pi-redesign .tab-view textarea{color:#edf5fa!important;}
+html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-redesign .tab-view input[type="radio"]{accent-color:#f87171;}
+</style><style id="postaliq-darkmode-fix">
+/* Full dark mode fix: the polished-home styling originally forced several surfaces back to white. */
+.dark body{background:#0f172a!important;color:#e2e8f0!important}
+.dark main{color:#e2e8f0!important}
+.dark header{background:rgba(15,23,42,.94)!important;border-color:#334155!important}
+.dark header nav button{color:#cbd5e1!important}
+.dark header nav button:hover{background:#1e293b!important;color:#fca5a5!important}
+.dark header nav button.bg-brand-red,.dark header nav button.text-brand-red{background:#b71c1c!important;color:#fff!important}
+.dark .tab-view > .bg-brand-card,.dark .tab-view > [class*="bg-brand-card"]{background:#111827!important;border-color:#334155!important}
+.dark #view-dashboard > div:first-child{background:#111827!important;color:#e2e8f0!important;border-color:#334155!important;box-shadow:0 18px 45px rgba(0,0,0,.35)!important}
+.dark #view-dashboard > div:first-child h1{color:#f8fafc!important}
+.dark #view-dashboard > div:first-child p{color:#cbd5e1!important}
+.dark #view-dashboard > div:nth-child(2) > div{background:#111827!important;border-color:#334155!important;color:#e2e8f0!important;box-shadow:0 8px 24px rgba(0,0,0,.25)!important}
+.dark #view-dashboard > div:nth-child(2) .text-xl{color:#f8fafc!important}
+.dark #view-dashboard > div:first-child .bg-white\/10{background:#1e293b!important;color:#e2e8f0!important;border-color:#475569!important}
+.dark #view-dashboard > div:first-child .bg-white\/10:hover{background:#334155!important}
+.dark #view-ask > .bg-brand-card{background:#111827!important}
+.dark #view-ask #ask-input{background:#f8fafc!important;color:#111827!important}
+.dark .pi-hero{background:#111827!important;border-color:#334155!important;box-shadow:0 18px 45px rgba(0,0,0,.35)!important}
+.dark .pi-hero h1,.dark .pi-section h2,.dark .pi-panel h3{color:#f8fafc!important}
+.dark .pi-hero-copy>p,.dark .pi-section-head p,.dark .pi-panel-head p{color:#cbd5e1!important}
+.dark .pi-btn-light{background:#1e293b!important;border-color:#475569!important;color:#e2e8f0!important}
+.dark .pi-btn-light:hover{background:#334155!important}
+.dark .pi-tools-grid,.dark .pi-tool,.dark .pi-panel,.dark .pi-stats{background:#111827!important;border-color:#334155!important}
+.dark .pi-tool{color:#e2e8f0!important;border-right-color:#334155!important;border-bottom-color:#334155!important}
+.dark .pi-tool:hover{background:#1e293b!important}
+.dark .pi-tool strong{color:#f1f5f9!important}
+.dark .pi-tool small,.dark .pi-panel-head p,.dark .pi-rate-grid span,.dark .pi-records small,.dark .pi-stats span,.dark .pi-stats small{color:#94a3b8!important}
+.dark .pi-rate-grid{border-color:#334155!important}
+.dark .pi-rate-grid div{border-color:#334155!important}
+.dark .pi-rate-grid b,.dark .pi-stats strong{color:#f8fafc!important}
+.dark .pi-records button{background:#111827!important;border-color:#334155!important;color:#e2e8f0!important}
+.dark .pi-records strong{color:#f1f5f9!important}
+.dark .pi-record-tag{background:#3b2a0b!important;color:#fbbf24!important}
+/* Calculator controls: modules after the 7th CPC page had inputs without dark Tailwind classes. */
+.dark .calc-module input:not([type="checkbox"]):not([type="radio"]),
+.dark .calc-module select,
+.dark .calc-module textarea{
+  background:#0f172a!important;
+  color:#f8fafc!important;
+  border-color:#475569!important;
+  color-scheme:dark;
+}
+.dark .calc-module input::placeholder,.dark .calc-module textarea::placeholder{color:#94a3b8!important}
+.dark .calc-module option{background:#0f172a!important;color:#f8fafc!important}
+.dark .calc-module label{color:#cbd5e1!important}
+.dark .calc-module .bg-white{background:#111827!important}
+.dark .calc-module .bg-slate-50{background:#1e293b!important}
+.dark .calc-module .text-slate-900{color:#f8fafc!important}
+.dark .calc-module .text-slate-800{color:#e2e8f0!important}
+.dark .calc-module .text-slate-700{color:#cbd5e1!important}
+.dark .calc-module .text-slate-600{color:#cbd5e1!important}
+.dark .calc-module .text-slate-500{color:#94a3b8!important}
+.dark .calc-module .border-slate-200{border-color:#334155!important}
+.dark .calc-module .border-slate-300{border-color:#475569!important}
+.dark .calc-module .border-b{border-color:#334155!important}
+/* Preserve readable dark fields in all calculator modules, including CPC8. */
+.dark #module-cpc8 input{background:#0f172a!important;color:#f8fafc!important;border-color:#475569!important}
+.dark #module-cpc8 .bg-slate-50{background:#1e293b!important}
+/* Generic form controls elsewhere in the application. */
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark select,.dark textarea{color-scheme:dark}
+</style><style id="postaliq-final-print-fix">
+/* PostalIQ print system: print the real page, but only the currently selected view/module. */
+@media print {
+  @page { margin: 10mm; }
+  html,body { background:#fff !important; color:#111 !important; }
+  body { margin:0 !important; font-size:10.5pt !important; -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+
+  /* Never print application chrome, navigation, tabs or action buttons. */
+  header,
+  .print-nav,
+  .no-print,
+  button,
+  [role="button"],
+  #order-detail-modal,
+  #pdf-viewer-modal,
+  #postal-print-frame { display:none !important; }
+
+  /* Only the currently visible top-level page is printable. */
+  .tab-view { display:none !important; }
+  .tab-view.piq-print-active { display:block !important; }
+  .tab-view.hidden,
+  .posb-pane.hidden,
+  .calc-module.hidden,
+  #orders-sub-manuals.hidden,
+  #orders-sub-sb.hidden,
+  .hidden { display:none !important; }
+
+  /* Remove interactive chrome while preserving the page's actual card/table layout. */
+  .piq-printing .overflow-x-auto { overflow:visible !important; }
+  .piq-printing .overflow-y-auto { overflow:visible !important; }
+  .piq-printing .shadow,
+  .piq-printing .shadow-sm,
+  .piq-printing .shadow-md,
+  .piq-printing .shadow-lg,
+  .piq-printing .shadow-xl,
+  .piq-printing .shadow-2xl { box-shadow:none !important; }
+  .piq-printing main { max-width:1180px !important; margin:0 auto !important; padding:0 !important; }
+
+  /* Keep the polished PostalIQ surfaces instead of converting everything to plain text. */
+  .piq-printing .bg-brand-card,
+  .piq-printing .dark\:bg-brand-darkCard,
+  .piq-printing .bg-white,
+  .piq-printing .bg-slate-50 { background:#fff !important; }
+  .piq-printing .border,
+  .piq-printing .border-slate-200,
+  .piq-printing .border-slate-300,
+  .piq-printing .border-brand-border,
+  .piq-printing .dark\:border-brand-darkBorder { border-color:#d8dee7 !important; }
+  .piq-printing .text-white,
+  .piq-printing .dark\:text-white { color:#111827 !important; }
+  .piq-printing h1,.piq-printing h2,.piq-printing h3,.piq-printing h4 { break-after:avoid; page-break-after:avoid; }
+  .piq-printing table { width:100% !important; border-collapse:collapse !important; }
+  .piq-printing th,.piq-printing td { border:1px solid #cbd5e1 !important; }
+  .piq-printing img { max-width:100% !important; height:auto !important; }
+  .piq-printing svg { width:16px !important; height:16px !important; max-width:16px !important; max-height:16px !important; }
+  .piq-printing #ppf-chart { width:100% !important; height:auto !important; max-width:100% !important; }
+
+  /* Inputs/selects remain readable, but no longer dominate the printed page. */
+  .piq-printing input,
+  .piq-printing select,
+  .piq-printing textarea {
+    color:#111827 !important;
+    background:#fff !important;
+    border:1px solid #cbd5e1 !important;
+    box-shadow:none !important;
+  }
+
+  /* Preserve the homepage's editorial cards when the Dashboard is printed. */
+  .piq-printing .pi-hero,
+  .piq-printing .pi-panel,
+  .piq-printing .pi-tool,
+  .piq-printing .pi-stats,
+  .piq-printing .pi-tools-grid { box-shadow:none !important; }
+}
+</style><style id="pi-live-tiles-css">
+/* ============ PostalIQ live tiles (Windows Phone 8.1 / 10 style) ============ */
+:root{--pilt-font:"Segoe UI","Segoe UI Variable Text",Inter,system-ui,-apple-system,sans-serif;--pilt-ease:cubic-bezier(.2,.75,.25,1)}
+.pilt{position:relative;perspective:800px;-webkit-tap-highlight-color:transparent;text-decoration:none}
+.pilt-tilt{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--sc,1));transition:transform .4s var(--pilt-ease)}
+.pilt.pilt-press .pilt-tilt{transition-duration:.07s}
+.pilt-in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .62s var(--pilt-ease)}
+.pilt-face{position:absolute;inset:0;overflow:hidden;background-color:var(--c);background-image:var(--g,none);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.pilt-front{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;padding:10px 12px 9px;color:#fff;font-family:var(--pilt-font);text-align:left}
+.pilt-back{transform:rotateX(180deg);background-image:linear-gradient(rgba(0,0,0,.26),rgba(0,0,0,.26)),var(--g,none);color:#fff;padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:3px;font-family:var(--pilt-font);text-align:left}
+.pilt-back>*{display:block}
+.pilt-big{font-size:34px;line-height:1.02;font-weight:300;letter-spacing:-.02em}
+.pilt-k{font-size:11.5px;line-height:1.3;opacity:.9}
+.pilt-h{font-size:14px;line-height:1.25;font-weight:600}
+.pilt-t{font-size:12px;line-height:1.35;opacity:.92}
+.pilt-pair{display:grid!important;grid-template-columns:1fr 1fr;gap:8px 12px}
+.pilt-pair>span,.pilt-pair .pilt-big,.pilt-pair .pilt-k{display:block}
+.pilt-wide .pilt-big{font-size:42px}
+.pilt-wide .pilt-h{font-size:16px}.pilt-wide .pilt-t{font-size:13px}
+.pilt-face::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 0 #fff;transition:box-shadow .2s}
+.pilt.active .pilt-face::after{box-shadow:inset 0 0 0 3px #fff}
+.pilt:hover .pilt-in{transform:rotateX(180deg);transition-delay:.05s}
+.pilt:focus-visible .pilt-in,.pilt.pilt-flip .pilt-in{transform:rotateX(180deg)}
+.pilt:focus-visible{outline:3px solid #f3c76a;outline-offset:2px}
+
+/* homepage grid */
+#view-dashboard.pi-demo-home .pih-features{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:150px;gap:8px;grid-auto-flow:dense}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt{display:block;height:100%;min-height:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;color:#fff!important;transform:none!important;overflow:visible}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt:nth-child(1),html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt:nth-child(6),html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt:nth-child(7),html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt:nth-child(8){grid-column:span 2}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt .pih-arrow,html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt p{display:none!important}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt .pih-icon{display:block!important;width:auto!important;height:auto!important;background:none!important;color:#fff!important;border-radius:0!important;font-size:40px!important;font-weight:300!important;line-height:1!important}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt h3{margin:0!important;font:600 15px/1.2 var(--pilt-font)!important;color:#fff!important}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt.pilt-wide h3{font-size:17px!important}
+@media(max-width:1250px){
+ #view-dashboard.pi-demo-home .pih-features{grid-template-columns:repeat(2,minmax(0,1fr))}
+ html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt:nth-child(7),html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt:nth-child(8){grid-column:span 1}
+ html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt:nth-child(7) .pilt-big,html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt:nth-child(8) .pilt-big{font-size:34px}
+}
+@media(max-width:560px){#view-dashboard.pi-demo-home .pih-features{grid-auto-rows:128px;gap:6px}html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt h3{font-size:13.5px!important}html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt .pih-icon{font-size:34px!important}.pilt-big{font-size:28px}}
+
+/* sidebar tiles */
+body.pi-redesign .pi-redesign-nav{display:grid!important;grid-template-columns:1fr 1fr;grid-auto-rows:116px;gap:6px}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt{display:block!important;width:auto;min-height:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;transform:none!important}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt.pilt-wide{grid-column:span 2}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt .pi-redesign-icon{display:block!important;flex:none;width:auto!important;height:auto!important;background:none!important;color:#fff!important;border-radius:0!important;font-size:34px!important;font-weight:300;line-height:1}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt b{display:block;margin:0;font:600 13.5px/1.2 var(--pilt-font)!important;color:#fff!important}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt small,html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt i{display:none!important}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt .pilt-big{font-size:28px}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt.pilt-wide .pilt-big{font-size:34px}
+.pi-redesign-nav .pilt-front>span:nth-child(2){flex:none;min-width:0}
+
+
+@media print{.pilt-back{display:none!important}}
+
+/* The page's own reduced-motion rule (body.pi-redesign *{transition-duration:.01ms!important}) freezes the tiles
+   on PCs where Windows "Show animations" is off. Tiles are the one thing that should always animate. */
+body.pi-redesign .pilt .pilt-in{transition-duration:.62s!important}
+body.pi-redesign .pilt .pilt-tilt{transition-duration:.4s!important}
+body.pi-redesign .pilt.pilt-press .pilt-tilt{transition-duration:.07s!important}
+body.pi-redesign .pilt .pilt-face::after{transition-duration:.2s!important}
+
+/* Windows Phone style: one big white pictogram centred on the tile, title bottom-left */
+.pilt-front{justify-content:flex-end!important}
+.pilt-pic{position:absolute;left:50%;top:43%;width:58px;height:58px;transform:translate(-50%,-50%);pointer-events:none}
+.pilt-pic svg{width:100%;height:100%;fill:none;stroke:#fff;stroke-width:3.2;stroke-linejoin:miter;stroke-linecap:butt;overflow:visible}
+.pilt-wide .pilt-pic{width:64px;height:64px}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt .pih-icon,html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt .pi-redesign-icon{display:none!important}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt .pilt-pic{width:38px;height:38px;top:34%}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt.pilt-wide .pilt-pic{width:46px;height:46px;top:40%}
+@media(max-width:560px){html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt .pilt-pic{width:46px;height:46px}}
+
+/* texture layer + style panel */
+.pilt-face::before,.pilt-tex::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:var(--tex,none);background-size:var(--texsz,auto);background-position:var(--texpos,0 0);background-repeat:var(--texrep,repeat)}
+.pilt-face>*:not(.pilt-pic){position:relative;z-index:1}
+.pilt-pic{z-index:1}
+.pilt-ts-btn{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin:0 0 0 2px;padding:8px 12px;border:1px solid #ffffff2e;background:#ffffff12;color:#eaf2f8;font:600 12.5px Inter,system-ui,sans-serif}
+.pilt-ts-btn:hover{background:#ffffff24}
+.pilt-ts-btn-home{margin:0;background:#fff;color:#102840;border:1px solid #10284022;align-self:flex-end}
+html.dark .pilt-ts-btn-home{background:#132838;color:#eaf2f8;border-color:#ffffff22}
+.pilt-ts{position:fixed;z-index:140;left:298px;bottom:16px;width:372px;max-height:calc(100vh - 32px);overflow:auto;padding:16px;background:#fff;color:#102840;border-radius:14px;box-shadow:0 22px 60px #0007;font:14px/1.4 Inter,system-ui,sans-serif}
+.pilt-ts[hidden]{display:none}
+html.dark .pilt-ts{background:#132838;color:#eaf2f8}
+.pilt-ts-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:16px}
+.pilt-ts-x{border:0;background:none;font-size:16px;color:inherit;padding:4px 8px}
+.pilt-ts-s{margin:12px 0 7px;font-size:12px;font-weight:700;opacity:.7}
+.pilt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.pilt-opt{display:flex;flex-direction:column;gap:6px;padding:7px;border:2px solid transparent;border-radius:10px;background:rgba(127,127,127,.13);color:inherit;text-align:left;font:600 12px Inter,system-ui,sans-serif}
+.pilt-opt[aria-checked=true]{border-color:#e32430;background:rgba(227,36,48,.10)}
+.pilt-minis{display:flex;gap:3px;height:26px}
+.pilt-minis i{flex:1}
+.pilt-tex{position:relative;display:block;height:26px;background:linear-gradient(135deg,#2a6fd0,#102b42)}
+.pilt-ts-r{margin-top:14px;padding:8px 12px;border:1px solid rgba(127,127,127,.4);background:none;color:inherit;font:600 12.5px Inter,system-ui,sans-serif}
+@media(max-width:900px){.pilt-ts{left:8px;right:8px;bottom:8px;width:auto}}
+@media print{.pilt-ts,.pilt-ts-btn{display:none!important}}
+
+/* =====================================================================
+   v2 · Sleek glass tiles
+   rounded corners · coloured glow · frosted icon chip · watermark glyph ·
+   cursor spotlight + parallax tilt · soft slide/blur live-content swap
+   ===================================================================== */
+:root{--pilt-font:Inter,"Segoe UI Variable Display","Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif}
+.pilt{--pr:22px}
+.pi-redesign-nav .pilt{--pr:17px}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt{border-radius:var(--pr)!important}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt{border-radius:var(--pr)!important}
+#view-dashboard.pi-demo-home .pih-features{grid-auto-rows:168px;gap:14px}
+body.pi-redesign .pi-redesign-nav{grid-auto-rows:112px;gap:8px}
+@media(max-width:560px){#view-dashboard.pi-demo-home .pih-features{grid-auto-rows:142px;gap:10px}}
+
+/* the card itself: coloured ambient glow, lifts on hover */
+.pilt .pilt-tilt{transform-style:flat;transform:translateY(var(--ty,0px)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--sc,1));
+ border-radius:var(--pr);overflow:hidden;will-change:transform;background-color:var(--c);background-image:var(--g,none);
+ box-shadow:0 1px 2px rgba(15,23,42,.14),0 12px 22px -10px rgba(15,23,42,.45);
+ box-shadow:0 1px 2px rgba(15,23,42,.12),0 12px 24px -10px color-mix(in srgb,var(--c) 80%,transparent),0 26px 44px -26px color-mix(in srgb,var(--c) 90%,transparent);
+ transition:transform .45s var(--pilt-ease),box-shadow .45s ease;
+ animation:pilt-rise .75s var(--pilt-ease) backwards;animation-delay:calc(var(--i,0)*55ms)}
+.pilt .pilt-in{transform-style:flat}
+.pilt:hover{--ty:-4px}
+.pilt.pilt-press{--ty:0px}
+.pilt:hover .pilt-tilt{box-shadow:0 2px 4px rgba(15,23,42,.16),0 20px 34px -12px rgba(15,23,42,.5);
+ box-shadow:0 2px 4px rgba(15,23,42,.14),0 20px 34px -12px color-mix(in srgb,var(--c) 90%,transparent),0 36px 56px -30px color-mix(in srgb,var(--c) 100%,transparent)}
+.pilt.active .pilt-tilt{box-shadow:0 0 0 2px #fff,0 0 0 5px rgba(255,255,255,.28),0 12px 26px -10px rgba(0,0,0,.5)}
+
+/* hairline glass edge + top highlight */
+.pilt .pilt-face{border-radius:var(--pr)}
+.pilt .pilt-face::after{border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.20),inset 0 1px 0 rgba(255,255,255,.34)}
+.pilt.active .pilt-face::after{box-shadow:inset 0 0 0 1px rgba(255,255,255,.30),inset 0 1px 0 rgba(255,255,255,.4)}
+
+/* live content swap: slide + blur crossfade (replaces the 3D flip, hover no longer flips) */
+.pilt:hover .pilt-in,.pilt:focus-visible .pilt-in,.pilt.pilt-flip .pilt-in{transform:none}
+.pilt .pilt-front{padding:17px 18px 16px;transition:opacity .6s ease,transform .6s var(--pilt-ease),filter .6s ease}
+.pilt .pilt-back{transform:translateY(18px);opacity:0;filter:blur(8px);pointer-events:none;padding:17px 18px;gap:5px;
+ background-image:linear-gradient(rgba(5,10,25,.34),rgba(5,10,25,.34)),var(--g,none);
+ transition:opacity .6s ease,transform .6s var(--pilt-ease),filter .6s ease}
+.pilt.pilt-flip .pilt-front{opacity:0;transform:translateY(-18px);filter:blur(8px)}
+.pilt.pilt-flip .pilt-back{opacity:1;transform:none;filter:none}
+.pilt.pilt-flip .pilt-back>*{animation:pilt-up .65s var(--pilt-ease) backwards}
+.pilt.pilt-flip .pilt-back>*:nth-child(2){animation-delay:.07s}
+
+/* frosted icon chip (top-left) */
+.pilt .pilt-pic{left:14px!important;top:14px!important;transform:none!important;width:46px!important;height:46px!important;padding:11px;box-sizing:border-box;border-radius:15px;
+ background:linear-gradient(145deg,rgba(255,255,255,.26),rgba(255,255,255,.07));border:1px solid rgba(255,255,255,.30);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 16px -8px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(10px) saturate(150%);backdrop-filter:blur(10px) saturate(150%);
+ transition:transform .5s var(--pilt-ease)!important}
+.pilt:hover .pilt-pic{transform:translateY(-1px) scale(1.06)!important}
+.pilt .pilt-pic svg{stroke-width:3;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2))}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt .pilt-pic{left:11px!important;top:11px!important;width:36px!important;height:36px!important;padding:8px;border-radius:12px}
+@media(max-width:560px){html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt .pilt-pic{width:40px!important;height:40px!important;padding:9px;border-radius:13px}}
+
+/* titles + caption */
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt h3{font:650 17px/1.2 var(--pilt-font)!important;letter-spacing:-.015em;text-shadow:0 1px 10px rgba(0,0,0,.22)}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt.pilt-wide h3{font-size:19px!important}
+html body.pi-redesign .pi-redesign-nav .pi-redesign-link.pilt.pilt b{font:650 13.5px/1.2 var(--pilt-font)!important;letter-spacing:-.005em;text-shadow:0 1px 8px rgba(0,0,0,.22)}
+.pi-redesign-nav .pilt .pilt-front{padding:12px 13px}
+.pilt .pilt-sub{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:88%;margin-top:5px;font:450 12px/1.4 var(--pilt-font);opacity:.8;text-align:left}
+.pilt:not(.pilt-wide) .pilt-sub{display:none}
+@media(max-width:560px){
+ html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt h3,html body.pi-redesign #view-dashboard.pi-demo-home .pih-feature.pilt.pilt.pilt-wide h3{font-size:14.5px!important}
+ .pilt .pilt-sub{display:none}
+}
+
+/* live-data typography (back face) */
+.pilt .pilt-big{font-size:38px;font-weight:600;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 2px 14px rgba(0,0,0,.2)}
+.pilt.pilt-wide .pilt-big{font-size:46px}
+.pilt .pilt-k{font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;opacity:.82}
+.pilt .pilt-h{font-size:16px;font-weight:650;letter-spacing:-.01em}
+.pilt .pilt-t{font-size:12.5px;opacity:.86}
+@media(max-width:560px){.pilt .pilt-big,.pilt.pilt-wide .pilt-big{font-size:30px}}
+
+/* decorative layers: watermark glyph, cursor spotlight, live dot, hover arrow */
+.pilt .pilt-face>.pilt-wm{position:absolute;right:-18px;bottom:-22px;width:132px;height:132px;opacity:.12;transform:rotate(-14deg);pointer-events:none;z-index:0;transition:transform .8s var(--pilt-ease),opacity .4s ease}
+.pilt.pilt-wide .pilt-face>.pilt-wm{width:156px;height:156px;right:-6px;bottom:-34px}
+.pi-redesign-nav .pilt .pilt-face>.pilt-wm{width:84px;height:84px;right:-10px;bottom:-14px}
+.pilt .pilt-wm svg{width:100%;height:100%;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.pilt:hover .pilt-face>.pilt-wm{transform:rotate(-8deg) scale(1.1) translate(-4px,-4px);opacity:.19}
+
+.pilt .pilt-face>.pilt-spot{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .35s ease;
+ background:radial-gradient(280px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.30),rgba(255,255,255,0) 62%)}
+.pilt:hover .pilt-face>.pilt-spot{opacity:1}
+
+.pilt .pilt-face>.pilt-live{position:absolute;top:23px;right:23px;width:8px;height:8px;border-radius:50%;background:#fff;opacity:.95;pointer-events:none;
+ animation:pilt-pulse 2.6s ease-out infinite;animation-delay:calc(var(--i,0)*-370ms);transition:opacity .25s ease}
+.pi-redesign-nav .pilt .pilt-face>.pilt-live{top:18px;right:18px;width:6px;height:6px}
+.pilt:hover .pilt-face>.pilt-live{opacity:0}
+
+.pilt .pilt-face>.pilt-go{position:absolute;top:13px;right:13px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;pointer-events:none;
+ font:600 14px/1 var(--pilt-font);background:rgba(255,255,255,.20);border:1px solid rgba(255,255,255,.32);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+ opacity:0;transform:translate(-6px,6px) scale(.8);transition:opacity .3s ease,transform .45s var(--pilt-ease)}
+.pi-redesign-nav .pilt .pilt-face>.pilt-go{top:9px;right:9px;width:24px;height:24px;font-size:12px}
+.pilt:hover .pilt-face>.pilt-go,.pilt:focus-visible .pilt-face>.pilt-go{opacity:1;transform:none}
+
+@keyframes pilt-rise{from{opacity:0;transform:translateY(22px) scale(.95)}}
+@keyframes pilt-up{from{opacity:0;transform:translateY(10px)}}
+@keyframes pilt-pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}70%,100%{box-shadow:0 0 0 9px rgba(255,255,255,0)}}
+
+/* keep the new motion alive even when the page's global reduced-motion rule is on (same policy as the original tiles) */
+body.pi-redesign .pilt .pilt-front,body.pi-redesign .pilt .pilt-back{transition-duration:.6s!important}
+body.pi-redesign .pilt .pilt-go,body.pi-redesign .pilt .pilt-spot,body.pi-redesign .pilt .pilt-live{transition-duration:.3s!important}
+body.pi-redesign .pilt .pilt-wm{transition-duration:.8s!important}
+body.pi-redesign .pilt .pilt-pic{transition-duration:.5s!important}
+@media(prefers-reduced-motion:reduce){.pilt .pilt-tilt,.pilt .pilt-face>.pilt-live,.pilt.pilt-flip .pilt-back>*{animation:none}}
+@media print{.pilt .pilt-live,.pilt .pilt-go,.pilt .pilt-spot{display:none!important}}
+
+/* style panel */
+.pilt-ts{border-radius:22px;padding:18px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%);border:1px solid rgba(255,255,255,.65);box-shadow:0 30px 80px -20px rgba(2,12,27,.55),0 2px 6px rgba(2,12,27,.10)}
+html.dark .pilt-ts{background:rgba(15,32,46,.88);border-color:rgba(255,255,255,.10)}
+.pilt-ts-s{text-transform:uppercase;letter-spacing:.1em;font-size:10.5px;opacity:.6}
+.pilt-opt{border-radius:14px;transition:transform .15s ease,border-color .15s ease,background .15s ease}
+.pilt-opt:hover{transform:translateY(-1px)}
+.pilt-minis{gap:4px}.pilt-minis i{border-radius:7px}.pilt-tex{border-radius:8px}
+.pilt-ts-r,.pilt-ts-btn{border-radius:12px}
+</style>
+<style id="pi-design-language">
+/* =====================================================================
+   PostalIQ design language v2 · applied to every page
+   Visual layer only: radius, depth, glass, gradients, motion. No layout,
+   no markup and no script behaviour is changed by this block.
+   ===================================================================== */
+:root{--pdl-r:20px;--pdl-ease:cubic-bezier(.2,.75,.25,1);
+ --pdl-edge:rgba(16,40,64,.09);--pdl-hi:rgba(255,255,255,.8);
+ --pdl-sh1:0 1px 2px rgba(16,40,64,.06);--pdl-sh2:0 14px 34px -18px rgba(16,40,64,.24);
+ --pdl-red1:#ef3340;--pdl-red2:#b3121e}
+html.dark{--pdl-edge:rgba(255,255,255,.09);--pdl-hi:rgba(255,255,255,.06);
+ --pdl-sh1:0 1px 2px rgba(0,0,0,.45);--pdl-sh2:0 16px 36px -16px rgba(0,0,0,.7)}
+
+/* ---------- shell ---------- */
+.pi-redesign-sidebar{background:radial-gradient(120% 55% at 0% 0%,rgba(56,189,248,.16),transparent 58%),radial-gradient(90% 40% at 100% 100%,rgba(217,31,43,.14),transparent 60%),linear-gradient(165deg,#102b42,#0c2235 90%)}
+.pi-redesign-mark{background:linear-gradient(145deg,var(--pdl-red1),var(--pdl-red2));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 0 1px rgba(255,255,255,.18),0 10px 22px -8px rgba(217,31,43,.7)}
+.pi-redesign-brand{transition:opacity .2s}.pi-redesign-brand:hover{opacity:.92}
+html body.pi-redesign>header{background:linear-gradient(90deg,#102b42,#143756)!important;box-shadow:0 1px 0 rgba(255,255,255,.06),0 10px 28px -14px rgba(8,24,39,.55)}
+html body.pi-redesign>header button[onclick="printCurrentPage()"]{border-radius:12px!important;transition:background-color .2s,transform .2s}
+html body.pi-redesign>header button[onclick="printCurrentPage()"]:hover{background:#ffffff22!important;transform:translateY(-1px)}
+html body.pi-redesign>header button[onclick="toggleTheme()"]{border-radius:12px;transition:background-color .2s}
+html body.pi-redesign>header button[onclick="toggleTheme()"]:hover{background:#ffffff14}
+.pi-redesign-mobile-menu{border-radius:13px}
+
+/* ---------- cards / panels ---------- */
+html body.pi-redesign .tab-view .bg-brand-card,
+html body.pi-redesign .tab-view [class*="bg-brand-card"],
+html body.pi-redesign .tab-view .ask-result-card,
+html body.pi-redesign .tab-view .ask-answer-card,
+html body.pi-redesign .tab-view .calc-module,
+html body.pi-redesign .tab-view .office-card,
+html body.pi-redesign .tab-view .form-card,
+html body.pi-redesign .tab-view .manual-card{border-radius:var(--pdl-r);border-color:var(--pdl-edge);box-shadow:inset 0 1px 0 var(--pdl-hi),var(--pdl-sh1),var(--pdl-sh2)}
+html body.pi-redesign .tab-view .manual-card,
+html body.pi-redesign #forms-grid>div{transition:transform .35s var(--pdl-ease),box-shadow .35s ease,border-color .35s ease}
+html body.pi-redesign .tab-view .manual-card:hover,
+html body.pi-redesign #forms-grid>div:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 var(--pdl-hi),0 2px 4px rgba(16,40,64,.07),0 24px 42px -20px rgba(16,40,64,.38)}
+html body.pi-redesign .tab-view .manual-open{border-radius:999px}
+html body.pi-redesign .tab-view [class*="border-l-4"]{border-radius:16px;box-shadow:var(--pdl-sh1),0 14px 30px -20px rgba(180,120,0,.55)}
+html body.pi-redesign .tab-view .ask-index-badge{border-radius:999px}
+html body.pi-redesign #pdf-viewer-modal>div,html body.pi-redesign #order-detail-modal>div{border-radius:26px}
+html body.pi-redesign #pdf-viewer-modal>div,html body.pi-redesign #order-detail-modal>div{box-shadow:0 40px 90px -24px rgba(2,12,27,.7)}
+
+/* ---------- page headers: gradient hairline instead of a flat rule ---------- */
+html body.pi-redesign .tab-view>.border-b:first-child{border-bottom-color:transparent;background-image:linear-gradient(90deg,#d91f2b,#f59e0b 38%,rgba(245,158,11,0) 78%);background-size:100% 2px;background-position:left bottom;background-repeat:no-repeat}
+html body.pi-redesign .tab-view>.border-b:first-child h2{letter-spacing:-.03em}
+
+/* ---------- pill tabs & filters ---------- */
+html body.pi-redesign .tab-view .print-nav button,
+html body.pi-redesign .tab-view [role="tab"],
+html body.pi-redesign .tab-view .ask-example{border-radius:999px;font-weight:600;letter-spacing:-.005em;transition:transform .25s var(--pdl-ease),box-shadow .3s ease,background-color .2s ease,color .2s ease,filter .2s}
+html body.pi-redesign .tab-view .print-nav{scrollbar-width:none;padding-bottom:12px}
+html body.pi-redesign .tab-view .print-nav::-webkit-scrollbar{display:none}
+html body.pi-redesign .tab-view .print-nav button.bg-slate-100{background-color:rgba(16,40,64,.055);box-shadow:inset 0 0 0 1px rgba(16,40,64,.07)}
+html body.pi-redesign .tab-view .print-nav button.bg-slate-100:hover{background-color:rgba(16,40,64,.10);transform:translateY(-1px)}
+html.dark body.pi-redesign .tab-view .print-nav button.bg-slate-100{background-color:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.09)}
+html.dark body.pi-redesign .tab-view .print-nav button.bg-slate-100:hover{background-color:rgba(255,255,255,.13)}
+
+/* ---------- primary buttons ---------- */
+html body.pi-redesign .tab-view button.bg-brand-red,
+html body.pi-redesign .tab-view a.bg-brand-red{background-image:linear-gradient(135deg,var(--pdl-red1),var(--pdl-red2));box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 6px 12px -8px rgba(217,31,43,.7)}
+html body.pi-redesign .tab-view button.bg-brand-red:hover,
+html body.pi-redesign .tab-view a.bg-brand-red:hover{filter:brightness(1.07);transform:translateY(-1px)}
+html body.pi-redesign .tab-view button.bg-brand-red:active{transform:translateY(0) scale(.98)}
+html body.pi-redesign .tab-view .manual-open{background-image:linear-gradient(135deg,var(--pdl-red1),var(--pdl-red2))}
+
+/* ---------- form controls ---------- */
+html body.pi-redesign .tab-view input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html body.pi-redesign .tab-view select,
+html body.pi-redesign .tab-view textarea{border-radius:14px;transition:box-shadow .25s ease,border-color .25s ease,background-color .25s ease}
+html body.pi-redesign .tab-view input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):focus,
+html body.pi-redesign .tab-view select:focus,
+html body.pi-redesign .tab-view textarea:focus{box-shadow:0 0 0 4px rgba(217,31,43,.12),0 10px 22px -12px rgba(217,31,43,.45);border-color:rgba(217,31,43,.55)!important}
+
+/* ---------- tables ---------- */
+html body.pi-redesign .tab-view table thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;background-color:#eef2f6;background-image:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,0));color:#3a5268}
+html.dark body.pi-redesign .tab-view table thead th{background-color:rgba(255,255,255,.06);background-image:none;color:#b8cad8}
+html body.pi-redesign .tab-view table tbody tr{transition:background-color .2s ease}
+html body.pi-redesign .tab-view table tbody tr:hover>td{background-color:rgba(217,31,43,.04)}
+html.dark body.pi-redesign .tab-view table tbody tr:hover>td{background-color:rgba(255,255,255,.04)}
+
+/* ---------- home (hero, panels, stats, quick access) ---------- */
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions>*{border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.88),rgba(255,255,255,.55));border:1px solid rgba(255,255,255,.75);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 16px 32px -18px rgba(107,74,36,.5);-webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%);transition:transform .35s var(--pdl-ease),box-shadow .35s ease,background .35s}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions>*:hover{transform:translateY(-3px);background:linear-gradient(145deg,#fff,rgba(255,255,255,.8));box-shadow:inset 0 1px 0 #fff,0 26px 44px -20px rgba(107,74,36,.55)}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions>*>span{border-radius:14px;background:linear-gradient(145deg,var(--pdl-red1),var(--pdl-red2));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 10px 18px -8px rgba(217,31,43,.7)}
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions>*{background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border-color:rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 16px 32px -18px rgba(0,0,0,.7);color:#eaf2f8}
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions>*:hover{background:linear-gradient(145deg,rgba(255,255,255,.18),rgba(255,255,255,.07))}
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-hero-actions small{color:#b8cad8}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-rate-strip{border-radius:20px;box-shadow:inset 0 1px 0 var(--pdl-hi),var(--pdl-sh1),0 16px 32px -20px rgba(16,40,64,.35)}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-rate-all{border-radius:999px}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-tags span{border-radius:999px}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-panel{border-radius:24px;border-color:var(--pdl-edge);box-shadow:inset 0 1px 0 var(--pdl-hi),var(--pdl-sh1),var(--pdl-sh2)}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-stats>div{border-radius:16px;background:linear-gradient(160deg,#f9fbfc,#edf1f5);box-shadow:inset 0 0 0 1px var(--pdl-edge);transition:transform .3s var(--pdl-ease),box-shadow .3s}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-stats>div:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px var(--pdl-edge),0 14px 24px -16px rgba(16,40,64,.35)}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-stats strong{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+html.dark body.pi-redesign #view-dashboard.pi-demo-home .pih-stats>div{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03))}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button{border-radius:14px;transition:transform .3s var(--pdl-ease),box-shadow .3s ease,border-color .3s}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-quick button:hover{transform:translateY(-2px);border-color:rgba(217,31,43,.35);box-shadow:0 14px 26px -16px rgba(217,31,43,.45)}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-section-head h2{letter-spacing:-.03em}
+html body.pi-redesign #view-dashboard.pi-demo-home .pih-section-head>div{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important}
+
+/* dark mode: tile glow reads better with less spread */
+html.dark .pilt:hover .pilt-tilt{box-shadow:0 2px 4px rgba(0,0,0,.4),0 20px 36px -14px rgba(0,0,0,.75)}
+
+/* ---------- print: strip every decorative effect ---------- */
+@media print{
+ html body.pi-redesign .tab-view *,html body.pi-redesign #view-dashboard *{box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+ html body.pi-redesign .tab-view>.border-b:first-child{background-image:none!important;border-bottom-color:#cbd5e1!important}
+ html body.pi-redesign .tab-view table thead th{background-image:none!important}
+ html body.pi-redesign .tab-view button.bg-brand-red,html body.pi-redesign .tab-view a.bg-brand-red{background-image:none!important}
+}
+</style>
+
+<style id="pi-posb-full-page-design">
+/* PostalIQ shell: carry the same polished navy / red / colorful tile language into the calculator workspace. */
+:root{--pi-navy:#102b42;--pi-red:#d91f2b;--pi-blue:#2478b9;--pi-green:#079b68;--pi-cyan:#099cc5;--pi-purple:#7c43c4;--pi-orange:#ee8b00;--pi-pink:#c92b72;--pi-gold:#e6a400;--pi-radius:16px}
+body.pi-redesign{background:radial-gradient(ellipse at 90% 0%,rgba(36,120,185,.055),transparent 34%),#f7f2e9!important;color:#102840}
+body.pi-redesign>header.top{margin-left:0!important;width:100%!important;box-sizing:border-box;padding:12px 24px;background:radial-gradient(120% 180% at 0% 0%,rgba(56,189,248,.13),transparent 45%),linear-gradient(110deg,#102b42,#15354f)!important;box-shadow:0 5px 20px rgba(16,43,66,.15);border-bottom:1px solid #ffffff1a}
+body.pi-redesign>.hero{margin-left:0;width:100%!important;box-sizing:border-box;border-bottom:1px solid #c7ab8750}
+body.pi-redesign>main.wrap{margin-left:0!important;width:100%!important;max-width:none!important;padding:20px 24px 34px!important;box-sizing:border-box}
+body.pi-redesign>.foot{margin-left:0!important;width:100%!important;box-sizing:border-box}
+body.pi-redesign .bar{gap:14px;margin:0 0 18px;padding:14px 16px;border:1px solid rgba(16,40,64,.08);border-radius:16px;background:linear-gradient(120deg,#fff,#f8fbfd);box-shadow:0 5px 18px rgba(16,40,64,.045)}
+body.pi-redesign .banner{border-radius:12px;box-shadow:inset 3px 0 0 #079b68}
+body.pi-redesign .slab{gap:10px;flex-wrap:wrap;color:#294257}
+body.pi-redesign .slab select{min-width:190px;border:1px solid #d3dee6;background:#fff;border-radius:11px;padding:9px 12px;transition:border-color .18s,box-shadow .18s}
+body.pi-redesign .tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 20px;padding:0}
+body.pi-redesign .tab{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:flex-start;gap:10px;min-width:0;min-height:58px;padding:10px 12px;border:1px solid rgba(16,40,64,.10);border-radius:14px;background:linear-gradient(145deg,#fff,#f7fafc);color:#294257;box-shadow:0 3px 10px rgba(16,40,64,.035);font-size:12px;line-height:1.25;font-weight:800;text-align:left;white-space:normal;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease,color .2s ease}
+body.pi-redesign .tab:before{content:"";display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:10px;background:#2478b9;color:#fff;font-size:17px;box-shadow:inset 0 1px 0 #ffffff55;transition:transform .22s,filter .22s}
+body.pi-redesign .tab:nth-child(1):before{content:"▦";background:linear-gradient(145deg,#ef3340,#b3121e)}
+body.pi-redesign .tab:nth-child(2):before{content:"⇄";background:linear-gradient(145deg,#079b68,#087b60)}
+body.pi-redesign .tab:nth-child(3):before{content:"₹";background:linear-gradient(145deg,#099cc5,#1764a4)}
+body.pi-redesign .tab:nth-child(4):before{content:"↗";background:linear-gradient(145deg,#7c43c4,#5630a0)}
+body.pi-redesign .tab:nth-child(5):before{content:"∿";background:linear-gradient(145deg,#ee8b00,#c9670a)}
+body.pi-redesign .tab:nth-child(6):before{content:"⌁";background:linear-gradient(145deg,#c92b72,#a91d53)}
+body.pi-redesign .tab:nth-child(7):before{content:"≡";background:linear-gradient(145deg,#e6a400,#b87800)}
+body.pi-redesign .tab:nth-child(8):before{content:"ⓘ";background:linear-gradient(145deg,#168b88,#126c79)}
+body.pi-redesign .tab:hover{z-index:1;transform:translateY(-3px);background:linear-gradient(130deg,#fff,#f0f7fc);border-color:#80b9d9;box-shadow:0 10px 20px rgba(16,40,64,.11)}
+body.pi-redesign .tab:hover:before{transform:scale(1.08) rotate(-4deg);filter:saturate(1.15)}
+body.pi-redesign .tab.on{color:#fff;border-color:#d91f2b;background:linear-gradient(110deg,#e32430,#b3121e);box-shadow:0 8px 18px -7px rgba(217,31,43,.65),inset 0 1px 0 rgba(255,255,255,.26)}
+body.pi-redesign .tab.on:before{background:#ffffff20;box-shadow:inset 0 0 0 1px #ffffff2b;color:#fff}
+body.pi-redesign .tab:focus-visible,body.pi-redesign .btn:focus-visible,body.pi-redesign .chips button:focus-visible{outline:3px solid #f3c76a;outline-offset:3px}
+body.pi-redesign .view{animation:piPosbTabIn .24s ease both}
+@keyframes piPosbTabIn{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+body.pi-redesign .panel{position:relative;background:linear-gradient(160deg,#fff 0%,#fff 70%,#fbfdff 100%);border:1px solid rgba(16,40,64,.095);border-radius:18px;padding:21px;box-shadow:0 7px 22px rgba(16,40,64,.055);transition:border-color .2s,box-shadow .2s,transform .2s}
+body.pi-redesign .panel:hover{border-color:rgba(36,120,185,.22);box-shadow:0 11px 28px rgba(16,40,64,.075)}
+body.pi-redesign .ph{align-items:flex-start;padding-bottom:13px;margin-bottom:17px;border-bottom:1px solid rgba(16,40,64,.08)}
+body.pi-redesign .ph h2{color:#102b42;font-size:20px;letter-spacing:-.45px}
+body.pi-redesign .ph p{margin-top:4px;line-height:1.55}
+body.pi-redesign .ph>span{padding:6px 9px;border-radius:8px;background:#edf5fa;color:#38617b;white-space:nowrap}
+body.pi-redesign .f label{color:#4d6476;letter-spacing:.55px}
+body.pi-redesign input:not([type=checkbox]):not([type=radio]),body.pi-redesign select{border:1px solid #d7e0e7;background:linear-gradient(180deg,#fff,#fbfdff);border-radius:11px;min-height:42px;transition:border-color .18s,box-shadow .18s,background .18s}
+body.pi-redesign input:not([type=checkbox]):not([type=radio]):hover,body.pi-redesign select:hover{border-color:#9bb9cc}
+body.pi-redesign input:not([type=checkbox]):not([type=radio]):focus,body.pi-redesign select:focus{outline:0;border-color:#2478b9!important;box-shadow:0 0 0 3px rgba(36,120,185,.15)!important;background:#fff}
+body.pi-redesign .btn{position:relative;overflow:hidden;border:1px solid #d5e0e8;border-radius:11px;background:linear-gradient(145deg,#fff,#f2f7fa);color:#244258;box-shadow:0 2px 5px rgba(16,40,64,.04);transition:transform .18s,box-shadow .18s,border-color .18s,background .18s}
+body.pi-redesign .btn:hover{transform:translateY(-2px);border-color:#82b7d5;box-shadow:0 7px 15px rgba(16,40,64,.11);background:linear-gradient(120deg,#fff,#eaf5fb)}
+body.pi-redesign .btn.p{background:linear-gradient(120deg,#ef3340,#b3121e);color:#fff;border-color:transparent;box-shadow:0 5px 13px -5px rgba(217,31,43,.65)}
+body.pi-redesign .btn.p:hover{background:linear-gradient(120deg,#fa4652,#a80f1a);box-shadow:0 9px 19px -5px rgba(217,31,43,.6)}
+body.pi-redesign .mets{gap:11px}
+body.pi-redesign .m{position:relative;overflow:hidden;border:1px solid rgba(16,40,64,.09);border-radius:15px;background:linear-gradient(145deg,#fff,#f5f9fc);box-shadow:0 4px 12px rgba(16,40,64,.035);transition:transform .2s,box-shadow .2s,border-color .2s}
+body.pi-redesign .m:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(16,40,64,.09);border-color:#a5c9df}
+body.pi-redesign .m:not(.hi):nth-child(3n+1){border-top:3px solid #2478b9}body.pi-redesign .m:not(.hi):nth-child(3n+2){border-top:3px solid #079b68}body.pi-redesign .m:not(.hi):nth-child(3n){border-top:3px solid #ee8b00}
+body.pi-redesign .m.hi{background:radial-gradient(130% 100% at 100% 0%,#2478b955,transparent 58%),linear-gradient(145deg,#12324c,#0c2235);box-shadow:0 7px 18px rgba(16,43,66,.17)}
+body.pi-redesign .info,body.pi-redesign .warn-box{border-radius:13px;line-height:1.6}
+body.pi-redesign .info{background:linear-gradient(120deg,#f7fafc,#f1f6f9);border-color:#e1e9ef;color:#536a7b}
+body.pi-redesign .warn-box{box-shadow:inset 3px 0 0 #e6a400}
+body.pi-redesign .chips button{border:1px solid #dce5eb;background:#f5f8fa;color:#294257;transition:transform .18s,background .18s,border-color .18s,box-shadow .18s}
+body.pi-redesign .chips button:hover{transform:translateY(-2px);background:#eaf5fb;border-color:#82b7d5;box-shadow:0 5px 12px rgba(16,40,64,.08)}
+body.pi-redesign .chips button.on{background:linear-gradient(120deg,#e32430,#b3121e);border-color:transparent;color:#fff;box-shadow:0 4px 10px rgba(217,31,43,.22)}
+body.pi-redesign .cards{gap:12px}
+body.pi-redesign .cards>*{border-radius:14px;transition:transform .2s,box-shadow .2s,border-color .2s}
+body.pi-redesign .cards>*:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(16,40,64,.08)}
+body.pi-redesign .tw{border-color:#dfe7ed;border-radius:13px;box-shadow:0 3px 12px rgba(16,40,64,.025)}
+body.pi-redesign table{border-collapse:separate;border-spacing:0}
+body.pi-redesign th{background:linear-gradient(180deg,#edf4f8,#e8f0f5);color:#294b61;font-weight:800}
+body.pi-redesign tbody tr{transition:background .16s}
+body.pi-redesign tbody tr:hover td{background:#eef7fc}
+body.pi-redesign tr.best td{background:#e9f8ef}
+body.pi-redesign details{padding:12px 14px;border:1px solid #e1e9ef;border-radius:12px;background:#fbfdfe}
+body.pi-redesign summary{color:#1b587e}body.pi-redesign summary:hover{color:#c51d2a}
+body.pi-redesign .foot{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between;padding:18px 24px 24px;color:#6b7d8b;font-size:11px;border-top:1px solid rgba(16,40,64,.08)}
+body.pi-redesign .foot b{color:#102b42}
+html.dark body.pi-redesign{background:radial-gradient(ellipse at 90% 0%,rgba(36,120,185,.09),transparent 34%),#0b1a27!important;color:#eaf2f8}
+html.dark body.pi-redesign .bar{background:linear-gradient(120deg,#132838,#102433);border-color:#ffffff12}
+html.dark body.pi-redesign .slab{color:#d4e2ec}
+html.dark body.pi-redesign .slab select,html.dark body.pi-redesign input:not([type=checkbox]):not([type=radio]),html.dark body.pi-redesign select{background:#0f2231;color:#eaf2f8;border-color:#3b5364}
+html.dark body.pi-redesign .tabs .tab{background:linear-gradient(145deg,#162e40,#122636);color:#dbe7f0;border-color:#ffffff14}
+html.dark body.pi-redesign .tabs .tab:hover{background:linear-gradient(120deg,#1b3a50,#173348);border-color:#5b99bd}
+html.dark body.pi-redesign .tabs .tab.on{background:linear-gradient(110deg,#e32430,#b3121e);color:#fff;border-color:#ff6872}
+html.dark body.pi-redesign .panel{background:linear-gradient(160deg,#132838,#102432);border-color:#ffffff14;box-shadow:0 7px 22px rgba(0,0,0,.16)}
+html.dark body.pi-redesign .ph h2,html.dark body.pi-redesign .foot b{color:#eaf2f8}
+html.dark body.pi-redesign .ph{border-color:#ffffff12}
+html.dark body.pi-redesign .ph>span{background:#20394a;color:#c5d9e7}
+html.dark body.pi-redesign .btn{background:linear-gradient(145deg,#20394a,#172f40);border-color:#ffffff18;color:#eaf2f8}
+html.dark body.pi-redesign .btn:hover{background:linear-gradient(120deg,#29495d,#1b394d);border-color:#5b99bd}
+html.dark body.pi-redesign .btn.p{background:linear-gradient(120deg,#ef3340,#b3121e);color:#fff}
+html.dark body.pi-redesign .m:not(.hi){background:linear-gradient(145deg,#173143,#112736);border-color:#ffffff14}
+html.dark body.pi-redesign .info{background:linear-gradient(120deg,#142d3e,#102635);border-color:#ffffff12;color:#b2c4d1}
+html.dark body.pi-redesign .chips button{background:#20394a;color:#eaf2f8;border-color:#ffffff14}
+html.dark body.pi-redesign .chips button:hover{background:#29495d;border-color:#5b99bd}
+html.dark body.pi-redesign .tw{border-color:#ffffff18}
+html.dark body.pi-redesign th{background:#20394a;color:#eaf2f8}
+html.dark body.pi-redesign tbody tr:hover td{background:#1b3a4b}
+html.dark body.pi-redesign tr.best td{background:#153a32}
+html.dark body.pi-redesign details{background:#102635;border-color:#ffffff14}
+html.dark body.pi-redesign summary{color:#9bc9ff}
+html.dark body.pi-redesign .foot{color:#9fb3c1;border-color:#ffffff12}
+@media(max-width:1150px){body.pi-redesign .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}body.pi-redesign .grid{grid-template-columns:minmax(260px,.8fr) minmax(0,1.2fr)}}
+@media(max-width:900px){body.pi-redesign>header.top{margin-left:0!important;width:100%!important}body.pi-redesign>.hero{margin-left:0;width:100%!important}body.pi-redesign>main.wrap{margin-left:0!important;width:100%!important;padding:16px 14px 28px!important}body.pi-redesign>.foot{margin-left:0!important;width:100%!important}body.pi-redesign .hero .wrap{padding:28px 20px}body.pi-redesign .grid{grid-template-columns:1fr}body.pi-redesign .panel{padding:17px}}
+@media(max-width:560px){body.pi-redesign .tabs{grid-template-columns:1fr 1fr;gap:7px}body.pi-redesign .tab{min-height:62px;padding:8px;font-size:11px;gap:7px}body.pi-redesign .tab:before{flex-basis:29px;width:29px;height:29px;border-radius:9px;font-size:15px}body.pi-redesign .bar{padding:12px;align-items:stretch}body.pi-redesign .slab{display:flex;flex-direction:column;align-items:stretch}body.pi-redesign .slab select{width:100%}body.pi-redesign .mets{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){body.pi-redesign .tab,body.pi-redesign .panel,body.pi-redesign .btn,body.pi-redesign .m,body.pi-redesign .chips button{transition:none!important;animation:none!important}}
+@media print{body.pi-redesign>header.top,body.pi-redesign>.hero{margin-left:0!important;width:100%!important}body.pi-redesign>main.wrap,body.pi-redesign>.foot{margin-left:0!important;width:100%!important}body.pi-redesign .tabs{display:none!important}}
+</style>
+<style id="postaliq-tab-live-tiles">
+/* PostalIQ Live Tile language applied to the main calculator navigation */
+.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 22px;perspective:1000px}
+.tab{--tab-a:#123d5a;--tab-b:#087e8b;position:relative;display:block;min-width:0;height:104px;padding:0;border:0;border-radius:17px;background:transparent;color:#fff;box-shadow:none;overflow:visible;text-align:left;isolation:isolate;transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s ease;outline:none}
+.tab:nth-child(8n+2){--tab-a:#c21f36;--tab-b:#f06a42}.tab:nth-child(8n+3){--tab-a:#4f3c9a;--tab-b:#1686a0}.tab:nth-child(8n+4){--tab-a:#087a60;--tab-b:#41ad75}.tab:nth-child(8n+5){--tab-a:#9b4a0d;--tab-b:#e59b26}.tab:nth-child(8n+6){--tab-a:#294f9c;--tab-b:#397bd1}.tab:nth-child(8n+7){--tab-a:#6f367e;--tab-b:#b04c78}.tab:nth-child(8n+8){--tab-a:#314353;--tab-b:#617c8c}
+.tab::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(180px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.27),transparent 65%);opacity:0;pointer-events:none;z-index:3;transition:opacity .3s ease}
+.tab-tile{position:absolute;inset:0;display:block;overflow:hidden;border-radius:inherit;background:linear-gradient(135deg,var(--tab-a),var(--tab-b));box-shadow:0 2px 5px #102b4230,0 12px 24px -12px color-mix(in srgb,var(--tab-b) 75%,transparent);transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease}
+.tab-tile::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.16),transparent 38%,rgba(0,0,0,.13));pointer-events:none}
+.tab-tile::after{content:"";position:absolute;width:100px;height:100px;right:-26px;bottom:-37px;border:1px solid #ffffff35;border-radius:28px;transform:rotate(28deg);box-shadow:0 0 0 13px #ffffff08,0 0 0 27px #ffffff06;transition:transform .65s cubic-bezier(.2,.8,.2,1)}
+.tab-face{position:absolute;inset:0;display:flex;align-items:flex-end;gap:10px;padding:15px 15px 14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1),filter .45s ease}
+.tab-front{z-index:1}.tab-icon{align-self:flex-start;display:grid;place-items:center;flex:0 0 35px;width:35px;height:35px;border-radius:12px;border:1px solid #ffffff40;background:linear-gradient(145deg,#ffffff42,#ffffff12);box-shadow:inset 0 1px #ffffff55,0 6px 14px #071a2b30;color:#fff;font-size:20px;font-weight:800;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.tab-copy{font:650 14px/1.18 Inter,"Segoe UI",system-ui,sans-serif;letter-spacing:-.015em;text-shadow:0 1px 8px #06182c55;max-width:calc(100% - 46px);overflow-wrap:anywhere}.tab-arrow{position:absolute;top:12px;right:13px;width:23px;height:23px;display:grid;place-items:center;border:1px solid #ffffff45;border-radius:50%;background:#ffffff20;opacity:.9;font-size:12px;transition:transform .35s ease,background .35s ease}
+.tab-back{z-index:2;align-items:flex-start;justify-content:center;flex-direction:column;gap:7px;background:linear-gradient(135deg,color-mix(in srgb,var(--tab-a) 88%,#071827),color-mix(in srgb,var(--tab-b) 78%,#071827));opacity:0;transform:translateY(13px);filter:blur(7px);padding:16px 18px}
+.tab-back-kicker{font:800 9px/1 Inter,system-ui,sans-serif;letter-spacing:.16em;opacity:.72}.tab-back-copy{font:750 13px/1.2 Inter,"Segoe UI",system-ui,sans-serif;letter-spacing:.015em}.tab-back-arrow{position:absolute;right:15px;bottom:12px;font-size:20px;line-height:1;opacity:.9}
+.tab:hover,.tab:focus-visible{transform:translateY(-4px);filter:saturate(1.08)}.tab:hover::before,.tab:focus-visible::before{opacity:1}.tab:hover .tab-tile,.tab:focus-visible .tab-tile{box-shadow:0 4px 8px #102b4230,0 20px 35px -13px color-mix(in srgb,var(--tab-b) 90%,transparent),0 30px 48px -28px color-mix(in srgb,var(--tab-a) 100%,transparent)}.tab:hover .tab-tile::after,.tab:focus-visible .tab-tile::after{transform:rotate(12deg) scale(1.16) translate(-4px,-3px)}.tab:hover .tab-front,.tab:focus-visible .tab-front{opacity:0;transform:translateY(-13px);filter:blur(7px)}.tab:hover .tab-back,.tab:focus-visible .tab-back{opacity:1;transform:none;filter:none}.tab:hover .tab-arrow,.tab:focus-visible .tab-arrow{transform:rotate(45deg);background:#ffffff38}
+.tab.on .tab-tile{box-shadow:0 0 0 2px var(--paper),0 0 0 4px color-mix(in srgb,var(--tab-b) 55%,transparent),0 13px 25px -12px color-mix(in srgb,var(--tab-b) 90%,transparent)}.tab.on .tab-tile::after{border-color:#ffffff58}.tab.on .tab-back{opacity:0}.tab.on .tab-front{opacity:1;transform:none;filter:none}
+html.dark .tab.on .tab-tile{box-shadow:0 0 0 2px var(--paper),0 0 0 4px color-mix(in srgb,var(--tab-b) 60%,transparent),0 13px 25px -12px #0008}
+.tab:focus-visible{outline:3px solid #f5b942;outline-offset:4px}.tab:active{transform:translateY(-1px) scale(.985)}
+@media(max-width:850px){.tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tab{height:94px}}
+@media(max-width:420px){.tabs{gap:8px}.tab{height:88px}.tab-face{padding:11px}.tab-icon{flex-basis:30px;width:30px;height:30px;border-radius:10px;font-size:17px}.tab-copy{font-size:12px}.tab-back-copy{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.tab,.tab-tile,.tab-face,.tab::before,.tab-tile::after{transition:none!important}}
+</style>
+
+<style id="postaliq-tab-idle-flip">
+/* Match the live-tile motion used by the PostalIQ side pane: lift/glow on hover,
+   smooth slide + blur crossfade for the occasional live content swap. No 3D rotation. */
+:root{--tab-live-ease:cubic-bezier(.2,.75,.25,1)}
+.tabs{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:8px!important;perspective:none!important;overflow:visible}
+.tab{height:82px!important;min-height:82px!important;padding:0!important;min-width:0!important;transform:translateY(0);filter:none!important;transition:transform .45s var(--tab-live-ease),box-shadow .45s ease!important}
+.tab-tile{transform:none!important;transform-style:flat!important;transition:box-shadow .45s ease!important;will-change:auto}
+.tab-face{backface-visibility:visible!important;-webkit-backface-visibility:visible!important;transition:opacity .6s ease,transform .6s var(--tab-live-ease),filter .6s ease!important;filter:none;}
+.tab-front{z-index:1;opacity:1;transform:none;filter:none}
+.tab-back{z-index:2;opacity:0;transform:translateY(18px);filter:blur(8px);pointer-events:none;background-image:linear-gradient(rgba(5,10,25,.34),rgba(5,10,25,.34)),linear-gradient(135deg,var(--tab-a),var(--tab-b))!important;padding:10px!important;gap:5px}
+.tab:hover,.tab:focus-visible{transform:translateY(-4px)!important;filter:none!important}
+.tab:hover .tab-tile,.tab:focus-visible .tab-tile,.tab.tab-auto-flip:not(.on) .tab-tile{box-shadow:0 2px 4px rgba(15,23,42,.14),0 20px 34px -12px color-mix(in srgb,var(--tab-b) 90%,transparent),0 36px 56px -30px color-mix(in srgb,var(--tab-a) 100%,transparent)!important}
+.tab:hover .tab-tile::after,.tab:focus-visible .tab-tile::after{transform:rotate(12deg) scale(1.16) translate(-4px,-3px)}
+/* Hover is the same gentle lift as the sidebar; content changes only during the live-tile cycle. */
+.tab:hover .tab-front,.tab:focus-visible .tab-front{opacity:1;transform:none;filter:none}
+.tab:hover .tab-back,.tab:focus-visible .tab-back{opacity:0;transform:translateY(18px);filter:blur(8px)}
+.tab.tab-auto-flip:not(.on) .tab-front{opacity:0!important;transform:translateY(-18px)!important;filter:blur(8px)!important}
+.tab.tab-auto-flip:not(.on) .tab-back{opacity:1!important;transform:none!important;filter:none!important;pointer-events:auto}
+.tab.tab-auto-flip:not(.on) .tab-back>*{animation:tab-live-rise .65s var(--tab-live-ease) backwards}
+.tab.tab-auto-flip:not(.on) .tab-back>*:nth-child(2){animation-delay:.07s}
+@keyframes tab-live-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.tab.on .tab-tile{transform:none!important;box-shadow:0 0 0 2px var(--paper),0 0 0 4px color-mix(in srgb,var(--tab-b) 55%,transparent),0 13px 25px -12px color-mix(in srgb,var(--tab-b) 90%,transparent)!important}
+.tab.on .tab-front{opacity:1!important;transform:none!important;filter:none!important}
+.tab.on .tab-back{opacity:0!important;transform:translateY(18px)!important;filter:blur(8px)!important}
+.tab .tab-copy{font-size:clamp(9px, .82vw, 12px);line-height:1.15;max-width:calc(100% - 4px);overflow-wrap:anywhere}
+.tab .tab-face{gap:6px;padding:9px!important}
+.tab .tab-icon{flex-basis:25px;width:25px;height:25px;border-radius:8px;font-size:14px}
+.tab .tab-arrow{top:6px;right:6px;width:18px;height:18px;font-size:10px}
+.tab .tab-back-kicker{font-size:8px}.tab .tab-back-copy{font-size:clamp(8px,.72vw,10px);line-height:1.15}.tab .tab-back-arrow{right:8px;bottom:7px;font-size:15px}
+/* Keep the navigation on one line at all widths; narrow screens can scroll the row. */
+@media(max-width:1150px){.tabs{grid-template-columns:repeat(8,minmax(112px,1fr))!important;overflow-x:auto;overflow-y:visible;padding:5px 3px 12px;scroll-snap-type:x proximity}.tab{scroll-snap-align:start}}
+@media(max-width:560px){.tabs{grid-template-columns:repeat(8,minmax(105px,1fr))!important;gap:8px!important}.tab{height:76px!important;min-height:76px!important}.tab .tab-copy{font-size:11px}.tab .tab-back-copy{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.tab,.tab .tab-tile,.tab .tab-face,.tab .tab-tile::after{transition:none!important;animation:none!important}.tab.tab-auto-flip .tab-front{opacity:1!important;transform:none!important;filter:none!important}.tab.tab-auto-flip .tab-back{opacity:0!important;transform:translateY(18px)!important;filter:blur(8px)!important}}
+</style>
+</head>
+<body class="pi-redesign bg-brand-surface dark:bg-brand-darkSurface text-slate-800 dark:text-slate-100 flex flex-col min-h-full font-sans antialiased transition-colors duration-200">
+<!-- Shared PostalIQ navigation rail: matched to index.html -->
+<div class="pi-redesign-scrim" id="pi-redesign-scrim" onclick="piToggleSidebar(false)"></div>
+<aside aria-label="PostalIQ main navigation" class="pi-redesign-sidebar no-print" id="pi-redesign-sidebar">
+<div class="pi-redesign-brand" onclick="navigateTab('dashboard')" role="button" tabindex="0">
+<div class="pi-redesign-mark">P.</div><div><div class="pi-redesign-brand-name">PostalIQ</div><div class="pi-redesign-brand-sub">Knowledge · Tools · Guidance</div></div>
+</div>
+<nav class="pi-redesign-nav">
+<a class="pi-redesign-link active" data-view="dashboard" href="index.html?view=dashboard"><span class="pi-redesign-icon">⌂</span><span><b>Home</b><small>Dashboard &amp; Overview</small></span><i>›</i></a>
+<a class="pi-redesign-link" data-view="ask" href="index.html?view=ask"><span class="pi-redesign-icon">✧</span><span><b>Ask PostalIQ</b><small>AI Assistant &amp; Sources</small></span><i>›</i></a>
+<a class="pi-redesign-link" data-view="orders" href="index.html?view=orders"><span class="pi-redesign-icon">▤</span><span><b>Orders &amp; Manuals</b><small>Orders, Circulars, Guides</small></span><i>›</i></a>
+<a class="pi-redesign-link" data-view="posb" href="index.html?view=posb"><span class="pi-redesign-icon">₹</span><span><b>POSB &amp; PLI</b><small>Savings &amp; Insurance Tools</small></span><i>›</i></a>
+<a class="pi-redesign-link" data-view="calculators" href="index.html?view=calculators"><span class="pi-redesign-icon">▦</span><span><b>Employee Calculators</b><small>Salary &amp; Service Tools</small></span><i>›</i></a>
+<a class="pi-redesign-link" data-view="forms" href="index.html?view=forms"><span class="pi-redesign-icon">▧</span><span><b>Forms &amp; Applications</b><small>Downloads &amp; Samples</small></span><i>›</i></a>
+<a class="pi-redesign-link" data-view="offices" href="index.html?view=offices"><span class="pi-redesign-icon">◎</span><span><b>PIN &amp; Offices</b><small>PIN Codes &amp; Directory</small></span><i>›</i></a>
+<a class="pi-redesign-link" href="manuals/LTC_Rules_FAQ.html" rel="noopener" target="_blank"><span class="pi-redesign-icon">▣</span><span><b>LTC Rules FAQ</b><small>Rules &amp; Practical Guidance</small></span><i>↗</i></a>
+<div aria-hidden="true" class="pi-redesign-nav-heading" style="padding:18px 14px 7px;color:#91a8b8;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;">Tools</div>
+<a class="pi-redesign-link" href="POSB_Scheme_Explorer.html"><span class="pi-redesign-icon">₹%</span><span><b>Smart Interest Calculator</b><small>Scheme returns &amp; comparisons</small></span><i>↗</i></a>
+<a class="pi-redesign-link" data-view="calculators" href="index.html?view=calculators"><span class="pi-redesign-icon">▦</span><span><b>Tools</b><small>Employee calculators &amp; utilities</small></span><i>›</i></a>
+<a class="pi-redesign-link" href="pdf-tools.html" rel="noopener" target="_blank"><span class="pi-redesign-icon">▤</span><span><b>PDF Tools</b><small>Merge, split, OCR &amp; convert</small></span><i>↗</i></a>
+</nav>
+<div class="pi-redesign-sidebar-foot">An independent knowledge &amp; tools portal<br/>Built for faster postal work.</div>
+</aside>
+<header class="top">
+<a aria-label="PostalIQ home" class="logo" href="index.html"><span class="mark">P.</span><span><span class="nm">PostalIQ <span class="chipm">Scheme Explorer</span></span><span class="sub">Knowledge · Tools · Guidance</span></span></a>
+<div class="acts">
+<button aria-label="Open PostalIQ navigation" class="pi-explorer-menu" onclick="piToggleSidebar(true)" type="button">☰</button>
+<a class="hb" href="index.html?view=dashboard"><span>‹</span><span class="t">PostalIQ home</span></a>
+<button aria-label="Switch light or dark theme" class="hb" id="theme" type="button">◐</button>
+</div>
+</header>
+<section class="hero"><div class="wrap">
+<div>
+<div class="eyebrow">SMALL SAVINGS · ESTIMATE · COMPARE</div>
+<h1>Know your scheme.<br/><em>Compare your return.</em></h1>
+<p>Work out what a Post Office scheme really pays, see it after tax, compare it with other schemes and with bank fixed deposits, or find out how much you need to save to reach a goal.</p>
+<div class="tags"><span>12 schemes</span><span>After-tax view</span><span>Goal planner</span><span>No data uploaded</span></div>
+</div>
+<div class="notes">
+<div class="note"><span>₹</span><b>Rates: Q3 FY 2026–27</b><small>1 Oct – 31 Dec 2026, unchanged from the previous quarter</small></div>
+<div class="note"><span>⌂</span><b>Runs in your browser</b><small>Nothing you type is stored or sent anywhere</small></div>
+<div class="note"><span>!</span><b>Estimates, not quotes</b><small>Always confirm at the counter before advising a customer</small></div>
+</div>
+</div></section>
+<main class="wrap">
+<div class="bar">
+<div class="banner" id="banner"></div>
+<label class="slab">Income-tax slab for after-tax figures
+      <select id="tax"><option value="0">No tax / not taxable</option><option value="5">5%</option><option value="10">10%</option><option value="15">15%</option><option value="20">20%</option><option value="30">30%</option></select></label>
+</div>
+<nav aria-label="Sections" class="tabs">
+<button class="tab on" data-v="calc"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">₹</span><span class="tab-copy">Scheme Calculator</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">OPEN CALCULATOR</span><span class="tab-back-arrow">→</span></span></span></button>
+<button class="tab" data-v="compare"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">▦</span><span class="tab-copy">Compare Schemes</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">COMPARE RETURNS</span><span class="tab-back-arrow">→</span></span></span></button>
+<button class="tab" data-v="banks"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">🏦</span><span class="tab-copy">Post Office vs Banks</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">COMPARE 10 BANKS</span><span class="tab-back-arrow">→</span></span></span></button>
+<button class="tab" data-v="debt"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">◒</span><span class="tab-copy">Post Office vs Debt Mutual Funds</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">EXPLORE DEBT FUNDS</span><span class="tab-back-arrow">→</span></span></span></button>
+<button class="tab" data-v="sip"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">↗</span><span class="tab-copy">SIP Calculator</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">PLAN MONTHLY INVESTING</span><span class="tab-back-arrow">→</span></span></span></button>
+<button class="tab" data-v="loan"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">⌁</span><span class="tab-copy">Loan Calculator</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">ESTIMATE REPAYMENTS</span><span class="tab-back-arrow">→</span></span></span></button>
+<button class="tab" data-v="rates"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">§</span><span class="tab-copy">Rates & Rules</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">VIEW CURRENT RULES</span><span class="tab-back-arrow">→</span></span></span></button>
+<button class="tab" data-v="sources"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">ⓘ</span><span class="tab-copy">Sources & Method</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">CHECK THE SOURCES</span><span class="tab-back-arrow">→</span></span></span></button>
+</nav>
+<!-- CALCULATOR -->
+<section class="view on" id="v-calc"><div class="grid">
+<aside class="panel">
+<div class="ph"><div><h2>Your deposit</h2><p>Pick a scheme and enter the amount.</p></div></div>
+<div class="f"><label for="sch">Scheme</label><select id="sch"></select></div>
+<div class="f"><label for="amt" id="amtL">Amount (₹)</label><input id="amt" inputmode="numeric" min="0" step="500" type="number"/></div>
+<div class="two"><div class="f"><label for="yrs">Tenure (years)</label><input id="yrs" max="50" min="1" step="1" type="number"/></div>
+<div class="f"><label for="rate">Rate (% p.a.)</label><input id="rate" max="20" min="0" step="0.05" type="number"/></div></div>
+<div class="f" id="modeW"><label for="mode">Deposit timing</label><select id="mode"><option value="lump">One deposit before 5 April each year (best case)</option><option value="monthly">Equal monthly deposits (by the 5th)</option></select></div>
+<label class="chk"><input id="goalOn" type="checkbox"/> Goal planner: find the deposit I need</label>
+<div class="f" id="goalW" style="display:none"><label for="goal" id="goalL">Target (₹, after tax)</label><input id="goal" min="0" step="1000" type="number" value="1000000"/></div>
+<div class="row"><button class="btn" id="reset" type="button">Reset to published rate</button></div>
+<div class="info" id="schNote"></div>
+<div class="facts" id="facts"></div>
+</aside>
+<div>
+<div class="warn-box" id="goalBox" style="display:none;margin:0 0 12px;background:rgba(23,128,90,.12);color:var(--green);border-color:rgba(23,128,90,.3);font-weight:700"></div>
+<div aria-live="polite" class="mets" id="mets"></div>
+<div class="panel">
+<div class="ph"><div><h2>Growth year by year</h2><p>Blue is what you put in, red is interest earned.</p></div><span id="badge"></span></div>
+<div id="chart"></div><div class="leg"><span><i style="background:#2b5d86"></i>Invested</span><span><i style="background:var(--red)"></i>Interest</span></div>
+<div class="warn-box" id="warns" style="display:none"></div>
+<details><summary>Year-wise table</summary><div class="tw"><table><thead><tr><th>Year</th><th>Invested</th><th>Interest</th><th>Value</th></tr></thead><tbody id="rows"></tbody></table></div></details>
+<div class="row" style="margin-top:14px"><button class="btn p" id="copy" type="button">Copy summary</button><button class="btn" id="link" type="button">Copy link</button><button class="btn" id="csv" type="button">Download CSV</button><button class="btn" onclick="print()" type="button">Print</button></div>
+<div class="info" id="resNote"></div>
+</div>
+</div>
+</div></section>
+<!-- COMPARE -->
+<section class="view" id="v-compare"><div class="panel">
+<div class="ph"><div><h2>Which scheme earns the most?</h2><p>Each scheme is shown for its own fixed tenure. Ranked by effective yearly return after tax.</p></div><span>SIDE BY SIDE</span></div>
+<div class="two" style="max-width:520px"><div class="f"><label for="cAmt">Lump-sum amount (₹)</label><input id="cAmt" min="0" step="1000" type="number" value="100000"/></div></div>
+<div class="chips" id="cChips"><button class="on" data-f="all">All</button><button data-f="income">Regular income</button><button data-f="growth">Lump-sum growth</button><button data-f="c80">Tax saving (80C)</button></div>
+<div class="tw"><table><thead><tr><th>Scheme</th><th>Tenure</th><th>Rate</th><th>You get (before tax)</th><th>You get (after tax)</th><th>Effective yield after tax</th></tr></thead><tbody id="cRows"></tbody></table></div>
+<div class="cards" id="cCards"></div>
+<div class="info">Payout schemes (MIS, SCSS) are ranked as if each payout were reinvested at the same rate, so they can be compared fairly. PPF and SSY are not in the table because they work on yearly deposits; see the cards above for what their tax-free rate is worth.</div>
+</div></section>
+<!-- BANKS -->
+<section class="view" id="v-banks"><div class="panel">
+<div class="ph"><div><h2>Post Office schemes vs bank products</h2><p>Compare a POSB scheme with 10 banks, including senior-citizen rates and monthly-income payout proxies. Rates are indicative; verify before investing.</p></div><span>SCHEME-WISE</span></div>
+<div class="two"><div class="f"><label for="bScheme">Post Office scheme</label><select id="bScheme"></select></div><div class="f"><label for="bAmt">Amount (₹)</label><input id="bAmt" min="0" step="1000" type="number" value="100000"/></div></div>
+<div class="two"><div class="f"><label for="bTerm">Comparison tenure</label><select id="bTerm"><option value="1">1 year</option><option value="2">2 years</option><option selected="" value="3">3 years</option><option value="5">5 years</option><option value="9.5833">9 years 7 months</option><option value="15">15 years (proxy)</option><option value="21">21 years (proxy)</option></select></div><div class="f"><label for="bCust">Your bank rate (% p.a., optional override)</label><input id="bCust" max="20" min="0" placeholder="Use this as an extra comparison" step="0.05" type="number"/></div></div>
+<div class="chips" id="bSen"><button class="on" data-s="0">General citizen</button><button data-s="1">Senior citizen</button></div>
+<div class="info" id="bMatchNote">The comparison product is chosen from the selected Post Office scheme.</div>
+<div class="mets" id="bSummary"></div>
+<div class="tw"><table><thead><tr><th>Provider / product</th><th>Comparison basis</th><th>Rate</th><th>Illustrative return / payout</th><th>Value / principal</th><th>After-tax estimate</th><th>Difference vs Post Office (MIS: monthly payout gap × months)</th></tr></thead><tbody id="bRows"></tbody></table></div>
+<div class="info"><b>Important:</b> this compares eligible Post Office schemes to the closest bank product, not always an equivalent product. PPF and SSY are deliberately excluded here because their government-set rates apply across institutions. SCSS is the same government scheme when opened through an authorised bank or Post Office, so its rate is shown identically across providers. Banks do not offer direct equivalents to NSC or KVP; those comparisons are proxies and do not reproduce their tax treatment, eligibility, government backing, lock-in or payout rules. Monthly-interest bank FD rates may be discounted from the cumulative FD rate by the bank. Rates below include representative published FD rates screened in October 2026; where the exact product/tenor is not directly comparable, rates are labelled as estimates or proxies and must be verified with the bank before investing. Tax is a simplified slab estimate; TDS, cess, deductions, premature-closure penalties and exact day-count rules are excluded.</div>
+</div></section>
+<!-- DEBT FUND COMPARATOR -->
+<section class="view" id="v-debt"><div class="panel">
+<div class="ph"><div><h2>Post Office vs Debt Mutual Funds</h2><p>Compare a POSB scheme with a category-level estimate and browse ten funds in each debt category.</p></div><span>MARKET-LINKED</span></div>
+<div class="two"><div class="f"><label for="dScheme">Post Office scheme</label><select id="dScheme"></select></div><div class="f"><label for="dAmt">Amount invested (₹)</label><input id="dAmt" min="0" step="1000" type="number" value="100000"/></div></div>
+<div class="two"><div class="f"><label for="dTerm">Comparison period (years)</label><select id="dTerm"><option value="1">1 year</option><option value="2">2 years</option><option selected="" value="3">3 years</option><option value="5">5 years</option><option value="9.5833">9 years 7 months (KVP)</option></select></div><div class="f"><label for="dCategory">Debt fund category</label><select id="dCategory"><option value="liquid">Liquid fund</option><option value="overnight">Overnight fund</option><option value="ultra">Ultra short duration</option><option value="medium">Medium duration</option><option value="long">Long duration</option></select></div><div class="f"><label for="dReturn">Assumed annual return (%)</label><input id="dReturn" max="20" min="0" step="0.1" type="number" value="6.3"/></div></div>
+<div class="mets" id="dSummary"></div><div class="info" id="dNote"></div>
+<div class="ph" style="margin-top:18px"><div><h2>Top 10 funds in selected category</h2><p>Listed by the published category ranking, not a buy recommendation. Direct-plan historical returns are not guaranteed.</p></div></div>
+<div class="tw"><table><thead><tr><th>Rank</th><th>Fund</th><th>1Y return</th><th>3Y CAGR</th><th>5Y CAGR</th><th>Expense ratio</th></tr></thead><tbody id="dFunds"></tbody></table></div>
+<div class="info">Debt funds are not deposits: NAV can fall, returns are not guaranteed and there is no DICGC deposit insurance. Longer-duration funds are more sensitive to interest-rate changes. Estimates use a user-adjustable assumed return; the comparison applies the selected tax slab simplistically and is not a precise tax calculation.</div>
+<div class="info"><b>Data sources:</b> <a href="https://www.indmoney.com/mutual-funds/debt/liquid" rel="noopener" target="_blank">Liquid</a> · <a href="https://www.indmoney.com/mutual-funds/debt/overnight" rel="noopener" target="_blank">Overnight</a> · <a href="https://www.indmoney.com/mutual-funds/debt/ultra-short" rel="noopener" target="_blank">Ultra short</a> · <a href="https://www.indmoney.com/mutual-funds/debt/medium-duration" rel="noopener" target="_blank">Medium duration</a> · <a href="https://www.indmoney.com/mutual-funds/debt/long-duration" rel="noopener" target="_blank">Long duration</a>. Data checked 19 October 2026; returns may update daily.</div>
+</div></section>
+<!-- SIP CALCULATOR -->
+<section class="view" id="v-sip"><div class="panel"><div class="ph"><div><h2>SIP calculator</h2><p>Estimate the future value of monthly investments at an assumed annual return.</p></div><span>MONTHLY INVESTING</span></div>
+<div class="two"><div class="f"><label for="sipAmt">Monthly SIP (₹)</label><input id="sipAmt" min="0" step="500" type="number" value="5000"/></div><div class="f"><label for="sipRate">Assumed annual return (%)</label><input id="sipRate" max="40" min="0" step="0.5" type="number" value="8"/></div></div>
+<div class="two"><div class="f"><label for="sipYears">Investment period (years)</label><input id="sipYears" max="50" min="1" step="1" type="number" value="10"/></div><div class="f"><label for="sipStep">Annual SIP increase (%)</label><input id="sipStep" max="50" min="0" step="1" type="number" value="0"/></div></div>
+<div aria-live="polite" class="mets" id="sipResults"></div><div class="info">Illustration only. Actual mutual fund returns vary; SIPs do not guarantee profit or protect against loss. Assumes monthly deposits at month-end and a constant monthly-equivalent return; tax and expense-ratio effects are not separately modelled.</div>
+</div></section>
+<!-- LOAN CALCULATOR -->
+<section class="view" id="v-loan"><div class="panel"><div class="ph"><div><h2>Loan &amp; EMI calculator</h2><p>Calculate monthly EMI, total interest, total repayment and an amortisation summary.</p></div><span>LOAN PLANNER</span></div>
+<div class="two"><div class="f"><label for="loanAmt">Loan amount (₹)</label><input id="loanAmt" min="0" step="10000" type="number" value="1000000"/></div><div class="f"><label for="loanRate">Interest rate (% p.a.)</label><input id="loanRate" max="40" min="0" step="0.1" type="number" value="9"/></div></div>
+<div class="two"><div class="f"><label for="loanYears">Loan tenure (years)</label><input id="loanYears" max="40" min="1" step="1" type="number" value="5"/></div><div class="f"><label for="loanExtra">Extra monthly payment (₹, optional)</label><input id="loanExtra" min="0" step="500" type="number" value="0"/></div></div>
+<div aria-live="polite" class="mets" id="loanResults"></div><div class="tw"><table><thead><tr><th>Year</th><th>Opening balance</th><th>Principal paid</th><th>Interest paid</th><th>Closing balance</th></tr></thead><tbody id="loanRows"></tbody></table></div>
+<div class="info">Estimate excludes processing fees, insurance, rate resets and lender-specific rounding. Extra payments are assumed to reduce principal monthly and shorten the repayment period; check the lender’s prepayment rules.</div>
+</div></section>
+<!-- RATES -->
+<section class="view" id="v-rates"><div class="panel">
+<div class="ph"><div><h2>All scheme rates and rules</h2><p>Rates for 1 October – 31 December 2026.</p></div><span>REFERENCE</span></div>
+<div class="tw"><table><thead><tr><th>Scheme</th><th>Rate</th><th>Interest basis</th><th>Tenure</th><th>Minimum</th><th>Maximum</th><th>Tax</th></tr></thead><tbody id="rRows"></tbody></table></div>
+<div class="info">Eligibility, nomination, premature closure and extension rules are not shown here. Check the official scheme rules or the latest orders. 80C deduction is available only under the old tax regime.</div>
+</div></section>
+<!-- SOURCES -->
+<section class="view" id="v-sources"><div class="panel">
+<div class="ph"><div><h2>Sources &amp; method</h2><p>How the numbers are worked out.</p></div></div>
+<p>Scheme rates are those notified by the Department of Economic Affairs, Ministry of Finance, for 1 October – 31 December 2026 (unchanged from July – September 2026). Bank rates are representative published retail deposit rates checked against official bank pages available in October 2026; where a bank does not publish a directly comparable product/tenor, the table explicitly labels a proxy.</p>
+<p style="margin-top:10px"><b>How each scheme is estimated</b></p>
+<ul>
+<li><b>TD:</b> compounded quarterly. <b>NSC:</b> compounded yearly, paid at maturity. <b>KVP:</b> doubles in 115 months at the current rate.</li>
+<li><b>RD:</b> deposits at the start of each month, interest on each month's balance, added to the balance every quarter.</li>
+<li><b>MIS / SCSS:</b> interest is paid out monthly / quarterly and not reinvested; principal returns at maturity.</li>
+<li><b>PPF / SSY:</b> yearly deposits, interest on the lowest monthly balance and credited at year end. SSY deposits run for 15 years and the account matures at 21 years. Both rates are reviewed every quarter, so future years may differ.</li>
+<li><b>After tax:</b> interest is taxed at your slab every year and the rest is reinvested. PPF and SSY interest is tax-free. Surcharge, cess, TDS and deduction limits are ignored.</li>
+<li><b>Effective yield:</b> the single yearly rate that would turn your deposits into the final amount, so schemes with different payment patterns can be compared.</li>
+</ul>
+<div class="info">These are planning estimates. Actual maturity amounts follow scheme rules, rounding and deposit dates. Do not quote them as official maturity values.</div>
+<div class="info"><b>Official references</b><ul>
+<li><a href="https://dea.gov.in/budget-division/475" rel="noopener" target="_blank">Department of Economic Affairs: small savings notices</a></li>
+<li><a href="https://www.indiapost.gov.in/banking-services/savings" rel="noopener" target="_blank">India Post: saving schemes</a></li><li><a href="https://www.paisabazaar.com/fixed-deposit/" rel="noopener" target="_blank">Paisabazaar: bank FD rate comparison (screen checked 14 October 2026; confirm with each bank)</a></li>
+<li><a href="https://sbi.bank.in/web/interest-rates/deposit-rates/retail-domestic-term-deposits" rel="noopener" target="_blank">SBI FD rates</a></li>
+<li><a href="https://www.hdfc.bank.in/fixed-deposit/fd-interest-rate" rel="noopener" target="_blank">HDFC Bank FD rates</a></li>
+<li><a href="https://www.icici.bank.in/personal-banking/deposits/fixed-deposit/fd-interest-rates" rel="noopener" target="_blank">ICICI Bank FD rates</a></li><li><a href="https://sbi.bank.in/web/interest-rates/interest-rates/deposit-rates" rel="noopener" target="_blank">SBI deposit rates and savings interest</a></li><li><a href="https://www.hdfc.bank.in/interest-rates" rel="noopener" target="_blank">HDFC Bank interest rates</a></li></ul></div>
+<div class="info"><b>Updating next quarter:</b> change the dates and rates in the <code>CFG</code>, <code>S</code> and <code>B</code> lists at the top of the script. Nothing else needs editing.</div>
+</div></section>
+<footer class="foot"><span><b>PostalIQ</b> · POSB Scheme Explorer &amp; Rate Comparator</span><span>Local calculations · No data uploaded</span><span>Verify official rules and live rates before advising.</span></footer>
+</main>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),$$=s=>[...document.querySelectorAll(s)];
+window.piToggleSidebar=function(open){const side=$('pi-redesign-sidebar'),scrim=$('pi-redesign-scrim');if(side)side.classList.toggle('open',!!open);if(scrim)scrim.classList.toggle('show',!!open);};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')window.piToggleSidebar(false)});
+const inr=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Number.isFinite(n)?n:0);
+const pc=(n,d=2)=>(Number.isFinite(n)?n:0).toFixed(d)+'%';
+/* ---------- DATA: update these each quarter ---------- */
+const CFG={from:'2026-10-01',to:'2026-12-31',label:'Q3 FY 2026–27'};
+// id,name,type,rate,years,fixed tenure?,amount label,min,max,step,interest basis,tenure text,tax text,80C?,note
+const S=[
+['SB','Post Office Savings Account (SB)','sb',4,1,0,'Account balance (₹)',500,0,500,'On lowest balance between 10th and month-end; credited yearly','No fixed maturity','Taxable (small exemption may apply)',0,'Estimate treats the balance as untouched and interest as credited every year.'],
+['RD','National Savings Recurring Deposit (RD)','rd',6.7,5,0,'Monthly deposit (₹)',100,0,10,'Quarterly compounding','5 years (extendable)','Taxable',0,'Deposits are assumed on time every month. Late deposits attract default charges.'],
+['TD1','1-Year Time Deposit (TD)','td',6.9,1,1,'Lump-sum deposit (₹)',1000,0,100,'Quarterly compounding; interest paid yearly','1 year','Taxable',0,'Maturity shown assumes interest stays in the account and compounds.'],
+['TD2','2-Year Time Deposit (TD)','td',7,2,1,'Lump-sum deposit (₹)',1000,0,100,'Quarterly compounding; interest paid yearly','2 years','Taxable',0,'Maturity shown assumes interest stays in the account and compounds.'],
+['TD3','3-Year Time Deposit (TD)','td',7.1,3,1,'Lump-sum deposit (₹)',1000,0,100,'Quarterly compounding; interest paid yearly','3 years','Taxable',0,'Maturity shown assumes interest stays in the account and compounds.'],
+['TD5','5-Year Time Deposit (TD)','td',7.5,5,1,'Lump-sum deposit (₹)',1000,0,100,'Quarterly compounding; interest paid yearly','5 years','Taxable; 80C deposit',1,'Maturity shown assumes interest stays in the account and compounds.'],
+['MIS','Monthly Income Scheme (MIS)','mis',7.4,5,1,'Lump-sum deposit (₹)',1000,900000,1000,'Monthly payout; principal returned at maturity','5 years','Taxable',0,'Single account limit ₹9 lakh; joint account ₹15 lakh. Payout is not reinvested.'],
+['SCSS','Senior Citizens Savings Scheme (SCSS)','scss',8.2,5,1,'Lump-sum deposit (₹)',1000,3000000,1000,'Quarterly payout; principal returned at maturity','5 years (extendable by 3)','Taxable; 80C deposit',1,'For age 60+ (limited exceptions). Extension and premature closure rules are not modelled.'],
+['PPF','Public Provident Fund (PPF)','ppf',7.1,15,0,'Deposit per year (₹)',500,150000,500,'Yearly compounding on lowest monthly balance','15 years (extendable in 5-year blocks)','Tax-free (EEE); 80C deposit',1,'Rate is reviewed every quarter, so later years may differ.'],
+['SSY','Sukanya Samriddhi Account (SSY)','ssy',8.2,21,1,'Deposit per year (₹)',250,150000,250,'Yearly compounding; deposits for 15 years','21 years from opening','Tax-free (EEE); 80C deposit',1,'Account for a girl child (up to 10 years at opening). Part withdrawal for education or marriage is not modelled.'],
+['NSC','National Savings Certificate (NSC)','nsc',7.7,5,1,'Lump-sum deposit (₹)',1000,0,100,'Yearly compounding; paid at maturity','5 years','Taxable; 80C deposit',1,'Check certificate value and rounding at purchase.'],
+['KVP','Kisan Vikas Patra (KVP)','kvp',7.5,115/12,1,'Lump-sum deposit (₹)',1000,0,100,'Money doubles in 115 months','115 months','Taxable',0,'At the current rate the amount doubles in 115 months.']];
+// Bank FD rates: [name, general %, senior %, note]
+const B={1:[['Post Office TD',6.9,6.9,'1-Year TD'],['SBI',6.25,6.75,'1 to <2 years; effective Dec 2025'],['HDFC Bank',6.25,6.75,'1 year to <15 months; effective Aug 2026'],['ICICI Bank',6.25,6.75,'1 year to 389 days; effective Oct 2026']],
+2:[['Post Office TD',7,7,'2-Year TD'],['SBI',6.4,6.9,'2 to <3 years; effective Dec 2025'],['HDFC Bank',6.45,6.95,'around 2 years; exact bucket applies'],['ICICI Bank',6.45,6.95,'2 years 1 day to 3 years; effective Oct 2026']],
+3:[['Post Office TD',7.1,7.1,'3-Year TD'],['SBI',6.3,6.8,'3 to <5 years; effective Dec 2025'],['HDFC Bank',6.5,7.1,'3y1d to <4y7m; effective Aug 2026'],['ICICI Bank',6.5,7.1,'3y1d to 5y; effective Oct 2026']],
+5:[['Post Office TD',7.5,7.5,'5-Year TD'],['SBI',6.05,7.05,'5–10 years; senior includes We-care premium'],['HDFC Bank',6.15,6.65,'5y1d to 10 years; effective Aug 2026'],['ICICI Bank',6.5,7,'5y1d to 10 years; effective Oct 2026']]};
+const K=['id','name','type','rate','yrs','fixed','amtL','min','max','step','basis','tenure','tax','c80','note'];
+const SC=S.map(a=>Object.fromEntries(K.map((k,i)=>[k,a[i]]))),by=id=>SC.find(s=>s.id===id);
+/* ---------- ENGINE ---------- */
+function sim(s,amt,yrs,rate,mode){const r=rate/100;let rows=[],cf=[],inv=0,total=0,payout=0,end=0,pl='';
+ if(['td','nsc','sb','kvp'].includes(s.type)){const g=s.type==='kvp'?(Math.pow(2,12/115)-1)*(rate/s.rate):0,T=s.type==='kvp'?115/12:yrs,
+   val=t=>s.type==='td'?amt*Math.pow(1+r/4,4*t):s.type==='kvp'?amt*Math.pow(1+g,t):amt*Math.pow(1+r,t);
+   cf=[[0,amt]];inv=amt;total=val(T);end=T*12;for(let y=1;y<=Math.ceil(T-1e-9);y++){const t=Math.min(y,T);rows.push({y:t,inv:amt,val:val(t)})}}
+ else if(s.type==='rd'){const n=Math.max(1,Math.round(yrs*12));let bal=0,acc=0;for(let m=1;m<=n;m++){bal+=amt;acc+=bal*r/12;cf.push([m-1,amt]);if(m%3===0){bal+=acc;acc=0}if(m%12===0)rows.push({y:m/12,inv:amt*m,val:bal+acc})}
+   bal+=acc;inv=amt*n;total=bal;end=n;if(n%12)rows.push({y:n/12,inv,val:bal})}
+ else if(s.type==='mis'||s.type==='scss'){const f=s.type==='mis'?12:4;payout=amt*r/f;pl=s.type==='mis'?'per month':'per quarter';inv=amt;total=amt+amt*r*yrs;cf=[[0,amt]];end=yrs*12;for(let y=1;y<=Math.ceil(yrs);y++){const t=Math.min(y,yrs);rows.push({y:t,inv:amt,val:amt+amt*r*t})}}
+ else{const dy=s.type==='ssy'?15:yrs,T=s.type==='ssy'?21:yrs;let bal=0;for(let y=1;y<=T;y++){let acc=0;for(let m=1;m<=12;m++){const d=y<=dy?(mode==='monthly'?amt/12:(m===1?amt:0)):0;if(d){bal+=d;cf.push([(y-1)*12+m-1,d])}acc+=bal*r/12}bal+=acc;rows.push({y,inv:amt*Math.min(y,dy),val:bal})}inv=amt*dy;total=bal;end=T*12}
+ return{rows,cf,inv,total,interest:Math.max(0,total-inv),payout,pl,end,rate}}
+function yld(s,x){if(s.type==='mis')return Math.pow(1+x.rate/1200,12)-1;if(s.type==='scss')return Math.pow(1+x.rate/400,4)-1;if(!(x.total>x.inv))return 0;
+ let lo=0,hi=.05;const f=i=>x.cf.reduce((a,[m,v])=>a+v*Math.pow(1+i,x.end-m),0)-x.total;for(let k=0;k<70;k++){const mid=(lo+hi)/2;f(mid)>0?hi=mid:lo=mid}return Math.pow(1+lo,12)-1}
+const free=s=>s.type==='ppf'||s.type==='ssy';
+function both(s,amt,yrs,rate,mode,tax){const pre=sim(s,amt,yrs,rate,mode),post=free(s)||!tax?pre:sim(s,amt,yrs,rate*(1-tax/100),mode);return{pre,post,yPre:yld(s,pre),yPost:yld(s,post)}}
+/* ---------- STATE ---------- */
+const st={v:'calc',s:'NSC',a:100000,t:5,r:7.7,x:0,m:'lump',g:0,gt:1000000,sen:0,f:'all'};
+(function(){try{const p=new URLSearchParams(location.hash.slice(1));const n=k=>p.has(k)&&Number.isFinite(+p.get(k));
+ if(p.get('v')&&$('v-'+p.get('v')))st.v=p.get('v');if(by(p.get('s')))st.s=p.get('s');if(n('a'))st.a=+p.get('a');if(n('t'))st.t=+p.get('t');if(n('r'))st.r=+p.get('r');st.keep=n('t')&&n('r');if(n('x'))st.x=+p.get('x');if(p.get('m')==='monthly')st.m='monthly';if(p.get('g')==='1')st.g=1;if(n('gt'))st.gt=+p.get('gt')}catch(e){}
+ try{if(!by(st.s))st.s='NSC';const o=localStorage.getItem('postaliq_slab');if(o!==null&&!location.hash.includes('x='))st.x=+o||0}catch(e){}})();
+const cur=()=>by(st.s);
+function share(){const p=new URLSearchParams({v:st.v,s:st.s,a:st.a,t:st.t,r:st.r,x:st.x,m:st.m,g:st.g,gt:st.gt});try{history.replaceState(null,'','#'+p)}catch(e){}return location.href}
+/* ---------- CALCULATOR ---------- */
+function load(id,keep){const s=by(id);st.s=id;$('sch').value=id;$('amtL').textContent=s.amtL;$('amt').step=s.step;$('amt').min=s.min;
+ if(!keep){st.r=s.rate;st.t=s.yrs}
+ $('yrs').value=+(+st.t).toFixed(2);$('rate').value=st.r;$('amt').value=st.a;
+ $('yrs').disabled=!!s.fixed;$('yrs').min=s.type==='ppf'?15:1;$('yrs').max=s.type==='ppf'?50:10;$('rate').disabled=s.type==='kvp';
+ $('modeW').style.display=free(s)?'':'none';$('mode').value=st.m;$('goalL').textContent=(s.type==='mis'?'Monthly income wanted':s.type==='scss'?'Quarterly income wanted':'Target amount')+' (₹, after tax)';
+ $('schNote').textContent=s.note;
+ $('facts').innerHTML=[['Interest',s.basis],['Tenure',s.tenure],['Minimum',inr(s.min)],['Maximum',s.max?inr(s.max)+(free(s)?' per year':''):'No limit'],['Tax',s.tax]].map(a=>`<b>${a[0]}</b><span>${a[1]}</span>`).join('');
+ calc()}
+function short(n){return n>=1e7?(n/1e7).toFixed(1)+' Cr':n>=1e5?(n/1e5).toFixed(1)+' L':n>=1e3?(n/1e3).toFixed(0)+'k':String(Math.round(n))}
+const fy=y=>Number.isInteger(y)?y:y.toFixed(1);
+function chart(rows){const n=rows.length;if(!n)return'';const step=Math.ceil(n/24),R=rows.filter((_,i)=>i%step===step-1||i===n-1),W=640,H=230,pl=46,pb=26,pt=10,max=Math.max(...R.map(r=>r.val))||1,bw=(W-pl-8)/R.length,ph=H-pt-pb;let g='';
+ for(let k=0;k<4;k++){const y=pt+ph*k/3;g+=`<line x1="${pl}" x2="${W-4}" y1="${y}" y2="${y}" class="gl"/><text x="${pl-6}" y="${y+4}" class="ax" text-anchor="end">${short(max*(1-k/3))}</text>`}
+ R.forEach((r,i)=>{const x=pl+i*bw+bw*.14,w=bw*.72,a=ph*Math.min(r.inv,r.val)/max,b=ph*Math.max(0,r.val-r.inv)/max,y0=H-pb;
+  g+=`<g><title>Year ${fy(r.y)}: invested ${inr(r.inv)}, interest ${inr(r.val-r.inv)}, value ${inr(r.val)}</title><rect x="${x}" y="${y0-a}" width="${w}" height="${a}" class="b1"/><rect x="${x}" y="${y0-a-b}" width="${w}" height="${b}" class="b2"/></g><text x="${x+w/2}" y="${H-8}" class="ax" text-anchor="middle">${fy(r.y)}</text>`});
+ return`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Year-wise growth of invested amount and interest">${g}</svg>`}
+let last=null;
+function calc(){const s=cur();let amt=Math.max(0,+$('amt').value||0),yrs=Math.max(1,+$('yrs').value||s.yrs),rate=Math.max(0,Math.min(20,+$('rate').value||0));
+ if(s.fixed)yrs=s.yrs;if(s.type==='ppf')yrs=Math.max(15,Math.min(50,Math.round(yrs)));else if(!s.fixed)yrs=Math.min(10,yrs);
+ st.a=amt;st.t=yrs;st.r=rate;st.m=$('mode').value;st.g=$('goalOn').checked?1:0;st.gt=+$('goal').value||0;$('goalW').style.display=st.g?'':'none';
+ const rr=s.type==='kvp'?s.rate:rate,tax=st.x;let goalMsg='';
+ if(st.g){const u=both(s,1,yrs,rr,st.m,tax),p=u.post,unit=p.payout||p.total;amt=unit>0?st.gt/unit:0;goalMsg=`To get ${inr(st.gt)} after tax${p.payout?' '+p.pl:''} you would need ${inr(amt)}${s.type==='rd'?' every month':free(s)?' every year':' as a lump sum'}.`}
+ const R=both(s,amt,yrs,rr,st.m,tax),a=R.pre,b=R.post,w=[];
+ if(s.min&&amt<s.min)w.push(`Below the minimum of ${inr(s.min)}.`);if(s.max&&amt>s.max)w.push(`Above the limit of ${inr(s.max)}${free(s)?' per year':''}${s.type==='mis'?' (joint account: ₹15,00,000)':''}.`);
+ if(!st.g&&s.min&&s.step>1&&amt%s.step&&amt>=s.min)w.push(`Amount should be in multiples of ${inr(s.step)}.`);if(s.type==='scss')w.push('Open only for eligible senior citizens (age 60 and above, with limited exceptions).');
+ const taxed=!free(s)&&tax>0,m=[['Invested',inr(a.inv),s.type==='rd'?'Total of monthly deposits':free(s)?(s.type==='ssy'?'Deposits for 15 years':'Total deposits'):'Your deposit',''],['Interest earned',inr(a.interest),'Before tax',''],['Value at maturity',inr(a.total),a.payout?'Includes principal returned':`After ${fy(+(a.end/12).toFixed(2))} years`,'hi']];
+ if(a.payout)m.push([s.type==='mis'?'Monthly payout':'Quarterly payout',inr(a.payout),'Before tax','']);
+ m.push([taxed?`After-tax value (${tax}% slab)`:'Value after tax',inr(b.total),free(s)?'Interest is tax-free':taxed?'Tax paid on interest each year':'No tax applied','']);
+ m.push(['Effective yearly return',pc(R.yPre*100),taxed?`${pc(R.yPost*100)} after tax`:free(s)&&tax?`Worth ${pc(rr/(1-tax/100))} on a taxable scheme`:'Per year, compounded','']);
+ $('mets').innerHTML=m.map(x=>`<div class="m ${x[3]}"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="h">${x[2]}</div></div>`).join('');
+ $('goalBox').style.display=st.g?'':'none';$('goalBox').textContent=goalMsg;
+ $('warns').style.display=w.length?'':'none';$('warns').innerHTML=w.map(t=>'• '+t).join('<br>');
+ $('chart').innerHTML=chart(a.rows);$('badge').textContent=pc(rate)+' p.a.';
+ $('rows').innerHTML=a.rows.map(r=>`<tr><td>${fy(r.y)}</td><td>${inr(r.inv)}</td><td>${inr(r.val-r.inv)}</td><td><b>${inr(r.val)}</b></td></tr>`).join('');
+ $('resNote').textContent=s.note+' Planning estimate only, not an official maturity quote.';
+ last={s,amt,yrs,rate:rr,a,b,R,tax};share()}
+/* ---------- COMPARE SCHEMES ---------- */
+const GROUP={income:['MIS','SCSS'],growth:['TD1','TD2','TD3','TD5','NSC','KVP'],c80:['TD5','SCSS','NSC']};
+function compare(){const amt=Math.max(0,+$('cAmt').value||0),tax=st.x,ids=['TD1','TD2','TD3','TD5','NSC','KVP','MIS','SCSS'];
+ const L=ids.map(id=>{const s=by(id),R=both(s,amt,s.yrs,s.rate,'lump',tax);return{s,R}}).sort((p,q)=>q.R.yPost-p.R.yPost),best=L[0]?L[0].R.yPost:0;
+ $('cRows').innerHTML=L.filter(o=>st.f==='all'||GROUP[st.f].includes(o.s.id)).map(({s,R})=>{const a=R.pre,b=R.post,over=s.max&&amt>s.max,tag=s.c80?'<span class="pill">80C</span>':'',pay=a.payout?`<br><span class="mut">${inr(R.pre.payout)} ${a.pl}</span>`:'';
+  return`<tr class="${R.yPost===best?'best':''}"><td><b>${s.name}</b>${tag}${over?`<br><span class="r">Above limit ${inr(s.max)}</span>`:''}</td><td>${s.tenure}</td><td>${pc(s.rate)}</td><td>${inr(a.total)}${pay}</td><td>${inr(b.total)}${b.payout?`<br><span class="mut">${inr(b.payout)} ${b.pl}</span>`:''}</td><td><b class="${R.yPost===best?'g':''}">${pc(R.yPost*100)}</b><div class="yb"><i style="width:${Math.min(100,R.yPost*100/(best*100||1)*100)}%"></i></div></td></tr>`}).join('');
+ const eq=(id)=>{const s=by(id);return tax?pc(s.rate/(1-tax/100)):pc(s.rate)};
+ $('cCards').innerHTML=['PPF','SSY'].map(id=>{const s=by(id);return`<div class="m"><div class="l">${s.name}</div><div class="v">${pc(s.rate)} tax-free</div><div class="h">${tax?`Same as a taxable ${eq(id)} at your ${tax}% slab`:'Choose a tax slab above to see the taxable equivalent'} · ${s.id==='PPF'?'15 years':'21 years'}</div></div>`}).join('')}
+/* ---------- SCHEME-WISE BANK COMPARATOR ---------- */
+const BM={
+ SB:{label:'Savings account',note:'Compare interest on an unchanged balance; bank savings rates can be balance-tiered.',term:1,poRate:4,kind:'savings',banks:[['SBI',2.50,2.50,'Savings rate published w.e.f. 15 Jun 2025'],['HDFC Bank',2.75,2.75,'Regular savings; check balance slab'],['ICICI Bank',2.75,2.75,'Resident savings; verify current slab']]},
+ RD:{label:'Recurring deposit',note:'Monthly contributions over 5 years. Bank RD rates usually follow the bank’s tenor-based deposit schedule.',term:5,poRate:6.7,kind:'rd',banks:[['SBI',6.05,6.55,'5-year bucket proxy; verify RD rate'],['HDFC Bank',6.15,6.65,'5-year bucket proxy; verify RD rate'],['ICICI Bank',6.50,7.00,'5-year bucket proxy; verify RD rate']]},
+ TD1:{label:'1-year fixed deposit',note:'Cumulative FD comparison; quarterly compounding is approximated.',term:1,poRate:6.9,kind:'fd',banks:[['SBI',6.25,6.75,'1 to <2 years; last published schedule'],['HDFC Bank',6.25,6.75,'1 year to <15 months; published Oct 2026'],['ICICI Bank',6.25,6.75,'1-year bucket; published Oct 2026']]},
+ TD2:{label:'2-year fixed deposit',note:'Cumulative FD comparison; exact day/tenor bucket can change the rate.',term:2,poRate:7.0,kind:'fd',banks:[['SBI',6.40,6.90,'2 to <3 years; last published schedule'],['HDFC Bank',6.45,6.95,'around 2 years; published Oct 2026'],['ICICI Bank',6.45,6.95,'2-year bucket; published Oct 2026']]},
+ TD3:{label:'3-year fixed deposit',note:'Cumulative FD comparison; quarterly compounding is approximated.',term:3,poRate:7.1,kind:'fd',banks:[['SBI',6.30,6.80,'3 to <5 years; last published schedule'],['HDFC Bank',6.50,7.10,'3-year bucket; published Oct 2026'],['ICICI Bank',6.50,7.10,'3-year bucket; published Oct 2026']]},
+ TD5:{label:'5-year / tax-saving FD',note:'A 5-year bank FD is the closest comparison; tax deduction eligibility and lock-in conditions differ.',term:5,poRate:7.5,kind:'fd',banks:[['SBI',6.05,7.05,'5–10 years; senior rate includes We-care premium'],['HDFC Bank',6.15,6.65,'5-year bucket; published Oct 2026'],['ICICI Bank',6.50,7.00,'5-year bucket; published Oct 2026']]},
+ MIS:{label:'Monthly income deposit',note:'Post Office MIS pays monthly at 7.4%. Banks generally offer monthly-interest payout on an FD; payout rates can be discounted from cumulative rates.',term:5,poRate:7.4,kind:'monthly',banks:[['SBI Monthly-interest FD',6.05,7.05,'5-year FD rate proxy; payout option may pay at discounted rate'],['HDFC Bank Monthly-interest FD',6.15,6.65,'5-year FD rate proxy; monthly payout may be discounted'],['ICICI Bank Monthly-interest FD',6.50,7.00,'5-year FD rate proxy; monthly payout may be discounted']]},
+ SCSS:{label:'Senior Citizens Savings Scheme (SCSS)',note:'SCSS is one government-backed scheme distributed through authorised banks as well as Post Offices. The notified scheme rate and core rules are the same regardless of where the account is opened; this is an access/channel comparison, not a bank-FD rate comparison.',term:5,poRate:8.2,kind:'scss',banks:[['SBI · SCSS',8.2,8.2,'Same Government-notified SCSS rate; availability subject to authorised branch'],['HDFC Bank · SCSS',8.2,8.2,'Same Government-notified SCSS rate; availability subject to authorised branch'],['ICICI Bank · SCSS',8.2,8.2,'Same Government-notified SCSS rate; availability subject to authorised branch']]},
+ NSC:{label:'5-year tax-saving growth',note:'Compare with a 5-year tax-saving FD. NSC and bank tax-saver FDs have different interest/tax rules.',term:5,poRate:7.7,kind:'fd',banks:[['SBI Tax Savings FD',6.05,7.05,'5-year bucket; verify scheme-specific rate'],['HDFC Bank Tax Saver FD',6.15,6.65,'5-year FD bucket; verify product terms'],['ICICI Bank Tax Saver FD',6.50,7.00,'5-year FD bucket; verify product terms']]},
+ KVP:{label:'Long-term doubling (proxy)',note:'KVP doubles in 115 months at its current notified rate. Banks do not offer an equivalent KVP product; comparison is a long-tenor FD proxy.',term:115/12,poRate:7.5,kind:'proxy',banks:[['SBI FD proxy',6.05,7.05,'5–10-year rate proxy; repeated to KVP maturity'],['HDFC Bank FD proxy',6.15,6.65,'5–10-year rate proxy; repeated to KVP maturity'],['ICICI Bank FD proxy',6.50,7.00,'5–10-year rate proxy; repeated to KVP maturity']]}
+};
+// Additional comparison panel: ten banks total. Rates are representative published retail FD rates
+// screened in October 2026; tenor interpolation and senior-citizen uplifts are estimates, not quotes.
+const EXTRA_BANKS=[
+ {name:'Axis Bank',r:[6.25,6.50,6.50]},
+ {name:'Kotak Mahindra Bank',r:[6.50,6.40,6.25]},
+ {name:'Punjab National Bank',r:[6.25,6.35,6.10]},
+ {name:'Bank of Baroda',r:[6.25,6.25,6.30]},
+ {name:'Canara Bank',r:[6.25,6.25,6.25]},
+ {name:'Union Bank of India',r:[6.20,6.10,6.00]},
+ {name:'IDFC FIRST Bank',r:[6.50,7.10,6.75]}
+];
+function expandedBankList(cfg,id,term){
+ const base=cfg.banks.slice();
+ const yrs=cfg.kind==='savings'?1:(id==='TD1'?1:id==='TD2'?2:id==='TD3'?3:((id==='TD5'||id==='NSC'||id==='RD'||id==='MIS'||id==='SCSS')?5:(id==='KVP'?115/12:term)));
+ const ix=yrs<=1?0:yrs<=3?1:2;
+ EXTRA_BANKS.forEach(b=>{
+  if(id==='SCSS'){base.push([b.name+' · SCSS',8.2,8.2,'Same Government-notified SCSS rate; confirm SCSS account-opening facility at the branch']);return;}
+  let rate=b.r[ix];
+  if(yrs>1&&yrs<3)rate=b.r[0]+(b.r[1]-b.r[0])*(yrs-1)/2;
+  if(id==='SB') rate=2.50; // broadly representative savings-account headline rate; tiers vary by balance
+  const senior= id==='SB'?rate:Math.min(8.5,rate+0.50);
+  let label=(id==='SB'?'Savings account headline rate; balance tiers vary':'Representative '+(yrs>=9?'long-tenor proxy':`${yrs}-year FD tenor`)+'; Oct 2026 screen; verify bank schedule');
+  if(['RD','MIS','SCSS','NSC','KVP'].includes(id))label+='; nearest FD proxy, not a direct equivalent';
+  base.push([b.name,Number(rate.toFixed(2)),Number(senior.toFixed(2)),label]);
+ });
+ return base;
+}
+function banks(){const id=$('bScheme').value||'TD3',cfg=BM[id]||BM.TD3,s=by(id),amt=Math.max(0,+$('bAmt').value||0),term=+$('bTerm').value||cfg.term,tax=st.x,sen=!!st.sen;
+ const poRate=cfg.poRate, monthly=cfg.kind==='monthly', savings=cfg.kind==='savings', recurring=cfg.kind==='rd', scss=cfg.kind==='scss';
+ const interest=(rate)=>scss?amt*rate/100*term:savings?amt*rate/100:recurring?(()=>{let total=0;for(let m=1;m<=Math.round(term*12);m++)total+=amt*(Math.pow(1+rate/400,4*term)-1)/Math.max(1,Math.round(term*12));return total})():monthly?amt*rate/100*12*term:amt*(Math.pow(1+rate/400,4*term)-1);
+ const payout=(rate)=>amt*rate/1200;
+ const poInterest=monthly?payout(poRate)*12*term:savings?interest(poRate):interest(poRate);
+ const poEnd=savings?amt+poInterest:monthly?amt:recurring?amt*Math.round(term*12)+poInterest:amt+poInterest;
+ const poNetInterest=poInterest*(1-tax/100),poNet=monthly?amt+poNetInterest:(savings?amt+poNetInterest:poEnd-poInterest+poNetInterest);
+ $('bMatchNote').textContent=scss?`${s.name}: ${cfg.note} All listed authorised providers show the same notified rate; use this table to check access/channel, not to rank banks by interest.`:`${s.name} → closest bank comparison: ${cfg.label}. ${cfg.note} Rates are indicative; scheme rules and tax treatment differ.`;
+ const rows=[['Post Office · '+s.name,`${term>=9?term.toFixed(2)+' years':term+' year(s)'} · ${scss?'quarterly payout; same SCSS scheme':cfg.kind==='monthly'?'monthly payout':cfg.kind==='savings'?'savings balance':cfg.kind==='rd'?'monthly contributions':'cumulative / proxy'}`,poRate,poInterest,poEnd,poNet,true]];
+ expandedBankList(cfg,id,term).forEach(b=>{const rate=sen?b[2]:b[1],int=interest(rate),end=savings?amt+int:monthly?amt:recurring?amt*Math.round(term*12)+int:amt+int,netInt=int*(1-tax/100),net=(savings||monthly)?amt+netInt:end-int+netInt;rows.push([b[0],b[3],rate,int,end,net,false])});
+ const custom=parseFloat($('bCust').value);if(Number.isFinite(custom)&&custom>0){const int=interest(custom),end=savings?amt+int:monthly?amt:recurring?amt*Math.round(term*12)+int:amt+int;rows.push(['Your bank / custom rate','User-entered rate; product terms not verified',custom,int,end,(savings||monthly)?amt+int*(1-tax/100):end-int+int*(1-tax/100),false])}
+ const baseline=rows[0][5];$('bRows').innerHTML=rows.map((r,i)=>{const diff=monthly&&i>0?(Math.round(payout(r[2]))-Math.round(payout(poRate)))*Math.round(term*12):r[5]-baseline,monthlyTxt=(monthly||i===0&&cfg.kind==='monthly')?`<br><span class="mut">Monthly gross income: ${inr(Math.round(payout(r[2])))}</span>`:scss?`<br><span class="mut">Quarterly gross interest: ${inr(amt*r[2]/400)}</span>`:'';return `<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="g">${pc(r[2])}</td><td>${inr(r[3])}${monthlyTxt}</td><td>${inr(r[4])}</td><td>${inr(r[5])}</td><td>${i===0?'—':`<b class="${diff<0?'r':'g'}">${diff>=0?'+':'−'}${inr(Math.abs(diff))}</b>`}</td></tr>`}).join('');
+ const m=scss?`Quarterly gross interest: ${inr(amt*poRate/400)} · same notified SCSS rate at authorised banks and Post Offices`:monthly?`Monthly gross income: ${inr(payout(poRate))}`:savings?`Illustrative annual interest: ${inr(amt*poRate/100)}`:recurring?`Monthly contribution: ${inr(amt)}`:`Illustrative interest / return: ${inr(poInterest)}`;
+ $('bSummary').innerHTML=[['Selected scheme',s.name,'POSB notified rate'],['POSB rate',pc(poRate),'Q3 FY 2026–27'],['Income / return',m,monthly?'Principal remains invested':'Before tax; illustrative']].map((x,i)=>`<div class="m ${i===1?'hi':''}"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="h">${x[2]}</div></div>`).join('');
+}
+/* ---------- RATES ---------- */
+function ratesTable(){$('rRows').innerHTML=SC.map(s=>`<tr><td><b>${s.name}</b></td><td class="g">${pc(s.rate)}</td><td>${s.basis}</td><td>${s.tenure}</td><td>${inr(s.min)}</td><td>${s.max?inr(s.max):'No limit'}${free(s)?' / year':''}</td><td>${s.tax}</td></tr>`).join('')}
+/* ---------- DEBT FUND SNAPSHOT (rankings/data checked 19 Oct 2026) ---------- */
+const DF={
+ liquid:{label:'Liquid',rate:6.3,source:'INDmoney, data 17 Oct 2026',funds:[['Union Liquid Fund','6.49','6.94','6.42','0.07'],['Baroda BNP Paribas Liquid Fund','6.44','6.89','6.41','0.10'],['Bandhan Liquid Fund','6.47','6.90','6.39','0.07'],['Bajaj Liquid Fund','6.49','6.94','—','0.08'],['DSP Liquid Fund','6.53','6.95','6.42','0.12'],['Mirae Asset Liquid Fund','6.41','6.91','6.40','0.09'],['Franklin India Liquid Super Institutional Fund','6.53','6.96','6.42','0.14'],['Mahindra Manulife Liquid Fund','6.51','6.95','6.44','0.15'],['Edelweiss Liquid Fund','6.52','6.98','6.43','0.10'],['Bank of India Liquid Fund','6.50','6.94','6.43','0.09']]},
+ overnight:{label:'Overnight',rate:5.3,source:'INDmoney, data 17 Oct 2026',funds:[['Axis Overnight Fund','5.28','6.06','5.79','0.09'],['HSBC Overnight Fund','5.26','6.03','5.77','0.07'],['Baroda BNP Paribas Overnight Fund','5.28','6.04','5.76','0.05'],['Tata Overnight Fund','5.29','6.06','5.77','0.09'],['Franklin India Overnight Fund','5.31','6.03','5.72','0.07'],['Kotak Overnight Fund','5.27','6.04','5.76','0.09'],['LIC MF Overnight Fund','5.26','6.03','5.76','0.10'],['UTI Overnight Fund','5.25','6.03','5.75','0.09'],['Bajaj Overnight Fund','5.34','6.06','—','0.11'],['ICICI Prudential Overnight Fund','5.26','6.02','5.74','0.09']]},
+ ultra:{label:'Ultra short duration',rate:6.5,source:'INDmoney, data 16 Oct 2026',funds:[['Sundaram Ultra Short Term Fund','6.47','7.24','6.65','0.19'],['Mirae Asset Ultra Short Term Fund','6.57','7.38','6.72','0.23'],['HSBC Ultra Short Term Fund','6.42','7.18','6.57','0.18'],['Baroda BNP Paribas Ultra Short Term Fund','6.49','7.19','6.68','0.28'],['Invesco India Ultra Short Term Fund','6.66','7.31','6.65','0.27'],['LIC MF Ultra Short Term Fund','6.67','7.21','6.35','0.25'],['UTI Ultra Short Term Fund','6.55','7.29','6.64','0.40'],['WhiteOak Capital Ultra Short Term Fund','6.31','6.98','6.35','0.27'],['SBI Ultra Short Term Fund','6.37','7.14','6.50','0.35'],['DSP Ultra Short Term Fund','6.57','7.38','6.69','0.30']]},
+ medium:{label:'Medium duration',rate:5.8,source:'INDmoney, data 16 Oct 2026',funds:[['Axis Medium Term Fund','5.60','8.26','7.21','0.72'],['ICICI Prudential Medium Term Fund','6.06','8.29','7.28','0.73'],['HDFC Medium Term Fund','5.67','7.81','6.69','0.70'],['Aditya Birla Sun Life Medium Term Fund','7.73','10.48','12.56','0.83'],['Kotak Medium Term Fund','5.55','8.74','7.26','0.67'],['HSBC Medium Term Fund','4.35','7.59','6.55','0.41'],['SBI Medium Term Fund','5.49','7.58','6.71','0.72'],['Bandhan Medium Term Fund','5.28','7.59','5.99','0.66'],['Nippon India Medium Duration Fund','5.20','8.31','6.77','0.50'],['UTI Medium Term Fund','3.46','6.65','5.75','0.87']]},
+ long:{label:'Long duration',rate:0.0,source:'INDmoney, data 16 Oct 2026',funds:[['SBI Long Term Fund','-0.05','6.17','—','0.32'],['ICICI Prudential Long Term Fund','-0.37','6.30','5.25','0.43'],['HDFC Long Term Fund','-1.10','5.82','—','0.28'],['Nippon India Nivesh Lakshya Long Term Fund','-0.66','6.13','5.51','0.33'],['Aditya Birla Sun Life Long Term Fund','0.46','6.49','—','0.43'],['Axis Long Term Fund','-0.72','5.69','—','0.33'],['UTI Long Term Fund','-0.99','5.37','—','0.78'],['Kotak Long Term Fund','-1.35','—','—','0.32'],['Bandhan Long Term Fund','0.75','—','—','0.28'],['Franklin India Long Term Fund','1.60','—','—','0.36']]}
+};
+function debtFunds(){const k=$('dCategory').value,d=DF[k],rows=d.funds;$('dFunds').innerHTML=rows.map((f,i)=>`<tr><td>${i+1}</td><td><b>${f[0]}</b></td><td>${f[1]}%</td><td>${f[2]==='—'?'—':f[2]+'%'}</td><td>${f[3]==='—'?'—':f[3]+'%'}</td><td>${f[4]}%</td></tr>`).join('');$('dNote').textContent=`Category reference: ${d.source}. Ranked fund lists are from a third-party screen; returns are historical direct-plan figures and are not a forecast. The assumed return is editable and is used for the estimate below.`;debtCompare()}
+function debtCompare(){const id=$('dScheme').value||'TD3',s=by(id),amt=Math.max(0,+$('dAmt').value||0),term=Math.max(.1,+($('dTerm').value)||3),r=Math.max(0,+$('dReturn').value||0)/100,tax=st.x/100,d=DF[$('dCategory').value];let posRate=s.rate;const isMonthly=['MIS','SCSS'].includes(id),isRD=id==='RD';if(id==='KVP')posRate=7.5;let poGross=amt*(Math.pow(1+posRate/400,4*term)-1),fundGross=amt*(Math.pow(1+r,term)-1);if(isMonthly){poGross=amt*posRate/100*term;fundGross=amt*(Math.pow(1+r,term)-1)}const poNet=poGross*(free(s)?1:1-tax),fundNet=fundGross*(1-tax);$('dSummary').innerHTML=[['Post Office · '+s.name,inr(amt+poGross*(free(s)?1:1-tax)),'Illustrative maturity-equivalent value'],[d.label+' fund',inr(amt+fundNet),'At assumed '+pc(r*100)+' annual return'],['Difference',`${fundNet-poNet>=0?'+':'−'}${inr(Math.abs(fundNet-poNet))}`,fundNet>=poNet?'Fund estimate higher':'Post Office estimate higher']].map((x,i)=>`<div class="m ${i===2?'hi':''}"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="h">${x[2]}</div></div>`).join('')}
+function sipCalc(){const p=Math.max(0,+$('sipAmt').value||0),rate=Math.max(0,+$('sipRate').value||0)/100,years=Math.max(1,Math.min(50,+$('sipYears').value||1)),step=Math.max(0,+$('sipStep').value||0)/100,n=years*12,rm=Math.pow(1+rate,1/12)-1;let value=0,invested=0,monthly=p;for(let m=1;m<=n;m++){if(m>1&&(m-1)%12===0)monthly=p*Math.pow(1+step,Math.floor((m-1)/12));value=value*(1+rm)+monthly;invested+=monthly}const gain=value-invested;$('sipResults').innerHTML=[['Invested amount',inr(invested),`${n} monthly contributions`],['Estimated value',inr(value),'At assumed return'],['Estimated gain',inr(gain),`Return assumption: ${pc(rate*100)} p.a.`]].map((x,i)=>`<div class="m ${i===1?'hi':''}"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="h">${x[2]}</div></div>`).join('')}
+function loanCalc(){const principal=Math.max(0,+$('loanAmt').value||0),annual=Math.max(0,+$('loanRate').value||0)/1200,years=Math.max(1,Math.min(40,+$('loanYears').value||1)),extra=Math.max(0,+$('loanExtra').value||0),n=years*12,emi=annual?principal*annual*Math.pow(1+annual,n)/(Math.pow(1+annual,n)-1):principal/n;let bal=principal,totalInt=0,totalPaid=0,yearRows=[],y={open:principal,principal:0,interest:0};for(let m=1;m<=n&&bal>.005;m++){const interest=bal*annual,principalPart=Math.min(bal,Math.max(0,emi-interest)+extra);bal=Math.max(0,bal-principalPart);totalInt+=interest;totalPaid+=principalPart+interest;y.principal+=principalPart;y.interest+=interest;if(m%12===0||bal<=.005){yearRows.push([Math.ceil(m/12),y.open,y.principal,y.interest,bal]);y={open:bal,principal:0,interest:0}}} $('loanResults').innerHTML=[['Monthly EMI',inr(emi),'Before optional extra payment'],['Total interest',inr(totalInt),'Across estimated payoff period'],['Total repayment',inr(principal+totalInt),'Principal + interest'],['Payoff duration',`${Math.ceil((totalPaid>0?yearRows.reduce((a,r)=>a+1,0):years))} year(s) approx`,'Extra payments may shorten tenure']].map((x,i)=>`<div class="m ${i===0?'hi':''}"><div class="l">${x[0]}</div><div class="v">${x[1]}</div><div class="h">${x[2]}</div></div>`).join('');$('loanRows').innerHTML=yearRows.map(r=>`<tr><td>${r[0]}</td><td>${inr(r[1])}</td><td>${inr(r[2])}</td><td>${inr(r[3])}</td><td>${inr(r[4])}</td></tr>`).join('')}
+
+/* ---------- UI WIRING ---------- */
+function banner(){const t=new Date(),a=new Date(CFG.from+'T00:00:00'),b=new Date(CFG.to+'T23:59:59'),el=$('banner');
+ if(t>b){el.className='banner warn';el.textContent=`These rates were for ${CFG.label} and have ended. Check the latest notification before advising.`}
+ else if(t<a){el.className='banner warn';el.textContent=`Rates shown start from 1 Oct 2026. Check which quarter applies.`}
+ else{el.className='banner';el.textContent=`Rates in force: ${CFG.label} (1 Oct – 31 Dec 2026). Next review is due at the end of December.`}}
+function view(v){st.v=v;$$('.tab').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$$('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));if(v==='compare')compare();if(v==='banks')banks();if(v==='debt')debtFunds();if(v==='sip')sipCalc();if(v==='loan')loanCalc();share()}
+function copy(txt,btn){const done=()=>{const o=btn.textContent;btn.textContent='Copied';setTimeout(()=>btn.textContent=o,1400)};
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,()=>fb());else fb();
+ function fb(){const t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');done()}catch(e){}t.remove()}}
+$('sch').innerHTML=SC.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+$('sch').onchange=e=>{st.a=by(e.target.value).type==='rd'?5000:by(e.target.value).type==='ppf'||by(e.target.value).type==='ssy'?150000:100000;load(e.target.value)};
+['amt','yrs','rate','goal'].forEach(id=>$(id).addEventListener('input',calc));['mode','goalOn'].forEach(id=>$(id).addEventListener('change',calc));
+$('reset').onclick=()=>{const s=cur();$('rate').value=s.rate;$('yrs').value=s.yrs;calc()};
+$('tax').onchange=e=>{st.x=+e.target.value;try{localStorage.setItem('postaliq_slab',st.x)}catch(x){};calc();compare();banks()};
+$$('.tab').forEach(b=>b.onclick=()=>view(b.dataset.v));
+$$('.tab').forEach(b=>{b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.setProperty('--mx',`${e.clientX-r.left}px`);b.style.setProperty('--my',`${e.clientY-r.top}px`)});b.addEventListener('pointerleave',()=>{b.style.setProperty('--mx','50%');b.style.setProperty('--my','0%')})});
+$('cAmt').oninput=compare;$('bAmt').oninput=banks;$('bTerm').onchange=banks;$('bCust').oninput=banks;$('bScheme').onchange=()=>{const id=$('bScheme').value,c=BM[id];$('bTerm').value=String(c.term);banks()};['dAmt','dReturn','dTerm'].forEach(id=>$(id).oninput=debtCompare);$('dScheme').onchange=debtCompare;$('dCategory').onchange=()=>{$('dReturn').value=DF[$('dCategory').value].rate;debtFunds()};['sipAmt','sipRate','sipYears','sipStep'].forEach(id=>$(id).oninput=sipCalc);['loanAmt','loanRate','loanYears','loanExtra'].forEach(id=>$(id).oninput=loanCalc);
+$$('#cChips button').forEach(b=>b.onclick=()=>{st.f=b.dataset.f;$$('#cChips button').forEach(x=>x.classList.toggle('on',x===b));compare()});
+$$('#bSen button').forEach(b=>b.onclick=()=>{st.sen=+b.dataset.s;$$('#bSen button').forEach(x=>x.classList.toggle('on',x===b));banks()});
+$('theme').onclick=()=>{const d=document.documentElement.classList.toggle('dark');try{localStorage.setItem('postaliq_theme',d?'dark':'light')}catch(e){}};
+$('link').onclick=e=>copy(share(),e.target);
+$('copy').onclick=e=>{if(!last)return;const{s,amt,yrs,rate,a,b,R,tax}=last;copy([`PostalIQ estimate: ${s.name}`,`${s.amtL.replace(' (₹)','')}: ${inr(amt)}`,`Tenure: ${fy(+yrs.toFixed(2))} years`,`Rate: ${pc(rate)} p.a. (${CFG.label})`,`Invested: ${inr(a.inv)}`,`Interest: ${inr(a.interest)}`,`Value at maturity: ${inr(a.total)}`,a.payout?`Payout: ${inr(a.payout)} ${a.pl}`:'',!free(s)&&tax?`After tax (${tax}% slab): ${inr(b.total)}`:'',`Effective yearly return: ${pc(R.yPre*100)}`,'Estimate only, not an official maturity quote.'].filter(Boolean).join('\n'),e.target)};
+$('csv').onclick=()=>{if(!last)return;const{s,amt,yrs,rate,a}=last,q=v=>'"'+String(v).replace(/"/g,'""')+'"',lines=[['Scheme',s.name],['Amount',amt],['Tenure (years)',yrs],['Rate (%)',rate],['Rates period',CFG.label],[],['Year','Invested','Interest','Value'],...a.rows.map(r=>[fy(r.y),Math.round(r.inv),Math.round(r.val-r.inv),Math.round(r.val)])],
+ u=URL.createObjectURL(new Blob(['\ufeff'+lines.map(l=>l.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'})),el=document.createElement('a');el.href=u;el.download=`PostalIQ-${s.id}-estimate.csv`;document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(u),3000)};
+$('tax').value=String(st.x);$('goalOn').checked=!!st.g;$('goal').value=st.gt;
+$('bScheme').innerHTML=SC.filter(s=>!['PPF','SSY'].includes(s.id)).map(s=>`<option value="${s.id}">${s.name}</option>`).join('');$('bScheme').value='TD3';$('dScheme').innerHTML=SC.filter(s=>!['PPF','SSY'].includes(s.id)).map(s=>`<option value="${s.id}">${s.name}</option>`).join('');$('dScheme').value='TD3';banner();ratesTable();load(st.s,!!st.keep||st.s==='NSC');compare();banks();debtFunds();sipCalc();loanCalc();view(st.v);
+})();
+</script>
+<script id="pi-live-tiles-js">
+(function(){
+'use strict';
+var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+var COL={home:'#1a73a8',ask:'#00796b',orders:'#b71c1c',posb:'#0063b1',calculators:'#107c10',forms:'#744da9',offices:'#c2570c',ltc:'#a16207',manuals:'#b8235f'};
+var FEATURE_KEYS={'Postal Orders':'orders','POSB & PLI':'posb','Employee Calculators':'calculators','Forms & Applications':'forms','PIN & Offices':'offices','Ask PostalIQ':'ask','LTC Rules FAQ':'ltc','Manuals & Guides':'manuals'};
+var VIEW_KEYS={dashboard:'home',ask:'ask',orders:'orders',posb:'posb',calculators:'calculators',forms:'forms',offices:'offices'};
+var WIDE_SIDE={home:1,posb:1};
+function txt(id){var e=document.getElementById(id);return e?e.textContent.trim():''}
+function num(id){var v=txt(id).replace(/,/g,'');return /^\d+$/.test(v)&&+v>0?(+v).toLocaleString('en-IN'):null}
+function big(v,k){return '<span class="pilt-big">'+v+'</span><span class="pilt-k">'+k+'</span>'}
+function msg(h,t){return '<span class="pilt-h">'+h+'</span><span class="pilt-t">'+t+'</span>'}
+function pair(a,ak,b,bk){return '<span class="pilt-pair"><span><span class="pilt-big">'+a+'</span><span class="pilt-k">'+ak+'</span></span><span><span class="pilt-big">'+b+'</span><span class="pilt-k">'+bk+'</span></span></span>'}
+function rate(id){return txt(id)||'–'}
+function clock(){var d=new Date();return '<span class="pilt-big pilt-clock">'+d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})+'</span><span class="pilt-k pilt-date">'+d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+'</span>'}
+/* each tile owns a list of "slides"; a slide returning null is skipped (e.g. counts not loaded yet) */
+var SLIDES={
+ home:[clock,function(){return msg('PostalIQ','Knowledge · Tools · Guidance')}],
+ ask:[function(){return msg('Try asking','“Premature withdrawal from RD”')},function(){return msg('Try asking','“Interest rate for monthly income account”')},function(){return msg('Try asking','“Claim by nominee after death”')}],
+ orders:[function(){var n=num('dash-count-orders');return n&&big(n,'orders loaded')},function(){return msg('SB Orders','Circulars and original documents')}],
+ posb:[function(){return pair(rate('home-rate-sb'),'Savings (SB)',rate('home-rate-ppf'),'PPF')},function(){return pair(rate('home-rate-rd'),'RD',rate('home-rate-mis'),'MIS')},function(){var n=num('dash-count-posb');return n&&big(n,'POSB &amp; PLI plans')}],
+ calculators:[function(){return msg('Pay · Pension','Arrears and leave')},function(){return msg('Gratuity','Service calculations')}],
+ forms:[function(){var n=num('dash-count-forms');return n&&big(n,'forms catalogued')},function(){return msg('Forms','Downloads and samples')}],
+ offices:[function(){var n=num('dash-count-offices');return n&&big(n,'PIN codes indexed')},function(){return msg('PIN &amp; Offices','Directory search')}],
+ ltc:[function(){return msg('LTC rules','Eligibility · Blocks · Family')},function(){return msg('LTC claims','Travel · Claims · Advances')}],
+ manuals:[function(){return msg('Manuals','Handbooks and rulebooks')},function(){return msg('Practical guides','Reference material')}]
+};
+var ICONS={"home": "<path d=\"M5 23 24 6l19 17\"/><path d=\"M10 19.5V42h28V19.5\"/><path d=\"M20 42V28h8v14\"/>", "ask": "<path d=\"M5 6h38v27H22l-11 9v-9H5z\"/><path d=\"M19 17a5 5 0 1 1 7 4.6c-1.6.8-2 1.8-2 3.4\"/><path d=\"M24 29h.1\"/>", "orders": "<path d=\"M9 3h22l9 9v33H9z\"/><path d=\"M31 3v9h9\"/><path d=\"M16 23h16M16 30h16M16 37h10\"/>", "posb": "<circle cx=\"24\" cy=\"24\" r=\"20\"/><path d=\"M14 14h20M14 21h20M15 14h6a7.5 7.5 0 0 1 0 15h-6l15 10\"/>", "calculators": "<rect x=\"8\" y=\"3\" width=\"32\" height=\"42\"/><path d=\"M14 9h20v9H14z\"/><path d=\"M14 26h4M22 26h4M30 26h4M14 33h4M22 33h4M30 33h4M14 40h4M22 40h4\"/>", "forms": "<path d=\"M9 8h30v37H9z\"/><path d=\"M17 3h14v10H17z\"/><path d=\"M15 24l3 3 5-6M28 24h6M15 36l3 3 5-6M28 36h6\"/>", "offices": "<path d=\"M24 45S8 29 8 19a16 16 0 0 1 32 0c0 10-16 26-16 26z\"/><circle cx=\"24\" cy=\"19\" r=\"5.5\"/>", "ltc": "<path d=\"M44 4 3 21l15 7 6 15z\"/><path d=\"M44 4 18 28v15l8-9\"/>", "manuals": "<path d=\"M24 11C17 6 9 6 3 8v32c6-2 14-2 21 3 7-5 15-5 21-3V8c-6-2-14-2-21 3z\"/><path d=\"M24 11v32\"/>"};
+var tiles=[];
+function refresh(t){
+ var list=SLIDES[t.key].concat([function(){return msg(t.label,t.desc)}]);
+ for(var tries=0;tries<list.length;tries++){
+  t.i=(t.i+1)%list.length;
+  var h=list[t.i]();
+  if(h){t.back.innerHTML=h;return}
+ }
+}
+function build(el,key,label,desc,wide,group){
+ var inn=document.createElement('span'),tilt=document.createElement('span'),front=document.createElement('span'),back=document.createElement('span');
+ tilt.className='pilt-tilt';inn.className='pilt-in';front.className='pilt-face pilt-front';back.className='pilt-face pilt-back';back.setAttribute('aria-hidden','true');
+ var pic=document.createElement('span');pic.className='pilt-pic';pic.setAttribute('aria-hidden','true');pic.innerHTML='<svg viewBox="0 0 48 48" focusable="false">'+(ICONS[key]||ICONS.orders)+'</svg>';
+ while(el.firstChild)front.appendChild(el.firstChild);
+ front.insertBefore(pic,front.firstChild);
+ var gl='<svg viewBox="0 0 48 48" focusable="false">'+(ICONS[key]||ICONS.orders)+'</svg>';
+ function deco(c,h){var n=document.createElement('span');n.className=c;n.setAttribute('aria-hidden','true');if(h)n.innerHTML=h;return n}
+ front.insertBefore(deco('pilt-spot'),front.firstChild);
+ front.insertBefore(deco('pilt-wm',gl),front.firstChild);
+ front.appendChild(deco('pilt-live'));front.appendChild(deco('pilt-go','\u2197'));
+ if(group==='home'&&desc){var sub=document.createElement('span');sub.className='pilt-sub';sub.textContent=desc;front.appendChild(sub)}
+ el.style.setProperty('--i',tiles.filter(function(q){return q.group===group}).length);
+ inn.appendChild(front);inn.appendChild(back);tilt.appendChild(inn);el.appendChild(tilt);
+ el.classList.add('pilt');if(wide)el.classList.add('pilt-wide');
+ el.style.setProperty('--c',COL[key]);
+ if(desc&&!el.title)el.title=desc;
+ var t={el:el,key:key,label:label,desc:desc,back:back,i:-1,group:group,last:0};
+ refresh(t);tiles.push(t);
+ el.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse')refresh(t)});
+ el.addEventListener('focus',function(){refresh(t)});
+ el.addEventListener('pointermove',function(e){
+  if(e.pointerType!=='mouse'||el.classList.contains('pilt-press'))return;
+  var r=el.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
+  el.style.setProperty('--mx',(px*100).toFixed(1)+'%');el.style.setProperty('--my',(py*100).toFixed(1)+'%');
+  el.style.setProperty('--ry',(-(px-.5)*2*4).toFixed(2)+'deg');el.style.setProperty('--rx',((py-.5)*2*4).toFixed(2)+'deg');
+ });
+ /* Windows-style press tilt: the pressed side dips away from you */
+ el.addEventListener('pointerdown',function(e){
+  if(e.button>0)return;
+  var r=el.getBoundingClientRect(),px=((e.clientX-r.left)/r.width-.5)*2,py=((e.clientY-r.top)/r.height-.5)*2;
+  el.style.setProperty('--ry',(PRESS_SIGN_Y*px*11)+'deg');
+  el.style.setProperty('--rx',(PRESS_SIGN_X*py*11)+'deg');
+  el.style.setProperty('--sc','.965');
+  el.classList.add('pilt-press');
+ });
+ ['pointerup','pointerleave','pointercancel','blur'].forEach(function(ev){el.addEventListener(ev,function(){
+  el.classList.remove('pilt-press');el.style.setProperty('--rx','0deg');el.style.setProperty('--ry','0deg');el.style.setProperty('--sc','1');
+ })});
+}
+var PRESS_SIGN_Y=1,PRESS_SIGN_X=-1;
+/* ---------- tile style: gradient themes + textures ---------- */
+var GLOSSG='linear-gradient(160deg,rgba(255,255,255,.30),rgba(255,255,255,0) 48%,rgba(0,0,0,.26))';
+var THEMES=[['prism','Prism'],['classic','Classic'],['gloss','Gloss'],['ocean','Ocean'],['sunset','Sunset'],['forest','Forest'],['royal','Royal'],['slate','Slate'],['aurora','Aurora'],['indiapost','India Post'],['postalnavy','Postal Navy']];
+var K=['home','ask','orders','posb','calculators','forms','offices','ltc','manuals'];
+function mk(a){var o={};for(var i=0;i<K.length;i++)o[K[i]]=a[i];return o}
+var PAL={
+ prism:mk([['#0ea5e9','#4338ca'],['#14b8a6','#0f766e'],['#f43f5e','#9f1239'],['#3b82f6','#1e40af'],['#16a34a','#14532d'],['#a855f7','#6b21a8'],['#ea580c','#9a3412'],['#d97706','#92400e'],['#db2777','#831843']]),
+ ocean:mk([['#0ea5e9','#1d4ed8'],['#0891b2','#0e7490'],['#2563eb','#1e3a8a'],['#0284c7','#075985'],['#0d9488','#0f766e'],['#6366f1','#3730a3'],['#0891b2','#0369a1'],['#0ea5e9','#1d4ed8'],['#3b82f6','#312e81']]),
+ sunset:mk([['#f97316','#be123c'],['#ec4899','#7e22ce'],['#dc2626','#7f1d1d'],['#ea580c','#9a3412'],['#db2777','#9d174d'],['#a21caf','#581c87'],['#e11d48','#9f1239'],['#ea580c','#b91c1c'],['#c026d3','#6b21a8']]),
+ forest:mk([['#16a34a','#14532d'],['#0d9488','#134e4a'],['#15803d','#064e3b'],['#0f766e','#164e63'],['#4d7c0f','#14532d'],['#059669','#065f46'],['#4d7c0f','#365314'],['#0f766e','#115e59'],['#166534','#052e16']]),
+ royal:mk([['#7c3aed','#312e81'],['#4f46e5','#1e1b4b'],['#9333ea','#581c87'],['#3b82f6','#3730a3'],['#6d28d9','#4c1d95'],['#9333ea','#6b21a8'],['#c026d3','#86198f'],['#4338ca','#312e81'],['#7e22ce','#3b0764']]),
+ slate:mk([['#475569','#1e293b'],['#52525b','#27272a'],['#334155','#0f172a'],['#475569','#0f172a'],['#57534e','#292524'],['#4b5563','#1f2937'],['#44403c','#1c1917'],['#64748b','#334155'],['#3f3f46','#18181b']]),
+ aurora:mk([['#06b6d4','#7c3aed'],['#10b981','#0891b2'],['#e11d48','#7c3aed'],['#3b82f6','#8b5cf6'],['#059669','#2563eb'],['#8b5cf6','#db2777'],['#f97316','#db2777'],['#d97706','#e11d48'],['#db2777','#6d28d9']]),
+ indiapost:mk([['#e31e24','#8f0f13'],['#b97f00','#7a5200'],['#d71920','#7f0d11'],['#a87400','#6b4a00'],['#e31e24','#a3141a'],['#a61419','#5c0a0d'],['#b97f00','#85560a'],['#d71920','#8f0f13'],['#a87400','#7a5200']]),
+ postalnavy:mk([['#1e3a5f','#0c2235'],['#b71c1c','#7f1d1d'],['#d32f2f','#8e0000'],['#1e3a5f','#102b42'],['#b45309','#78350f'],['#8e0000','#450a0a'],['#c62828','#7f1d1d'],['#a16207','#713f12'],['#12304d','#0c2235']])
+};
+function pal(th,key){
+ if(th==='classic')return[COL[key],'none'];
+ if(th==='gloss')return[COL[key],GLOSSG];
+ var p=(PAL[th]||PAL.ocean)[key]||[COL[key],COL[key]];
+ return[p[0],'linear-gradient(135deg,'+p[0]+','+p[1]+')'];
+}
+function svgUrl(s){return 'url("data:image/svg+xml,'+encodeURIComponent(s)+'")'}
+var TEX=[
+ {id:'none',name:'None',img:'none'},
+ {id:'sheen',name:'Sheen',img:'radial-gradient(120% 100% at 0% 0%,rgba(255,255,255,.22),transparent 55%),linear-gradient(to top,rgba(0,0,0,.26),transparent 55%)'},
+ {id:'grain',name:'Grain',size:'160px 160px',img:svgUrl("<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.9 0 0 0 -0.3'/></filter><rect width='100%' height='100%' filter='url(#n)'/></svg>")},
+ {id:'dots',name:'Dots',size:'9px 9px',img:'radial-gradient(rgba(255,255,255,.26) 1.3px,transparent 1.8px)'},
+ {id:'lines',name:'Diagonal',img:'repeating-linear-gradient(45deg,rgba(255,255,255,.12) 0 2px,transparent 2px 9px)'},
+ {id:'grid',name:'Grid',size:'14px 14px',img:'linear-gradient(rgba(255,255,255,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.13) 1px,transparent 1px)'},
+ {id:'weave',name:'Weave',size:'8px 8px',pos:'0 0,4px 4px',img:'linear-gradient(45deg,rgba(0,0,0,.2) 25%,transparent 25% 75%,rgba(0,0,0,.2) 75%),linear-gradient(45deg,rgba(0,0,0,.2) 25%,transparent 25% 75%,rgba(0,0,0,.2) 75%)'},
+ {id:'waves',name:'Postmark',size:'40px 14px',img:svgUrl("<svg xmlns='http://www.w3.org/2000/svg' width='40' height='14'><path d='M0 7q5-6 10 0t10 0t10 0t10 0' fill='none' stroke='white' stroke-opacity='.24' stroke-width='1.6'/></svg>")},
+ {id:'airmail',name:'Airmail edge',size:'100% 6px',pos:'left bottom',rep:'no-repeat',img:'repeating-linear-gradient(-45deg,#e32430 0 8px,#fff 8px 12px,#2a6fd0 12px 20px,#fff 20px 24px)'},
+ {id:'glow',name:'Glow',img:'radial-gradient(circle at 24% 14%,rgba(255,255,255,.32),transparent 58%)'}
+];
+var ST={t:'prism',x:'sheen'};
+try{var sv=JSON.parse(localStorage.getItem('postaliq-tile-style-v2')||'null');if(sv&&sv.t&&sv.x)ST=sv}catch(e){}
+function texVars(el,x){
+ el.style.setProperty('--tex',x.img);el.style.setProperty('--texsz',x.size||'auto');el.style.setProperty('--texpos',x.pos||'0 0');el.style.setProperty('--texrep',x.rep||'repeat');
+}
+function applyStyle(){
+ var x=TEX.filter(function(q){return q.id===ST.x})[0]||TEX[0];
+ texVars(document.documentElement,x);
+ tiles.forEach(function(t){var p=pal(ST.t,t.key);t.el.style.setProperty('--c',p[0]);t.el.style.setProperty('--g',p[1])});
+ var panel=document.getElementById('pilt-ts');
+ if(panel){[].forEach.call(panel.querySelectorAll('[data-th]'),function(b){b.setAttribute('aria-checked',b.dataset.th===ST.t)});[].forEach.call(panel.querySelectorAll('[data-tx]'),function(b){b.setAttribute('aria-checked',b.dataset.tx===ST.x)})}
+}
+function saveStyle(){try{localStorage.setItem('postaliq-tile-style-v2',JSON.stringify(ST))}catch(e){}}
+function buildPanel(){
+ var p=document.createElement('div');p.id='pilt-ts';p.className='pilt-ts';p.hidden=true;p.setAttribute('role','dialog');p.setAttribute('aria-label','Tile style');
+ var th=THEMES.map(function(t){
+  var minis=['home','orders','posb'].map(function(k){var q=pal(t[0],k);return '<i style="background-color:'+q[0]+';background-image:'+q[1]+'"></i>'}).join('');
+  return '<button type="button" class="pilt-opt" role="radio" aria-checked="false" data-th="'+t[0]+'"><span class="pilt-minis">'+minis+'</span><span>'+t[1]+'</span></button>';
+ }).join('');
+ var tx=TEX.map(function(t){return '<button type="button" class="pilt-opt" role="radio" aria-checked="false" data-tx="'+t.id+'"><span class="pilt-tex" data-prev="'+t.id+'"></span><span>'+t.name+'</span></button>'}).join('');
+ p.innerHTML='<div class="pilt-ts-h"><b>Tile style</b><button type="button" class="pilt-ts-x" aria-label="Close">✕</button></div><div class="pilt-ts-s">Colour theme</div><div class="pilt-grid" role="radiogroup" aria-label="Colour theme">'+th+'</div><div class="pilt-ts-s">Texture</div><div class="pilt-grid" role="radiogroup" aria-label="Texture">'+tx+'</div><button type="button" class="pilt-ts-r">Reset to default</button>';
+ document.body.appendChild(p);
+ [].forEach.call(p.querySelectorAll('[data-prev]'),function(el){var x=TEX.filter(function(q){return q.id===el.dataset.prev})[0];texVars(el,x)});
+ p.addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.th){ST.t=b.dataset.th}else if(b.dataset.tx){ST.x=b.dataset.tx}
+  else if(b.classList.contains('pilt-ts-r')){ST={t:'prism',x:'sheen'}}
+  else if(b.classList.contains('pilt-ts-x')){p.hidden=true;return}
+  saveStyle();applyStyle();
+ });
+ function toggle(e){e.stopPropagation();p.hidden=!p.hidden}
+ var side=document.querySelector('.pi-redesign-sidebar-foot');
+ if(side){var sb=document.createElement('button');sb.type='button';sb.className='pilt-ts-btn';sb.innerHTML='<span aria-hidden="true">◧</span> Tile style';sb.addEventListener('click',toggle);side.parentNode.insertBefore(sb,side)}
+ var head=document.querySelector('#view-dashboard .pih-section-head');
+ if(head){var hb=document.createElement('button');hb.type='button';hb.className='pilt-ts-btn pilt-ts-btn-home';hb.innerHTML='<span aria-hidden="true">◧</span> Tile style';hb.addEventListener('click',toggle);head.appendChild(hb)}
+ document.addEventListener('click',function(e){if(!p.hidden&&!p.contains(e.target))p.hidden=true});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')p.hidden=true});
+}
+
+function init(){
+ var links=document.querySelectorAll('.pi-redesign-nav .pi-redesign-link');
+ for(var j=0;j<links.length;j++){
+  var l=links[j],b=l.querySelector('b'),s=l.querySelector('small');
+  var k=l.dataset.view?VIEW_KEYS[l.dataset.view]:'ltc';
+  build(l,k||'ltc',b?b.innerHTML:'',s?s.textContent.trim():'',!!WIDE_SIDE[k],'side');
+ }
+ buildPanel();applyStyle();
+ /* live clock on the Home tile */
+ setInterval(function(){
+  var d=new Date(),c=document.querySelectorAll('.pilt-clock'),dt=document.querySelectorAll('.pilt-date');
+  for(var a=0;a<c.length;a++)c[a].textContent=d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'});
+  for(var b2=0;b2<dt.length;b2++)dt[b2].textContent=d.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'});
+ },5000);
+ setInterval(tick,1900);
+}
+/* staggered idle flips, like a phone start screen */
+function visible(t){
+ var r=t.el.getBoundingClientRect();
+ if(!r.width||r.bottom<0||r.top>innerHeight)return false;
+ if(t.group==='home'){var v=document.getElementById('view-dashboard');return !!v&&!v.classList.contains('hidden')}
+ var s=document.getElementById('pi-redesign-sidebar');return !!s&&(innerWidth>900||s.classList.contains('open'));
+}
+function tick(){
+ if(document.hidden)return;
+ ['home','side'].forEach(function(g){
+  var max=g==='home'?2:1,group=tiles.filter(function(t){return t.group===g&&visible(t)});
+  var live=group.filter(function(t){return t.el.classList.contains('pilt-flip')});
+  if(live.length>=max||Math.random()>.6)return;
+  var now=Date.now(),pool=group.filter(function(t){return !t.el.classList.contains('pilt-flip')&&!t.el.matches(':hover')&&now-t.last>7000});
+  if(!pool.length)return;
+  var t=pool[Math.floor(Math.random()*pool.length)];
+  refresh(t);t.last=now;t.el.classList.add('pilt-flip');
+  setTimeout(function(){t.el.classList.remove('pilt-flip')},3600+Math.random()*1800);
+ });
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
+<script id="postaliq-tab-idle-flip-js">
+(function(){
+  const tabs=Array.from(document.querySelectorAll('.tabs .tab'));
+  if(!tabs.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let last=0;
+  function flipOne(){
+    if(document.hidden || Date.now()-last<4800) return;
+    const pool=tabs.filter(t=>!t.matches(':hover,:focus-visible')&&!t.classList.contains('on')&&!t.classList.contains('tab-auto-flip'));
+    if(!pool.length || Math.random()>.58) return;
+    const t=pool[Math.floor(Math.random()*pool.length)];
+    t.classList.add('tab-auto-flip'); last=Date.now();
+    window.setTimeout(()=>t.classList.remove('tab-auto-flip'),2500+Math.random()*700);
+  }
+  window.setInterval(flipOne,1250);
+  tabs.forEach(t=>{
+    t.addEventListener('pointerenter',()=>t.classList.remove('tab-auto-flip'));
+    t.addEventListener('focus',()=>t.classList.remove('tab-auto-flip'));
+    t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('tab-auto-flip'));});
+  });
+})();
+</script>
+</body>
+</html>
