@@ -48,11 +48,6 @@ html.dark .note{background:#132838cc;border-color:#ffffff16;color:#eaf2f8}
 .banner.warn{background:var(--amber);color:var(--amberink);border-color:rgba(185,127,0,.4)}
 .slab{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--mut)}
 .slab select{width:auto;min-width:210px}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
-.tab{border:0;border-radius:999px;padding:9px 16px;font-size:13px;font-weight:650;color:#294257;background:rgba(16,40,64,.06);box-shadow:inset 0 0 0 1px rgba(16,40,64,.08);transition:transform .25s,background-color .2s}
-html.dark .tab{color:#dbe7f0;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
-.tab:hover{transform:translateY(-1px)}
-.tab.on{color:#fff;background-image:linear-gradient(135deg,#ef3340,#b3121e);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 6px 12px -8px rgba(217,31,43,.7)}
 .view{display:none}.view.on{display:block}
 .grid{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px;align-items:start}
 .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:20px}
@@ -96,7 +91,7 @@ html.dark .chips button{background:rgba(255,255,255,.08)}.chips button.on{backgr
 ul{margin:6px 0 0;padding-left:20px}li{margin:3px 0}
 @media(max-width:940px){.hero .wrap,.grid{grid-template-columns:1fr}.mets{grid-template-columns:1fr 1fr}.top{padding:10px 14px}.wrap{padding:0 14px}.sub,.hb span.t{display:none}}
 @media(max-width:520px){.two{grid-template-columns:1fr}.nm{font-size:20px}}
-@media print{.top,.tabs,.bar,.acts,.btn,.row,.hero .notes,.chips{display:none!important}body{background:#fff;color:#000}.view{display:block!important;page-break-inside:avoid}#v-rates,#v-sources,#v-banks,#v-compare{display:none!important}.panel{box-shadow:none}.hero{background:none}}
+@media print{.top,.bar,.acts,.btn,.row,.hero .notes,.chips{display:none!important}body{background:#fff;color:#000}.view{display:block!important;page-break-inside:avoid}#v-rates,#v-sources,#v-banks,#v-compare{display:none!important}.panel{box-shadow:none}.hero{background:none}}
 </style>
 <style id="pi-redesign-css">
 :root{--pir-navy:#102b42;--pir-red:#d91f2b;--pir-paper:#f7f2e9}
@@ -854,22 +849,7 @@ body.pi-redesign .bar{gap:14px;margin:0 0 18px;padding:14px 16px;border:1px soli
 body.pi-redesign .banner{border-radius:12px;box-shadow:inset 3px 0 0 #079b68}
 body.pi-redesign .slab{gap:10px;flex-wrap:wrap;color:#294257}
 body.pi-redesign .slab select{min-width:190px;border:1px solid #d3dee6;background:#fff;border-radius:11px;padding:9px 12px;transition:border-color .18s,box-shadow .18s}
-body.pi-redesign .tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:0 0 20px;padding:0}
-body.pi-redesign .tab{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:flex-start;gap:10px;min-width:0;min-height:58px;padding:10px 12px;border:1px solid rgba(16,40,64,.10);border-radius:14px;background:linear-gradient(145deg,#fff,#f7fafc);color:#294257;box-shadow:0 3px 10px rgba(16,40,64,.035);font-size:12px;line-height:1.25;font-weight:800;text-align:left;white-space:normal;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease,color .2s ease}
-body.pi-redesign .tab:before{content:"";display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:10px;background:#2478b9;color:#fff;font-size:17px;box-shadow:inset 0 1px 0 #ffffff55;transition:transform .22s,filter .22s}
-body.pi-redesign .tab:nth-child(1):before{content:"▦";background:linear-gradient(145deg,#ef3340,#b3121e)}
-body.pi-redesign .tab:nth-child(2):before{content:"⇄";background:linear-gradient(145deg,#079b68,#087b60)}
-body.pi-redesign .tab:nth-child(3):before{content:"₹";background:linear-gradient(145deg,#099cc5,#1764a4)}
-body.pi-redesign .tab:nth-child(4):before{content:"↗";background:linear-gradient(145deg,#7c43c4,#5630a0)}
-body.pi-redesign .tab:nth-child(5):before{content:"∿";background:linear-gradient(145deg,#ee8b00,#c9670a)}
-body.pi-redesign .tab:nth-child(6):before{content:"⌁";background:linear-gradient(145deg,#c92b72,#a91d53)}
-body.pi-redesign .tab:nth-child(7):before{content:"≡";background:linear-gradient(145deg,#e6a400,#b87800)}
-body.pi-redesign .tab:nth-child(8):before{content:"ⓘ";background:linear-gradient(145deg,#168b88,#126c79)}
-body.pi-redesign .tab:hover{z-index:1;transform:translateY(-3px);background:linear-gradient(130deg,#fff,#f0f7fc);border-color:#80b9d9;box-shadow:0 10px 20px rgba(16,40,64,.11)}
-body.pi-redesign .tab:hover:before{transform:scale(1.08) rotate(-4deg);filter:saturate(1.15)}
-body.pi-redesign .tab.on{color:#fff;border-color:#d91f2b;background:linear-gradient(110deg,#e32430,#b3121e);box-shadow:0 8px 18px -7px rgba(217,31,43,.65),inset 0 1px 0 rgba(255,255,255,.26)}
-body.pi-redesign .tab.on:before{background:#ffffff20;box-shadow:inset 0 0 0 1px #ffffff2b;color:#fff}
-body.pi-redesign .tab:focus-visible,body.pi-redesign .btn:focus-visible,body.pi-redesign .chips button:focus-visible{outline:3px solid #f3c76a;outline-offset:3px}
+body.pi-redesign .btn:focus-visible,body.pi-redesign .chips button:focus-visible{outline:3px solid #f3c76a;outline-offset:3px}
 body.pi-redesign .view{animation:piPosbTabIn .24s ease both}
 @keyframes piPosbTabIn{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 body.pi-redesign .panel{position:relative;background:linear-gradient(160deg,#fff 0%,#fff 70%,#fbfdff 100%);border:1px solid rgba(16,40,64,.095);border-radius:18px;padding:21px;box-shadow:0 7px 22px rgba(16,40,64,.055);transition:border-color .2s,box-shadow .2s,transform .2s}
@@ -914,9 +894,6 @@ html.dark body.pi-redesign{background:radial-gradient(ellipse at 90% 0%,rgba(36,
 html.dark body.pi-redesign .bar{background:linear-gradient(120deg,#132838,#102433);border-color:#ffffff12}
 html.dark body.pi-redesign .slab{color:#d4e2ec}
 html.dark body.pi-redesign .slab select,html.dark body.pi-redesign input:not([type=checkbox]):not([type=radio]),html.dark body.pi-redesign select{background:#0f2231;color:#eaf2f8;border-color:#3b5364}
-html.dark body.pi-redesign .tabs .tab{background:linear-gradient(145deg,#162e40,#122636);color:#dbe7f0;border-color:#ffffff14}
-html.dark body.pi-redesign .tabs .tab:hover{background:linear-gradient(120deg,#1b3a50,#173348);border-color:#5b99bd}
-html.dark body.pi-redesign .tabs .tab.on{background:linear-gradient(110deg,#e32430,#b3121e);color:#fff;border-color:#ff6872}
 html.dark body.pi-redesign .panel{background:linear-gradient(160deg,#132838,#102432);border-color:#ffffff14;box-shadow:0 7px 22px rgba(0,0,0,.16)}
 html.dark body.pi-redesign .ph h2,html.dark body.pi-redesign .foot b{color:#eaf2f8}
 html.dark body.pi-redesign .ph{border-color:#ffffff12}
@@ -935,68 +912,38 @@ html.dark body.pi-redesign tr.best td{background:#153a32}
 html.dark body.pi-redesign details{background:#102635;border-color:#ffffff14}
 html.dark body.pi-redesign summary{color:#9bc9ff}
 html.dark body.pi-redesign .foot{color:#9fb3c1;border-color:#ffffff12}
-@media(max-width:1150px){body.pi-redesign .tabs{grid-template-columns:repeat(2,minmax(0,1fr))}body.pi-redesign .grid{grid-template-columns:minmax(260px,.8fr) minmax(0,1.2fr)}}
+@media(max-width:1150px){body.pi-redesign .grid{grid-template-columns:minmax(260px,.8fr) minmax(0,1.2fr)}}
 @media(max-width:900px){body.pi-redesign>header.top{margin-left:0!important;width:100%!important}body.pi-redesign>.hero{margin-left:0;width:100%!important}body.pi-redesign>main.wrap{margin-left:0!important;width:100%!important;padding:16px 14px 28px!important}body.pi-redesign>.foot{margin-left:0!important;width:100%!important}body.pi-redesign .hero .wrap{padding:28px 20px}body.pi-redesign .grid{grid-template-columns:1fr}body.pi-redesign .panel{padding:17px}}
-@media(max-width:560px){body.pi-redesign .tabs{grid-template-columns:1fr 1fr;gap:7px}body.pi-redesign .tab{min-height:62px;padding:8px;font-size:11px;gap:7px}body.pi-redesign .tab:before{flex-basis:29px;width:29px;height:29px;border-radius:9px;font-size:15px}body.pi-redesign .bar{padding:12px;align-items:stretch}body.pi-redesign .slab{display:flex;flex-direction:column;align-items:stretch}body.pi-redesign .slab select{width:100%}body.pi-redesign .mets{grid-template-columns:1fr 1fr}}
-@media(prefers-reduced-motion:reduce){body.pi-redesign .tab,body.pi-redesign .panel,body.pi-redesign .btn,body.pi-redesign .m,body.pi-redesign .chips button{transition:none!important;animation:none!important}}
-@media print{body.pi-redesign>header.top,body.pi-redesign>.hero{margin-left:0!important;width:100%!important}body.pi-redesign>main.wrap,body.pi-redesign>.foot{margin-left:0!important;width:100%!important}body.pi-redesign .tabs{display:none!important}}
-</style>
-<style id="postaliq-tab-live-tiles">
-/* PostalIQ Live Tile language applied to the main calculator navigation */
-.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 22px;perspective:1000px}
-.tab{--tab-a:#123d5a;--tab-b:#087e8b;position:relative;display:block;min-width:0;height:104px;padding:0;border:0;border-radius:17px;background:transparent;color:#fff;box-shadow:none;overflow:visible;text-align:left;isolation:isolate;transition:transform .35s cubic-bezier(.2,.8,.2,1),filter .35s ease;outline:none}
-.tab:nth-child(8n+2){--tab-a:#c21f36;--tab-b:#f06a42}.tab:nth-child(8n+3){--tab-a:#4f3c9a;--tab-b:#1686a0}.tab:nth-child(8n+4){--tab-a:#087a60;--tab-b:#41ad75}.tab:nth-child(8n+5){--tab-a:#9b4a0d;--tab-b:#e59b26}.tab:nth-child(8n+6){--tab-a:#294f9c;--tab-b:#397bd1}.tab:nth-child(8n+7){--tab-a:#6f367e;--tab-b:#b04c78}.tab:nth-child(8n+8){--tab-a:#314353;--tab-b:#617c8c}
-.tab::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(180px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.27),transparent 65%);opacity:0;pointer-events:none;z-index:3;transition:opacity .3s ease}
-.tab-tile{position:absolute;inset:0;display:block;overflow:hidden;border-radius:inherit;background:linear-gradient(135deg,var(--tab-a),var(--tab-b));box-shadow:0 2px 5px #102b4230,0 12px 24px -12px color-mix(in srgb,var(--tab-b) 75%,transparent);transform-style:preserve-3d;transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease}
-.tab-tile::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.16),transparent 38%,rgba(0,0,0,.13));pointer-events:none}
-.tab-tile::after{content:"";position:absolute;width:100px;height:100px;right:-26px;bottom:-37px;border:1px solid #ffffff35;border-radius:28px;transform:rotate(28deg);box-shadow:0 0 0 13px #ffffff08,0 0 0 27px #ffffff06;transition:transform .65s cubic-bezier(.2,.8,.2,1)}
-.tab-face{position:absolute;inset:0;display:flex;align-items:flex-end;gap:10px;padding:15px 15px 14px;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:opacity .45s ease,transform .55s cubic-bezier(.2,.8,.2,1),filter .45s ease}
-.tab-front{z-index:1}.tab-icon{align-self:flex-start;display:grid;place-items:center;flex:0 0 35px;width:35px;height:35px;border-radius:12px;border:1px solid #ffffff40;background:linear-gradient(145deg,#ffffff42,#ffffff12);box-shadow:inset 0 1px #ffffff55,0 6px 14px #071a2b30;color:#fff;font-size:20px;font-weight:800;backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
-.tab-copy{font:650 14px/1.18 Inter,"Segoe UI",system-ui,sans-serif;letter-spacing:-.015em;text-shadow:0 1px 8px #06182c55;max-width:calc(100% - 46px);overflow-wrap:anywhere}.tab-arrow{position:absolute;top:12px;right:13px;width:23px;height:23px;display:grid;place-items:center;border:1px solid #ffffff45;border-radius:50%;background:#ffffff20;opacity:.9;font-size:12px;transition:transform .35s ease,background .35s ease}
-.tab-back{z-index:2;align-items:flex-start;justify-content:center;flex-direction:column;gap:7px;background:linear-gradient(135deg,color-mix(in srgb,var(--tab-a) 88%,#071827),color-mix(in srgb,var(--tab-b) 78%,#071827));opacity:0;transform:translateY(13px);filter:blur(7px);padding:16px 18px}
-.tab-back-kicker{font:800 9px/1 Inter,system-ui,sans-serif;letter-spacing:.16em;opacity:.72}.tab-back-copy{font:750 13px/1.2 Inter,"Segoe UI",system-ui,sans-serif;letter-spacing:.015em}.tab-back-arrow{position:absolute;right:15px;bottom:12px;font-size:20px;line-height:1;opacity:.9}
-.tab:hover,.tab:focus-visible{transform:translateY(-4px);filter:saturate(1.08)}.tab:hover::before,.tab:focus-visible::before{opacity:1}.tab:hover .tab-tile,.tab:focus-visible .tab-tile{box-shadow:0 4px 8px #102b4230,0 20px 35px -13px color-mix(in srgb,var(--tab-b) 90%,transparent),0 30px 48px -28px color-mix(in srgb,var(--tab-a) 100%,transparent)}.tab:hover .tab-tile::after,.tab:focus-visible .tab-tile::after{transform:rotate(12deg) scale(1.16) translate(-4px,-3px)}.tab:hover .tab-front,.tab:focus-visible .tab-front{opacity:0;transform:translateY(-13px);filter:blur(7px)}.tab:hover .tab-back,.tab:focus-visible .tab-back{opacity:1;transform:none;filter:none}.tab:hover .tab-arrow,.tab:focus-visible .tab-arrow{transform:rotate(45deg);background:#ffffff38}
-.tab.on .tab-tile{box-shadow:0 0 0 2px var(--paper),0 0 0 4px color-mix(in srgb,var(--tab-b) 55%,transparent),0 13px 25px -12px color-mix(in srgb,var(--tab-b) 90%,transparent)}.tab.on .tab-tile::after{border-color:#ffffff58}.tab.on .tab-back{opacity:0}.tab.on .tab-front{opacity:1;transform:none;filter:none}
-html.dark .tab.on .tab-tile{box-shadow:0 0 0 2px var(--paper),0 0 0 4px color-mix(in srgb,var(--tab-b) 60%,transparent),0 13px 25px -12px #0008}
-.tab:focus-visible{outline:3px solid #f5b942;outline-offset:4px}.tab:active{transform:translateY(-1px) scale(.985)}
-@media(max-width:850px){.tabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tab{height:94px}}
-@media(max-width:420px){.tabs{gap:8px}.tab{height:88px}.tab-face{padding:11px}.tab-icon{flex-basis:30px;width:30px;height:30px;border-radius:10px;font-size:17px}.tab-copy{font-size:12px}.tab-back-copy{font-size:11px}}
-@media(prefers-reduced-motion:reduce){.tab,.tab-tile,.tab-face,.tab::before,.tab-tile::after{transition:none!important}}
+@media(max-width:560px){body.pi-redesign .bar{padding:12px;align-items:stretch}body.pi-redesign .slab{display:flex;flex-direction:column;align-items:stretch}body.pi-redesign .slab select{width:100%}body.pi-redesign .mets{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){body.pi-redesign .panel,body.pi-redesign .btn,body.pi-redesign .m,body.pi-redesign .chips button{transition:none!important;animation:none!important}}
+@media print{body.pi-redesign>header.top,body.pi-redesign>.hero{margin-left:0!important;width:100%!important}body.pi-redesign>main.wrap,body.pi-redesign>.foot{margin-left:0!important;width:100%!important}}
 </style>
 
-<style id="postaliq-tab-idle-flip">
-/* Match the live-tile motion used by the PostalIQ side pane: lift/glow on hover,
-   smooth slide + blur crossfade for the occasional live content swap. No 3D rotation. */
-:root{--tab-live-ease:cubic-bezier(.2,.75,.25,1)}
-.tabs{display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:8px!important;perspective:none!important;overflow:visible}
-.tab{height:82px!important;min-height:82px!important;padding:0!important;min-width:0!important;transform:translateY(0);filter:none!important;transition:transform .45s var(--tab-live-ease),box-shadow .45s ease!important}
-.tab-tile{transform:none!important;transform-style:flat!important;transition:box-shadow .45s ease!important;will-change:auto}
-.tab-face{backface-visibility:visible!important;-webkit-backface-visibility:visible!important;transition:opacity .6s ease,transform .6s var(--tab-live-ease),filter .6s ease!important;filter:none;}
-.tab-front{z-index:1;opacity:1;transform:none;filter:none}
-.tab-back{z-index:2;opacity:0;transform:translateY(18px);filter:blur(8px);pointer-events:none;background-image:linear-gradient(rgba(5,10,25,.34),rgba(5,10,25,.34)),linear-gradient(135deg,var(--tab-a),var(--tab-b))!important;padding:10px!important;gap:5px}
-.tab:hover,.tab:focus-visible{transform:translateY(-4px)!important;filter:none!important}
-.tab:hover .tab-tile,.tab:focus-visible .tab-tile,.tab.tab-auto-flip:not(.on) .tab-tile{box-shadow:0 2px 4px rgba(15,23,42,.14),0 20px 34px -12px color-mix(in srgb,var(--tab-b) 90%,transparent),0 36px 56px -30px color-mix(in srgb,var(--tab-a) 100%,transparent)!important}
-.tab:hover .tab-tile::after,.tab:focus-visible .tab-tile::after{transform:rotate(12deg) scale(1.16) translate(-4px,-3px)}
-/* Hover is the same gentle lift as the sidebar; content changes only during the live-tile cycle. */
-.tab:hover .tab-front,.tab:focus-visible .tab-front{opacity:1;transform:none;filter:none}
-.tab:hover .tab-back,.tab:focus-visible .tab-back{opacity:0;transform:translateY(18px);filter:blur(8px)}
-.tab.tab-auto-flip:not(.on) .tab-front{opacity:0!important;transform:translateY(-18px)!important;filter:blur(8px)!important}
-.tab.tab-auto-flip:not(.on) .tab-back{opacity:1!important;transform:none!important;filter:none!important;pointer-events:auto}
-.tab.tab-auto-flip:not(.on) .tab-back>*{animation:tab-live-rise .65s var(--tab-live-ease) backwards}
-.tab.tab-auto-flip:not(.on) .tab-back>*:nth-child(2){animation-delay:.07s}
-@keyframes tab-live-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.tab.on .tab-tile{transform:none!important;box-shadow:0 0 0 2px var(--paper),0 0 0 4px color-mix(in srgb,var(--tab-b) 55%,transparent),0 13px 25px -12px color-mix(in srgb,var(--tab-b) 90%,transparent)!important}
-.tab.on .tab-front{opacity:1!important;transform:none!important;filter:none!important}
-.tab.on .tab-back{opacity:0!important;transform:translateY(18px)!important;filter:blur(8px)!important}
-.tab .tab-copy{font-size:clamp(9px, .82vw, 12px);line-height:1.15;max-width:calc(100% - 4px);overflow-wrap:anywhere}
-.tab .tab-face{gap:6px;padding:9px!important}
-.tab .tab-icon{flex-basis:25px;width:25px;height:25px;border-radius:8px;font-size:14px}
-.tab .tab-arrow{top:6px;right:6px;width:18px;height:18px;font-size:10px}
-.tab .tab-back-kicker{font-size:8px}.tab .tab-back-copy{font-size:clamp(8px,.72vw,10px);line-height:1.15}.tab .tab-back-arrow{right:8px;bottom:7px;font-size:15px}
-/* Keep the navigation on one line at all widths; narrow screens can scroll the row. */
-@media(max-width:1150px){.tabs{grid-template-columns:repeat(8,minmax(112px,1fr))!important;overflow-x:auto;overflow-y:visible;padding:5px 3px 12px;scroll-snap-type:x proximity}.tab{scroll-snap-align:start}}
-@media(max-width:560px){.tabs{grid-template-columns:repeat(8,minmax(105px,1fr))!important;gap:8px!important}.tab{height:76px!important;min-height:76px!important}.tab .tab-copy{font-size:11px}.tab .tab-back-copy{font-size:10px}}
-@media(prefers-reduced-motion:reduce){.tab,.tab .tab-tile,.tab .tab-face,.tab .tab-tile::after{transition:none!important;animation:none!important}.tab.tab-auto-flip .tab-front{opacity:1!important;transform:none!important;filter:none!important}.tab.tab-auto-flip .tab-back{opacity:0!important;transform:translateY(18px)!important;filter:blur(8px)!important}}
+<style id="pilt-tabs-css">
+/* =====================================================================
+   Tabs inside every page use the same live tiles as the home screen and
+   the side pane (glass look, hover lift, cursor spotlight, press tilt,
+   idle live-content swap, theme / texture picker). One compact row per
+   page; on narrow screens the row scrolls sideways instead of wrapping.
+   ===================================================================== */
+html body.pi-redesign .tabs.pilt-tabs{display:grid!important;grid-auto-flow:column;grid-template-rows:76px;grid-auto-columns:minmax(108px,1fr);gap:8px;overflow-x:auto!important;overflow-y:hidden!important;padding:8px 8px 32px!important;margin:-8px -8px -14px!important;border-bottom:0!important;scrollbar-width:none}
+html body.pi-redesign .tabs.pilt-tabs::-webkit-scrollbar{display:none}
+html body.pi-redesign .tabs.pilt-tabs[data-n="2"]{grid-auto-columns:minmax(150px,190px)}
+html body.pi-redesign .tabs.pilt-tabs button.pilt-tab.pilt-tab{--pr:14px;display:block!important;height:100%;min-width:0;min-height:0!important;margin:0;padding:0!important;border:0!important;border-radius:var(--pr)!important;background:none!important;background-image:none!important;box-shadow:none!important;transform:none!important;filter:none!important;color:#fff!important;font:inherit;text-align:left;white-space:normal}
+html body.pi-redesign .pilt-tab .pilt-front{padding:8px 10px;justify-content:flex-end}
+html body.pi-redesign .pilt-tab b{display:block;margin:0;font:650 12px/1.2 var(--pilt-font)!important;letter-spacing:-.005em;color:#fff!important;text-shadow:0 1px 8px rgba(0,0,0,.22)}
+html body.pi-redesign .pilt-tab .pilt-pic{left:8px!important;top:8px!important;width:26px!important;height:26px!important;padding:6px;border-radius:9px}
+html body.pi-redesign .pilt-tab .pilt-face>.pilt-wm{width:58px;height:58px;right:-6px;bottom:-10px}
+html body.pi-redesign .pilt-tab .pilt-face>.pilt-live{top:12px;right:12px;width:5px;height:5px}
+html body.pi-redesign .pilt-tab .pilt-face>.pilt-go{display:none!important}
+html body.pi-redesign .pilt-tab .pilt-back{padding:8px 10px;gap:1px}
+html body.pi-redesign .pilt-tab .pilt-h,html body.pi-redesign .pilt-tab .pilt-t{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+html body.pi-redesign .pilt-tab .pilt-h{font-size:12px;line-height:1.2}
+html body.pi-redesign .pilt-tab .pilt-t{font-size:10.5px;line-height:1.25}
+html body.pi-redesign .pilt-tab.active{outline:3px solid var(--c);outline-offset:2px}
+html body.pi-redesign .pilt-tab.active .pilt-tilt{box-shadow:0 12px 24px -12px color-mix(in srgb,var(--c) 85%,transparent)}
+html body.pi-redesign .pilt-tab:not(.active):not(:hover) .pilt-tilt{filter:saturate(.8)}
+@media print{.pilt-tabs{display:none!important}}
 </style>
 </head>
 <body class="pi-redesign bg-brand-surface dark:bg-brand-darkSurface text-slate-800 dark:text-slate-100 flex flex-col min-h-full font-sans antialiased transition-colors duration-200">
@@ -1050,14 +997,14 @@ html.dark .tab.on .tab-tile{box-shadow:0 0 0 2px var(--paper),0 0 0 4px color-mi
       <select id="tax"><option value="0">No tax / not taxable</option><option value="5">5%</option><option value="10">10%</option><option value="15">15%</option><option value="20">20%</option><option value="30">30%</option></select></label>
 </div>
 <nav aria-label="Sections" class="tabs">
-<button class="tab on" data-v="calc"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">₹</span><span class="tab-copy">Scheme Calculator</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">OPEN CALCULATOR</span><span class="tab-back-arrow">→</span></span></span></button>
-<button class="tab" data-v="compare"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">▦</span><span class="tab-copy">Compare Schemes</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">COMPARE RETURNS</span><span class="tab-back-arrow">→</span></span></span></button>
-<button class="tab" data-v="banks"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">🏦</span><span class="tab-copy">Post Office vs Banks</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">COMPARE 10 BANKS</span><span class="tab-back-arrow">→</span></span></span></button>
-<button class="tab" data-v="debt"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">◒</span><span class="tab-copy">Post Office vs Debt Mutual Funds</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">EXPLORE DEBT FUNDS</span><span class="tab-back-arrow">→</span></span></span></button>
-<button class="tab" data-v="sip"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">↗</span><span class="tab-copy">SIP Calculator</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">PLAN MONTHLY INVESTING</span><span class="tab-back-arrow">→</span></span></span></button>
-<button class="tab" data-v="loan"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">⌁</span><span class="tab-copy">Loan Calculator</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">ESTIMATE REPAYMENTS</span><span class="tab-back-arrow">→</span></span></span></button>
-<button class="tab" data-v="rates"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">§</span><span class="tab-copy">Rates & Rules</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">VIEW CURRENT RULES</span><span class="tab-back-arrow">→</span></span></span></button>
-<button class="tab" data-v="sources"><span class="tab-tile"><span class="tab-face tab-front"><span class="tab-icon">ⓘ</span><span class="tab-copy">Sources & Method</span><span class="tab-arrow">↗</span></span><span class="tab-face tab-back"><span class="tab-back-kicker">POSTALIQ</span><span class="tab-back-copy">CHECK THE SOURCES</span><span class="tab-back-arrow">→</span></span></span></button>
+<button class="tab on" data-v="calc">Scheme Calculator</button>
+<button class="tab" data-v="compare">Compare Schemes</button>
+<button class="tab" data-v="banks">Post Office vs Banks</button>
+<button class="tab" data-v="debt" title="Post Office vs Debt Mutual Funds">Post Office vs Debt Funds</button>
+<button class="tab" data-v="sip">SIP Calculator</button>
+<button class="tab" data-v="loan">Loan Calculator</button>
+<button class="tab" data-v="rates">Rates &amp; Rules</button>
+<button class="tab" data-v="sources">Sources &amp; Method</button>
 </nav>
 <!-- CALCULATOR -->
 <section class="view on" id="v-calc"><div class="grid">
@@ -1341,7 +1288,6 @@ $('sch').onchange=e=>{st.a=by(e.target.value).type==='rd'?5000:by(e.target.value
 $('reset').onclick=()=>{const s=cur();$('rate').value=s.rate;$('yrs').value=s.yrs;calc()};
 $('tax').onchange=e=>{st.x=+e.target.value;try{localStorage.setItem('postaliq_slab',st.x)}catch(x){};calc();compare();banks()};
 $$('.tab').forEach(b=>b.onclick=()=>view(b.dataset.v));
-$$('.tab').forEach(b=>{b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.setProperty('--mx',`${e.clientX-r.left}px`);b.style.setProperty('--my',`${e.clientY-r.top}px`)});b.addEventListener('pointerleave',()=>{b.style.setProperty('--mx','50%');b.style.setProperty('--my','0%')})});
 $('cAmt').oninput=compare;$('bAmt').oninput=banks;$('bTerm').onchange=banks;$('bCust').oninput=banks;$('bScheme').onchange=()=>{const id=$('bScheme').value,c=BM[id];$('bTerm').value=String(c.term);banks()};['dAmt','dReturn','dTerm'].forEach(id=>$(id).oninput=debtCompare);$('dScheme').onchange=debtCompare;$('dCategory').onchange=()=>{$('dReturn').value=DF[$('dCategory').value].rate;debtFunds()};['sipAmt','sipRate','sipYears','sipStep'].forEach(id=>$(id).oninput=sipCalc);['loanAmt','loanRate','loanYears','loanExtra'].forEach(id=>$(id).oninput=loanCalc);
 $$('#cChips button').forEach(b=>b.onclick=()=>{st.f=b.dataset.f;$$('#cChips button').forEach(x=>x.classList.toggle('on',x===b));compare()});
 $$('#bSen button').forEach(b=>b.onclick=()=>{st.sen=+b.dataset.s;$$('#bSen button').forEach(x=>x.classList.toggle('on',x===b));banks()});
@@ -1384,7 +1330,7 @@ var SLIDES={
 var ICONS={"home": "<path d=\"M5 23 24 6l19 17\"/><path d=\"M10 19.5V42h28V19.5\"/><path d=\"M20 42V28h8v14\"/>", "ask": "<path d=\"M5 6h38v27H22l-11 9v-9H5z\"/><path d=\"M19 17a5 5 0 1 1 7 4.6c-1.6.8-2 1.8-2 3.4\"/><path d=\"M24 29h.1\"/>", "orders": "<path d=\"M9 3h22l9 9v33H9z\"/><path d=\"M31 3v9h9\"/><path d=\"M16 23h16M16 30h16M16 37h10\"/>", "posb": "<circle cx=\"24\" cy=\"24\" r=\"20\"/><path d=\"M14 14h20M14 21h20M15 14h6a7.5 7.5 0 0 1 0 15h-6l15 10\"/>", "calculators": "<rect x=\"8\" y=\"3\" width=\"32\" height=\"42\"/><path d=\"M14 9h20v9H14z\"/><path d=\"M14 26h4M22 26h4M30 26h4M14 33h4M22 33h4M30 33h4M14 40h4M22 40h4\"/>", "forms": "<path d=\"M9 8h30v37H9z\"/><path d=\"M17 3h14v10H17z\"/><path d=\"M15 24l3 3 5-6M28 24h6M15 36l3 3 5-6M28 36h6\"/>", "offices": "<path d=\"M24 45S8 29 8 19a16 16 0 0 1 32 0c0 10-16 26-16 26z\"/><circle cx=\"24\" cy=\"19\" r=\"5.5\"/>", "ltc": "<path d=\"M44 4 3 21l15 7 6 15z\"/><path d=\"M44 4 18 28v15l8-9\"/>", "manuals": "<path d=\"M24 11C17 6 9 6 3 8v32c6-2 14-2 21 3 7-5 15-5 21-3V8c-6-2-14-2-21 3z\"/><path d=\"M24 11v32\"/>"};
 var tiles=[];
 function refresh(t){
- var list=SLIDES[t.key].concat([function(){return msg(t.label,t.desc)}]);
+ var list=(t.slides||SLIDES[t.key]).concat([function(){return msg(t.label,t.desc)}]);
  for(var tries=0;tries<list.length;tries++){
   t.i=(t.i+1)%list.length;
   var h=list[t.i]();
@@ -1506,6 +1452,39 @@ function buildPanel(){
  document.addEventListener('keydown',function(e){if(e.key==='Escape')p.hidden=true});
 }
 
+/* ---------- tabs on this page: the same live tiles as the index ---------- */
+var TI={bank:'<path d="M5 19 24 7l19 12"/><path d="M8 41h32"/><path d="M12 24v13"/><path d="M20 24v13"/><path d="M28 24v13"/><path d="M36 24v13"/>',doc:'<path d="M12 5h18l8 8v30H12z"/><path d="M30 5v8h8"/><path d="M18 24h14"/><path d="M18 31h14"/>',book:'<path d="M6 9h14a4 4 0 0 1 4 4v28a3 3 0 0 0-3-3H6z"/><path d="M42 9H28a4 4 0 0 0-4 4v28a3 3 0 0 1 3-3h15z"/>',chart:'<path d="M8 40V10"/><path d="M8 40h32"/><path d="M14 32l8-9 6 5 10-14"/>',coins:'<ellipse cx="24" cy="13" rx="14" ry="6"/><path d="M10 13v10c0 3.3 6.3 6 14 6s14-2.7 14-6V13"/><path d="M10 23v10c0 3.3 6.3 6 14 6s14-2.7 14-6V23"/>',cert:'<rect x="6" y="9" width="36" height="26" rx="2"/><circle cx="24" cy="22" r="6"/><path d="M18 35l-3 8 9-4 9 4-3-8"/>',cal:'<rect x="7" y="9" width="34" height="32" rx="3"/><path d="M7 19h34"/><path d="M16 5v8"/><path d="M32 5v8"/><path d="M24 24v7l5 3"/>',wallet:'<path d="M6 14h32a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z"/><path d="M6 14l28-8v8"/><circle cx="34" cy="28" r="2.5"/>',pass:'<rect x="9" y="5" width="30" height="38" rx="3"/><path d="M16 14h16"/><path d="M16 22h16"/><path d="M16 30h9"/>',shield:'<path d="M24 5l16 6v12c0 10-7 17-16 21C15 40 8 33 8 23V11z"/><path d="M17 24l5 5 9-10"/>',pct:'<path d="M14 34L34 14"/><circle cx="16" cy="16" r="5"/><circle cx="32" cy="32" r="5"/>',cash:'<rect x="5" y="12" width="38" height="24" rx="3"/><circle cx="24" cy="24" r="6"/>',glass:'<path d="M12 6h24"/><path d="M12 42h24"/><path d="M14 6c0 10 10 12 10 18S14 32 14 42"/><path d="M34 6c0 10-10 12-10 18s10 8 10 18"/>',house:'<path d="M5 23 24 6l19 17"/><path d="M10 19.5V42h28V19.5"/><path d="M20 42V28h8v14"/>',mail:'<rect x="5" y="10" width="38" height="28" rx="3"/><path d="M5 14l19 14 19-14"/>',sliders:'<path d="M8 14h32"/><path d="M8 24h32"/><path d="M8 34h32"/><circle cx="18" cy="14" r="3.5"/><circle cx="32" cy="24" r="3.5"/><circle cx="22" cy="34" r="3.5"/>',trend:'<path d="M6 36l12-12 8 8 16-18"/><path d="M32 14h10v10"/>',layers:'<path d="M24 6l18 9-18 9-18-9z"/><path d="M6 24l18 9 18-9"/><path d="M6 33l18 9 18-9"/>'};
+TI.calc=ICONS.calculators;
+/* [data-v of the tab, colour key, icon, back-face caption] */
+var TABS=[['calc','posb','calc','Work out what a scheme pays'],
+['compare','ask','chart','Compare returns side by side'],
+['banks','forms','bank','Post Office against 10 banks'],
+['debt','offices','trend','Explore debt mutual funds'],
+['sip','calculators','coins','Plan monthly investing'],
+['loan','orders','cash','Estimate repayments'],
+['rates','ltc','pct','View current rules'],
+['sources','manuals','book','Check the sources']];
+function tabSync(el){
+ var act=/(^|\s)(bg-brand-red|on)(\s|$)/.test(el.className);
+ if(!el.classList.contains('pilt')||!el.classList.contains('pilt-tab')||el.classList.contains('active')!==act){el.classList.add('pilt','pilt-tab');el.classList.toggle('active',act)}
+}
+function initTabs(){
+ var mo=window.MutationObserver&&new MutationObserver(function(ms){for(var i=0;i<ms.length;i++)tabSync(ms[i].target)});
+ var bar=document.querySelector('.tabs');if(!bar)return;
+ bar.classList.add('pilt-tabs');bar.setAttribute('data-n',TABS.length);
+ TABS.forEach(function(s){
+  var el=bar.querySelector('.tab[data-v="'+s[0]+'"]');if(!el)return;
+  var label=el.textContent.replace(/\s+/g,' ').trim();
+  el.innerHTML='<b>'+label.replace(/&/g,'&amp;')+'</b>';
+  build(el,s[1],'<b>'+label+'</b>',s[3],false,'tab');
+  var t=tiles[tiles.length-1],ic='<svg viewBox="0 0 48 48" focusable="false">'+(TI[s[2]]||'')+'</svg>',
+      pic=el.querySelector('.pilt-pic'),wm=el.querySelector('.pilt-wm');
+  if(pic)pic.innerHTML=ic;if(wm)wm.innerHTML=ic;
+  t.label=label;t.slides=[];t.i=-1;refresh(t);
+  el.classList.add('pilt-tab');tabSync(el);
+  if(mo)mo.observe(el,{attributes:true,attributeFilter:['class']});
+ });
+}
 function init(){
  var links=document.querySelectorAll('.pi-redesign-nav .pi-redesign-link');
  for(var j=0;j<links.length;j++){
@@ -1513,6 +1492,7 @@ function init(){
   var k=l.dataset.view?VIEW_KEYS[l.dataset.view]:'ltc';
   build(l,k||'ltc',b?b.innerHTML:'',s?s.textContent.trim():'',!!WIDE_SIDE[k],'side');
  }
+ initTabs();
  buildPanel();applyStyle();
  /* live clock on the Home tile */
  setInterval(function(){
@@ -1527,11 +1507,12 @@ function visible(t){
  var r=t.el.getBoundingClientRect();
  if(!r.width||r.bottom<0||r.top>innerHeight)return false;
  if(t.group==='home'){var v=document.getElementById('view-dashboard');return !!v&&!v.classList.contains('hidden')}
+ if(t.group==='tab')return true;
  var s=document.getElementById('pi-redesign-sidebar');return !!s&&(innerWidth>900||s.classList.contains('open'));
 }
 function tick(){
  if(document.hidden)return;
- ['home','side'].forEach(function(g){
+ ['home','side','tab'].forEach(function(g){
   var max=g==='home'?2:1,group=tiles.filter(function(t){return t.group===g&&visible(t)});
   var live=group.filter(function(t){return t.el.classList.contains('pilt-flip')});
   if(live.length>=max||Math.random()>.6)return;
@@ -1546,26 +1527,5 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 </script>
 
-<script id="postaliq-tab-idle-flip-js">
-(function(){
-  const tabs=Array.from(document.querySelectorAll('.tabs .tab'));
-  if(!tabs.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  let last=0;
-  function flipOne(){
-    if(document.hidden || Date.now()-last<4800) return;
-    const pool=tabs.filter(t=>!t.matches(':hover,:focus-visible')&&!t.classList.contains('on')&&!t.classList.contains('tab-auto-flip'));
-    if(!pool.length || Math.random()>.58) return;
-    const t=pool[Math.floor(Math.random()*pool.length)];
-    t.classList.add('tab-auto-flip'); last=Date.now();
-    window.setTimeout(()=>t.classList.remove('tab-auto-flip'),2500+Math.random()*700);
-  }
-  window.setInterval(flipOne,1250);
-  tabs.forEach(t=>{
-    t.addEventListener('pointerenter',()=>t.classList.remove('tab-auto-flip'));
-    t.addEventListener('focus',()=>t.classList.remove('tab-auto-flip'));
-    t.addEventListener('click',()=>{tabs.forEach(x=>x.classList.remove('tab-auto-flip'));});
-  });
-})();
-</script>
 </body>
 </html>
