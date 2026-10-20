@@ -485,10 +485,10 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
     <button class="pi-redesign-link" data-view="calculators" onclick="piNavigate('calculators')"><span class="pi-redesign-icon">▦</span><span><b>Employee Calculators</b><small>Salary &amp; Service Tools</small></span><i>›</i></button>
     <button class="pi-redesign-link" data-view="forms" onclick="piNavigate('forms')"><span class="pi-redesign-icon">▧</span><span><b>Forms &amp; Applications</b><small>Downloads &amp; Samples</small></span><i>›</i></button>
     <button class="pi-redesign-link" data-view="offices" onclick="piNavigate('offices')"><span class="pi-redesign-icon">◎</span><span><b>PIN &amp; Offices</b><small>PIN Codes &amp; Directory</small></span><i>›</i></button>
+    <button class="pi-redesign-link" data-view="feedback" onclick="piNavigate('feedback')"><span class="pi-redesign-icon">✉</span><span><b>Suggestions &amp; Requests</b><small>Share feedback with PostalIQ</small></span><i>›</i></button>
     <a class="pi-redesign-link" href="manuals/LTC_Rules_FAQ.html" target="_blank" rel="noopener"><span class="pi-redesign-icon">▣</span><span><b>LTC Rules FAQ</b><small>Rules &amp; Practical Guidance</small></span><i>↗</i></a>
     <div class="pi-redesign-nav-heading" aria-hidden="true" style="padding:18px 14px 7px;color:#91a8b8;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;">Tools</div>
     <a class="pi-redesign-link" href="POSB_Scheme_Explorer.html"><span class="pi-redesign-icon">₹%</span><span><b>Smart Interest Calculator</b><small>Scheme returns &amp; comparisons</small></span><i>↗</i></a>
-    <button class="pi-redesign-link" data-view="calculators" onclick="piNavigate('calculators')"><span class="pi-redesign-icon">▦</span><span><b>Tools</b><small>Employee calculators &amp; utilities</small></span><i>›</i></button>
     <a class="pi-redesign-link" href="pdf-tools.html" target="_blank" rel="noopener"><span class="pi-redesign-icon">▤</span><span><b>PDF Tools</b><small>Merge, split, OCR &amp; convert</small></span><i>↗</i></a>
   </nav>
   <div class="pi-redesign-sidebar-foot">An independent knowledge &amp; tools portal<br>Built for faster postal work.</div>
@@ -607,6 +607,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
         <a class="pih-feature" href="manuals/LTC_Rules_FAQ.html" target="_blank" rel="noopener"><div class="pih-icon pih-gold">✈</div><span class="pih-arrow">↗</span><h3>LTC Rules FAQ</h3><p>Eligibility, blocks, family, travel, claims and advances.</p></a>
         <button class="pih-feature" onclick="navigateTab('orders')"><div class="pih-icon pih-pink">▥</div><span class="pih-arrow">›</span><h3>Manuals &amp; Guides</h3><p>Handbooks, rulebooks and practical reference material.</p></button>
         <a class="pih-feature" href="pdf-tools.html" target="_blank" rel="noopener"><div class="pih-icon pih-blue">▤</div><span class="pih-arrow">↗</span><h3>PDF Tools</h3><p>Merge, split, compress, OCR and convert PDF files.</p></a>
+        <button class="pih-feature" onclick="navigateTab('feedback')"><div class="pih-icon pih-pink">✉</div><span class="pih-arrow">›</span><h3>Suggestions &amp; Requests</h3><p>Suggest improvements, report errors or request missing PostalIQ resources.</p></button>
       </section>
       <section class="pih-lower-grid">
         <div class="pih-panel"><div class="pih-panel-head"><div><h2>PostalIQ at a glance</h2><p>Live counts from the loaded reference catalogues.</p></div><span>OVERVIEW</span></div>
@@ -1380,6 +1381,37 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       </div>
 
     </div>
+
+
+
+    <!-- VIEW: SUGGESTIONS & REQUESTS -->
+    <section id="view-feedback" class="tab-view hidden space-y-5">
+      <div class="rounded-2xl p-6 sm:p-8 border border-brand-border dark:border-brand-darkBorder" style="background:linear-gradient(120deg,#fff7e9,#f4e7d9 58%,#e4f2f4);">
+        <div class="text-xs font-black tracking-widest uppercase" style="color:#a21d27">HELP IMPROVE POSTALIQ</div>
+        <h1 class="text-3xl sm:text-4xl font-bold mt-2" style="color:#102b42;font-family:Georgia,serif">Suggestions &amp; Requests</h1>
+        <p class="mt-3 max-w-2xl text-sm leading-6" style="color:#344e63">Found an error, need a missing order or manual, or have an idea for a new tool? Send it here. Submissions are intended for the private PostalIQ feedback spreadsheet and are not displayed publicly.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
+        <form id="pi-feedback-form" class="lg:col-span-2 bg-brand-card dark:bg-brand-darkCard rounded-2xl border border-brand-border dark:border-brand-darkBorder p-5 sm:p-7 space-y-5" autocomplete="on">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div><label for="pi-feedback-type" class="block text-xs font-bold mb-2">Submission type <span class="text-brand-red">*</span></label><select id="pi-feedback-type" name="type" required class="w-full px-3 py-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm"><option value="Suggestion">Suggestion</option><option value="Feature request">Feature request</option><option value="Correction / error report">Correction / error report</option><option value="Missing order or circular">Missing order or circular</option><option value="Missing manual or guide">Missing manual or guide</option><option value="Bug report">Bug report</option><option value="Other">Other</option></select></div>
+            <div><label for="pi-feedback-section" class="block text-xs font-bold mb-2">Related section <span class="text-brand-red">*</span></label><select id="pi-feedback-section" name="section" required class="w-full px-3 py-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm"><option>General / whole website</option><option>Orders &amp; Manuals</option><option>POSB Scheme Explorer</option><option>POSB &amp; PLI</option><option>Employee Calculators</option><option>Forms &amp; Applications</option><option>Ask PostalIQ AI</option><option>PIN &amp; Offices</option><option>PDF Tools</option></select></div>
+          </div>
+          <div><label for="pi-feedback-title" class="block text-xs font-bold mb-2">Short title <span class="text-brand-red">*</span></label><input id="pi-feedback-title" name="title" required maxlength="140" placeholder="e.g. Add a search option to the GDS rulebook" class="w-full px-3 py-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm"></div>
+          <div><label for="pi-feedback-details" class="block text-xs font-bold mb-2">Details <span class="text-brand-red">*</span></label><textarea id="pi-feedback-details" name="details" required minlength="10" maxlength="5000" rows="6" placeholder="Describe the suggestion, the error, or the resource you need. Please avoid sharing confidential or personal information." class="w-full px-3 py-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm resize-y"></textarea><div class="text-right text-[11px] text-slate-500 mt-1"><span id="pi-feedback-count">0</span>/5000</div></div>
+          <div><label for="pi-feedback-contact" class="block text-xs font-bold mb-2">Contact email <span class="font-normal text-slate-500">(optional)</span></label><input id="pi-feedback-contact" name="contact" type="email" maxlength="254" placeholder="Only if you would like a reply" class="w-full px-3 py-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm"><p class="text-[11px] text-slate-500 mt-1">Leave blank if you prefer not to share an email address.</p></div>
+          <div class="hidden" aria-hidden="true"><label for="pi-feedback-website">Website</label><input id="pi-feedback-website" name="website" tabindex="-1" autocomplete="off"></div>
+          <div class="flex flex-col sm:flex-row gap-3 items-start sm:items-center"><button id="pi-feedback-submit" type="submit" class="px-5 py-3 rounded-xl font-bold text-sm text-white" style="background:linear-gradient(135deg,#d91f2b,#a91520);box-shadow:0 8px 18px #d91f2b30">Submit feedback <span aria-hidden="true">→</span></button><span id="pi-feedback-status" class="text-sm text-slate-500" role="status" aria-live="polite">The form needs to be connected to your Google Apps Script web-app URL before submissions can be saved.</span></div>
+          <p class="text-[11px] leading-5 text-slate-500">Please do not submit account numbers, customer details, passwords, or other confidential information.</p>
+        </form>
+        <aside class="bg-brand-card dark:bg-brand-darkCard rounded-2xl border border-brand-border dark:border-brand-darkBorder p-5 space-y-4">
+          <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl" style="background:#e0f2fe;color:#075985">▤</div><div><h2 class="font-bold text-base">What happens next?</h2><p class="text-xs text-slate-500">A simple feedback workflow</p></div></div>
+          <ol class="space-y-4 text-sm"><li class="flex gap-3"><span class="w-7 h-7 flex-shrink-0 rounded-full flex items-center justify-center font-bold text-xs" style="background:#dbeafe;color:#1d4ed8">1</span><span><b>Submit</b><span class="block text-xs text-slate-500 mt-1">Tell us what needs improvement.</span></span></li><li class="flex gap-3"><span class="w-7 h-7 flex-shrink-0 rounded-full flex items-center justify-center font-bold text-xs" style="background:#d1fae5;color:#047857">2</span><span><b>Review</b><span class="block text-xs text-slate-500 mt-1">The site owner reviews it in Google Sheets.</span></span></li><li class="flex gap-3"><span class="w-7 h-7 flex-shrink-0 rounded-full flex items-center justify-center font-bold text-xs" style="background:#fef3c7;color:#92400e">3</span><span><b>Track progress</b><span class="block text-xs text-slate-500 mt-1">Requests can be marked New, Under Review, Implemented or Closed.</span></span></li></ol>
+          <div class="p-3 rounded-xl text-xs leading-5" style="background:#f1f5f9;color:#475569">No public comments feed is shown. Email is optional, and a personal reply is not guaranteed.</div>
+        </aside>
+      </div>
+      <iframe id="pi-feedback-target" name="pi-feedback-target" title="Feedback submission response" class="hidden" aria-hidden="true"></iframe>
+    </section>
 
   </main>
 
@@ -3674,7 +3706,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
     // Deep links from standalone tools open the matching PostalIQ section.
     window.addEventListener('DOMContentLoaded', () => {
       const view = new URLSearchParams(window.location.search).get('view');
-      if (['dashboard','ask','orders','posb','calculators','forms','offices'].includes(view)) piNavigate(view);
+      if (['dashboard','ask','orders','posb','calculators','forms','offices','feedback'].includes(view)) piNavigate(view);
     });
 
     function navigateTab(tabId) {
@@ -3682,7 +3714,7 @@ html.dark body.pi-redesign .tab-view input[type="checkbox"],html.dark body.pi-re
       const target = document.getElementById('view-' + tabId);
       if (target) target.classList.remove('hidden');
 
-      ['dashboard', 'ask', 'orders', 'posb', 'forms', 'offices', 'calculators'].forEach(t => {
+      ['dashboard', 'ask', 'orders', 'posb', 'forms', 'offices', 'calculators', 'feedback'].forEach(t => {
         const btn = document.getElementById('btn-tab-' + t);
         if (btn) {
           btn.className = (t === tabId)
@@ -4655,7 +4687,7 @@ var SLIDES={
 var ICONS={"home": "<path d=\"M5 23 24 6l19 17\"/><path d=\"M10 19.5V42h28V19.5\"/><path d=\"M20 42V28h8v14\"/>", "ask": "<path d=\"M5 6h38v27H22l-11 9v-9H5z\"/><path d=\"M19 17a5 5 0 1 1 7 4.6c-1.6.8-2 1.8-2 3.4\"/><path d=\"M24 29h.1\"/>", "orders": "<path d=\"M9 3h22l9 9v33H9z\"/><path d=\"M31 3v9h9\"/><path d=\"M16 23h16M16 30h16M16 37h10\"/>", "posb": "<circle cx=\"24\" cy=\"24\" r=\"20\"/><path d=\"M14 14h20M14 21h20M15 14h6a7.5 7.5 0 0 1 0 15h-6l15 10\"/>", "calculators": "<rect x=\"8\" y=\"3\" width=\"32\" height=\"42\"/><path d=\"M14 9h20v9H14z\"/><path d=\"M14 26h4M22 26h4M30 26h4M14 33h4M22 33h4M30 33h4M14 40h4M22 40h4\"/>", "forms": "<path d=\"M9 8h30v37H9z\"/><path d=\"M17 3h14v10H17z\"/><path d=\"M15 24l3 3 5-6M28 24h6M15 36l3 3 5-6M28 36h6\"/>", "offices": "<path d=\"M24 45S8 29 8 19a16 16 0 0 1 32 0c0 10-16 26-16 26z\"/><circle cx=\"24\" cy=\"19\" r=\"5.5\"/>", "ltc": "<path d=\"M44 4 3 21l15 7 6 15z\"/><path d=\"M44 4 18 28v15l8-9\"/>", "manuals": "<path d=\"M24 11C17 6 9 6 3 8v32c6-2 14-2 21 3 7-5 15-5 21-3V8c-6-2-14-2-21 3z\"/><path d=\"M24 11v32\"/>"};
 var tiles=[];
 function refresh(t){
- var list=SLIDES[t.key].concat([function(){return msg(t.label,t.desc)}]);
+ var list=(t.slides||SLIDES[t.key]).concat([function(){return msg(t.label,t.desc)}]);
  for(var tries=0;tries<list.length;tries++){
   t.i=(t.i+1)%list.length;
   var h=list[t.i]();
@@ -4777,6 +4809,35 @@ function buildPanel(){
  document.addEventListener('keydown',function(e){if(e.key==='Escape')p.hidden=true});
 }
 
+/* ---------- tabs inside pages: same live tiles ---------- */
+var TI={doc:'<path d="M12 5h18l8 8v30H12z"/><path d="M30 5v8h8"/><path d="M18 24h14"/><path d="M18 31h14"/>',book:'<path d="M6 9h14a4 4 0 0 1 4 4v28a3 3 0 0 0-3-3H6z"/><path d="M42 9H28a4 4 0 0 0-4 4v28a3 3 0 0 1 3-3h15z"/>',chart:'<path d="M8 40V10"/><path d="M8 40h32"/><path d="M14 32l8-9 6 5 10-14"/>',coins:'<ellipse cx="24" cy="13" rx="14" ry="6"/><path d="M10 13v10c0 3.3 6.3 6 14 6s14-2.7 14-6V13"/><path d="M10 23v10c0 3.3 6.3 6 14 6s14-2.7 14-6V23"/>',cert:'<rect x="6" y="9" width="36" height="26" rx="2"/><circle cx="24" cy="22" r="6"/><path d="M18 35l-3 8 9-4 9 4-3-8"/>',cal:'<rect x="7" y="9" width="34" height="32" rx="3"/><path d="M7 19h34"/><path d="M16 5v8"/><path d="M32 5v8"/><path d="M24 24v7l5 3"/>',wallet:'<path d="M6 14h32a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z"/><path d="M6 14l28-8v8"/><circle cx="34" cy="28" r="2.5"/>',pass:'<rect x="9" y="5" width="30" height="38" rx="3"/><path d="M16 14h16"/><path d="M16 22h16"/><path d="M16 30h9"/>',shield:'<path d="M24 5l16 6v12c0 10-7 17-16 21C15 40 8 33 8 23V11z"/><path d="M17 24l5 5 9-10"/>',pct:'<path d="M14 34L34 14"/><circle cx="16" cy="16" r="5"/><circle cx="32" cy="32" r="5"/>',cash:'<rect x="5" y="12" width="38" height="24" rx="3"/><circle cx="24" cy="24" r="6"/>',glass:'<path d="M12 6h24"/><path d="M12 42h24"/><path d="M14 6c0 10 10 12 10 18S14 32 14 42"/><path d="M34 6c0 10-10 12-10 18s10 8 10 18"/>',house:'<path d="M5 23 24 6l19 17"/><path d="M10 19.5V42h28V19.5"/><path d="M20 42V28h8v14"/>',mail:'<rect x="5" y="10" width="38" height="28" rx="3"/><path d="M5 14l19 14 19-14"/>',sliders:'<path d="M8 14h32"/><path d="M8 24h32"/><path d="M8 34h32"/><circle cx="18" cy="14" r="3.5"/><circle cx="32" cy="24" r="3.5"/><circle cx="22" cy="34" r="3.5"/>',trend:'<path d="M6 36l12-12 8 8 16-18"/><path d="M32 14h10v10"/>',layers:'<path d="M24 6l18 9-18 9-18-9z"/><path d="M6 24l18 9 18-9"/><path d="M6 33l18 9 18-9"/>'};
+/* [button id, colour key, icon, back-face caption] */
+var TABS=[['#view-orders',[['orders-subbtn-sb','orders','doc','Savings Bank orders'],['orders-subbtn-manuals','manuals','book','Open a manual or guide']]],
+['#view-posb',[['subbtn-posb-rates-hub','posb','chart','Current quarter rates and archive'],['subbtn-posb-ppf-ssy','ask','coins','Passbook interest calculator'],['subbtn-posb-nsc-kvp','forms','cert','Certificate calculator'],['subbtn-posb-td-rd','offices','cal','Deposit maturity calculator'],['subbtn-posb-mis-scss','ltc','wallet','MIS and SCSS payouts'],['subbtn-posb-sb','calculators','pass','Interest on lowest balance'],['subbtn-posb-pli','manuals','shield','Postal life insurance']]],
+['#view-calculators',[['modbtn-salary','calculators','cash','Open this calculator'],['modbtn-da-arrears','home','trend','Open this calculator'],['modbtn-fixation','forms','sliders','Open this calculator'],['modbtn-pension','orders','glass','Open this calculator'],['modbtn-nps-hba','posb','house','Open this calculator'],['modbtn-tax','offices','pct','Open this calculator'],['modbtn-gds','ask','mail','Open this tool'],['modbtn-cpc8','ltc','layers','Open this estimator']]]];
+function tabSync(el){
+ var act=/(^|\s)bg-brand-red(\s|$)/.test(el.className);
+ if(!el.classList.contains('pilt')||!el.classList.contains('pilt-tab')||el.classList.contains('active')!==act){el.classList.add('pilt','pilt-tab');el.classList.toggle('active',act)}
+}
+function initTabs(){
+ var mo=window.MutationObserver&&new MutationObserver(function(ms){for(var i=0;i<ms.length;i++)tabSync(ms[i].target)});
+ TABS.forEach(function(g){
+  var bar=document.querySelector(g[0]+' .print-nav');if(!bar)return;
+  bar.classList.add('pilt-tabs');bar.setAttribute('data-n',g[1].length);
+  g[1].forEach(function(s){
+   var el=document.getElementById(s[0]);if(!el)return;
+   var label=el.textContent.replace(/\s+/g,' ').trim();
+   el.innerHTML='<b>'+label.replace(/&/g,'&amp;')+'</b>';
+   build(el,s[1],'<b>'+label+'</b>',s[3],false,'tab');
+   var t=tiles[tiles.length-1],ic='<svg viewBox="0 0 48 48" focusable="false">'+(TI[s[2]]||'')+'</svg>',
+       pic=el.querySelector('.pilt-pic'),wm=el.querySelector('.pilt-wm');
+   if(pic)pic.innerHTML=ic;if(wm)wm.innerHTML=ic;
+   t.label=label;t.slides=[];t.i=-1;refresh(t);
+   el.classList.add('pilt-tab');tabSync(el);
+   if(mo)mo.observe(el,{attributes:true,attributeFilter:['class']});
+  });
+ });
+}
 function init(){
  var feats=document.querySelectorAll('#view-dashboard .pih-feature');
  for(var i=0;i<feats.length;i++){
@@ -4790,6 +4851,7 @@ function init(){
   var k=l.dataset.view?VIEW_KEYS[l.dataset.view]:'ltc';
   build(l,k||'ltc',b?b.innerHTML:'',s?s.textContent.trim():'',!!WIDE_SIDE[k],'side');
  }
+ initTabs();
  buildPanel();applyStyle();
  /* live clock on the Home tile */
  setInterval(function(){
@@ -4804,11 +4866,12 @@ function visible(t){
  var r=t.el.getBoundingClientRect();
  if(!r.width||r.bottom<0||r.top>innerHeight)return false;
  if(t.group==='home'){var v=document.getElementById('view-dashboard');return !!v&&!v.classList.contains('hidden')}
+ if(t.group==='tab')return true;
  var s=document.getElementById('pi-redesign-sidebar');return !!s&&(innerWidth>900||s.classList.contains('open'));
 }
 function tick(){
  if(document.hidden)return;
- ['home','side'].forEach(function(g){
+ ['home','side','tab'].forEach(function(g){
   var max=g==='home'?2:1,group=tiles.filter(function(t){return t.group===g&&visible(t)});
   var live=group.filter(function(t){return t.el.classList.contains('pilt-flip')});
   if(live.length>=max||Math.random()>.6)return;
@@ -4935,5 +4998,78 @@ html.dark .pilt:hover .pilt-tilt{box-shadow:0 2px 4px rgba(0,0,0,.4),0 20px 36px
  html body.pi-redesign .tab-view button.bg-brand-red,html body.pi-redesign .tab-view a.bg-brand-red{background-image:none!important}
 }
 </style>
+<style id="pilt-tabs-css">
+/* =====================================================================
+   Tabs inside every page use the same live tiles as the home screen and
+   the side pane (glass look, hover lift, cursor spotlight, press tilt,
+   idle live-content swap, theme / texture picker). One compact row per
+   page; on narrow screens the row scrolls sideways instead of wrapping.
+   ===================================================================== */
+html body.pi-redesign .tab-view .print-nav.pilt-tabs{display:grid!important;grid-auto-flow:column;grid-template-rows:76px;grid-auto-columns:minmax(108px,1fr);gap:8px;overflow-x:auto!important;overflow-y:hidden!important;padding:8px 8px 32px!important;margin:-8px -8px -14px!important;border-bottom:0!important;scrollbar-width:none}
+html body.pi-redesign .tab-view .print-nav.pilt-tabs::-webkit-scrollbar{display:none}
+html body.pi-redesign .tab-view .print-nav.pilt-tabs[data-n="2"]{grid-auto-columns:minmax(150px,190px)}
+html body.pi-redesign .tab-view .print-nav.pilt-tabs button.pilt-tab.pilt-tab{--pr:14px;display:block!important;height:100%;min-width:0;min-height:0!important;margin:0;padding:0!important;border:0!important;border-radius:var(--pr)!important;background:none!important;background-image:none!important;box-shadow:none!important;transform:none!important;filter:none!important;color:#fff!important;font:inherit;text-align:left;white-space:normal}
+html body.pi-redesign .pilt-tab .pilt-front{padding:8px 10px;justify-content:flex-end}
+html body.pi-redesign .pilt-tab b{display:block;margin:0;font:650 12px/1.2 var(--pilt-font)!important;letter-spacing:-.005em;color:#fff!important;text-shadow:0 1px 8px rgba(0,0,0,.22)}
+html body.pi-redesign .pilt-tab .pilt-pic{left:8px!important;top:8px!important;width:26px!important;height:26px!important;padding:6px;border-radius:9px}
+html body.pi-redesign .pilt-tab .pilt-face>.pilt-wm{width:58px;height:58px;right:-6px;bottom:-10px}
+html body.pi-redesign .pilt-tab .pilt-face>.pilt-live{top:12px;right:12px;width:5px;height:5px}
+html body.pi-redesign .pilt-tab .pilt-face>.pilt-go{display:none!important}
+html body.pi-redesign .pilt-tab .pilt-back{padding:8px 10px;gap:1px}
+html body.pi-redesign .pilt-tab .pilt-h,html body.pi-redesign .pilt-tab .pilt-t{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+html body.pi-redesign .pilt-tab .pilt-h{font-size:12px;line-height:1.2}
+html body.pi-redesign .pilt-tab .pilt-t{font-size:10.5px;line-height:1.25}
+html body.pi-redesign .pilt-tab.active{outline:3px solid var(--c);outline-offset:2px}
+html body.pi-redesign .pilt-tab.active .pilt-tilt{box-shadow:0 12px 24px -12px color-mix(in srgb,var(--c) 85%,transparent)}
+html body.pi-redesign .pilt-tab:not(.active):not(:hover) .pilt-tilt{filter:saturate(.8)}
+/* side pane: the "Tools" group heading spans the full row so its tiles sit side by side */
+html body.pi-redesign .pi-redesign-nav .pi-redesign-nav-heading{grid-column:1/-1}
+@media print{.pilt-tabs{display:none!important}}
+</style>
+
+<style id="postaliq-feedback-view-style">
+#view-feedback input:focus,#view-feedback select:focus,#view-feedback textarea:focus{outline:0;border-color:#c51d2a;box-shadow:0 0 0 3px rgba(197,29,42,.12)}
+html.dark #view-feedback>div:first-child{background:linear-gradient(120deg,#233746,#39404a)!important}html.dark #view-feedback>div:first-child h1,html.dark #view-feedback>div:first-child p{color:#f0f4f7!important}html.dark #view-feedback aside>div:last-child{background:#172c3b!important;color:#c5d4df!important}
+#view-feedback label{color:inherit}
+@media(max-width:640px){#view-feedback form{padding:16px}}
+</style>
+<script id="postaliq-feedback-form-logic">
+(function(){
+  // Replace this placeholder with the deployed Google Apps Script Web App URL ending in /exec.
+  const POSTALIQ_FEEDBACK_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyaUnGVTa-7Q_t8j4djjsU5FhBjPpuU1OJGK-knbhvEWhyd44XEYa_tjR1NeCC1DvY/exec';
+  const form=document.getElementById('pi-feedback-form');
+  if(!form)return;
+  const details=document.getElementById('pi-feedback-details');
+  const count=document.getElementById('pi-feedback-count');
+  const status=document.getElementById('pi-feedback-status');
+  const submit=document.getElementById('pi-feedback-submit');
+  const target=document.getElementById('pi-feedback-target');
+  let waitingForResponse=false;
+  details.addEventListener('input',()=>{count.textContent=String(details.value.length)});
+  target.addEventListener('load',()=>{
+    if(!waitingForResponse)return;
+    waitingForResponse=false;submit.disabled=false;submit.innerHTML='Submit feedback <span aria-hidden="true">→</span>';
+    status.textContent='The form was sent to the feedback endpoint. Please check the spreadsheet to confirm it was recorded.';
+    status.className='text-sm text-emerald-700 dark:text-emerald-400';
+    form.reset();count.textContent='0';
+  });
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    if(!form.reportValidity())return;
+    if(document.getElementById('pi-feedback-website').value)return;
+    if(!POSTALIQ_FEEDBACK_ENDPOINT.startsWith('https://script.google.com/macros/s/')||!POSTALIQ_FEEDBACK_ENDPOINT.endsWith('/exec')){
+      status.textContent='Setup needed: deploy the Google Apps Script as a web app, then paste its /exec URL into POSTALIQ_FEEDBACK_ENDPOINT in this file.';
+      status.className='text-sm text-amber-700 dark:text-amber-300';return;
+    }
+    const data=new FormData(form);
+    data.set('page',window.location.href);
+    data.set('userAgent',navigator.userAgent);
+    const payload=document.createElement('form');payload.method='POST';payload.action=POSTALIQ_FEEDBACK_ENDPOINT;payload.target='pi-feedback-target';payload.style.display='none';
+    for(const [key,value] of data.entries()){const input=document.createElement('input');input.type='hidden';input.name=key;input.value=String(value);payload.appendChild(input)}
+    document.body.appendChild(payload);waitingForResponse=true;submit.disabled=true;submit.textContent='Submitting…';status.textContent='Sending your submission…';status.className='text-sm text-slate-500';payload.submit();setTimeout(()=>payload.remove(),1000);
+  });
+})();
+</script>
+
 </body>
 </html>
